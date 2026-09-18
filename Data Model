@@ -1,0 +1,37 @@
+STUDENT
+│
+├── Student ID
+├── User
+├── Contact Number
+├── Mess Hall
+├── Hostel Name
+├── Room Number
+├── Dietary Preference
+├── Allergies
+└── Active
+
+
+
+MESS HALL
+│
+├── Name
+├── Location
+├── Capacity
+├── Supervisor
+└── Active
+
+
+
+Menu Item
+│
+├── Name
+├── Mess Hall → Mess Hall
+├── Meal Type
+│   ├── Breakfast
+│   ├── Lunch
+│   └── Dinner
+├── Diet Type
+│   ├── Vegetarian
+│   └── Non-Vegetarian
+├── Description
+└── Active
