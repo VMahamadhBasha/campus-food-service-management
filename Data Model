@@ -35,3 +35,172 @@ Menu Item
 │   └── Non-Vegetarian
 ├── Description
 └── Active
+
+
+
+
+STUDENT
+│
+├── Student ID
+├── User → User
+├── Contact Number
+├── Mess Hall → Mess Hall
+├── Hostel Name
+├── Room Number
+├── Dietary Preference
+│   ├── Vegetarian
+│   ├── Non-Vegetarian
+│   └── Other
+├── Allergies
+└── Active
+    ├── True
+    └── False
+
+
+
+MESS HALL
+│
+├── Name
+├── Location
+├── Capacity
+├── Supervisor → User
+└── Active
+    ├── True
+    └── False
+
+
+
+MENU ITEM
+│
+├── Name
+├── Mess Hall → Mess Hall
+├── Meal Type
+│   ├── Breakfast
+│   ├── Lunch
+│   └── Dinner
+├── Diet Type
+│   ├── Vegetarian
+│   └── Non-Vegetarian
+├── Description
+└── Active
+    ├── True
+    └── False
+
+
+
+FOOD COMPLAINT
+│
+├── Number
+├── Student → Student
+├── Use Case
+│   ├── Food Quality Complaint
+│   ├── Meal Not Available
+│   ├── Food Hygiene Issue
+│   ├── Special Diet Request
+│   ├── Allergy Management Request
+│   ├── Food Menu Feedback
+│   ├── Meal Reservation / Pre-Booking
+│   ├── Missed Meal Request
+│   ├── Food Wastage Reporting
+│   ├── Emergency Food Assistance
+│   ├── Hostel Mess Billing Issue
+│   └── Smart Menu Recommendation
+├── Category
+│   ├── Food Quality
+│   ├── Food Safety
+│   ├── Food Hygiene
+│   ├── Food Availability
+│   ├── Dietary
+│   ├── Allergy
+│   ├── Menu Feedback
+│   ├── Food Wastage
+│   ├── Billing
+│   └── Other
+├── Problem Type
+├── Problem Type Normalized
+├── Mess Hall → Mess Hall
+├── Meal Type
+│   ├── Breakfast
+│   ├── Lunch
+│   ├── Snacks
+│   └── Dinner
+├── Description
+├── Attachment
+├── AI Category
+├── AI Confidence
+├── Base Problem → Food Base Problem
+├── Priority
+│   ├── 1 - Critical
+│   ├── 2 - High
+│   ├── 3 - Medium
+│   └── 4 - Low
+├── State
+│   ├── New
+│   ├── In Progress
+│   ├── Resolved
+│   ├── Closed
+│   └── Not Resolved
+├── Resolution Notes
+├── Not Resolved Reason
+├── Feedback Eligible
+├── Opened At
+├── Resolved At
+├── Closed At
+└── Not Resolved At
+
+
+
+
+FOOD BASE PROBLEM
+│
+├── Number
+├── Use Case
+│   ├── Food Quality Complaint
+│   ├── Meal Not Available
+│   ├── Food Hygiene Issue
+│   ├── Special Diet Request
+│   ├── Allergy Management Request
+│   ├── Food Menu Feedback
+│   ├── Meal Reservation / Pre-Booking
+│   ├── Missed Meal Request
+│   ├── Food Wastage Reporting
+│   ├── Emergency Food Assistance
+│   ├── Hostel Mess Billing Issue
+│   └── Smart Menu Recommendation
+├── Category
+│   ├── Food Quality
+│   ├── Food Safety
+│   ├── Food Hygiene
+│   ├── Food Availability
+│   ├── Dietary
+│   ├── Allergy
+│   ├── Menu Feedback
+│   ├── Food Wastage
+│   ├── Billing
+│   └── Other
+├── Problem Type
+├── Problem Type Normalized
+├── Mess Hall → Mess Hall
+├── Student Count
+├── Ticket Count
+├── Open Ticket Count
+├── Resolved Ticket Count
+├── First Ticket → Food Complaint
+├── Latest Ticket → Food Complaint
+├── First Reported At
+├── Latest Reported At
+├── Current Priority
+│   ├── 1 - Critical
+│   ├── 2 - High
+│   ├── 3 - Medium
+│   └── 4 - Low
+├── Priority Reason
+├── AI Risk Score
+├── AI Summary
+├── Knowledge Insights
+├── Recommended Action
+└── Status
+    ├── Active
+    ├── Monitoring
+    ├── Resolved
+    └── Closed
