@@ -1,3 +1,4 @@
+""""
 STUDENT
 │
 ├── Student ID
@@ -36,7 +37,7 @@ Menu Item
 ├── Description
 └── Active
 
-
+""""
 
 
 STUDENT
@@ -122,7 +123,6 @@ FOOD COMPLAINT
 ├── Meal Type
 │   ├── Breakfast
 │   ├── Lunch
-│   ├── Snacks
 │   └── Dinner
 ├── Description
 ├── Attachment
