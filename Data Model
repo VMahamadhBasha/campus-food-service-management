@@ -204,3 +204,37 @@ FOOD BASE PROBLEM
     ├── Monitoring
     ├── Resolved
     └── Closed
+
+
+
+USE CASE PRIORITY
+│
+├── Use Case
+│   ├── Food Hygiene Issue
+│   ├── Missed Meal Request
+│   ├── Allergy Management Request
+│   ├── Emergency Food Assistant
+│   ├── Special Diet Request
+│   ├── Meal Reservation/Pre Booking
+│   ├── Food Quality Complaint
+│   ├── Smart Menu Recommendation
+│   ├── Food Wastage Reporting
+│   ├── Food Menu Feedback
+│   ├── Hostel Mess Billing Issue
+│   └── Meal Not Available
+│
+├── Base Priority
+│   ├── Low
+│   ├── Medium
+│   ├── High
+│   └── Critical
+│
+├── Priority Level
+│   ├── Low
+│   ├── Medium
+│   ├── High
+│   └── Critical
+│
+├── Affected Threshold
+├── Safety Critical
+└── Active
