@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="use_case" table="x_snc_campus_foo_1_use_case_priority" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>use_case</element>
+            <name>x_snc_campus_foo_1_use_case_priority</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-19 09:43:12</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>use_case</sys_name>
+            <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+            <sys_update_name>sys_choice_x_snc_campus_foo_1_use_case_priority_use_case</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-19 09:43:12</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>use_case</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Allergy Management Request</label>
+            <language>en</language>
+            <name>x_snc_campus_foo_1_use_case_priority</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-19 09:46:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-19 15:27:56</sys_updated_on>
+            <value>allergy_management_request</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>use_case</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Emergency Food Assistance</label>
+            <language>en</language>
+            <name>x_snc_campus_foo_1_use_case_priority</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-19 09:47:13</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-19 15:29:20</sys_updated_on>
+            <value>emergency_food_assistance</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>use_case</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Food Hygiene Issue</label>
+            <language>en</language>
+            <name>x_snc_campus_foo_1_use_case_priority</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-19 09:46:46</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-19 15:27:06</sys_updated_on>
+            <value>food_hygiene_issue</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>use_case</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Food Menu Feedback</label>
+            <language>en</language>
+            <name>x_snc_campus_foo_1_use_case_priority</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-19 09:47:40</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-19 15:28:12</sys_updated_on>
+            <value>food_menu_feedback</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>use_case</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Food Quality Complaint</label>
+            <language>en</language>
+            <name>x_snc_campus_foo_1_use_case_priority</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-19 09:45:25</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-19 15:26:28</sys_updated_on>
+            <value>food_quality_complaint</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>use_case</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Food Wastage Reporting</label>
+            <language>en</language>
+            <name>x_snc_campus_foo_1_use_case_priority</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-19 09:48:34</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-19 15:29:00</sys_updated_on>
+            <value>food_wastage_reporting</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>use_case</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Hostel Mess Billing Issue</label>
+            <language>en</language>
+            <name>x_snc_campus_foo_1_use_case_priority</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-19 09:49:20</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-19 15:29:36</sys_updated_on>
+            <value>hostel_mess_billing_issue</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>use_case</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Meal Not Available</label>
+            <language>en</language>
+            <name>x_snc_campus_foo_1_use_case_priority</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-19 09:48:12</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-19 15:26:45</sys_updated_on>
+            <value>meal_not_available</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>use_case</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Meal Reservation / Pre-Booking</label>
+            <language>en</language>
+            <name>x_snc_campus_foo_1_use_case_priority</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-19 09:43:12</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>4</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-19 15:28:28</sys_updated_on>
+            <value>meal_reservation_pre_booking</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>use_case</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Missed Meal Request</label>
+            <language>en</language>
+            <name>x_snc_campus_foo_1_use_case_priority</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-19 09:49:43</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-19 15:28:43</sys_updated_on>
+            <value>missed_meal_request</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>use_case</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Smart Menu Recommendation</label>
+            <language>en</language>
+            <name>x_snc_campus_foo_1_use_case_priority</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-19 09:44:22</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-19 15:29:53</sys_updated_on>
+            <value>smart_menu_recommendation</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>use_case</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Special Diet Request</label>
+            <language>en</language>
+            <name>x_snc_campus_foo_1_use_case_priority</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-19 09:48:55</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-19 15:27:32</sys_updated_on>
+            <value>special_diet_request</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

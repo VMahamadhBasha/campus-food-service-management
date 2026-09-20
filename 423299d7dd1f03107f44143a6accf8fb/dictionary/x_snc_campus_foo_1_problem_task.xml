@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="f7264637619303107f44f4898ccc4c6e" extends="task" label="Problem Task" max_length="40" name="x_snc_campus_foo_1_problem_task" type="collection">
+        <element label="Resolution Notes" max_length="255" name="resolution_notes" type="string_full_utf8"/>
+        <element label="Parent Base Problem" mandatory="true" max_length="32" name="parent_base_problem" reference="x_snc_campus_foo_1_food_base_problem" type="reference"/>
+        <element label="Resolved At" max_length="40" name="resolved_at" type="glide_date_time"/>
+        <element label="Not Resolved Reason" max_length="255" name="not_resolved_reason" type="string_full_utf8"/>
+        <element label="Not Resolved At" max_length="40" name="not_resolved_at" type="glide_date_time"/>
+        <element choice="3" default="staff" label="Escalation Level" mandatory="true" max_length="40" name="escalation_level" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="staff" value="staff"/>
+                <element inactive_on_update="false" label="Manager" value="manager"/>
+                <element inactive_on_update="false" label="Admin" value="admin"/>
+            </choice>
+        </element>
+    </element>
+</database>
