@@ -50,7 +50,7 @@
         <element label="Mess Hall" mandatory="true" max_length="32" name="mess_hall" reference="x_snc_campus_foo_1_mess_hall" type="reference"/>
         <element label="Student" mandatory="true" max_length="32" name="student" reference="x_snc_campus_foo_1_student" type="reference"/>
         <element label="Closed At" max_length="40" name="closed_at" type="glide_date_time"/>
-        <element choice="1" label="State" mandatory="true" max_length="40" name="state" type="choice">
+        <element choice="1" label="State" max_length="40" name="state" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Closed" value="closed"/>
                 <element inactive_on_update="false" label="Active" value="active"/>
