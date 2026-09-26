@@ -1,0 +1,1817 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function($window, $location, $anchorScroll, $document, $scope) {
+    var c = this;
+    
+    c.showDropdown = false;
+
+    c.toggleDropdown = function($event) {
+        $event.stopPropagation();
+        c.showDropdown = !c.showDropdown;
+    };
+
+    // Close menu when clicking anywhere outside
+    $document.on('click', function() {
+        if (c.showDropdown) {
+            c.showDropdown = false;
+            $scope.$apply();
+        }
+    });
+
+    c.openDashboard = function(role) {
+        c.showDropdown = false;
+        if (c.data.dashboards && c.data.dashboards[role]) {
+            c.activeDashboard = role;
+            c.currentDashboard = c.data.dashboards[role];
+            $window.scrollTo(0, 0);
+        }
+    };
+
+    c.showLanding = function() {
+        c.activeDashboard = null;
+        c.currentDashboard = null;
+        $window.scrollTo(0, 0);
+    };
+
+    c.scrollTo = function(id) {
+        $location.hash(id);
+        $anchorScroll();
+    };
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.cfms-widget {&#13;
+    --navbar-bg: #00695c;&#13;
+    --hero-bg: #b2ebf2;&#13;
+    --page-bg: #f0fbfc;&#13;
+    --dark-text: #263238;&#13;
+    --light-text: #546e7a;&#13;
+    --white: #ffffff;&#13;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);&#13;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;&#13;
+&#13;
+    font-family: var(--font-family);&#13;
+    background-color: var(--page-bg);&#13;
+    color: var(--dark-text);&#13;
+    line-height: 1.6;&#13;
+    overflow-x: hidden;&#13;
+    margin: -15px; /* Offset default Service Portal page padding */&#13;
+}&#13;
+&#13;
+.cfms-widget a {&#13;
+    text-decoration: none;&#13;
+    color: inherit;&#13;
+    transition: 0.3s;&#13;
+}&#13;
+&#13;
+.cfms-widget ul {&#13;
+    list-style: none;&#13;
+    margin: 0;&#13;
+    padding: 0;&#13;
+}&#13;
+&#13;
+/* --- NAVIGATION BAR --- */&#13;
+.cfms-widget nav.main-nav {&#13;
+    background-color: var(--navbar-bg);&#13;
+    display: flex;&#13;
+    justify-content: space-between;&#13;
+    align-items: center;&#13;
+    padding: 0 5%;&#13;
+    height: 80px;&#13;
+    position: sticky;&#13;
+    top: 0;&#13;
+    z-index: 1000;&#13;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);&#13;
+}&#13;
+&#13;
+.cfms-widget .nav-logo-container {&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 10px;&#13;
+    font-weight: 800;&#13;
+    font-size: 1.5rem;&#13;
+    color: var(--white);&#13;
+}&#13;
+&#13;
+.cfms-widget .nav-app-logo {&#13;
+    width: 40px;&#13;
+    height: 40px;&#13;
+    background-color: var(--white);&#13;
+    border-radius: 8px;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    color: var(--navbar-bg);&#13;
+    font-size: 1.2rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .nav-links {&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 2rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .nav-links li a {&#13;
+    font-weight: 600;&#13;
+    color: var(--white);&#13;
+    position: relative;&#13;
+    font-size: 0.95rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .nav-links li a:hover {&#13;
+    color: #e0f7fa;&#13;
+}&#13;
+&#13;
+/* --- DROPDOWN MENU --- */&#13;
+/* --- FIXED DROPDOWN MENU --- */&#13;
+.cfms-widget .dropdown {&#13;
+    position: relative;&#13;
+    display: inline-block;&#13;
+}&#13;
+&#13;
+.cfms-widget .dropbtn {&#13;
+    background-color: rgba(255, 255, 255, 0.15);&#13;
+    color: white !important;&#13;
+    padding: 10px 25px;&#13;
+    border-radius: 6px;&#13;
+    font-weight: 600;&#13;
+    cursor: pointer;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 8px;&#13;
+    border: 1px solid rgba(255, 255, 255, 0.4);&#13;
+}&#13;
+&#13;
+.cfms-widget .dropbtn:hover {&#13;
+    background-color: var(--white);&#13;
+    color: var(--navbar-bg) !important;&#13;
+}&#13;
+&#13;
+/* Dropdown Content */&#13;
+.cfms-widget .dropdown-content {&#13;
+    display: none;&#13;
+    position: absolute;&#13;
+    right: 0;&#13;
+    top: 100%; /* Sits directly flush with button bottom */&#13;
+    background-color: rgba(38, 50, 56, 0.98); &#13;
+    min-width: 220px;&#13;
+    z-index: 1001;&#13;
+    border-radius: 8px;&#13;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);&#13;
+    overflow: hidden;&#13;
+    border: 1px solid rgba(255,255,255,0.1);&#13;
+}&#13;
+&#13;
+/* Invisible bridge so mouse hover is never lost */&#13;
+.cfms-widget .dropdown::before {&#13;
+    content: '';&#13;
+    position: absolute;&#13;
+    top: 100%;&#13;
+    left: 0;&#13;
+    right: 0;&#13;
+    height: 10px;&#13;
+    display: block;&#13;
+}&#13;
+&#13;
+.cfms-widget .dropdown-content a {&#13;
+    color: #e0f7fa;&#13;
+    padding: 14px 20px;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 12px;&#13;
+    font-size: 0.95rem;&#13;
+    font-weight: 500;&#13;
+    transition: background 0.2s, color 0.2s;&#13;
+    width: 100%;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.cfms-widget .dropdown-content a i {&#13;
+    color: #4dd0e1;&#13;
+    width: 20px;&#13;
+    text-align: center;&#13;
+    font-size: 1.1rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .dropdown-content a:hover {&#13;
+    background-color: rgba(255, 255, 255, 0.15);&#13;
+    color: #ffffff;&#13;
+}&#13;
+&#13;
+/* Hover trigger */&#13;
+.cfms-widget .dropdown:hover .dropdown-content,&#13;
+.cfms-widget .dropdown-content:hover {&#13;
+    display: block;&#13;
+}&#13;
+/* --- HERO SECTION --- */&#13;
+.cfms-widget .hero-section {&#13;
+    background-color: var(--hero-bg);&#13;
+    color: var(--dark-text);&#13;
+    padding: 5rem 10%;&#13;
+    display: flex;&#13;
+    justify-content: space-between;&#13;
+    align-items: center;&#13;
+    gap: 4rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .hero-content {&#13;
+    flex: 1;&#13;
+    max-width: 600px;&#13;
+}&#13;
+&#13;
+.cfms-widget .hero-title {&#13;
+    font-size: 3.5rem;&#13;
+    font-weight: 800;&#13;
+    line-height: 1.1;&#13;
+    margin-bottom: 1.5rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .hero-title span {&#13;
+    color: var(--white);&#13;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);&#13;
+}&#13;
+&#13;
+.cfms-widget .hero-subtitle {&#13;
+    font-size: 1.1rem;&#13;
+    color: #37474f;&#13;
+    margin-bottom: 2.5rem;&#13;
+    font-weight: 500;&#13;
+}&#13;
+&#13;
+.cfms-widget .cta-btn {&#13;
+    background-color: var(--dark-text);&#13;
+    color: var(--white);&#13;
+    padding: 15px 35px;&#13;
+    border-radius: 30px;&#13;
+    font-weight: 700;&#13;
+    font-size: 1rem;&#13;
+    display: inline-flex;&#13;
+    align-items: center;&#13;
+    gap: 10px;&#13;
+    box-shadow: 0 5px 15px rgba(38, 50, 56, 0.3);&#13;
+    transition: all 0.3s ease;&#13;
+}&#13;
+&#13;
+.cfms-widget .cta-btn:hover {&#13;
+    background-color: #000;&#13;
+    transform: translateY(-3px);&#13;
+    box-shadow: 0 8px 20px rgba(38, 50, 56, 0.4);&#13;
+}&#13;
+&#13;
+.cfms-widget .hero-app-info {&#13;
+    flex: 1;&#13;
+    background-color: rgba(255, 255, 255, 0.8);&#13;
+    padding: 2.5rem;&#13;
+    border-radius: 15px;&#13;
+    border-left: 6px solid var(--navbar-bg);&#13;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);&#13;
+}&#13;
+&#13;
+.cfms-widget .hero-app-info h3 {&#13;
+    font-size: 1.5rem;&#13;
+    margin-bottom: 1rem;&#13;
+    color: var(--dark-text);&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 10px;&#13;
+}&#13;
+&#13;
+.cfms-widget .hero-app-info h3 i {&#13;
+    color: var(--navbar-bg);&#13;
+}&#13;
+&#13;
+.cfms-widget .hero-app-info p {&#13;
+    font-size: 1rem;&#13;
+    color: #37474f;&#13;
+    margin-bottom: 1rem;&#13;
+    line-height: 1.6;&#13;
+}&#13;
+&#13;
+/* --- FEATURES CARDS ROW --- */&#13;
+.cfms-widget .features-row {&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(4, 1fr);&#13;
+    gap: 1.5rem;&#13;
+    padding: 4rem 10%;&#13;
+    background-color: var(--page-bg);&#13;
+    margin-top: -3rem;&#13;
+    position: relative;&#13;
+    z-index: 5;&#13;
+}&#13;
+&#13;
+.cfms-widget .feature-card {&#13;
+    background: white;&#13;
+    padding: 2rem;&#13;
+    border-radius: 12px;&#13;
+    box-shadow: var(--shadow);&#13;
+    text-align: center;&#13;
+    transition: transform 0.3s;&#13;
+    border-bottom: 3px solid transparent;&#13;
+}&#13;
+&#13;
+.cfms-widget .feature-card:hover {&#13;
+    transform: translateY(-5px);&#13;
+    border-bottom: 3px solid var(--navbar-bg);&#13;
+}&#13;
+&#13;
+.cfms-widget .feature-icon {&#13;
+    width: 60px;&#13;
+    height: 60px;&#13;
+    border-radius: 50%;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    margin: 0 auto 1.5rem;&#13;
+    font-size: 1.5rem;&#13;
+    color: white;&#13;
+}&#13;
+&#13;
+.cfms-widget .icon-teal { background-color: #4dd0e1; }&#13;
+.cfms-widget .icon-blue { background-color: #00acc1; }&#13;
+.cfms-widget .icon-yellow { background-color: #ffca28; }&#13;
+.cfms-widget .icon-red { background-color: #ef5350; }&#13;
+&#13;
+.cfms-widget .feature-card h4 {&#13;
+    font-size: 1.1rem;&#13;
+    margin-bottom: 0.8rem;&#13;
+    color: var(--dark-text);&#13;
+}&#13;
+&#13;
+.cfms-widget .feature-card p {&#13;
+    font-size: 0.85rem;&#13;
+    color: var(--light-text);&#13;
+}&#13;
+&#13;
+/* --- ABOUT SECTION --- */&#13;
+.cfms-widget .about-section {&#13;
+    padding: 4rem 10%;&#13;
+    background-color: var(--page-bg);&#13;
+    display: grid;&#13;
+    grid-template-columns: 1fr 1fr;&#13;
+    gap: 4rem;&#13;
+    align-items: center;&#13;
+}&#13;
+&#13;
+.cfms-widget .about-label {&#13;
+    color: var(--navbar-bg);&#13;
+    font-weight: 700;&#13;
+    text-transform: uppercase;&#13;
+    font-size: 0.85rem;&#13;
+    letter-spacing: 1px;&#13;
+    margin-bottom: 0.5rem;&#13;
+    display: block;&#13;
+}&#13;
+&#13;
+.cfms-widget .about-title {&#13;
+    font-size: 2.5rem;&#13;
+    color: var(--dark-text);&#13;
+    margin-bottom: 1.5rem;&#13;
+    line-height: 1.2;&#13;
+}&#13;
+&#13;
+.cfms-widget .about-text {&#13;
+    color: var(--light-text);&#13;
+    margin-bottom: 2rem;&#13;
+    font-size: 1rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .learn-more-btn {&#13;
+    border: 2px solid var(--navbar-bg);&#13;
+    color: var(--navbar-bg);&#13;
+    padding: 10px 25px;&#13;
+    border-radius: 6px;&#13;
+    font-weight: 600;&#13;
+    display: inline-block;&#13;
+}&#13;
+&#13;
+.cfms-widget .learn-more-btn:hover {&#13;
+    background-color: var(--navbar-bg);&#13;
+    color: white;&#13;
+}&#13;
+&#13;
+.cfms-widget .stats-grid {&#13;
+    display: grid;&#13;
+    grid-template-columns: 1fr 1fr;&#13;
+    gap: 2rem;&#13;
+    margin-bottom: 2rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .stat-item {&#13;
+    text-align: center;&#13;
+    background: white;&#13;
+    padding: 1.5rem;&#13;
+    border-radius: 12px;&#13;
+    box-shadow: var(--shadow);&#13;
+}&#13;
+&#13;
+.cfms-widget .stat-item i {&#13;
+    font-size: 1.8rem;&#13;
+    color: var(--navbar-bg);&#13;
+    margin-bottom: 0.5rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .stat-item h3 {&#13;
+    font-size: 1.2rem;&#13;
+    color: var(--dark-text);&#13;
+}&#13;
+&#13;
+.cfms-widget .stat-item p {&#13;
+    font-size: 0.8rem;&#13;
+    color: var(--light-text);&#13;
+}&#13;
+&#13;
+.cfms-widget .quote-box {&#13;
+    background-color: #e0f7fa;&#13;
+    padding: 2rem;&#13;
+    border-radius: 12px;&#13;
+    position: relative;&#13;
+    border-left: 5px solid var(--navbar-bg);&#13;
+}&#13;
+&#13;
+.cfms-widget .quote-box p {&#13;
+    font-style: italic;&#13;
+    color: #006064;&#13;
+    font-weight: 500;&#13;
+}&#13;
+&#13;
+.cfms-widget .quote-box span {&#13;
+    display: block;&#13;
+    margin-top: 1rem;&#13;
+    font-style: normal;&#13;
+    font-weight: 700;&#13;
+    font-size: 0.9rem;&#13;
+    color: var(--navbar-bg);&#13;
+}&#13;
+&#13;
+/* --- DASHBOARDS --- */&#13;
+.cfms-widget .dashboard-container {&#13;
+    padding: 4rem 10%;&#13;
+    background-color: var(--page-bg);&#13;
+    min-height: 80vh;&#13;
+    animation: slideUp 0.5s ease-out;&#13;
+}&#13;
+&#13;
+@keyframes slideUp {&#13;
+    from { opacity: 0; transform: translateY(20px); }&#13;
+    to { opacity: 1; transform: translateY(0); }&#13;
+}&#13;
+&#13;
+.cfms-widget .dashboard-header {&#13;
+    display: flex;&#13;
+    justify-content: space-between;&#13;
+    align-items: center;&#13;
+    margin-bottom: 2rem;&#13;
+    border-bottom: 2px solid #b2ebf2;&#13;
+    padding-bottom: 1rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .dashboard-header h2 {&#13;
+    color: var(--dark-text);&#13;
+    font-size: 2rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .back-btn {&#13;
+    background-color: var(--dark-text);&#13;
+    color: white;&#13;
+    padding: 10px 20px;&#13;
+    border-radius: 6px;&#13;
+    cursor: pointer;&#13;
+    font-weight: 600;&#13;
+    border: none;&#13;
+}&#13;
+&#13;
+.cfms-widget .back-btn:hover {&#13;
+    background-color: #000;&#13;
+}&#13;
+&#13;
+.cfms-widget .dash-grid {&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));&#13;
+    gap: 1.5rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .dash-card {&#13;
+    background: white;&#13;
+    padding: 2rem;&#13;
+    border-radius: 12px;&#13;
+    box-shadow: var(--shadow);&#13;
+    text-align: center;&#13;
+    border-top: 4px solid var(--navbar-bg);&#13;
+}&#13;
+&#13;
+.cfms-widget .dash-card i {&#13;
+    font-size: 2.5rem;&#13;
+    color: var(--navbar-bg);&#13;
+    margin-bottom: 1rem;&#13;
+}&#13;
+&#13;
+/* --- FOOTER --- */&#13;
+.cfms-widget footer.main-footer {&#13;
+    background-color: var(--dark-text);&#13;
+    color: white;&#13;
+    padding: 4rem 10% 2rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .footer-content {&#13;
+    display: flex;&#13;
+    flex-wrap: wrap;&#13;
+    justify-content: space-between;&#13;
+    gap: 3rem;&#13;
+    margin-bottom: 3rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .footer-col {&#13;
+    flex: 1;&#13;
+    min-width: 200px;&#13;
+}&#13;
+&#13;
+.cfms-widget .footer-col.col-wide {&#13;
+    flex: 2;&#13;
+}&#13;
+&#13;
+.cfms-widget .footer-col h3 {&#13;
+    color: white;&#13;
+    margin-bottom: 1.5rem;&#13;
+    font-size: 1.1rem;&#13;
+    position: relative;&#13;
+}&#13;
+&#13;
+.cfms-widget .footer-col h3::after {&#13;
+    content: '';&#13;
+    position: absolute;&#13;
+    left: 0;&#13;
+    bottom: -8px;&#13;
+    width: 30px;&#13;
+    height: 2px;&#13;
+    background-color: var(--hero-bg);&#13;
+}&#13;
+&#13;
+.cfms-widget .footer-logo {&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 10px;&#13;
+    font-size: 1.5rem;&#13;
+    font-weight: 700;&#13;
+    margin-bottom: 1rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .footer-col p {&#13;
+    color: #b0bec5;&#13;
+    font-size: 0.9rem;&#13;
+    margin-bottom: 1rem;&#13;
+    line-height: 1.5;&#13;
+}&#13;
+&#13;
+.cfms-widget .footer-col ul li {&#13;
+    margin-bottom: 0.8rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .footer-col ul li a {&#13;
+    color: #b0bec5;&#13;
+    font-size: 0.9rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .footer-col ul li a:hover {&#13;
+    color: var(--hero-bg);&#13;
+    padding-left: 5px;&#13;
+}&#13;
+&#13;
+.cfms-widget .social-links {&#13;
+    display: flex;&#13;
+    gap: 15px;&#13;
+    margin-top: 1rem;&#13;
+}&#13;
+&#13;
+.cfms-widget .social-links a {&#13;
+    width: 35px;&#13;
+    height: 35px;&#13;
+    background-color: rgba(255,255,255,0.1);&#13;
+    border-radius: 50%;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    color: white;&#13;
+    font-size: 1rem;&#13;
+    transition: 0.3s;&#13;
+}&#13;
+&#13;
+.cfms-widget .social-links a:hover {&#13;
+    background-color: var(--hero-bg);&#13;
+    color: var(--dark-text);&#13;
+    transform: translateY(-3px);&#13;
+}&#13;
+&#13;
+.cfms-widget .footer-bottom {&#13;
+    text-align: center;&#13;
+    padding-top: 2rem;&#13;
+    border-top: 1px solid rgba(255,255,255,0.1);&#13;
+    color: #78909c;&#13;
+    font-size: 0.85rem;&#13;
+}&#13;
+&#13;
+/* --- RESPONSIVENESS --- */&#13;
+@media (max-width: 1024px) {&#13;
+    .cfms-widget .features-row {&#13;
+        grid-template-columns: repeat(2, 1fr);&#13;
+    }&#13;
+    .cfms-widget .hero-section {&#13;
+        flex-direction: column;&#13;
+        text-align: center;&#13;
+        gap: 2rem;&#13;
+    }&#13;
+    .cfms-widget .hero-app-info {&#13;
+        text-align: left;&#13;
+    }&#13;
+}&#13;
+&#13;
+@media (max-width: 768px) {&#13;
+    .cfms-widget .hero-title {&#13;
+        font-size: 2.5rem;&#13;
+    }&#13;
+&#13;
+    .cfms-widget .features-row {&#13;
+        grid-template-columns: 1fr;&#13;
+        padding: 2rem 5%;&#13;
+        margin-top: 0;&#13;
+    }&#13;
+&#13;
+    .cfms-widget .about-section {&#13;
+        grid-template-columns: 1fr;&#13;
+        padding: 3rem 5%;&#13;
+    }&#13;
+&#13;
+    .cfms-widget .nav-links {&#13;
+        display: none; &#13;
+    }&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>cfms_landing</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>CFMS Landing Page</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+    /* Provide initial dashboard config object to client */
+    data.dashboards = {
+        student: {
+            title: "Student Dashboard",
+            cards: [
+                { icon: "fa-book", title: "Daily Menu", desc: "View today's specials at the Dining Hall." },
+                { icon: "fa-credit-card", title: "Meal Plan Balance", desc: "You have 12 meals left this week." },
+                { icon: "fa-history", title: "Order History", desc: "View your last 5 orders." },
+                { icon: "fa-star", title: "Rate Meal", desc: "Rate your last lunch experience." }
+            ]
+        },
+        staff: {
+            title: "Food Officer Dashboard",
+            cards: [
+                { icon: "fa-calendar-check-o", title: "Shift Schedule", desc: "Your next shift starts at 10:00 AM." },
+                { icon: "fa-list-alt", title: "Manage Complaints", desc: "3 pending student complaints." },
+                { icon: "fa-cutlery", title: "Menu Updates", desc: "Update today's lunch menu." },
+                { icon: "fa-bullhorn", title: "Announcements", desc: "Post a notice for students." }
+            ]
+        },
+        manager: {
+            title: "Manager Dashboard",
+            cards: [
+                { icon: "fa-line-chart", title: "Sales Analytics", desc: "Revenue is up 15% this week." },
+                { icon: "fa-users", title: "Staff Management", desc: "Approve leave requests." },
+                { icon: "fa-exclamation-triangle", title: "Escalated Issues", desc: "2 unresolved high-priority complaints." },
+                { icon: "fa-file-text-o", title: "Reports", desc: "Generate monthly waste report." }
+            ]
+        },
+        admin: {
+            title: "Admin Dashboard",
+            cards: [
+                { icon: "fa-cogs", title: "User Management", desc: "Manage Students, Staff, and Managers." },
+                { icon: "fa-server", title: "System Status", desc: "All servers operational." },
+                { icon: "fa-sliders", title: "App Settings", desc: "Configure global app parameters." },
+                { icon: "fa-pie-chart", title: "View Reports", desc: "View overall system usage statistics." }
+            ]
+        }
+    };
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 09:26:30</sys_created_on>
+        <sys_id>f3863341a0ab03107f4432329b8a15d1</sys_id>
+        <sys_mod_count>11</sys_mod_count>
+        <sys_name>CFMS Landing Page</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_f3863341a0ab03107f4432329b8a15d1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:42:48</sys_updated_on>
+        <template><![CDATA[<div class="cfms-widget">
+    <!-- NAVIGATION BAR -->
+    <nav class="main-nav">
+        <div class="nav-logo-container">
+            <div class="nav-app-logo">
+                <i class="fa fa-cutlery"></i>
+            </div>
+            <span>CFMS</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="javascript:void(0)" ng-click="c.showLanding()">Home</a></li>
+            <li><a href="#about" ng-click="c.scrollTo('about')">About</a></li>
+            <li><a href="#features" ng-click="c.scrollTo('features')">Features</a></li>
+            <li><a href="#contact" ng-click="c.scrollTo('contact')">Help</a></li>
+            
+            <!-- LOGIN DROPDOWN -->
+            <li class="dropdown" ng-class="{'open': c.showDropdown}">
+    <a href="javascript:void(0)" class="dropbtn" ng-click="c.toggleDropdown($event)">
+        <i class="fa fa-sign-in"></i> Login
+    </a>
+    <div class="dropdown-content" ng-show="c.showDropdown">
+        <a href="javascript:void(0)" ng-click="c.openDashboard('student')">
+            <i class="fa fa-graduation-cap"></i> Student Login
+        </a>
+        <a href="javascript:void(0)" ng-click="c.openDashboard('staff')">
+            <i class="fa fa-user"></i> Staff Login
+        </a>
+        <a href="javascript:void(0)" ng-click="c.openDashboard('manager')">
+            <i class="fa fa-briefcase"></i> Manager Login
+        </a>
+        <a href="javascript:void(0)" ng-click="c.openDashboard('admin')">
+            <i class="fa fa-shield"></i> Admin Login
+        </a>
+    </div>
+</li>
+        </ul>
+    </nav>
+
+    <!-- LANDING PAGE CONTENT -->
+    <div id="landing-page" ng-show="!c.activeDashboard">
+        
+        <!-- HERO SECTION -->
+        <header class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Good Food<br><span>Better Campus</span></h1>
+                <p class="hero-subtitle">Report food issues, check menus, and help us serve you better. Together for a healthier, happier campus.</p>
+                <a href="javascript:void(0)" ng-click="c.scrollTo('features')" class="cta-btn">Get Started <i class="fa fa-arrow-right"></i></a>
+            </div>
+
+            <!-- APP INFO -->
+            <div class="hero-app-info">
+                <h3><i class="fa fa-mobile"></i> About Our App</h3>
+                <p>The Campus Food Management System (CFMS) is your all-in-one digital companion for campus dining.</p>
+                <p>Whether you are a student looking to check the daily menu, or a staff member managing complaints, our app bridges the gap between the kitchen and the campus community.</p>
+                <p><strong>Features:</strong> Real-time menu updates, instant complaint tracking, hygiene reporting, and direct communication with food officers.</p>
+            </div>
+        </header>
+
+        <!-- FEATURES ROW -->
+        <section id="features" class="features-row">
+            <div class="feature-card">
+                <div class="feature-icon icon-teal"><i class="fa fa-file-text-o"></i></div>
+                <h4>Report a Complaint</h4>
+                <p>Facing food quality or hygiene issues? Let us know.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon icon-blue"><i class="fa fa-cutlery"></i></div>
+                <h4>View Mess Menu</h4>
+                <p>Check daily menu and meal information.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon icon-yellow"><i class="fa fa-search"></i></div>
+                <h4>Track Your Complaint</h4>
+                <p>Stay updated on the status of your complaints.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon icon-red"><i class="fa fa-line-chart"></i></div>
+                <h4>Improve Together</h4>
+                <p>Your feedback helps us serve better food for a healthier campus.</p>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="about-section">
+            <div class="about-left">
+                <span class="about-label">About CFMS</span>
+                <h2 class="about-title">A Better Food Experience<br>for a Better Tomorrow</h2>
+                <p class="about-text">
+                    The Campus Food Management System (CFMS) is a digital platform designed to bridge the gap between students and food service teams. It enables transparent communication, quick issue resolution, and continuous improvement in campus food services.
+                </p>
+                <a href="javascript:void(0)" class="learn-more-btn">Learn More &rarr;</a>
+            </div>
+            
+            <div class="about-right">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <i class="fa fa-users"></i>
+                        <h3>1000+</h3>
+                        <p>Students Served</p>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fa fa-cutlery"></i>
+                        <h3>Daily</h3>
+                        <p>Menu Updates</p>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fa fa-bolt"></i>
+                        <h3>Quick</h3>
+                        <p>Issue Resolution</p>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fa fa-heartbeat"></i>
+                        <h3>Healthier</h3>
+                        <p>Campus Community</p>
+                    </div>
+                </div>
+
+                <div class="quote-box">
+                    <p>"Food is not just fuel, it's the foundation of a brighter future."</p>
+                    <span>~ CFMS Team</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- DASHBOARD VIEW -->
+    <div id="dashboard-view" class="dashboard-container" ng-show="c.activeDashboard">
+        <div class="dashboard-header">
+            <h2>{{c.currentDashboard.title}}</h2>
+            <button class="back-btn" ng-click="c.showLanding()">Logout / Back</button>
+        </div>
+        
+        <div class="dash-grid">
+            <div class="dash-card" ng-repeat="card in c.currentDashboard.cards">
+                <i class="fa {{card.icon}}"></i>
+                <h3>{{card.title}}</h3>
+                <p>{{card.desc}}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="main-footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-col col-wide">
+                <div class="footer-logo">
+                    <i class="fa fa-cutlery"></i> CFMS
+                </div>
+                <p>Campus Food Management System</p>
+                <p>Revolutionizing campus dining one meal at a time. Eat smart, eat healthy, eat fast.</p>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="javascript:void(0)" ng-click="c.showLanding()">Home</a></li>
+                    <li><a href="#about" ng-click="c.scrollTo('about')">About</a></li>
+                    <li><a href="#features" ng-click="c.scrollTo('features')">Features</a></li>
+                    <li><a href="#contact" ng-click="c.scrollTo('contact')">Help</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="mailto:cfms-support@campus.edu"><i class="fa fa-envelope"></i> cfms-support@campus.edu</a></li>
+                    <li><a href="tel:+9118001234567"><i class="fa fa-phone"></i> +91 1800 123 4567</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="javascript:void(0)" title="Website"><i class="fa fa-globe"></i></a>
+                    <a href="javascript:void(0)" title="LinkedIn"><i class="fa fa-linkedin"></i></a>
+                    <a href="javascript:void(0)" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    <a href="javascript:void(0)" title="Instagram"><i class="fa fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 CFMS. All rights reserved.</p>
+        </div>
+    </footer>
+</div>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>sp_widget_f3863341a0ab03107f4432329b8a15d1</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller = function($window, $location, $anchorScroll, $document, $scope) {
+    var c = this;
+    
+    c.showDropdown = false;
+
+    c.toggleDropdown = function($event) {
+        $event.stopPropagation();
+        c.showDropdown = !c.showDropdown;
+    };
+
+    // Close menu when clicking anywhere outside
+    $document.on('click', function() {
+        if (c.showDropdown) {
+            c.showDropdown = false;
+            $scope.$apply();
+        }
+    });
+
+    c.openDashboard = function(role) {
+        c.showDropdown = false;
+        if (c.data.dashboards &amp;&amp; c.data.dashboards[role]) {
+            c.activeDashboard = role;
+            c.currentDashboard = c.data.dashboards[role];
+            $window.scrollTo(0, 0);
+        }
+    };
+
+    c.showLanding = function() {
+        c.activeDashboard = null;
+        c.currentDashboard = null;
+        $window.scrollTo(0, 0);
+    };
+
+    c.scrollTo = function(id) {
+        $location.hash(id);
+        $anchorScroll();
+    };
+};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;.cfms-widget {&amp;#13;
+    --navbar-bg: #00695c;&amp;#13;
+    --hero-bg: #b2ebf2;&amp;#13;
+    --page-bg: #f0fbfc;&amp;#13;
+    --dark-text: #263238;&amp;#13;
+    --light-text: #546e7a;&amp;#13;
+    --white: #ffffff;&amp;#13;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);&amp;#13;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;&amp;#13;
+&amp;#13;
+    font-family: var(--font-family);&amp;#13;
+    background-color: var(--page-bg);&amp;#13;
+    color: var(--dark-text);&amp;#13;
+    line-height: 1.6;&amp;#13;
+    overflow-x: hidden;&amp;#13;
+    margin: -15px; /* Offset default Service Portal page padding */&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget a {&amp;#13;
+    text-decoration: none;&amp;#13;
+    color: inherit;&amp;#13;
+    transition: 0.3s;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget ul {&amp;#13;
+    list-style: none;&amp;#13;
+    margin: 0;&amp;#13;
+    padding: 0;&amp;#13;
+}&amp;#13;
+&amp;#13;
+/* --- NAVIGATION BAR --- */&amp;#13;
+.cfms-widget nav.main-nav {&amp;#13;
+    background-color: var(--navbar-bg);&amp;#13;
+    display: flex;&amp;#13;
+    justify-content: space-between;&amp;#13;
+    align-items: center;&amp;#13;
+    padding: 0 5%;&amp;#13;
+    height: 80px;&amp;#13;
+    position: sticky;&amp;#13;
+    top: 0;&amp;#13;
+    z-index: 1000;&amp;#13;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .nav-logo-container {&amp;#13;
+    display: flex;&amp;#13;
+    align-items: center;&amp;#13;
+    gap: 10px;&amp;#13;
+    font-weight: 800;&amp;#13;
+    font-size: 1.5rem;&amp;#13;
+    color: var(--white);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .nav-app-logo {&amp;#13;
+    width: 40px;&amp;#13;
+    height: 40px;&amp;#13;
+    background-color: var(--white);&amp;#13;
+    border-radius: 8px;&amp;#13;
+    display: flex;&amp;#13;
+    align-items: center;&amp;#13;
+    justify-content: center;&amp;#13;
+    color: var(--navbar-bg);&amp;#13;
+    font-size: 1.2rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .nav-links {&amp;#13;
+    display: flex;&amp;#13;
+    align-items: center;&amp;#13;
+    gap: 2rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .nav-links li a {&amp;#13;
+    font-weight: 600;&amp;#13;
+    color: var(--white);&amp;#13;
+    position: relative;&amp;#13;
+    font-size: 0.95rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .nav-links li a:hover {&amp;#13;
+    color: #e0f7fa;&amp;#13;
+}&amp;#13;
+&amp;#13;
+/* --- DROPDOWN MENU --- */&amp;#13;
+/* --- FIXED DROPDOWN MENU --- */&amp;#13;
+.cfms-widget .dropdown {&amp;#13;
+    position: relative;&amp;#13;
+    display: inline-block;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .dropbtn {&amp;#13;
+    background-color: rgba(255, 255, 255, 0.15);&amp;#13;
+    color: white !important;&amp;#13;
+    padding: 10px 25px;&amp;#13;
+    border-radius: 6px;&amp;#13;
+    font-weight: 600;&amp;#13;
+    cursor: pointer;&amp;#13;
+    display: flex;&amp;#13;
+    align-items: center;&amp;#13;
+    gap: 8px;&amp;#13;
+    border: 1px solid rgba(255, 255, 255, 0.4);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .dropbtn:hover {&amp;#13;
+    background-color: var(--white);&amp;#13;
+    color: var(--navbar-bg) !important;&amp;#13;
+}&amp;#13;
+&amp;#13;
+/* Dropdown Content */&amp;#13;
+.cfms-widget .dropdown-content {&amp;#13;
+    display: none;&amp;#13;
+    position: absolute;&amp;#13;
+    right: 0;&amp;#13;
+    top: 100%; /* Sits directly flush with button bottom */&amp;#13;
+    background-color: rgba(38, 50, 56, 0.98); &amp;#13;
+    min-width: 220px;&amp;#13;
+    z-index: 1001;&amp;#13;
+    border-radius: 8px;&amp;#13;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);&amp;#13;
+    overflow: hidden;&amp;#13;
+    border: 1px solid rgba(255,255,255,0.1);&amp;#13;
+}&amp;#13;
+&amp;#13;
+/* Invisible bridge so mouse hover is never lost */&amp;#13;
+.cfms-widget .dropdown::before {&amp;#13;
+    content: '';&amp;#13;
+    position: absolute;&amp;#13;
+    top: 100%;&amp;#13;
+    left: 0;&amp;#13;
+    right: 0;&amp;#13;
+    height: 10px;&amp;#13;
+    display: block;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .dropdown-content a {&amp;#13;
+    color: #e0f7fa;&amp;#13;
+    padding: 14px 20px;&amp;#13;
+    display: flex;&amp;#13;
+    align-items: center;&amp;#13;
+    gap: 12px;&amp;#13;
+    font-size: 0.95rem;&amp;#13;
+    font-weight: 500;&amp;#13;
+    transition: background 0.2s, color 0.2s;&amp;#13;
+    width: 100%;&amp;#13;
+    box-sizing: border-box;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .dropdown-content a i {&amp;#13;
+    color: #4dd0e1;&amp;#13;
+    width: 20px;&amp;#13;
+    text-align: center;&amp;#13;
+    font-size: 1.1rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .dropdown-content a:hover {&amp;#13;
+    background-color: rgba(255, 255, 255, 0.15);&amp;#13;
+    color: #ffffff;&amp;#13;
+}&amp;#13;
+&amp;#13;
+/* Hover trigger */&amp;#13;
+.cfms-widget .dropdown:hover .dropdown-content,&amp;#13;
+.cfms-widget .dropdown-content:hover {&amp;#13;
+    display: block;&amp;#13;
+}&amp;#13;
+/* --- HERO SECTION --- */&amp;#13;
+.cfms-widget .hero-section {&amp;#13;
+    background-color: var(--hero-bg);&amp;#13;
+    color: var(--dark-text);&amp;#13;
+    padding: 5rem 10%;&amp;#13;
+    display: flex;&amp;#13;
+    justify-content: space-between;&amp;#13;
+    align-items: center;&amp;#13;
+    gap: 4rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .hero-content {&amp;#13;
+    flex: 1;&amp;#13;
+    max-width: 600px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .hero-title {&amp;#13;
+    font-size: 3.5rem;&amp;#13;
+    font-weight: 800;&amp;#13;
+    line-height: 1.1;&amp;#13;
+    margin-bottom: 1.5rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .hero-title span {&amp;#13;
+    color: var(--white);&amp;#13;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .hero-subtitle {&amp;#13;
+    font-size: 1.1rem;&amp;#13;
+    color: #37474f;&amp;#13;
+    margin-bottom: 2.5rem;&amp;#13;
+    font-weight: 500;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .cta-btn {&amp;#13;
+    background-color: var(--dark-text);&amp;#13;
+    color: var(--white);&amp;#13;
+    padding: 15px 35px;&amp;#13;
+    border-radius: 30px;&amp;#13;
+    font-weight: 700;&amp;#13;
+    font-size: 1rem;&amp;#13;
+    display: inline-flex;&amp;#13;
+    align-items: center;&amp;#13;
+    gap: 10px;&amp;#13;
+    box-shadow: 0 5px 15px rgba(38, 50, 56, 0.3);&amp;#13;
+    transition: all 0.3s ease;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .cta-btn:hover {&amp;#13;
+    background-color: #000;&amp;#13;
+    transform: translateY(-3px);&amp;#13;
+    box-shadow: 0 8px 20px rgba(38, 50, 56, 0.4);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .hero-app-info {&amp;#13;
+    flex: 1;&amp;#13;
+    background-color: rgba(255, 255, 255, 0.8);&amp;#13;
+    padding: 2.5rem;&amp;#13;
+    border-radius: 15px;&amp;#13;
+    border-left: 6px solid var(--navbar-bg);&amp;#13;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .hero-app-info h3 {&amp;#13;
+    font-size: 1.5rem;&amp;#13;
+    margin-bottom: 1rem;&amp;#13;
+    color: var(--dark-text);&amp;#13;
+    display: flex;&amp;#13;
+    align-items: center;&amp;#13;
+    gap: 10px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .hero-app-info h3 i {&amp;#13;
+    color: var(--navbar-bg);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .hero-app-info p {&amp;#13;
+    font-size: 1rem;&amp;#13;
+    color: #37474f;&amp;#13;
+    margin-bottom: 1rem;&amp;#13;
+    line-height: 1.6;&amp;#13;
+}&amp;#13;
+&amp;#13;
+/* --- FEATURES CARDS ROW --- */&amp;#13;
+.cfms-widget .features-row {&amp;#13;
+    display: grid;&amp;#13;
+    grid-template-columns: repeat(4, 1fr);&amp;#13;
+    gap: 1.5rem;&amp;#13;
+    padding: 4rem 10%;&amp;#13;
+    background-color: var(--page-bg);&amp;#13;
+    margin-top: -3rem;&amp;#13;
+    position: relative;&amp;#13;
+    z-index: 5;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .feature-card {&amp;#13;
+    background: white;&amp;#13;
+    padding: 2rem;&amp;#13;
+    border-radius: 12px;&amp;#13;
+    box-shadow: var(--shadow);&amp;#13;
+    text-align: center;&amp;#13;
+    transition: transform 0.3s;&amp;#13;
+    border-bottom: 3px solid transparent;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .feature-card:hover {&amp;#13;
+    transform: translateY(-5px);&amp;#13;
+    border-bottom: 3px solid var(--navbar-bg);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .feature-icon {&amp;#13;
+    width: 60px;&amp;#13;
+    height: 60px;&amp;#13;
+    border-radius: 50%;&amp;#13;
+    display: flex;&amp;#13;
+    align-items: center;&amp;#13;
+    justify-content: center;&amp;#13;
+    margin: 0 auto 1.5rem;&amp;#13;
+    font-size: 1.5rem;&amp;#13;
+    color: white;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .icon-teal { background-color: #4dd0e1; }&amp;#13;
+.cfms-widget .icon-blue { background-color: #00acc1; }&amp;#13;
+.cfms-widget .icon-yellow { background-color: #ffca28; }&amp;#13;
+.cfms-widget .icon-red { background-color: #ef5350; }&amp;#13;
+&amp;#13;
+.cfms-widget .feature-card h4 {&amp;#13;
+    font-size: 1.1rem;&amp;#13;
+    margin-bottom: 0.8rem;&amp;#13;
+    color: var(--dark-text);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .feature-card p {&amp;#13;
+    font-size: 0.85rem;&amp;#13;
+    color: var(--light-text);&amp;#13;
+}&amp;#13;
+&amp;#13;
+/* --- ABOUT SECTION --- */&amp;#13;
+.cfms-widget .about-section {&amp;#13;
+    padding: 4rem 10%;&amp;#13;
+    background-color: var(--page-bg);&amp;#13;
+    display: grid;&amp;#13;
+    grid-template-columns: 1fr 1fr;&amp;#13;
+    gap: 4rem;&amp;#13;
+    align-items: center;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .about-label {&amp;#13;
+    color: var(--navbar-bg);&amp;#13;
+    font-weight: 700;&amp;#13;
+    text-transform: uppercase;&amp;#13;
+    font-size: 0.85rem;&amp;#13;
+    letter-spacing: 1px;&amp;#13;
+    margin-bottom: 0.5rem;&amp;#13;
+    display: block;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .about-title {&amp;#13;
+    font-size: 2.5rem;&amp;#13;
+    color: var(--dark-text);&amp;#13;
+    margin-bottom: 1.5rem;&amp;#13;
+    line-height: 1.2;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .about-text {&amp;#13;
+    color: var(--light-text);&amp;#13;
+    margin-bottom: 2rem;&amp;#13;
+    font-size: 1rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .learn-more-btn {&amp;#13;
+    border: 2px solid var(--navbar-bg);&amp;#13;
+    color: var(--navbar-bg);&amp;#13;
+    padding: 10px 25px;&amp;#13;
+    border-radius: 6px;&amp;#13;
+    font-weight: 600;&amp;#13;
+    display: inline-block;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .learn-more-btn:hover {&amp;#13;
+    background-color: var(--navbar-bg);&amp;#13;
+    color: white;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .stats-grid {&amp;#13;
+    display: grid;&amp;#13;
+    grid-template-columns: 1fr 1fr;&amp;#13;
+    gap: 2rem;&amp;#13;
+    margin-bottom: 2rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .stat-item {&amp;#13;
+    text-align: center;&amp;#13;
+    background: white;&amp;#13;
+    padding: 1.5rem;&amp;#13;
+    border-radius: 12px;&amp;#13;
+    box-shadow: var(--shadow);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .stat-item i {&amp;#13;
+    font-size: 1.8rem;&amp;#13;
+    color: var(--navbar-bg);&amp;#13;
+    margin-bottom: 0.5rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .stat-item h3 {&amp;#13;
+    font-size: 1.2rem;&amp;#13;
+    color: var(--dark-text);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .stat-item p {&amp;#13;
+    font-size: 0.8rem;&amp;#13;
+    color: var(--light-text);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .quote-box {&amp;#13;
+    background-color: #e0f7fa;&amp;#13;
+    padding: 2rem;&amp;#13;
+    border-radius: 12px;&amp;#13;
+    position: relative;&amp;#13;
+    border-left: 5px solid var(--navbar-bg);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .quote-box p {&amp;#13;
+    font-style: italic;&amp;#13;
+    color: #006064;&amp;#13;
+    font-weight: 500;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .quote-box span {&amp;#13;
+    display: block;&amp;#13;
+    margin-top: 1rem;&amp;#13;
+    font-style: normal;&amp;#13;
+    font-weight: 700;&amp;#13;
+    font-size: 0.9rem;&amp;#13;
+    color: var(--navbar-bg);&amp;#13;
+}&amp;#13;
+&amp;#13;
+/* --- DASHBOARDS --- */&amp;#13;
+.cfms-widget .dashboard-container {&amp;#13;
+    padding: 4rem 10%;&amp;#13;
+    background-color: var(--page-bg);&amp;#13;
+    min-height: 80vh;&amp;#13;
+    animation: slideUp 0.5s ease-out;&amp;#13;
+}&amp;#13;
+&amp;#13;
+@keyframes slideUp {&amp;#13;
+    from { opacity: 0; transform: translateY(20px); }&amp;#13;
+    to { opacity: 1; transform: translateY(0); }&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .dashboard-header {&amp;#13;
+    display: flex;&amp;#13;
+    justify-content: space-between;&amp;#13;
+    align-items: center;&amp;#13;
+    margin-bottom: 2rem;&amp;#13;
+    border-bottom: 2px solid #b2ebf2;&amp;#13;
+    padding-bottom: 1rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .dashboard-header h2 {&amp;#13;
+    color: var(--dark-text);&amp;#13;
+    font-size: 2rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .back-btn {&amp;#13;
+    background-color: var(--dark-text);&amp;#13;
+    color: white;&amp;#13;
+    padding: 10px 20px;&amp;#13;
+    border-radius: 6px;&amp;#13;
+    cursor: pointer;&amp;#13;
+    font-weight: 600;&amp;#13;
+    border: none;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .back-btn:hover {&amp;#13;
+    background-color: #000;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .dash-grid {&amp;#13;
+    display: grid;&amp;#13;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));&amp;#13;
+    gap: 1.5rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .dash-card {&amp;#13;
+    background: white;&amp;#13;
+    padding: 2rem;&amp;#13;
+    border-radius: 12px;&amp;#13;
+    box-shadow: var(--shadow);&amp;#13;
+    text-align: center;&amp;#13;
+    border-top: 4px solid var(--navbar-bg);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .dash-card i {&amp;#13;
+    font-size: 2.5rem;&amp;#13;
+    color: var(--navbar-bg);&amp;#13;
+    margin-bottom: 1rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+/* --- FOOTER --- */&amp;#13;
+.cfms-widget footer.main-footer {&amp;#13;
+    background-color: var(--dark-text);&amp;#13;
+    color: white;&amp;#13;
+    padding: 4rem 10% 2rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .footer-content {&amp;#13;
+    display: flex;&amp;#13;
+    flex-wrap: wrap;&amp;#13;
+    justify-content: space-between;&amp;#13;
+    gap: 3rem;&amp;#13;
+    margin-bottom: 3rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .footer-col {&amp;#13;
+    flex: 1;&amp;#13;
+    min-width: 200px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .footer-col.col-wide {&amp;#13;
+    flex: 2;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .footer-col h3 {&amp;#13;
+    color: white;&amp;#13;
+    margin-bottom: 1.5rem;&amp;#13;
+    font-size: 1.1rem;&amp;#13;
+    position: relative;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .footer-col h3::after {&amp;#13;
+    content: '';&amp;#13;
+    position: absolute;&amp;#13;
+    left: 0;&amp;#13;
+    bottom: -8px;&amp;#13;
+    width: 30px;&amp;#13;
+    height: 2px;&amp;#13;
+    background-color: var(--hero-bg);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .footer-logo {&amp;#13;
+    display: flex;&amp;#13;
+    align-items: center;&amp;#13;
+    gap: 10px;&amp;#13;
+    font-size: 1.5rem;&amp;#13;
+    font-weight: 700;&amp;#13;
+    margin-bottom: 1rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .footer-col p {&amp;#13;
+    color: #b0bec5;&amp;#13;
+    font-size: 0.9rem;&amp;#13;
+    margin-bottom: 1rem;&amp;#13;
+    line-height: 1.5;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .footer-col ul li {&amp;#13;
+    margin-bottom: 0.8rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .footer-col ul li a {&amp;#13;
+    color: #b0bec5;&amp;#13;
+    font-size: 0.9rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .footer-col ul li a:hover {&amp;#13;
+    color: var(--hero-bg);&amp;#13;
+    padding-left: 5px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .social-links {&amp;#13;
+    display: flex;&amp;#13;
+    gap: 15px;&amp;#13;
+    margin-top: 1rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .social-links a {&amp;#13;
+    width: 35px;&amp;#13;
+    height: 35px;&amp;#13;
+    background-color: rgba(255,255,255,0.1);&amp;#13;
+    border-radius: 50%;&amp;#13;
+    display: flex;&amp;#13;
+    align-items: center;&amp;#13;
+    justify-content: center;&amp;#13;
+    color: white;&amp;#13;
+    font-size: 1rem;&amp;#13;
+    transition: 0.3s;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .social-links a:hover {&amp;#13;
+    background-color: var(--hero-bg);&amp;#13;
+    color: var(--dark-text);&amp;#13;
+    transform: translateY(-3px);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cfms-widget .footer-bottom {&amp;#13;
+    text-align: center;&amp;#13;
+    padding-top: 2rem;&amp;#13;
+    border-top: 1px solid rgba(255,255,255,0.1);&amp;#13;
+    color: #78909c;&amp;#13;
+    font-size: 0.85rem;&amp;#13;
+}&amp;#13;
+&amp;#13;
+/* --- RESPONSIVENESS --- */&amp;#13;
+@media (max-width: 1024px) {&amp;#13;
+    .cfms-widget .features-row {&amp;#13;
+        grid-template-columns: repeat(2, 1fr);&amp;#13;
+    }&amp;#13;
+    .cfms-widget .hero-section {&amp;#13;
+        flex-direction: column;&amp;#13;
+        text-align: center;&amp;#13;
+        gap: 2rem;&amp;#13;
+    }&amp;#13;
+    .cfms-widget .hero-app-info {&amp;#13;
+        text-align: left;&amp;#13;
+    }&amp;#13;
+}&amp;#13;
+&amp;#13;
+@media (max-width: 768px) {&amp;#13;
+    .cfms-widget .hero-title {&amp;#13;
+        font-size: 2.5rem;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .cfms-widget .features-row {&amp;#13;
+        grid-template-columns: 1fr;&amp;#13;
+        padding: 2rem 5%;&amp;#13;
+        margin-top: 0;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .cfms-widget .about-section {&amp;#13;
+        grid-template-columns: 1fr;&amp;#13;
+        padding: 3rem 5%;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .cfms-widget .nav-links {&amp;#13;
+        display: none; &amp;#13;
+    }&amp;#13;
+}&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;cfms_landing&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]&gt;&lt;/link&gt;&lt;name&gt;CFMS Landing Page&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;false&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+    /* Provide initial dashboard config object to client */
+    data.dashboards = {
+        student: {
+            title: "Student Dashboard",
+            cards: [
+                { icon: "fa-book", title: "Daily Menu", desc: "View today's specials at the Dining Hall." },
+                { icon: "fa-credit-card", title: "Meal Plan Balance", desc: "You have 12 meals left this week." },
+                { icon: "fa-history", title: "Order History", desc: "View your last 5 orders." },
+                { icon: "fa-star", title: "Rate Meal", desc: "Rate your last lunch experience." }
+            ]
+        },
+        staff: {
+            title: "Food Officer Dashboard",
+            cards: [
+                { icon: "fa-calendar-check-o", title: "Shift Schedule", desc: "Your next shift starts at 10:00 AM." },
+                { icon: "fa-list-alt", title: "Manage Complaints", desc: "3 pending student complaints." },
+                { icon: "fa-cutlery", title: "Menu Updates", desc: "Update today's lunch menu." },
+                { icon: "fa-bullhorn", title: "Announcements", desc: "Post a notice for students." }
+            ]
+        },
+        manager: {
+            title: "Manager Dashboard",
+            cards: [
+                { icon: "fa-line-chart", title: "Sales Analytics", desc: "Revenue is up 15% this week." },
+                { icon: "fa-users", title: "Staff Management", desc: "Approve leave requests." },
+                { icon: "fa-exclamation-triangle", title: "Escalated Issues", desc: "2 unresolved high-priority complaints." },
+                { icon: "fa-file-text-o", title: "Reports", desc: "Generate monthly waste report." }
+            ]
+        },
+        admin: {
+            title: "Admin Dashboard",
+            cards: [
+                { icon: "fa-cogs", title: "User Management", desc: "Manage Students, Staff, and Managers." },
+                { icon: "fa-server", title: "System Status", desc: "All servers operational." },
+                { icon: "fa-sliders", title: "App Settings", desc: "Configure global app parameters." },
+                { icon: "fa-pie-chart", title: "View Reports", desc: "View overall system usage statistics." }
+            ]
+        }
+    };
+})();]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-09-24 09:26:30&lt;/sys_created_on&gt;&lt;sys_id&gt;f3863341a0ab03107f4432329b8a15d1&lt;/sys_id&gt;&lt;sys_mod_count&gt;11&lt;/sys_mod_count&gt;&lt;sys_name&gt;CFMS Landing Page&lt;/sys_name&gt;&lt;sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Campus Food Services Assistant"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_f3863341a0ab03107f4432329b8a15d1&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-09-24 16:42:48&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div class="cfms-widget"&gt;
+    &lt;!-- NAVIGATION BAR --&gt;
+    &lt;nav class="main-nav"&gt;
+        &lt;div class="nav-logo-container"&gt;
+            &lt;div class="nav-app-logo"&gt;
+                &lt;i class="fa fa-cutlery"&gt;&lt;/i&gt;
+            &lt;/div&gt;
+            &lt;span&gt;CFMS&lt;/span&gt;
+        &lt;/div&gt;
+
+        &lt;ul class="nav-links"&gt;
+            &lt;li&gt;&lt;a href="javascript:void(0)" ng-click="c.showLanding()"&gt;Home&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#about" ng-click="c.scrollTo('about')"&gt;About&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#features" ng-click="c.scrollTo('features')"&gt;Features&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#contact" ng-click="c.scrollTo('contact')"&gt;Help&lt;/a&gt;&lt;/li&gt;
+            
+            &lt;!-- LOGIN DROPDOWN --&gt;
+            &lt;li class="dropdown" ng-class="{'open': c.showDropdown}"&gt;
+    &lt;a href="javascript:void(0)" class="dropbtn" ng-click="c.toggleDropdown($event)"&gt;
+        &lt;i class="fa fa-sign-in"&gt;&lt;/i&gt; Login
+    &lt;/a&gt;
+    &lt;div class="dropdown-content" ng-show="c.showDropdown"&gt;
+        &lt;a href="javascript:void(0)" ng-click="c.openDashboard('student')"&gt;
+            &lt;i class="fa fa-graduation-cap"&gt;&lt;/i&gt; Student Login
+        &lt;/a&gt;
+        &lt;a href="javascript:void(0)" ng-click="c.openDashboard('staff')"&gt;
+            &lt;i class="fa fa-user"&gt;&lt;/i&gt; Staff Login
+        &lt;/a&gt;
+        &lt;a href="javascript:void(0)" ng-click="c.openDashboard('manager')"&gt;
+            &lt;i class="fa fa-briefcase"&gt;&lt;/i&gt; Manager Login
+        &lt;/a&gt;
+        &lt;a href="javascript:void(0)" ng-click="c.openDashboard('admin')"&gt;
+            &lt;i class="fa fa-shield"&gt;&lt;/i&gt; Admin Login
+        &lt;/a&gt;
+    &lt;/div&gt;
+&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/nav&gt;
+
+    &lt;!-- LANDING PAGE CONTENT --&gt;
+    &lt;div id="landing-page" ng-show="!c.activeDashboard"&gt;
+        
+        &lt;!-- HERO SECTION --&gt;
+        &lt;header class="hero-section"&gt;
+            &lt;div class="hero-content"&gt;
+                &lt;h1 class="hero-title"&gt;Good Food&lt;br&gt;&lt;span&gt;Better Campus&lt;/span&gt;&lt;/h1&gt;
+                &lt;p class="hero-subtitle"&gt;Report food issues, check menus, and help us serve you better. Together for a healthier, happier campus.&lt;/p&gt;
+                &lt;a href="javascript:void(0)" ng-click="c.scrollTo('features')" class="cta-btn"&gt;Get Started &lt;i class="fa fa-arrow-right"&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;/div&gt;
+
+            &lt;!-- APP INFO --&gt;
+            &lt;div class="hero-app-info"&gt;
+                &lt;h3&gt;&lt;i class="fa fa-mobile"&gt;&lt;/i&gt; About Our App&lt;/h3&gt;
+                &lt;p&gt;The Campus Food Management System (CFMS) is your all-in-one digital companion for campus dining.&lt;/p&gt;
+                &lt;p&gt;Whether you are a student looking to check the daily menu, or a staff member managing complaints, our app bridges the gap between the kitchen and the campus community.&lt;/p&gt;
+                &lt;p&gt;&lt;strong&gt;Features:&lt;/strong&gt; Real-time menu updates, instant complaint tracking, hygiene reporting, and direct communication with food officers.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/header&gt;
+
+        &lt;!-- FEATURES ROW --&gt;
+        &lt;section id="features" class="features-row"&gt;
+            &lt;div class="feature-card"&gt;
+                &lt;div class="feature-icon icon-teal"&gt;&lt;i class="fa fa-file-text-o"&gt;&lt;/i&gt;&lt;/div&gt;
+                &lt;h4&gt;Report a Complaint&lt;/h4&gt;
+                &lt;p&gt;Facing food quality or hygiene issues? Let us know.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="feature-card"&gt;
+                &lt;div class="feature-icon icon-blue"&gt;&lt;i class="fa fa-cutlery"&gt;&lt;/i&gt;&lt;/div&gt;
+                &lt;h4&gt;View Mess Menu&lt;/h4&gt;
+                &lt;p&gt;Check daily menu and meal information.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="feature-card"&gt;
+                &lt;div class="feature-icon icon-yellow"&gt;&lt;i class="fa fa-search"&gt;&lt;/i&gt;&lt;/div&gt;
+                &lt;h4&gt;Track Your Complaint&lt;/h4&gt;
+                &lt;p&gt;Stay updated on the status of your complaints.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="feature-card"&gt;
+                &lt;div class="feature-icon icon-red"&gt;&lt;i class="fa fa-line-chart"&gt;&lt;/i&gt;&lt;/div&gt;
+                &lt;h4&gt;Improve Together&lt;/h4&gt;
+                &lt;p&gt;Your feedback helps us serve better food for a healthier campus.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/section&gt;
+
+        &lt;!-- ABOUT SECTION --&gt;
+        &lt;section id="about" class="about-section"&gt;
+            &lt;div class="about-left"&gt;
+                &lt;span class="about-label"&gt;About CFMS&lt;/span&gt;
+                &lt;h2 class="about-title"&gt;A Better Food Experience&lt;br&gt;for a Better Tomorrow&lt;/h2&gt;
+                &lt;p class="about-text"&gt;
+                    The Campus Food Management System (CFMS) is a digital platform designed to bridge the gap between students and food service teams. It enables transparent communication, quick issue resolution, and continuous improvement in campus food services.
+                &lt;/p&gt;
+                &lt;a href="javascript:void(0)" class="learn-more-btn"&gt;Learn More &amp;rarr;&lt;/a&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="about-right"&gt;
+                &lt;div class="stats-grid"&gt;
+                    &lt;div class="stat-item"&gt;
+                        &lt;i class="fa fa-users"&gt;&lt;/i&gt;
+                        &lt;h3&gt;1000+&lt;/h3&gt;
+                        &lt;p&gt;Students Served&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class="stat-item"&gt;
+                        &lt;i class="fa fa-cutlery"&gt;&lt;/i&gt;
+                        &lt;h3&gt;Daily&lt;/h3&gt;
+                        &lt;p&gt;Menu Updates&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class="stat-item"&gt;
+                        &lt;i class="fa fa-bolt"&gt;&lt;/i&gt;
+                        &lt;h3&gt;Quick&lt;/h3&gt;
+                        &lt;p&gt;Issue Resolution&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class="stat-item"&gt;
+                        &lt;i class="fa fa-heartbeat"&gt;&lt;/i&gt;
+                        &lt;h3&gt;Healthier&lt;/h3&gt;
+                        &lt;p&gt;Campus Community&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;div class="quote-box"&gt;
+                    &lt;p&gt;"Food is not just fuel, it's the foundation of a brighter future."&lt;/p&gt;
+                    &lt;span&gt;~ CFMS Team&lt;/span&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/section&gt;
+    &lt;/div&gt;
+
+    &lt;!-- DASHBOARD VIEW --&gt;
+    &lt;div id="dashboard-view" class="dashboard-container" ng-show="c.activeDashboard"&gt;
+        &lt;div class="dashboard-header"&gt;
+            &lt;h2&gt;{{c.currentDashboard.title}}&lt;/h2&gt;
+            &lt;button class="back-btn" ng-click="c.showLanding()"&gt;Logout / Back&lt;/button&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="dash-grid"&gt;
+            &lt;div class="dash-card" ng-repeat="card in c.currentDashboard.cards"&gt;
+                &lt;i class="fa {{card.icon}}"&gt;&lt;/i&gt;
+                &lt;h3&gt;{{card.title}}&lt;/h3&gt;
+                &lt;p&gt;{{card.desc}}&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- FOOTER --&gt;
+    &lt;footer class="main-footer" id="contact"&gt;
+        &lt;div class="footer-content"&gt;
+            &lt;div class="footer-col col-wide"&gt;
+                &lt;div class="footer-logo"&gt;
+                    &lt;i class="fa fa-cutlery"&gt;&lt;/i&gt; CFMS
+                &lt;/div&gt;
+                &lt;p&gt;Campus Food Management System&lt;/p&gt;
+                &lt;p&gt;Revolutionizing campus dining one meal at a time. Eat smart, eat healthy, eat fast.&lt;/p&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="footer-col"&gt;
+                &lt;h3&gt;Quick Links&lt;/h3&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;&lt;a href="javascript:void(0)" ng-click="c.showLanding()"&gt;Home&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href="#about" ng-click="c.scrollTo('about')"&gt;About&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href="#features" ng-click="c.scrollTo('features')"&gt;Features&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href="#contact" ng-click="c.scrollTo('contact')"&gt;Help&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+
+            &lt;div class="footer-col"&gt;
+                &lt;h3&gt;Support&lt;/h3&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;&lt;a href="mailto:cfms-support@campus.edu"&gt;&lt;i class="fa fa-envelope"&gt;&lt;/i&gt; cfms-support@campus.edu&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href="tel:+9118001234567"&gt;&lt;i class="fa fa-phone"&gt;&lt;/i&gt; +91 1800 123 4567&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+
+            &lt;div class="footer-col"&gt;
+                &lt;h3&gt;Follow Us&lt;/h3&gt;
+                &lt;div class="social-links"&gt;
+                    &lt;a href="javascript:void(0)" title="Website"&gt;&lt;i class="fa fa-globe"&gt;&lt;/i&gt;&lt;/a&gt;
+                    &lt;a href="javascript:void(0)" title="LinkedIn"&gt;&lt;i class="fa fa-linkedin"&gt;&lt;/i&gt;&lt;/a&gt;
+                    &lt;a href="javascript:void(0)" title="Twitter"&gt;&lt;i class="fa fa-twitter"&gt;&lt;/i&gt;&lt;/a&gt;
+                    &lt;a href="javascript:void(0)" title="Instagram"&gt;&lt;i class="fa fa-instagram"&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class="footer-bottom"&gt;
+            &lt;p&gt;&amp;copy; 2026 CFMS. All rights reserved.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/footer&gt;
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-1099910859</payload_hash>
+        <record_name>CFMS Landing Page</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:42:48</sys_created_on>
+        <sys_id>132b9519a0e743107f4432329b8a15ed</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0d44c5acc0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:42:48</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>132b95198ee74310d04231c186cea1ec</update_guid>
+        <update_guid_history>132b95198ee74310d04231c186cea1ec:-1099910859,9409d115bee743100dffceb12af7a7c2:1963786808,b8a65ddd86a743100f5622293664055e:-1841205298,a3261d9d97a743100c412729b6b97b34:-45838703,9eb5519d41a743102b223688a5f8bd57:1218581074,ae85995de7a7431005257f73627b8a14:2097400800,2af29919b0a74310860c27b19c43d810:-1328770160,324295d56aa74310bd30f019efb67acb:977958925,ae85c19dac274310d0cf21910c13a9f4:-1589296599,d16d7f0598eb031073d4570b51b9c5cf:500549304,50e7330557ab0310a5f4eb8fb9b72c94:-943297637,cc57f781cbab0310c372067a7cc0c3b5:-557361020</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="CFMS Landing Page">2678d1fd80a703107f4447e44ab1d578</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 05:48:00</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>236fd37394bc432d911bf3c1cd022311</sys_id>
+        <sys_metadata>f3863341a0ab03107f4432329b8a15d1</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>CFMS Landing Page</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>sp_widget_f3863341a0ab03107f4432329b8a15d1</sys_update_name>
+        <sys_update_version display_value="sp_widget_f3863341a0ab03107f4432329b8a15d1">132b9519a0e743107f4432329b8a15ed</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 05:48:00</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

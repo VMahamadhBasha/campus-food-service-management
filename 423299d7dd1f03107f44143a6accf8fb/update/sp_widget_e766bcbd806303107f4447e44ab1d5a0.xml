@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.services-section {&#13;
+  padding: 70px 20px;&#13;
+&#13;
+  background: #ffffff;&#13;
+}&#13;
+&#13;
+.services-container {&#13;
+  max-width: 1200px;&#13;
+  margin: auto;&#13;
+}&#13;
+&#13;
+.section-heading {&#13;
+  text-align: center;&#13;
+  margin-bottom: 45px;&#13;
+}&#13;
+&#13;
+.section-heading span {&#13;
+  font-size: 12px;&#13;
+  font-weight: 700;&#13;
+&#13;
+  color: #0f766e;&#13;
+&#13;
+  letter-spacing: 1px;&#13;
+}&#13;
+&#13;
+.section-heading h2 {&#13;
+  margin-top: 10px;&#13;
+&#13;
+  font-size: 32px;&#13;
+&#13;
+  color: #111827;&#13;
+}&#13;
+&#13;
+.section-heading p {&#13;
+  margin-top: 10px;&#13;
+&#13;
+  color: #6b7280;&#13;
+}&#13;
+&#13;
+.services-grid {&#13;
+  display: grid;&#13;
+&#13;
+  grid-template-columns:&#13;
+    repeat(4, 1fr);&#13;
+&#13;
+  gap: 20px;&#13;
+}&#13;
+&#13;
+.service-card {&#13;
+  padding: 25px;&#13;
+&#13;
+  border: 1px solid #e5e7eb;&#13;
+&#13;
+  border-radius: 14px;&#13;
+&#13;
+  background: white;&#13;
+&#13;
+  text-decoration: none;&#13;
+&#13;
+  transition: all 0.2s ease;&#13;
+}&#13;
+&#13;
+.service-card:hover {&#13;
+  transform: translateY(-4px);&#13;
+&#13;
+  box-shadow:&#13;
+    0 10px 25px rgba(0,0,0,0.08);&#13;
+&#13;
+  border-color: #99f6e4;&#13;
+}&#13;
+&#13;
+.service-icon {&#13;
+  width: 48px;&#13;
+  height: 48px;&#13;
+&#13;
+  border-radius: 10px;&#13;
+&#13;
+  background: #f0fdfa;&#13;
+&#13;
+  color: #0f766e;&#13;
+&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+&#13;
+  font-size: 20px;&#13;
+}&#13;
+&#13;
+.service-content h3 {&#13;
+  margin-top: 18px;&#13;
+&#13;
+  font-size: 17px;&#13;
+&#13;
+  color: #111827;&#13;
+}&#13;
+&#13;
+.service-content p {&#13;
+  margin-top: 8px;&#13;
+&#13;
+  font-size: 13px;&#13;
+&#13;
+  line-height: 1.6;&#13;
+&#13;
+  color: #6b7280;&#13;
+}&#13;
+&#13;
+.service-link {&#13;
+  display: block;&#13;
+&#13;
+  margin-top: 15px;&#13;
+&#13;
+  color: #0f766e;&#13;
+&#13;
+  font-size: 13px;&#13;
+&#13;
+  font-weight: 600;&#13;
+}&#13;
+&#13;
+@media(max-width: 900px) {&#13;
+&#13;
+  .services-grid {&#13;
+    grid-template-columns:&#13;
+      repeat(2, 1fr);&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+@media(max-width: 600px) {&#13;
+&#13;
+  .services-grid {&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>food_services_12_use_case</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Food Services 12 Usecase</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.services = [
+
+        {
+            title: 'Report Food Complaint',
+            description: 'Report problems with food quality or service.',
+            icon: 'fa fa-exclamation-circle',
+            url: '?id=create_complaint'
+        },
+
+        {
+            title: 'Food Quality Issue',
+            description: 'Report food quality related problems.',
+            icon: 'fa fa-cutlery',
+            url: '?id=food_quality'
+        },
+
+        {
+            title: 'Hygiene Complaint',
+            description: 'Report cleanliness and hygiene issues.',
+            icon: 'fa fa-shield',
+            url: '?id=hygiene_complaint'
+        },
+
+        {
+            title: 'Menu Related Issue',
+            description: 'Report issues related to the food menu.',
+            icon: 'fa fa-list',
+            url: '?id=menu_issue'
+        },
+
+        {
+            title: 'Meal Timing Issue',
+            description: 'Report problems with meal timings.',
+            icon: 'fa fa-clock-o',
+            url: '?id=meal_timing'
+        },
+
+        {
+            title: 'Food Availability',
+            description: 'Report unavailable or insufficient food.',
+            icon: 'fa fa-shopping-basket',
+            url: '?id=food_availability'
+        },
+
+        {
+            title: 'Mess Service Issue',
+            description: 'Report problems with mess services.',
+            icon: 'fa fa-building',
+            url: '?id=mess_service'
+        },
+
+        {
+            title: 'Track Complaint',
+            description: 'Track the status of your complaints.',
+            icon: 'fa fa-search',
+            url: '?id=my_complaints'
+        },
+
+        {
+            title: 'Complaint History',
+            description: 'View your previously submitted complaints.',
+            icon: 'fa fa-history',
+            url: '?id=complaint_history'
+        },
+
+        {
+            title: 'Give Feedback',
+            description: 'Share feedback about resolved complaints.',
+            icon: 'fa fa-comment',
+            url: '?id=food_feedback'
+        },
+
+        {
+            title: 'Food Service Updates',
+            description: 'View important food service announcements.',
+            icon: 'fa fa-bell',
+            url: '?id=food_updates'
+        },
+
+        {
+            title: 'Help & Support',
+            description: 'Get help with campus food services.',
+            icon: 'fa fa-question-circle',
+            url: '?id=food_help'
+        }
+
+    ];
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 03:20:36</sys_created_on>
+        <sys_id>e766bcbd806303107f4447e44ab1d5a0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Food Services 12 Usecase</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_e766bcbd806303107f4447e44ab1d5a0</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 03:20:36</sys_updated_on>
+        <template><![CDATA[<section class="services-section">
+
+  <div class="services-container">
+
+    <div class="section-heading">
+
+      <span>
+        WHAT WE OFFER
+      </span>
+
+      <h2>
+        Campus Food Services
+      </h2>
+
+      <p>
+        Everything you need to report, track
+        and manage food service issues.
+      </p>
+
+    </div>
+
+
+    <div class="services-grid">
+
+      <a ng-repeat="service in c.data.services"
+         href="{{service.url}}"
+         class="service-card">
+
+        <div class="service-icon">
+
+          <i class="{{service.icon}}"></i>
+
+        </div>
+
+        <div class="service-content">
+
+          <h3>
+            {{service.title}}
+          </h3>
+
+          <p>
+            {{service.description}}
+          </p>
+
+          <span class="service-link">
+            Explore
+            <i class="fa fa-arrow-right"></i>
+          </span>
+
+        </div>
+
+      </a>
+
+    </div>
+
+  </div>
+
+</section>]]></template>
+    </sp_widget>
+</record_update>

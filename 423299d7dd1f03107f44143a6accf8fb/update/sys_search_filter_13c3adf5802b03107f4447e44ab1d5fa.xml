@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_search_filter">
+    <sys_search_filter action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <ais_search_source display_value="All Knowledge Articles">64ce118dc30101103f4fcd7b7940dd10</ais_search_source>
+        <label>Knowledge</label>
+        <name>All Knowledge Articles</name>
+        <order>200</order>
+        <search_context_config display_value="[AI Agents] - Agent Search">1a08f1a6430022101dbab69d4bb8f25e</search_context_config>
+        <sys_class_name>sys_search_filter</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 06:37:28</sys_created_on>
+        <sys_id>13c3adf5802b03107f4447e44ab1d5fa</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>All Knowledge Articles</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_search_filter_13c3adf5802b03107f4447e44ab1d5fa</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 06:37:28</sys_updated_on>
+    </sys_search_filter>
+</record_update>

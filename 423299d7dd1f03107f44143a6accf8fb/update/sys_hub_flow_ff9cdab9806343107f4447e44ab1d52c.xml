@@ -1,0 +1,742 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_hub_flow">
+    <sys_hub_flow action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <acls/>
+        <active>true</active>
+        <allow_high_security_roles>false</allow_high_security_roles>
+        <annotation/>
+        <attributes>intermediateFlowVersion=1.2,labelCacheCleanUpExecuted=true,timeFromCreateToActivate=90000</attributes>
+        <authored_on_release_version>29000</authored_on_release_version>
+        <callable_by_client_api>false</callable_by_client_api>
+        <category/>
+        <copied_from/>
+        <copied_from_name/>
+        <description/>
+        <display_name_after_preview/>
+        <flow_priority>MEDIUM</flow_priority>
+        <generation_source>agentic_ai</generation_source>
+        <internal_name>food_base_problem__ai_agent_campus_food_intelligence_agent__bb9cdab9806343107f4447e44ab1d52b</internal_name>
+        <label_cache>[{"name":"Created_1.current","label":"Trigger - Record Created➛Food Base Problem Record","reference":"x_snc_campus_foo_1_food_base_problem","reference_display":"Food Base Problem","type":"reference","base_type":"reference","usedInstances":{"c0acdab9-0563-4310-82e4-905cff02fa84":["target_record"]},"attributes":{"element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper"}}]</label_cache>
+        <master_snapshot>71fc5af9806343107f4447e44ab1d5b2</master_snapshot>
+        <master_snapshot_digest/>
+        <name>Food Base Problem - AI Agent: Campus Food Intelligence Agent - bb9cdab9806343107f4447e44ab1d52b</name>
+        <natlang/>
+        <outputs/>
+        <pre_compiled>false</pre_compiled>
+        <remote_trigger_id>d6fc9af9806343107f4447e44ab1d554</remote_trigger_id>
+        <run_as>user</run_as>
+        <run_with_roles/>
+        <sc_callable>false</sc_callable>
+        <show_draft_actions>false</show_draft_actions>
+        <show_triggered_flows>false</show_triggered_flows>
+        <status>published</status>
+        <substatus/>
+        <sys_class_name>sys_hub_flow</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:45:43</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>ff9cdab9806343107f4447e44ab1d52c</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Food Base Problem - AI Agent: Campus Food Intelligence Agent - bb9cdab9806343107f4447e44ab1d52b</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_hub_flow_ff9cdab9806343107f4447e44ab1d52c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:47:15</sys_updated_on>
+        <type>flow</type>
+        <updation_source/>
+        <version>2</version>
+        <version_record>01ac1eb9806343107f4447e44ab1d578</version_record>
+    </sys_hub_flow>
+    <sys_translated_text action="delete_multiple" query="documentkey=ff9cdab9806343107f4447e44ab1d52c"/>
+    <sys_variable_value action="delete_multiple" query="document_key=ff9cdab9806343107f4447e44ab1d52c"/>
+    <sys_flow_record_trigger action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition table="x_snc_campus_foo_1_food_base_problem">number= not empty<item endquery="false" field="number" goto="false" newquery="false" operator="=" or="false" value=" not empty"/>
+        </condition>
+        <name/>
+        <on_delete>false</on_delete>
+        <on_insert>true</on_insert>
+        <on_update>false</on_update>
+        <published_version/>
+        <run_flow_in>background</run_flow_in>
+        <run_on_extended>false</run_on_extended>
+        <run_when_setting>both</run_when_setting>
+        <run_when_user_list/>
+        <run_when_user_setting>any</run_when_user_setting>
+        <sys_class_name>sys_flow_record_trigger</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:47:15</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>d6fc9af9806343107f4447e44ab1d554</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_overrides/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:47:15</sys_updated_on>
+        <table>x_snc_campus_foo_1_food_base_problem</table>
+        <trigger_definition/>
+    </sys_flow_record_trigger>
+    <sys_trigger_runner_mapping action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <data>{"run_flow_in":"background","run_when_user_list":[],"run_when_setting":"both","run_when_user_setting":"any","run_on_extended":"false"}</data>
+        <identifier>ff9cdab9806343107f4447e44ab1d52c</identifier>
+        <identifier_type>flow</identifier_type>
+        <runner>FDTriggerRunner</runner>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:47:15</sys_created_on>
+        <sys_id>dafc9af9806343107f4447e44ab1d555</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:47:15</sys_updated_on>
+        <trigger display_value="">d6fc9af9806343107f4447e44ab1d554</trigger>
+    </sys_trigger_runner_mapping>
+    <sys_trigger_runner_mapping action="delete_multiple" query="identifier=ff9cdab9806343107f4447e44ab1d52c^sys_idNOT INdafc9af9806343107f4447e44ab1d555"/>
+    <sys_hub_flow_stage action="delete_multiple" query="flow=ff9cdab9806343107f4447e44ab1d52c"/>
+    <sys_flow_cat_variable_model action="delete_multiple" query="id=ff9cdab9806343107f4447e44ab1d52c^sys_idNOT INff9cdab9806343107f4447e44ab1d52f"/>
+    <sys_flow_cat_variable_model action="INSERT_OR_UPDATE">
+        <id>ff9cdab9806343107f4447e44ab1d52c</id>
+        <name>Food Base Problem - AI Agent: Campus Food Intelligence Agent - bb9cdab9806343107f4447e44ab1d52b</name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:45:43</sys_created_on>
+        <sys_id>ff9cdab9806343107f4447e44ab1d52f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:45:43</sys_updated_on>
+    </sys_flow_cat_variable_model>
+    <sys_flow_cat_variable action="delete_multiple" query="flow_catalog_model=ff9cdab9806343107f4447e44ab1d52f"/>
+    <sys_hub_flow_input action="delete_multiple" query="model=ff9cdab9806343107f4447e44ab1d52c^sys_idNOT IN44acdab9806343107f4447e44ab1d58a,dcacdab9806343107f4447e44ab1d597"/>
+    <sys_hub_flow_input action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <array>false</array>
+        <array_denormalized>false</array_denormalized>
+        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,uiType=document_id</attributes>
+        <audit>false</audit>
+        <calculation><![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]></calculation>
+        <choice/>
+        <choice_field/>
+        <choice_table/>
+        <column_label/>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent>table_name</dependent>
+        <dependent_on_field>table_name</dependent_on_field>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>current</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <help/>
+        <hint/>
+        <internal_type display_value="">document_id</internal_type>
+        <label>Record</label>
+        <mandatory>true</mandatory>
+        <max_length>200</max_length>
+        <model display_value="Food Base Problem - AI Agent: Campus Food Intelligence Agent - bb9cdab9806343107f4447e44ab1d52b">ff9cdab9806343107f4447e44ab1d52c</model>
+        <model_id>ff9cdab9806343107f4447e44ab1d52c</model_id>
+        <model_table>sys_hub_flow</model_table>
+        <name>var__m_sys_hub_flow_input_ff9cdab9806343107f4447e44ab1d52c</name>
+        <next_element/>
+        <order>100</order>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_only_option/>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <sizeclass/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_hub_flow_input</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:45:44</sys_created_on>
+        <sys_id>44acdab9806343107f4447e44ab1d58a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:45:44</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>true</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_hub_flow_input>
+    <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=44acdab9806343107f4447e44ab1d58a"/>
+    <sys_hub_flow_input action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <array>false</array>
+        <array_denormalized>false</array_denormalized>
+        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,test_input_hidden=true,uiType=table_name</attributes>
+        <audit>false</audit>
+        <calculation><![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]></calculation>
+        <choice/>
+        <choice_field/>
+        <choice_table/>
+        <column_label/>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent/>
+        <dependent_on_field/>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>table_name</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <help/>
+        <hint/>
+        <internal_type display_value="">table_name</internal_type>
+        <label>Table Name</label>
+        <mandatory>false</mandatory>
+        <max_length>200</max_length>
+        <model display_value="Food Base Problem - AI Agent: Campus Food Intelligence Agent - bb9cdab9806343107f4447e44ab1d52b">ff9cdab9806343107f4447e44ab1d52c</model>
+        <model_id>ff9cdab9806343107f4447e44ab1d52c</model_id>
+        <model_table>sys_hub_flow</model_table>
+        <name>var__m_sys_hub_flow_input_ff9cdab9806343107f4447e44ab1d52c</name>
+        <next_element/>
+        <order>101</order>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_only_option/>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <sizeclass/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_hub_flow_input</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:45:44</sys_created_on>
+        <sys_id>dcacdab9806343107f4447e44ab1d597</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:45:44</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>false</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_hub_flow_input>
+    <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=dcacdab9806343107f4447e44ab1d597"/>
+    <sys_hub_flow_output action="delete_multiple" query="model=ff9cdab9806343107f4447e44ab1d52c"/>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=ff9cdab9806343107f4447e44ab1d52c"/>
+    <sys_hub_trigger_instance_v2 action="delete_multiple" query="flow=ff9cdab9806343107f4447e44ab1d52c^sys_idNOT IN8cacdab9806343107f4447e44ab1d587"/>
+    <sys_hub_trigger_instance_v2 action="INSERT_OR_UPDATE">
+        <comment/>
+        <display_text/>
+        <flow display_value="Food Base Problem - AI Agent: Campus Food Intelligence Agent - bb9cdab9806343107f4447e44ab1d52b">ff9cdab9806343107f4447e44ab1d52c</flow>
+        <generation_source>agentic_ai</generation_source>
+        <name>Created</name>
+        <published_version/>
+        <remote_sys_id/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:45:44</sys_created_on>
+        <sys_id>8cacdab9806343107f4447e44ab1d587</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:45:44</sys_updated_on>
+        <trigger_definition display_value="Created">798916a0c31322002841b63b12d3ae7c</trigger_definition>
+        <trigger_inputs>H4sIAAAAAAAA/+VaWW/bOBD+K4KedoEU0OEjzltrp9gA2aRw3N2HbEBQEmkLlUhXopS6Qf77Dq3DtA7XdpyNnX0xoOExMx9nvhlRvn/SA+yQQL/QJ9gJiH6m+0yQiOFgspgTEAspRgyHcswjc8I8wgQMwGOImYcFjxb6hYgScqbTiIcTEs4DLGAtxUEMQh55JNIvzDN9uUu+JSxPcZDI5x8oZi5ycThPYkQ5R6b89ZCDY4LmEYfZoVTux7Dx4q981WeYon2CKdqXcsocR6BCSHVPpSPXPvuW2evO/MCLCNMv7h/AUQ+kLnXxwCKGa5u2ZRmGdd4xnZ7tmJZnY2IYsKoKUMUL0YCTlF2ry7SbbGCFBfkhJJReCVMNzIhg75YFi3LGzF8B/yP2f4Lac0POowScckk2Vj6iHLBMTEdY4DvY2RVJRAo8uO+SOIPDIxQngRiqsmzC7Vz4nGVLMq+z1TxIQnaToaGXGxTnA5IEzk8JmdwNejfjj+PCys8+W0KSDwbcxUH5hIWIfCcR0p4nnfoBnCjKkI55Ei1dHl8Ob8cj9PfHyfCPyzEaX95NxlfDyeVIfz7T40U8DHAcr6wEeND3ROrQ1YBGmYNyiRv5c/HRFX5axPDz2SpNooTBXFQeXy1hMszqyZLJr/0Ynu/BmTvyPclODaKBFqgt9cnjKsJnnDCNQxTAj+YmEWAmtCL06FWIp7lf9EsR+0us8iBNcYRQiAAGNEscBGhOpwChz+aJQP3B+cDs4ZbY77tr+CyTVYaFrj/U5SjEc6l2o8HPz/LwSUBcocQ9/RqrT3/6ceyzqYK8gpSlICWTpA5UqRKySSsOKdMfHzdiGy3fB7qHNU4pJm1iaMMo2a0e5mklQnfnWtOk1CHUMvoSO9OwHWoafaOLqWcbhmspXFtX32qXqKSdyr3DQqh6uIl5c8k21Ns5EPWuqGVTqlfRLxxSqWmrDEjX0yffx3puqgDHY1qlENk7VaLCsFw8Wu8jNrl24AKGvRTDCq/w8dUK1OOMMBQTISQdHKBCfVBLFIP8W+6IMxMUDpY5o0lAKY+0G84+XK3maXcE6Am8OFIW3sr2l5ewNSi3gRH2jrRTxbHV+AMD6XAxqzYDUv8nkK/pl8zTcrhH3R/s7sybtAwV4knXj2ePloF0zrsDart9ABOaBNohDjY7VhcP+j2bDiotQ0V9u2Hvp2nYknLTVvJuKtfbElDayGNl4a40APskZCWC8q3tX7Qr/19QXtQo5fu190n7GHuqPRQN+CNExaFf8B3sfptGPGFerV6BQs1n2mqG9lt+FL8fdWnaZPdh3/kh/shm8NZnHDtkirVvUq5XMV5QCmaLvQq1TU1nQDrEgFd6Gwq10x0MHBdblPZ7fWKZlUK9Utxozfspz1skdtrEDG0v0Y1xnjalxw5v9m9v4IvKVhazzVUrGzvFGjTkzPNF1lJUK1AxFFeqUHFvsT8ruIrWsj1KQodE/ySGYXsa40KDfcR+NNHrYeyRNkp1qEITqv8NxokGKNZoQh14FaowTunbS/59bt+ID7lHgpEaaWqllBA/YiZiJDjCnoeUU9k7RfJvBtvfd4HH0SteekmzCOJU7TxGfJkPYILmUy3HhHias9DEjAAHBsCGYI4mbTva+4UdvTjw1U0d1fJF64Qx3cmHAyOa1bzaXRiIl/qOFbKanW93g1Whkpc2x8Tr427X7jffYg2qzXGTCb+w8P00zDtTatrE0Bvvb3bbt7pn4w2OklvrwbLlhdU79vrVWvsGK06xz19P6UA2IrXmZRr4HinG2v+E9SK6y3dPVy3k7kRHzwdu1+y3EN15t5XocuWbDBMNUKg0d52J/pNWX5bFPOSa6O5rXmXfvu0/3gx4+BeVpMKGeygAAA==</trigger_inputs>
+        <trigger_outputs/>
+        <trigger_type>record_create</trigger_type>
+        <updation_source/>
+    </sys_hub_trigger_instance_v2>
+    <sys_hub_action_instance_v2 action="delete_multiple" query="flow=ff9cdab9806343107f4447e44ab1d52c^sys_idNOT IN38ac1eb9806343107f4447e44ab1d532"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="AIA Trigger Use Case">0b63e51a53c7121059e0ddeeff7b12b5</action_type>
+        <action_type_parent/>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot/>
+        <display_text/>
+        <flow display_value="Food Base Problem - AI Agent: Campus Food Intelligence Agent - bb9cdab9806343107f4447e44ab1d52b">ff9cdab9806343107f4447e44ab1d52c</flow>
+        <generation_source>agentic_ai</generation_source>
+        <order>1</order>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:45:47</sys_created_on>
+        <sys_id>38ac1eb9806343107f4447e44ab1d532</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:45:47</sys_updated_on>
+        <ui_id>c0acdab9-0563-4310-82e4-905cff02fa84</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/71UTU/jMBD9K8jnpsqHkza9oSIkpN1FApYLQtHEHrfWuklwHKBb9b/vuElLWRYtB8TRk/l478283G1YBStkM+asXizQFqKulF50Fpyuq0JLNmKPYDqfgkku8rjMp2GW8CQKJ4pzPkHOoYxkmnNKlbptDKxvP17RgCUADi2bbZhYaiMtVmx2dz9iNHzGwkhCmqeQJtNJFEdhmmMoJaJSkzKKk5xaGCjRUOpNT+Fkfkzh5MJT+D9Jt258Rksp1WJ4fxsaX++DtZUeaDRi+OywkkgIFZgWR2wFlQRX2zWbOdtRwCLIy8qsDxlLXTlqxnzuc6t/07hpGIY+UyGRFth/PTyLQc0+rM7AASHphOvskCqWtRbY9nJJVNAZNz+O9QmXjefZlzgozb66Nt2q+tFLww4N9sujSNcSCGw8U499IKKul/XT1R7lua52ogwfTS3AHF7gSLqycx7PhnX65i+V+8gbndHgiiYWK2gaihSNrR/1bgqBXo0Xhh5jZeonQtfqRTUG4RmOaQMwPqf42S58C1Z7ut+pDRX7cT8r/dDhhb+sKefTaTKRQRypOOAqyoJSpVmQ8SyfqJhHESq2HbF23c4NtO2LULSh4qHzNHvZBoGKXmNfIqxu3CmBesRBi+3oxWpgF+gKi4Lu6chfm82cjsahLKKx6Cyp67bbt6b6gGlUKmKIZJYm4h+mieWxaXZgTq72YN7BONjj5VRfO+TqKD6YJP4skyTxa4s4aH+9Y5Ob/tMnW2UY+AV2UdcIVizPNRq/xqpblbu7fcdGx9t47aTjfXyJmUqeZVGpZCBkxgMOMAnyeJoHXIQiA+h/1Z9npvs/CslmPLkGAAA=</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=38ac1eb9806343107f4447e44ab1d532"/>
+    <sys_hub_sub_flow_instance_v2 action="delete_multiple" query="flow=ff9cdab9806343107f4447e44ab1d52c"/>
+    <sys_hub_flow_logic_instance_v2 action="delete_multiple" query="flow=ff9cdab9806343107f4447e44ab1d52c"/>
+    <sys_hub_pill_compound action="delete_multiple" query="attached_to=ff9cdab9806343107f4447e44ab1d52c"/>
+    <sys_hub_flow_variable action="delete_multiple" query="model=ff9cdab9806343107f4447e44ab1d52c"/>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>table_name</element>
+        <help/>
+        <hint/>
+        <label>Table Name</label>
+        <language>en</language>
+        <name>var__m_sys_hub_flow_input_ff9cdab9806343107f4447e44ab1d52c</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:45:46</sys_created_on>
+        <sys_id>68acdab9806343107f4447e44ab1d5b4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:45:46</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>current</element>
+        <help/>
+        <hint/>
+        <label>Record</label>
+        <language>en</language>
+        <name>var__m_sys_hub_flow_input_ff9cdab9806343107f4447e44ab1d52c</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:45:44</sys_created_on>
+        <sys_id>ccacdab9806343107f4447e44ab1d594</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:45:44</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_input_ff9cdab9806343107f4447e44ab1d52c"/>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_output_ff9cdab9806343107f4447e44ab1d52c"/>
+    <sys_hub_flow_snapshot action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <acls/>
+        <active>true</active>
+        <allow_high_security_roles>false</allow_high_security_roles>
+        <annotation/>
+        <attributes>intermediateFlowVersion=1.2,labelCacheCleanUpExecuted=true</attributes>
+        <authored_on_release_version>29000</authored_on_release_version>
+        <callable_by_client_api>false</callable_by_client_api>
+        <category/>
+        <copied_from/>
+        <copied_from_name/>
+        <description/>
+        <flow_priority>MEDIUM</flow_priority>
+        <internal_name>food_base_problem__ai_agent_campus_food_intelligence_agent__bb9cdab9806343107f4447e44ab1d52b</internal_name>
+        <label_cache>[{"name":"Created_1.current","label":"Trigger - Record Created➛Food Base Problem Record","reference":"x_snc_campus_foo_1_food_base_problem","reference_display":"Food Base Problem","type":"reference","base_type":"reference","usedInstances":{"c0acdab9-0563-4310-82e4-905cff02fa84":["target_record"]},"attributes":{"element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper"}}]</label_cache>
+        <master>true</master>
+        <name>Food Base Problem - AI Agent: Campus Food Intelligence Agent - bb9cdab9806343107f4447e44ab1d52b</name>
+        <natlang/>
+        <outputs/>
+        <parent_flow display_value="Food Base Problem - AI Agent: Campus Food Intelligence Agent - bb9cdab9806343107f4447e44ab1d52b">ff9cdab9806343107f4447e44ab1d52c</parent_flow>
+        <remote_trigger_id/>
+        <run_as>user</run_as>
+        <run_with_roles/>
+        <sc_callable>false</sc_callable>
+        <status>published</status>
+        <sys_class_name>sys_hub_flow_snapshot</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:47:13</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>71fc5af9806343107f4447e44ab1d5b2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_overrides/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:47:13</sys_updated_on>
+        <type>flow</type>
+        <version>2</version>
+    </sys_hub_flow_snapshot>
+    <sys_translated_text action="delete_multiple" query="documentkey=71fc5af9806343107f4447e44ab1d5b2"/>
+    <sys_variable_value action="delete_multiple" query="document_key=71fc5af9806343107f4447e44ab1d5b2"/>
+    <sys_hub_flow_stage action="delete_multiple" query="flow=71fc5af9806343107f4447e44ab1d5b2"/>
+    <sys_flow_cat_variable_model action="delete_multiple" query="id=71fc5af9806343107f4447e44ab1d5b2^sys_idNOT IN4afc5af9806343107f4447e44ab1d5b3"/>
+    <sys_flow_cat_variable_model action="INSERT_OR_UPDATE">
+        <id>71fc5af9806343107f4447e44ab1d5b2</id>
+        <name>Food Base Problem - AI Agent: Campus Food Intelligence Agent - bb9cdab9806343107f4447e44ab1d52b</name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:47:13</sys_created_on>
+        <sys_id>4afc5af9806343107f4447e44ab1d5b3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:47:13</sys_updated_on>
+    </sys_flow_cat_variable_model>
+    <sys_flow_cat_variable action="delete_multiple" query="flow_catalog_model=4afc5af9806343107f4447e44ab1d5b3"/>
+    <sys_hub_flow_input action="delete_multiple" query="model=71fc5af9806343107f4447e44ab1d5b2^sys_idNOT IN02fc5af9806343107f4447e44ab1d5d5,0efc5af9806343107f4447e44ab1d5b4"/>
+    <sys_hub_flow_input action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <array>false</array>
+        <array_denormalized>false</array_denormalized>
+        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,test_input_hidden=true,uiType=table_name</attributes>
+        <audit>false</audit>
+        <calculation><![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]></calculation>
+        <choice/>
+        <choice_field/>
+        <choice_table/>
+        <column_label/>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent/>
+        <dependent_on_field/>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>table_name</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <help/>
+        <hint/>
+        <internal_type display_value="">table_name</internal_type>
+        <label>Table Name</label>
+        <mandatory>false</mandatory>
+        <max_length>200</max_length>
+        <model display_value="Food Base Problem - AI Agent: Campus Food Intelligence Agent - bb9cdab9806343107f4447e44ab1d52b">71fc5af9806343107f4447e44ab1d5b2</model>
+        <model_id>71fc5af9806343107f4447e44ab1d5b2</model_id>
+        <model_table>sys_hub_flow_snapshot</model_table>
+        <name>var__m_sys_hub_flow_input_71fc5af9806343107f4447e44ab1d5b2</name>
+        <next_element/>
+        <order>101</order>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_only_option/>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <sizeclass/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_hub_flow_input</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:47:14</sys_created_on>
+        <sys_id>02fc5af9806343107f4447e44ab1d5d5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:47:14</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>false</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_hub_flow_input>
+    <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=02fc5af9806343107f4447e44ab1d5d5"/>
+    <sys_hub_flow_input action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <array>false</array>
+        <array_denormalized>false</array_denormalized>
+        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,uiType=document_id</attributes>
+        <audit>false</audit>
+        <calculation><![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]></calculation>
+        <choice/>
+        <choice_field/>
+        <choice_table/>
+        <column_label/>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent>table_name</dependent>
+        <dependent_on_field>table_name</dependent_on_field>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>current</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <help/>
+        <hint/>
+        <internal_type display_value="">document_id</internal_type>
+        <label>Record</label>
+        <mandatory>true</mandatory>
+        <max_length>200</max_length>
+        <model display_value="Food Base Problem - AI Agent: Campus Food Intelligence Agent - bb9cdab9806343107f4447e44ab1d52b">71fc5af9806343107f4447e44ab1d5b2</model>
+        <model_id>71fc5af9806343107f4447e44ab1d5b2</model_id>
+        <model_table>sys_hub_flow_snapshot</model_table>
+        <name>var__m_sys_hub_flow_input_71fc5af9806343107f4447e44ab1d5b2</name>
+        <next_element/>
+        <order>100</order>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_only_option/>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <sizeclass/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_hub_flow_input</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:47:14</sys_created_on>
+        <sys_id>0efc5af9806343107f4447e44ab1d5b4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:47:14</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>true</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_hub_flow_input>
+    <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=0efc5af9806343107f4447e44ab1d5b4"/>
+    <sys_hub_flow_output action="delete_multiple" query="model=71fc5af9806343107f4447e44ab1d5b2"/>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=71fc5af9806343107f4447e44ab1d5b2"/>
+    <sys_hub_trigger_instance_v2 action="delete_multiple" query="flow=71fc5af9806343107f4447e44ab1d5b2^sys_idNOT IN5efc9af9806343107f4447e44ab1d518"/>
+    <sys_hub_trigger_instance_v2 action="INSERT_OR_UPDATE">
+        <comment/>
+        <display_text/>
+        <flow display_value="Food Base Problem - AI Agent: Campus Food Intelligence Agent - bb9cdab9806343107f4447e44ab1d52b">71fc5af9806343107f4447e44ab1d5b2</flow>
+        <generation_source/>
+        <name>Created</name>
+        <published_version/>
+        <remote_sys_id/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:47:15</sys_created_on>
+        <sys_id>5efc9af9806343107f4447e44ab1d518</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:47:15</sys_updated_on>
+        <trigger_definition display_value="Created">798916a0c31322002841b63b12d3ae7c</trigger_definition>
+        <trigger_inputs>H4sIAAAAAAAA/+VaWW/bOBD+K4KedoEU0OEjzltrp9gA2aRw3N2HbEBQEmkLlUhXopS6Qf77Dq3DtA7XdpyNnX0xoOExMx9nvhlRvn/SA+yQQL/QJ9gJiH6m+0yQiOFgspgTEAspRgyHcswjc8I8wgQMwGOImYcFjxb6hYgScqbTiIcTEs4DLGAtxUEMQh55JNIvzDN9uUu+JSxPcZDI5x8oZi5ycThPYkQ5R6b89ZCDY4LmEYfZoVTux7Dx4q981WeYon2CKdqXcsocR6BCSHVPpSPXPvuW2evO/MCLCNMv7h/AUQ+kLnXxwCKGa5u2ZRmGdd4xnZ7tmJZnY2IYsKoKUMUL0YCTlF2ry7SbbGCFBfkhJJReCVMNzIhg75YFi3LGzF8B/yP2f4Lac0POowScckk2Vj6iHLBMTEdY4DvY2RVJRAo8uO+SOIPDIxQngRiqsmzC7Vz4nGVLMq+z1TxIQnaToaGXGxTnA5IEzk8JmdwNejfjj+PCys8+W0KSDwbcxUH5hIWIfCcR0p4nnfoBnCjKkI55Ei1dHl8Ob8cj9PfHyfCPyzEaX95NxlfDyeVIfz7T40U8DHAcr6wEeND3ROrQ1YBGmYNyiRv5c/HRFX5axPDz2SpNooTBXFQeXy1hMszqyZLJr/0Ynu/BmTvyPclODaKBFqgt9cnjKsJnnDCNQxTAj+YmEWAmtCL06FWIp7lf9EsR+0us8iBNcYRQiAAGNEscBGhOpwChz+aJQP3B+cDs4ZbY77tr+CyTVYaFrj/U5SjEc6l2o8HPz/LwSUBcocQ9/RqrT3/6ceyzqYK8gpSlICWTpA5UqRKySSsOKdMfHzdiGy3fB7qHNU4pJm1iaMMo2a0e5mklQnfnWtOk1CHUMvoSO9OwHWoafaOLqWcbhmspXFtX32qXqKSdyr3DQqh6uIl5c8k21Ns5EPWuqGVTqlfRLxxSqWmrDEjX0yffx3puqgDHY1qlENk7VaLCsFw8Wu8jNrl24AKGvRTDCq/w8dUK1OOMMBQTISQdHKBCfVBLFIP8W+6IMxMUDpY5o0lAKY+0G84+XK3maXcE6Am8OFIW3sr2l5ewNSi3gRH2jrRTxbHV+AMD6XAxqzYDUv8nkK/pl8zTcrhH3R/s7sybtAwV4knXj2ePloF0zrsDart9ABOaBNohDjY7VhcP+j2bDiotQ0V9u2Hvp2nYknLTVvJuKtfbElDayGNl4a40APskZCWC8q3tX7Qr/19QXtQo5fu190n7GHuqPRQN+CNExaFf8B3sfptGPGFerV6BQs1n2mqG9lt+FL8fdWnaZPdh3/kh/shm8NZnHDtkirVvUq5XMV5QCmaLvQq1TU1nQDrEgFd6Gwq10x0MHBdblPZ7fWKZlUK9Utxozfspz1skdtrEDG0v0Y1xnjalxw5v9m9v4IvKVhazzVUrGzvFGjTkzPNF1lJUK1AxFFeqUHFvsT8ruIrWsj1KQodE/ySGYXsa40KDfcR+NNHrYeyRNkp1qEITqv8NxokGKNZoQh14FaowTunbS/59bt+ID7lHgpEaaWqllBA/YiZiJDjCnoeUU9k7RfJvBtvfd4HH0SteekmzCOJU7TxGfJkPYILmUy3HhHias9DEjAAHBsCGYI4mbTva+4UdvTjw1U0d1fJF64Qx3cmHAyOa1bzaXRiIl/qOFbKanW93g1Whkpc2x8Tr427X7jffYg2qzXGTCb+w8P00zDtTatrE0Bvvb3bbt7pn4w2OklvrwbLlhdU79vrVWvsGK06xz19P6UA2IrXmZRr4HinG2v+E9SK6y3dPVy3k7kRHzwdu1+y3EN15t5XocuWbDBMNUKg0d52J/pNWX5bFPOSa6O5rXmXfvu0/3gx4+BeVpMKGeygAAA==</trigger_inputs>
+        <trigger_outputs/>
+        <trigger_type>record_create</trigger_type>
+        <updation_source/>
+    </sys_hub_trigger_instance_v2>
+    <sys_hub_action_instance_v2 action="delete_multiple" query="flow=71fc5af9806343107f4447e44ab1d5b2^sys_idNOT IN96fc9af9806343107f4447e44ab1d517"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="AIA Trigger Use Case">0b63e51a53c7121059e0ddeeff7b12b5</action_type>
+        <action_type_parent display_value="AIA Trigger Use Case">931a511a5387121059e0ddeeff7b1249</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot>0b63e51a53c7121059e0ddeeff7b12b5</compiled_snapshot>
+        <display_text/>
+        <flow display_value="Food Base Problem - AI Agent: Campus Food Intelligence Agent - bb9cdab9806343107f4447e44ab1d52b">71fc5af9806343107f4447e44ab1d5b2</flow>
+        <generation_source/>
+        <order>1</order>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:47:15</sys_created_on>
+        <sys_id>96fc9af9806343107f4447e44ab1d517</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:47:15</sys_updated_on>
+        <ui_id>c0acdab9-0563-4310-82e4-905cff02fa84</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/71UTU/jMBD9K8jnpsqHmzS9oSIkpN1FApYLQtHEHrfWuklwHKBb9b/vuElLWcQuB8TRk/l478283G1YBStkM+asXizQFqKulF50Fpyuq0JLNmKPYDqfgkku8rjMp2Ga8CQKM8U5z5BzKCM5yTmlSt02Bta3H69owBIAh5bNNkwstZEWKza7ux8xGj5jU5UmOIlgkogsiqNwkmMoJaJSWRnF5ZRaGCjRUOpNT+Fkfkzh5MJT+D9Jt258Rksp1WJ4fxsaX++DtZUeaDRi+OywkkgIFZgWR2wFlQRX2zWbOdtRwCLIy8qsDxlLXTlqxnzuc6t/07hpGIY+UyGRFth/PTyLQc0+rM7AASHphOvskCqWtRbY9nJJVNAZNz+O9QmXjefZlzgozb66Nt2q+tFLww4N9sujSNcSCGw8U499IKKul/XT1R7lua52ogwfTS3AHF7gSLqycx7PhnX65i+V+8gbndHgiiYWK2gaihSNrR/1bgqBXo0Xhh5jZeonQtfqRTUG4RmOaQMwPqf42S58C1Z7ut+pDRX7cT8r/dDhxe6yOJ9Ok0wGcaTigKsoDUo1SYOUp3mmYh5FqNh2xNp1OzfQti9C0YaKh87T7GUbBCp6jX2JsLpxpwTqEQcttqMXq4FdoCssCrqnI39tNnM6GoeyiMais6Su227fmuoDpuHZP00jj02zA3NytQfzDsbBHi+n+tohV0fxwSTxZ5kkiV9bxEH76x2b3PSfPtkqw8AvsIu6RrBiea7R+DVW3arc3e07NjrexmsnHe/jS8xU8jSNSiUDIVMecIAsyONpHnARihTodx8n+Sea6f4Pc7HUjLkGAAA=</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=96fc9af9806343107f4447e44ab1d517"/>
+    <sys_hub_sub_flow_instance_v2 action="delete_multiple" query="flow=71fc5af9806343107f4447e44ab1d5b2"/>
+    <sys_hub_flow_logic_instance_v2 action="delete_multiple" query="flow=71fc5af9806343107f4447e44ab1d5b2"/>
+    <sys_hub_pill_compound action="delete_multiple" query="attached_to=71fc5af9806343107f4447e44ab1d5b2"/>
+    <sys_hub_flow_variable action="delete_multiple" query="model=71fc5af9806343107f4447e44ab1d5b2"/>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>table_name</element>
+        <help/>
+        <hint/>
+        <label>Table Name</label>
+        <language>en</language>
+        <name>var__m_sys_hub_flow_input_71fc5af9806343107f4447e44ab1d5b2</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:47:14</sys_created_on>
+        <sys_id>42fc5af9806343107f4447e44ab1d5f4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:47:14</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>current</element>
+        <help/>
+        <hint/>
+        <label>Record</label>
+        <language>en</language>
+        <name>var__m_sys_hub_flow_input_71fc5af9806343107f4447e44ab1d5b2</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:47:14</sys_created_on>
+        <sys_id>cafc5af9806343107f4447e44ab1d5d0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:47:14</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_input_71fc5af9806343107f4447e44ab1d5b2"/>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_output_71fc5af9806343107f4447e44ab1d5b2"/>
+    <sys_hub_flow action="UPDATE">
+        <sys_id>ff9cdab9806343107f4447e44ab1d52c</sys_id>
+        <latest_snapshot>71fc5af9806343107f4447e44ab1d5b2</latest_snapshot>
+        <compiler_build/>
+        <version_record/>
+    </sys_hub_flow>
+    <sys_flow_trigger_plan action="delete_multiple" query="plan_id=ff9cdab9806343107f4447e44ab1d52c^sys_idNOT IN9afc9af9806343107f4447e44ab1d556"/>
+    <sys_flow_trigger_plan action="INSERT_OR_UPDATE">
+        <binding_strategy>com.snc.process_flow.engine.binding.OncePerRecord</binding_strategy>
+        <plan/>
+        <plan_id>ff9cdab9806343107f4447e44ab1d52c</plan_id>
+        <snapshot>71fc5af9806343107f4447e44ab1d5b2</snapshot>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 10:47:15</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>9afc9af9806343107f4447e44ab1d556</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_overrides/>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 10:47:15</sys_updated_on>
+        <trigger display_value="">d6fc9af9806343107f4447e44ab1d554</trigger>
+    </sys_flow_trigger_plan>
+    <sys_flow_subflow_plan action="delete_multiple" query="plan_id=ff9cdab9806343107f4447e44ab1d52c"/>
+</record_update>

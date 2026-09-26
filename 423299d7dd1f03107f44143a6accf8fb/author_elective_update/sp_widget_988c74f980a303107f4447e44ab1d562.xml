@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.login-cta {&#13;
+  padding: 55px 20px;&#13;
+&#13;
+  background: #0f766e;&#13;
+&#13;
+  text-align: center;&#13;
+&#13;
+  color: white;&#13;
+}&#13;
+&#13;
+.login-cta h2 {&#13;
+  font-size: 30px;&#13;
+}&#13;
+&#13;
+.login-cta p {&#13;
+  margin-top: 10px;&#13;
+&#13;
+  opacity: 0.9;&#13;
+}&#13;
+&#13;
+.cta-button {&#13;
+  display: inline-block;&#13;
+&#13;
+  margin-top: 22px;&#13;
+&#13;
+  padding: 12px 25px;&#13;
+&#13;
+  background: white;&#13;
+&#13;
+  color: #0f766e;&#13;
+&#13;
+  border-radius: 8px;&#13;
+&#13;
+  text-decoration: none;&#13;
+&#13;
+  font-weight: 700;&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>1food_services_login_page</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Food Services Login CTA</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 03:46:39</sys_created_on>
+        <sys_id>988c74f980a303107f4447e44ab1d562</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Food Services Login CTA</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_988c74f980a303107f4447e44ab1d562</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 03:46:39</sys_updated_on>
+        <template><![CDATA[<section class="login-cta">
+
+  <div>
+
+    <h2>
+      Ready to get started?
+    </h2>
+
+    <p>
+      Login to report complaints,
+      track resolutions and provide feedback.
+    </p>
+
+    <a href="?id=login"
+       class="cta-button">
+
+      Login to Campus Services
+
+    </a>
+
+  </div>
+
+</section>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>sp_widget_988c74f980a303107f4447e44ab1d562</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;.login-cta {&amp;#13;
+  padding: 55px 20px;&amp;#13;
+&amp;#13;
+  background: #0f766e;&amp;#13;
+&amp;#13;
+  text-align: center;&amp;#13;
+&amp;#13;
+  color: white;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.login-cta h2 {&amp;#13;
+  font-size: 30px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.login-cta p {&amp;#13;
+  margin-top: 10px;&amp;#13;
+&amp;#13;
+  opacity: 0.9;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.cta-button {&amp;#13;
+  display: inline-block;&amp;#13;
+&amp;#13;
+  margin-top: 22px;&amp;#13;
+&amp;#13;
+  padding: 12px 25px;&amp;#13;
+&amp;#13;
+  background: white;&amp;#13;
+&amp;#13;
+  color: #0f766e;&amp;#13;
+&amp;#13;
+  border-radius: 8px;&amp;#13;
+&amp;#13;
+  text-decoration: none;&amp;#13;
+&amp;#13;
+  font-weight: 700;&amp;#13;
+}&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;1food_services_login_page&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]&gt;&lt;/link&gt;&lt;name&gt;Food Services Login CTA&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;true&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+})();]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-09-26 03:46:39&lt;/sys_created_on&gt;&lt;sys_id&gt;988c74f980a303107f4447e44ab1d562&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;Food Services Login CTA&lt;/sys_name&gt;&lt;sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Campus Food Services Assistant"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_988c74f980a303107f4447e44ab1d562&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-09-26 03:46:39&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;section class="login-cta"&gt;
+
+  &lt;div&gt;
+
+    &lt;h2&gt;
+      Ready to get started?
+    &lt;/h2&gt;
+
+    &lt;p&gt;
+      Login to report complaints,
+      track resolutions and provide feedback.
+    &lt;/p&gt;
+
+    &lt;a href="?id=login"
+       class="cta-button"&gt;
+
+      Login to Campus Services
+
+    &lt;/a&gt;
+
+  &lt;/div&gt;
+
+&lt;/section&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>388753851</payload_hash>
+        <record_name>Food Services Login CTA</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 03:46:39</sys_created_on>
+        <sys_id>09bc7cf980a303107f4447e44ab1d539</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0dbd279d70000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 03:46:39</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>09bc7cf9fea30310783e187adf8eb938</update_guid>
+        <update_guid_history>09bc7cf9fea30310783e187adf8eb938:388753851</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Food Services Login CTA">fd07befd802743107f4447e44ab1d58d</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 12:41:05</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>0d7ee12e62ae441681bfda0e75ea94a1</sys_id>
+        <sys_metadata>988c74f980a303107f4447e44ab1d562</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Food Services Login CTA</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>sp_widget_988c74f980a303107f4447e44ab1d562</sys_update_name>
+        <sys_update_version display_value="sp_widget_988c74f980a303107f4447e44ab1d562">09bc7cf980a303107f4447e44ab1d539</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 12:41:05</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

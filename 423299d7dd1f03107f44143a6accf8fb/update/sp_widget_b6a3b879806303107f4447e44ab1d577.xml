@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>```css&#13;
+.cfs-navbar {&#13;
+  background: #ffffff;&#13;
+  border-bottom: 1px solid #e5e7eb;&#13;
+&#13;
+  min-height: 70px;&#13;
+&#13;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);&#13;
+}&#13;
+&#13;
+&#13;
+/* Container */&#13;
+&#13;
+.cfs-navbar .container {&#13;
+  min-height: 70px;&#13;
+&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: space-between;&#13;
+}&#13;
+&#13;
+&#13;
+/* Brand */&#13;
+&#13;
+.navbar-brand {&#13;
+  margin: 0;&#13;
+  padding: 0;&#13;
+}&#13;
+&#13;
+.navbar-brand a {&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+&#13;
+  gap: 10px;&#13;
+&#13;
+  text-decoration: none;&#13;
+&#13;
+  color: #1f2937;&#13;
+}&#13;
+&#13;
+.brand-icon {&#13;
+  width: 40px;&#13;
+  height: 40px;&#13;
+&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+&#13;
+  border-radius: 8px;&#13;
+&#13;
+  background: #0f766e;&#13;
+&#13;
+  color: #ffffff;&#13;
+&#13;
+  font-size: 18px;&#13;
+}&#13;
+&#13;
+.brand-name {&#13;
+  font-size: 17px;&#13;
+  font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+/* Navigation */&#13;
+&#13;
+.cfs-navbar .navbar-nav {&#13;
+  margin: 0;&#13;
+&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+&#13;
+  gap: 8px;&#13;
+}&#13;
+&#13;
+.cfs-navbar .navbar-nav &gt; li &gt; a {&#13;
+  color: #4b5563;&#13;
+&#13;
+  font-size: 14px;&#13;
+  font-weight: 500;&#13;
+&#13;
+  padding: 10px 14px;&#13;
+&#13;
+  border-radius: 6px;&#13;
+&#13;
+  text-decoration: none;&#13;
+}&#13;
+&#13;
+&#13;
+/* Hover */&#13;
+&#13;
+.cfs-navbar .navbar-nav &gt; li &gt; a:hover {&#13;
+  background: #f0fdfa;&#13;
+&#13;
+  color: #0f766e;&#13;
+}&#13;
+&#13;
+&#13;
+/* Login button */&#13;
+&#13;
+.cfs-navbar .login-btn {&#13;
+  background: #0f766e !important;&#13;
+&#13;
+  color: #ffffff !important;&#13;
+&#13;
+  margin-left: 8px;&#13;
+&#13;
+  padding: 10px 20px !important;&#13;
+&#13;
+  border-radius: 7px !important;&#13;
+&#13;
+  font-weight: 600 !important;&#13;
+}&#13;
+&#13;
+.cfs-navbar .login-btn:hover {&#13;
+  background: #115e59 !important;&#13;
+&#13;
+  color: #ffffff !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* Mobile */&#13;
+&#13;
+@media (max-width: 767px) {&#13;
+&#13;
+  .cfs-navbar .container {&#13;
+    flex-direction: column;&#13;
+&#13;
+    padding: 12px 15px;&#13;
+  }&#13;
+&#13;
+  .cfs-navbar .navbar-nav {&#13;
+    width: 100%;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    margin-top: 10px;&#13;
+&#13;
+    flex-wrap: wrap;&#13;
+  }&#13;
+&#13;
+  .cfs-navbar .navbar-nav &gt; li &gt; a {&#13;
+    padding: 8px 10px;&#13;
+  }&#13;
+&#13;
+}&#13;
+```&#13;
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>food_services_navbar</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Food_Services_Navbar</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.loggedIn = gs.isLoggedIn();
+
+    data.userName = '';
+    data.userInitial = '';
+
+    if (data.loggedIn) {
+
+        var user = gs.getUser();
+
+        data.userName = user.getDisplayName();
+
+        if (data.userName) {
+            data.userInitial =
+                data.userName.substring(0, 1).toUpperCase();
+        }
+    }
+
+
+    /*
+     * NAVIGATION CONFIGURATION
+     *
+     * Change these values according
+     * to your actual portal page IDs.
+     */
+
+    data.menuItems = [
+
+        {
+            label: 'Home',
+            icon: 'fa fa-home',
+            url: '?id=food_home',
+            visible: true
+        },
+
+        {
+            label: 'Services',
+            icon: 'fa fa-th-large',
+            url: '?id=food_services',
+            visible: true
+        },
+
+        {
+            label: 'My Complaints',
+            icon: 'fa fa-list-alt',
+            url: '?id=my_complaints',
+            visible: data.loggedIn
+        },
+
+        {
+            label: 'Feedback',
+            icon: 'fa fa-comment',
+            url: '?id=food_feedback',
+            visible: data.loggedIn
+        }
+
+    ];
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 03:10:42</sys_created_on>
+        <sys_id>b6a3b879806303107f4447e44ab1d577</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>Food_Services_Navbar</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_b6a3b879806303107f4447e44ab1d577</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 06:06:53</sys_updated_on>
+        <template><![CDATA[<nav class="cfs-navbar">
+
+  <div class="container">
+
+    <!-- Brand -->
+    <div class="navbar-brand">
+      <a href="?id=food_home">
+
+        <span class="brand-icon">
+          <i class="fa fa-cutlery"></i>
+        </span>
+
+        <span class="brand-name">
+          Campus Food Services
+        </span>
+
+      </a>
+    </div>
+
+
+    <!-- Navigation -->
+    <ul class="nav navbar-nav navbar-right">
+
+      <!-- Home -->
+      <li>
+        <a href="?id=food_home">
+          <i class="fa fa-home"></i>
+          <span>Home</span>
+        </a>
+      </li>
+       <li>
+        <a href="https://www.youtube.com/channel/UCoRtLMN2LTSEql7t81WXy0g">
+          <i class="fa fa-home"></i>
+          <span>you tube </span>
+        </a>
+      </li>
+
+
+      <!-- Services -->
+      <li>
+        <a href="?id=food_services">
+          <i class="fa fa-th-large"></i>
+          <span>Services</span>
+        </a>
+      </li>
+
+
+      <!-- About -->
+      <li>
+        <a href="?id=food_about">
+          <i class="fa fa-info-circle"></i>
+          <span>About</span>
+        </a>
+      </li>
+
+
+    <a href="/sp?id=login" class="login-btn">
+  <i class="fa fa-sign-in"></i>
+  <span>Login</span>
+</a>
+
+    </ul>
+
+  </div>
+
+</nav>]]></template>
+    </sp_widget>
+</record_update>

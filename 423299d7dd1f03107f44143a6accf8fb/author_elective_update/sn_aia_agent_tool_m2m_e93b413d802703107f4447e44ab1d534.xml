@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sn_aia_agent_tool_m2m">
+    <sn_aia_agent_tool_m2m action="DELETE">
+        <active>true</active>
+        <agent display_value="Campus Food Intelligence Agent">be219d21112703107f44be1983f83811</agent>
+        <description>Analyze the complete JSON output returned by the "Get Food Base Problem" tool.
+
+Use the "food_base_problem_data" input from that tool output.
+
+The input contains the fields:
+Number, Use Case, Problem Type, Student Count, Meal Type, Mess Hall, Description, and State.
+
+Determine Priority using ONLY Use Case and Student Count.
+
+This tool must be called only after Get Food Base Problem has successfully retrieved the record.</description>
+        <display_mode>inline</display_mode>
+        <display_output>true</display_output>
+        <document_status/>
+        <entity>sn_aia_agent</entity>
+        <entity_id>be219d21112703107f44be1983f83811</entity_id>
+        <execution_mode>copilot</execution_mode>
+        <inputs>[{"name":"food_base_problem_number","value":"","description":"The Food Base Problem Number to analyze, for example FBP0001059.","mandatory":true}]</inputs>
+        <max_auto_executions>10</max_auto_executions>
+        <name>Analyze Food Base Problem</name>
+        <output_transformation_strategy>none</output_transformation_strategy>
+        <post_message>Food Base Problem analysis completed</post_message>
+        <post_processing_script/>
+        <pre_message>Analyzing the Food Base Problem</pre_message>
+        <pre_run>false</pre_run>
+        <requires_text_refined_message>false</requires_text_refined_message>
+        <requires_widget_transformation>true</requires_widget_transformation>
+        <should_display_refined_message>false</should_display_refined_message>
+        <sys_class_name>sn_aia_agent_tool_m2m</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 04:50:02</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>e93b413d802703107f4447e44ab1d534</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Analyze Food Base Problem</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sn_aia_agent_tool_m2m_e93b413d802703107f4447e44ab1d534</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 05:47:51</sys_updated_on>
+        <timeout/>
+        <tool display_value="Analyze Food Base Problem">293b413d802703107f4447e44ab1d530</tool>
+        <tool_attributes>{}</tool_attributes>
+        <transformation_instructions/>
+        <widgets>db0e858eff62b210f465ffffffffff2c</widgets>
+    </sn_aia_agent_tool_m2m>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>sn_aia_agent_tool_m2m_e93b413d802703107f4447e44ab1d534</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sn_aia_agent_tool_m2m"><sn_aia_agent_tool_m2m action="INSERT_OR_UPDATE"><active>true</active><agent display_value="Campus Food Intelligence Agent">be219d21112703107f44be1983f83811</agent><description>Analyze the complete JSON output returned by the "Get Food Base Problem" tool.
+
+Use the "food_base_problem_data" input from that tool output.
+
+The input contains the fields:
+Number, Use Case, Problem Type, Student Count, Meal Type, Mess Hall, Description, and State.
+
+Determine Priority using ONLY Use Case and Student Count.
+
+This tool must be called only after Get Food Base Problem has successfully retrieved the record.</description><display_mode>inline</display_mode><display_output>true</display_output><document_status/><entity>sn_aia_agent</entity><entity_id>be219d21112703107f44be1983f83811</entity_id><execution_mode>copilot</execution_mode><inputs>[{"name":"food_base_problem_number","value":"","description":"The Food Base Problem Number to analyze, for example FBP0001059.","mandatory":true}]</inputs><max_auto_executions>10</max_auto_executions><name>Analyze Food Base Problem</name><output_transformation_strategy>none</output_transformation_strategy><post_message>Food Base Problem analysis completed</post_message><post_processing_script/><pre_message>Analyzing the Food Base Problem</pre_message><pre_run>false</pre_run><requires_text_refined_message>false</requires_text_refined_message><requires_widget_transformation>true</requires_widget_transformation><should_display_refined_message>false</should_display_refined_message><sys_class_name>sn_aia_agent_tool_m2m</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-09-26 04:50:02</sys_created_on><sys_domain>global</sys_domain><sys_id>e93b413d802703107f4447e44ab1d534</sys_id><sys_mod_count>4</sys_mod_count><sys_name>Analyze Food Base Problem</sys_name><sys_overrides/><sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package><sys_policy/><sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope><sys_update_name>sn_aia_agent_tool_m2m_e93b413d802703107f4447e44ab1d534</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-09-26 05:47:51</sys_updated_on><timeout/><tool display_value="Analyze Food Base Problem">293b413d802703107f4447e44ab1d530</tool><tool_attributes>{}</tool_attributes><transformation_instructions/><widgets>db0e858eff62b210f465ffffffffff2c</widgets></sn_aia_agent_tool_m2m></record_update>]]></payload>
+        <payload_hash>-1255945424</payload_hash>
+        <record_name>Analyze Food Base Problem</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 05:47:51</sys_created_on>
+        <sys_id>687891fd80a703107f4447e44ab1d599</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0dc4172ce0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 05:47:51</sys_updated_on>
+        <type>Agent Tool</type>
+        <update_guid>e87891fddda703105284bf0e81097a98</update_guid>
+        <update_guid_history>e87891fddda703105284bf0e81097a98:-1255945424,9ff6d5f919a7031058a14e5c0d4988db:-1505582861,2962d1fd99670310d90e5903039f47fd:-1988818466,1f215db9dd670310cab7ad72c0c61b0b:-1685114309,e93b413de6270310c42201e1e6dd4f37:-1988818466</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Analyze Food Base Problem">9d596935806b03107f4447e44ab1d52d</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 07:01:38</sys_created_on>
+        <sys_db_object display_value="" name="sn_aia_agent_tool_m2m">sn_aia_agent_tool_m2m</sys_db_object>
+        <sys_id>5d7d7bd760ce42248bb22cb929f93f51</sys_id>
+        <sys_metadata>e93b413d802703107f4447e44ab1d534</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Analyze Food Base Problem</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>sn_aia_agent_tool_m2m_e93b413d802703107f4447e44ab1d534</sys_update_name>
+        <sys_update_version display_value="sn_aia_agent_tool_m2m_e93b413d802703107f4447e44ab1d534">687891fd80a703107f4447e44ab1d599</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 07:01:38</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

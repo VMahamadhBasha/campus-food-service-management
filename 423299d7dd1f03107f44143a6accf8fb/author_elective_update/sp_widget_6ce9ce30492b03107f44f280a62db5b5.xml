@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.food-home {&#13;
+  background: #f4f8fb;&#13;
+  min-height: 100vh;&#13;
+  padding-bottom: 40px;&#13;
+  font-family: Arial, sans-serif;&#13;
+}&#13;
+&#13;
+/* Hero */&#13;
+&#13;
+.hero-section {&#13;
+  background: linear-gradient(135deg, #1677b7, #075a75);&#13;
+  padding: 55px 30px;&#13;
+  text-align: center;&#13;
+  color: white;&#13;
+}&#13;
+&#13;
+.hero-content h1 {&#13;
+  font-size: 36px;&#13;
+  margin-bottom: 12px;&#13;
+  font-weight: 700;&#13;
+}&#13;
+&#13;
+.hero-content p {&#13;
+  font-size: 17px;&#13;
+  margin-bottom: 28px;&#13;
+}&#13;
+&#13;
+.primary-btn {&#13;
+  display: inline-block;&#13;
+  background: white;&#13;
+  color: #075a75;&#13;
+  padding: 13px 25px;&#13;
+  border-radius: 6px;&#13;
+  text-decoration: none;&#13;
+  font-weight: bold;&#13;
+}&#13;
+&#13;
+.primary-btn:hover {&#13;
+  text-decoration: none;&#13;
+  opacity: 0.9;&#13;
+}&#13;
+&#13;
+/* Features */&#13;
+&#13;
+.features-section {&#13;
+  max-width: 1100px;&#13;
+  margin: 40px auto;&#13;
+  padding: 0 20px;&#13;
+}&#13;
+&#13;
+.features-section h2 {&#13;
+  text-align: center;&#13;
+  font-size: 28px;&#13;
+  color: #164b60;&#13;
+  margin-bottom: 5px;&#13;
+}&#13;
+&#13;
+.subtitle {&#13;
+  text-align: center;&#13;
+  color: #666;&#13;
+  margin-bottom: 30px;&#13;
+}&#13;
+&#13;
+.feature-grid {&#13;
+  display: grid;&#13;
+  grid-template-columns: repeat(4, 1fr);&#13;
+  gap: 20px;&#13;
+}&#13;
+&#13;
+.feature-card {&#13;
+  background: white;&#13;
+  padding: 25px 20px;&#13;
+  text-align: center;&#13;
+  border-radius: 10px;&#13;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.12);&#13;
+  min-height: 230px;&#13;
+}&#13;
+&#13;
+.feature-card .icon {&#13;
+  font-size: 38px;&#13;
+  margin-bottom: 12px;&#13;
+}&#13;
+&#13;
+.feature-card h3 {&#13;
+  color: #075a75;&#13;
+  font-size: 19px;&#13;
+}&#13;
+&#13;
+.feature-card p {&#13;
+  color: #666;&#13;
+  font-size: 14px;&#13;
+  line-height: 1.5;&#13;
+  min-height: 55px;&#13;
+}&#13;
+&#13;
+.feature-card a {&#13;
+  color: #08718c;&#13;
+  font-weight: bold;&#13;
+  text-decoration: none;&#13;
+}&#13;
+&#13;
+/* Information */&#13;
+&#13;
+.info-section {&#13;
+  max-width: 1100px;&#13;
+  margin: 30px auto;&#13;
+  padding: 0 20px;&#13;
+  display: grid;&#13;
+  grid-template-columns: repeat(3, 1fr);&#13;
+  gap: 20px;&#13;
+}&#13;
+&#13;
+.info-box {&#13;
+  background: white;&#13;
+  padding: 20px;&#13;
+  border-radius: 8px;&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  gap: 15px;&#13;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);&#13;
+}&#13;
+&#13;
+.info-box span {&#13;
+  font-size: 30px;&#13;
+}&#13;
+&#13;
+.info-box h3 {&#13;
+  margin: 0 0 5px;&#13;
+  color: #075a75;&#13;
+}&#13;
+&#13;
+.info-box p {&#13;
+  margin: 0;&#13;
+  color: #666;&#13;
+  font-size: 13px;&#13;
+}&#13;
+&#13;
+/* Mobile */&#13;
+&#13;
+@media (max-width: 900px) {&#13;
+  .feature-grid {&#13;
+    grid-template-columns: repeat(2, 1fr);&#13;
+  }&#13;
+&#13;
+  .info-section {&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+}&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+  .feature-grid {&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+&#13;
+  .hero-content h1 {&#13;
+    font-size: 27px;&#13;
+  }&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>Campus Food Service Home Page</description>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>campus_food_home</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Campus Food Home</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-23 06:52:43</sys_created_on>
+        <sys_id>6ce9ce30492b03107f44f280a62db5b5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Campus Food Home</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_6ce9ce30492b03107f44f280a62db5b5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-23 06:52:43</sys_updated_on>
+        <template><![CDATA[<div class="food-home">
+
+  <!-- Welcome Section -->
+  <div class="hero-section">
+    <div class="hero-content">
+      <h1>]]>🍽<![CDATA[️ Campus Food Service</h1>
+      <p>Smart and simple food service assistance for students</p>
+
+      <a href="?id=campus_food_service" class="primary-btn">
+        ]]>📝<![CDATA[ Report a Food Complaint
+      </a>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <div class="features-section">
+
+    <h2>Our Services</h2>
+    <p class="subtitle">Everything you need for campus food services</p>
+
+    <div class="feature-grid">
+
+      <div class="feature-card">
+        <div class="icon">]]>📝<![CDATA[</div>
+        <h3>Food Complaint</h3>
+        <p>Report food quality, hygiene or meal-related complaints.</p>
+        <a href="?id=campus_food_service">Report Complaint →</a>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon">]]>🔍<![CDATA[</div>
+        <h3>Track Complaint</h3>
+        <p>Check the current status of your submitted complaint.</p>
+        <a href="?id=track_complaint">Track Complaint →</a>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon">]]>🍛<![CDATA[</div>
+        <h3>Today's Menu</h3>
+        <p>View breakfast, lunch, snacks and dinner menu.</p>
+        <a href="?id=food_menu">View Menu →</a>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon">⭐</div>
+        <h3>Food Feedback</h3>
+        <p>Share your feedback about campus food services.</p>
+        <a href="?id=food_feedback">Give Feedback →</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Quick Information -->
+  <div class="info-section">
+
+    <div class="info-box">
+      <span>]]>🍽<![CDATA[️</span>
+      <div>
+        <h3>Food Quality</h3>
+        <p>Report poor quality or stale food.</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <span>]]>🧼<![CDATA[</span>
+      <div>
+        <h3>Hygiene</h3>
+        <p>Report cleanliness and hygiene issues.</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <span>]]>📢<![CDATA[</span>
+      <div>
+        <h3>Quick Support</h3>
+        <p>Submit your issue and get assistance.</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>sp_widget_6ce9ce30492b03107f44f280a62db5b5</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;.food-home {&amp;#13;
+  background: #f4f8fb;&amp;#13;
+  min-height: 100vh;&amp;#13;
+  padding-bottom: 40px;&amp;#13;
+  font-family: Arial, sans-serif;&amp;#13;
+}&amp;#13;
+&amp;#13;
+/* Hero */&amp;#13;
+&amp;#13;
+.hero-section {&amp;#13;
+  background: linear-gradient(135deg, #1677b7, #075a75);&amp;#13;
+  padding: 55px 30px;&amp;#13;
+  text-align: center;&amp;#13;
+  color: white;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.hero-content h1 {&amp;#13;
+  font-size: 36px;&amp;#13;
+  margin-bottom: 12px;&amp;#13;
+  font-weight: 700;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.hero-content p {&amp;#13;
+  font-size: 17px;&amp;#13;
+  margin-bottom: 28px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.primary-btn {&amp;#13;
+  display: inline-block;&amp;#13;
+  background: white;&amp;#13;
+  color: #075a75;&amp;#13;
+  padding: 13px 25px;&amp;#13;
+  border-radius: 6px;&amp;#13;
+  text-decoration: none;&amp;#13;
+  font-weight: bold;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.primary-btn:hover {&amp;#13;
+  text-decoration: none;&amp;#13;
+  opacity: 0.9;&amp;#13;
+}&amp;#13;
+&amp;#13;
+/* Features */&amp;#13;
+&amp;#13;
+.features-section {&amp;#13;
+  max-width: 1100px;&amp;#13;
+  margin: 40px auto;&amp;#13;
+  padding: 0 20px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.features-section h2 {&amp;#13;
+  text-align: center;&amp;#13;
+  font-size: 28px;&amp;#13;
+  color: #164b60;&amp;#13;
+  margin-bottom: 5px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.subtitle {&amp;#13;
+  text-align: center;&amp;#13;
+  color: #666;&amp;#13;
+  margin-bottom: 30px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.feature-grid {&amp;#13;
+  display: grid;&amp;#13;
+  grid-template-columns: repeat(4, 1fr);&amp;#13;
+  gap: 20px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.feature-card {&amp;#13;
+  background: white;&amp;#13;
+  padding: 25px 20px;&amp;#13;
+  text-align: center;&amp;#13;
+  border-radius: 10px;&amp;#13;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.12);&amp;#13;
+  min-height: 230px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.feature-card .icon {&amp;#13;
+  font-size: 38px;&amp;#13;
+  margin-bottom: 12px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.feature-card h3 {&amp;#13;
+  color: #075a75;&amp;#13;
+  font-size: 19px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.feature-card p {&amp;#13;
+  color: #666;&amp;#13;
+  font-size: 14px;&amp;#13;
+  line-height: 1.5;&amp;#13;
+  min-height: 55px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.feature-card a {&amp;#13;
+  color: #08718c;&amp;#13;
+  font-weight: bold;&amp;#13;
+  text-decoration: none;&amp;#13;
+}&amp;#13;
+&amp;#13;
+/* Information */&amp;#13;
+&amp;#13;
+.info-section {&amp;#13;
+  max-width: 1100px;&amp;#13;
+  margin: 30px auto;&amp;#13;
+  padding: 0 20px;&amp;#13;
+  display: grid;&amp;#13;
+  grid-template-columns: repeat(3, 1fr);&amp;#13;
+  gap: 20px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.info-box {&amp;#13;
+  background: white;&amp;#13;
+  padding: 20px;&amp;#13;
+  border-radius: 8px;&amp;#13;
+  display: flex;&amp;#13;
+  align-items: center;&amp;#13;
+  gap: 15px;&amp;#13;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.info-box span {&amp;#13;
+  font-size: 30px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.info-box h3 {&amp;#13;
+  margin: 0 0 5px;&amp;#13;
+  color: #075a75;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.info-box p {&amp;#13;
+  margin: 0;&amp;#13;
+  color: #666;&amp;#13;
+  font-size: 13px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+/* Mobile */&amp;#13;
+&amp;#13;
+@media (max-width: 900px) {&amp;#13;
+  .feature-grid {&amp;#13;
+    grid-template-columns: repeat(2, 1fr);&amp;#13;
+  }&amp;#13;
+&amp;#13;
+  .info-section {&amp;#13;
+    grid-template-columns: 1fr;&amp;#13;
+  }&amp;#13;
+}&amp;#13;
+&amp;#13;
+@media (max-width: 600px) {&amp;#13;
+  .feature-grid {&amp;#13;
+    grid-template-columns: 1fr;&amp;#13;
+  }&amp;#13;
+&amp;#13;
+  .hero-content h1 {&amp;#13;
+    font-size: 27px;&amp;#13;
+  }&amp;#13;
+}&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description&gt;Campus Food Service Home Page&lt;/description&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;campus_food_home&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]&gt;&lt;/link&gt;&lt;name&gt;Campus Food Home&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;true&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+})();]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-09-23 06:52:43&lt;/sys_created_on&gt;&lt;sys_id&gt;6ce9ce30492b03107f44f280a62db5b5&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;Campus Food Home&lt;/sys_name&gt;&lt;sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Campus Food Services Assistant"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_6ce9ce30492b03107f44f280a62db5b5&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-09-23 06:52:43&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div class="food-home"&gt;
+
+  &lt;!-- Welcome Section --&gt;
+  &lt;div class="hero-section"&gt;
+    &lt;div class="hero-content"&gt;
+      &lt;h1&gt;]]&gt;🍽&lt;![CDATA[️ Campus Food Service&lt;/h1&gt;
+      &lt;p&gt;Smart and simple food service assistance for students&lt;/p&gt;
+
+      &lt;a href="?id=campus_food_service" class="primary-btn"&gt;
+        ]]&gt;📝&lt;![CDATA[ Report a Food Complaint
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Features --&gt;
+  &lt;div class="features-section"&gt;
+
+    &lt;h2&gt;Our Services&lt;/h2&gt;
+    &lt;p class="subtitle"&gt;Everything you need for campus food services&lt;/p&gt;
+
+    &lt;div class="feature-grid"&gt;
+
+      &lt;div class="feature-card"&gt;
+        &lt;div class="icon"&gt;]]&gt;📝&lt;![CDATA[&lt;/div&gt;
+        &lt;h3&gt;Food Complaint&lt;/h3&gt;
+        &lt;p&gt;Report food quality, hygiene or meal-related complaints.&lt;/p&gt;
+        &lt;a href="?id=campus_food_service"&gt;Report Complaint →&lt;/a&gt;
+      &lt;/div&gt;
+
+      &lt;div class="feature-card"&gt;
+        &lt;div class="icon"&gt;]]&gt;🔍&lt;![CDATA[&lt;/div&gt;
+        &lt;h3&gt;Track Complaint&lt;/h3&gt;
+        &lt;p&gt;Check the current status of your submitted complaint.&lt;/p&gt;
+        &lt;a href="?id=track_complaint"&gt;Track Complaint →&lt;/a&gt;
+      &lt;/div&gt;
+
+      &lt;div class="feature-card"&gt;
+        &lt;div class="icon"&gt;]]&gt;🍛&lt;![CDATA[&lt;/div&gt;
+        &lt;h3&gt;Today's Menu&lt;/h3&gt;
+        &lt;p&gt;View breakfast, lunch, snacks and dinner menu.&lt;/p&gt;
+        &lt;a href="?id=food_menu"&gt;View Menu →&lt;/a&gt;
+      &lt;/div&gt;
+
+      &lt;div class="feature-card"&gt;
+        &lt;div class="icon"&gt;⭐&lt;/div&gt;
+        &lt;h3&gt;Food Feedback&lt;/h3&gt;
+        &lt;p&gt;Share your feedback about campus food services.&lt;/p&gt;
+        &lt;a href="?id=food_feedback"&gt;Give Feedback →&lt;/a&gt;
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Quick Information --&gt;
+  &lt;div class="info-section"&gt;
+
+    &lt;div class="info-box"&gt;
+      &lt;span&gt;]]&gt;🍽&lt;![CDATA[️&lt;/span&gt;
+      &lt;div&gt;
+        &lt;h3&gt;Food Quality&lt;/h3&gt;
+        &lt;p&gt;Report poor quality or stale food.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="info-box"&gt;
+      &lt;span&gt;]]&gt;🧼&lt;![CDATA[&lt;/span&gt;
+      &lt;div&gt;
+        &lt;h3&gt;Hygiene&lt;/h3&gt;
+        &lt;p&gt;Report cleanliness and hygiene issues.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="info-box"&gt;
+      &lt;span&gt;]]&gt;📢&lt;![CDATA[&lt;/span&gt;
+      &lt;div&gt;
+        &lt;h3&gt;Quick Support&lt;/h3&gt;
+        &lt;p&gt;Submit your issue and get assistance.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-1912827356</payload_hash>
+        <record_name>Campus Food Home</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-23 06:52:43</sys_created_on>
+        <sys_id>ad8ac6b0492b03107f44f280a62db59c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0cd09bf250000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-23 06:52:43</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>618ac6b04c2b03104b326bf8f8466f9c</update_guid>
+        <update_guid_history>618ac6b04c2b03104b326bf8f8466f9c:-1912827356</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Campus Food Home">dba67ebd802743107f4447e44ab1d594</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 12:39:33</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>025b3781f9aa4ebb8072b7b4234a6e91</sys_id>
+        <sys_metadata>6ce9ce30492b03107f44f280a62db5b5</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Campus Food Home</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>sp_widget_6ce9ce30492b03107f44f280a62db5b5</sys_update_name>
+        <sys_update_version display_value="sp_widget_6ce9ce30492b03107f44f280a62db5b5">ad8ac6b0492b03107f44f280a62db59c</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 12:39:33</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

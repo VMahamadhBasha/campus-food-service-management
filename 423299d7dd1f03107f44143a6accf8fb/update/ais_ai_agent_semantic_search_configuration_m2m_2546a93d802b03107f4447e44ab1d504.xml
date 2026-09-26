@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="ais_ai_agent_semantic_search_configuration_m2m">
+    <ais_ai_agent_semantic_search_configuration_m2m action="INSERT_OR_UPDATE">
+        <ai_agent display_value="Campus Food Intelligence Agent">be219d21112703107f44be1983f83811</ai_agent>
+        <ai_agent_tool display_value="Find Food Knowledge">ad46693d802b03107f4447e44ab1d5f9</ai_agent_tool>
+        <semantic_search_configuration display_value="Find Food Knowledge">e946693d802b03107f4447e44ab1d5fb</semantic_search_configuration>
+        <sys_class_name>ais_ai_agent_semantic_search_configuration_m2m</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 06:48:16</sys_created_on>
+        <sys_id>2546a93d802b03107f4447e44ab1d504</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>ais_ai_agent_semantic_search_configuration_m2m_2546a93d802b03107f4447e44ab1d504</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 06:48:16</sys_updated_on>
+    </ais_ai_agent_semantic_search_configuration_m2m>
+</record_update>

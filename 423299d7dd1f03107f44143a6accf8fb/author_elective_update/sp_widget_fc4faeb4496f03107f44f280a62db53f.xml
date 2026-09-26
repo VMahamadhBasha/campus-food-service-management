@@ -1,0 +1,957 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function($scope) {
+
+    var c = this;
+
+
+    c.loading = false;
+
+    c.successMessage = "";
+
+    c.errorMessage = "";
+
+
+    c.submitTicket = function() {
+
+        c.successMessage = "";
+        c.errorMessage = "";
+
+
+        if (!c.data.category) {
+
+            c.errorMessage =
+                "Please select an issue category.";
+
+            return;
+        }
+
+
+        if (!c.data.subject) {
+
+            c.errorMessage =
+                "Please enter the subject.";
+
+            return;
+        }
+
+
+        if (!c.data.description) {
+
+            c.errorMessage =
+                "Please describe your issue.";
+
+            return;
+        }
+
+
+        c.loading = true;
+
+
+        c.server.get({
+
+            action: "create_ticket",
+
+            category: c.data.category,
+
+            subject: c.data.subject,
+
+            description: c.data.description
+
+        }).then(function(response) {
+
+            c.loading = false;
+
+
+            if (response.data.success) {
+
+                c.successMessage =
+                    response.data.message;
+
+
+                c.data.category = "";
+
+                c.data.subject = "";
+
+                c.data.description = "";
+
+            } else {
+
+                c.errorMessage =
+                    response.data.message;
+
+            }
+
+        });
+
+    };
+
+
+    c.goBack = function() {
+
+        window.location.href =
+            "?id=student_welcome";
+
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.cfms-ticket-page {&#13;
+    min-height: 100vh;&#13;
+    background: #f3f6fa;&#13;
+    padding: 35px;&#13;
+    font-family: "Segoe UI", Arial, sans-serif;&#13;
+    color: #102235;&#13;
+}&#13;
+&#13;
+&#13;
+.ticket-header {&#13;
+    background: white;&#13;
+    border-radius: 16px;&#13;
+    padding: 25px 30px;&#13;
+    margin-bottom: 25px;&#13;
+&#13;
+    display: flex;&#13;
+    justify-content: space-between;&#13;
+    align-items: center;&#13;
+&#13;
+    border: 1px solid #dce4eb;&#13;
+}&#13;
+&#13;
+&#13;
+.ticket-header h1 {&#13;
+    margin: 0 0 7px;&#13;
+    font-size: 29px;&#13;
+    font-weight: 750;&#13;
+}&#13;
+&#13;
+&#13;
+.ticket-header p {&#13;
+    margin: 0;&#13;
+    color: #63768a;&#13;
+    font-size: 16px;&#13;
+}&#13;
+&#13;
+&#13;
+.back-btn {&#13;
+    border: 1px solid #cfd9e2;&#13;
+    background: white;&#13;
+    color: #34506a;&#13;
+    padding: 10px 18px;&#13;
+    border-radius: 8px;&#13;
+    cursor: pointer;&#13;
+    font-size: 15px;&#13;
+}&#13;
+&#13;
+&#13;
+.ticket-card {&#13;
+    background: white;&#13;
+    max-width: 850px;&#13;
+    margin: auto;&#13;
+&#13;
+    padding: 35px;&#13;
+&#13;
+    border-radius: 18px;&#13;
+&#13;
+    border: 1px solid #dce4eb;&#13;
+&#13;
+    box-shadow:&#13;
+        0 8px 25px rgba(30, 50, 70, .06);&#13;
+}&#13;
+&#13;
+&#13;
+.form-group {&#13;
+    margin-bottom: 24px;&#13;
+}&#13;
+&#13;
+&#13;
+.form-group label {&#13;
+    display: block;&#13;
+    font-size: 16px;&#13;
+    font-weight: 700;&#13;
+    margin-bottom: 9px;&#13;
+}&#13;
+&#13;
+&#13;
+.form-control {&#13;
+    width: 100%;&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    border: 1px solid #ccd7e0;&#13;
+&#13;
+    border-radius: 9px;&#13;
+&#13;
+    padding: 13px 15px;&#13;
+&#13;
+    font-size: 15px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    outline: none;&#13;
+}&#13;
+&#13;
+&#13;
+.form-control:focus {&#13;
+    border-color: #159c91;&#13;
+&#13;
+    box-shadow:&#13;
+        0 0 0 3px rgba(21,156,145,.10);&#13;
+}&#13;
+&#13;
+&#13;
+.description {&#13;
+    resize: vertical;&#13;
+}&#13;
+&#13;
+&#13;
+.submit-btn {&#13;
+    width: 100%;&#13;
+    height: 52px;&#13;
+&#13;
+    border: none;&#13;
+    border-radius: 9px;&#13;
+&#13;
+    background: #117f75;&#13;
+&#13;
+    color: white;&#13;
+&#13;
+    font-size: 17px;&#13;
+    font-weight: 700;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+.submit-btn:hover {&#13;
+    background: #096b62;&#13;
+}&#13;
+&#13;
+&#13;
+.submit-btn:disabled {&#13;
+    opacity: .6;&#13;
+    cursor: not-allowed;&#13;
+}&#13;
+&#13;
+&#13;
+.success-message {&#13;
+    margin-top: 20px;&#13;
+    padding: 14px;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    background: #e7f7ee;&#13;
+    color: #137442;&#13;
+&#13;
+    text-align: center;&#13;
+}&#13;
+&#13;
+&#13;
+.error-message {&#13;
+    margin-top: 20px;&#13;
+    padding: 14px;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    background: #fff0f0;&#13;
+    color: #c62828;&#13;
+&#13;
+    text-align: center;&#13;
+}&#13;
+&#13;
+&#13;
+@media(max-width:600px) {&#13;
+&#13;
+    .cfms-ticket-page {&#13;
+        padding: 18px;&#13;
+    }&#13;
+&#13;
+    .ticket-header {&#13;
+        align-items: flex-start;&#13;
+        gap: 15px;&#13;
+    }&#13;
+&#13;
+    .ticket-header h1 {&#13;
+        font-size: 23px;&#13;
+    }&#13;
+&#13;
+    .ticket-card {&#13;
+        padding: 22px;&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>cfms_raise_ticket</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>CFMS Raise Ticket</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.success = false;
+    data.message = "";
+
+
+    if (input && input.action == "create_ticket") {
+
+        if (!input.category ||
+            !input.subject ||
+            !input.description) {
+
+            data.success = false;
+            data.message =
+                "Please fill all required fields.";
+
+            return;
+        }
+
+
+        var ticket = new GlideRecord("incident");
+
+        ticket.initialize();
+
+
+        ticket.caller_id = gs.getUserID();
+
+        ticket.short_description =
+            "[CFMS] " + input.subject;
+
+        ticket.description =
+            "Category: " + input.category +
+            "\n\n" +
+            input.description;
+
+        ticket.contact_type = "self-service";
+
+        ticket.urgency = 3;
+        ticket.impact = 3;
+
+
+        var ticketNumber = ticket.insert();
+
+
+        if (ticketNumber) {
+
+            data.success = true;
+
+            data.number =
+                ticket.getValue("number");
+
+            data.message =
+                "Ticket " +
+                ticket.getValue("number") +
+                " has been raised successfully.";
+
+        } else {
+
+            data.success = false;
+
+            data.message =
+                "Unable to create the ticket.";
+
+        }
+
+    }
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-23 09:37:18</sys_created_on>
+        <sys_id>fc4faeb4496f03107f44f280a62db53f</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>CFMS Raise Ticket</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_fc4faeb4496f03107f44f280a62db53f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-23 09:39:10</sys_updated_on>
+        <template><![CDATA[<div class="cfms-ticket-page">
+
+    <div class="ticket-header">
+        <div>
+            <h1>]]>🎫<![CDATA[ Raise a Ticket</h1>
+            <p>Report any campus food or mess-related issue.</p>
+        </div>
+
+        <button class="back-btn" ng-click="c.goBack()">
+            ← Back
+        </button>
+    </div>
+
+
+    <div class="ticket-card">
+
+        <div class="form-group">
+            <label>Issue Category</label>
+
+            <select
+                ng-model="c.data.category"
+                class="form-control">
+
+                <option value="">Select an issue</option>
+                <option value="Food Quality">Food Quality</option>
+                <option value="Hygiene">Hygiene</option>
+                <option value="Billing">Billing</option>
+                <option value="Diet">Diet</option>
+                <option value="Mess Service">Mess Service</option>
+                <option value="Other">Other</option>
+
+            </select>
+        </div>
+
+
+        <div class="form-group">
+            <label>Subject</label>
+
+            <input
+                type="text"
+                class="form-control"
+                ng-model="c.data.subject"
+                placeholder="Enter your issue title">
+        </div>
+
+
+        <div class="form-group">
+            <label>Describe Your Issue</label>
+
+            <textarea
+                class="form-control description"
+                ng-model="c.data.description"
+                placeholder="Explain your issue clearly..."
+                rows="6">
+            </textarea>
+        </div>
+
+
+        <button
+            class="submit-btn"
+            ng-click="c.submitTicket()"
+            ng-disabled="c.loading">
+
+            <span ng-if="!c.loading">
+                Submit Ticket →
+            </span>
+
+            <span ng-if="c.loading">
+                Submitting...
+            </span>
+
+        </button>
+
+
+        <div
+            class="success-message"
+            ng-if="c.successMessage">
+
+            ✓ {{c.successMessage}}
+
+        </div>
+
+
+        <div
+            class="error-message"
+            ng-if="c.errorMessage">
+
+            {{c.errorMessage}}
+
+        </div>
+
+    </div>
+
+</div>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>sp_widget_fc4faeb4496f03107f44f280a62db53f</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller = function($scope) {
+
+    var c = this;
+
+
+    c.loading = false;
+
+    c.successMessage = "";
+
+    c.errorMessage = "";
+
+
+    c.submitTicket = function() {
+
+        c.successMessage = "";
+        c.errorMessage = "";
+
+
+        if (!c.data.category) {
+
+            c.errorMessage =
+                "Please select an issue category.";
+
+            return;
+        }
+
+
+        if (!c.data.subject) {
+
+            c.errorMessage =
+                "Please enter the subject.";
+
+            return;
+        }
+
+
+        if (!c.data.description) {
+
+            c.errorMessage =
+                "Please describe your issue.";
+
+            return;
+        }
+
+
+        c.loading = true;
+
+
+        c.server.get({
+
+            action: "create_ticket",
+
+            category: c.data.category,
+
+            subject: c.data.subject,
+
+            description: c.data.description
+
+        }).then(function(response) {
+
+            c.loading = false;
+
+
+            if (response.data.success) {
+
+                c.successMessage =
+                    response.data.message;
+
+
+                c.data.category = "";
+
+                c.data.subject = "";
+
+                c.data.description = "";
+
+            } else {
+
+                c.errorMessage =
+                    response.data.message;
+
+            }
+
+        });
+
+    };
+
+
+    c.goBack = function() {
+
+        window.location.href =
+            "?id=student_welcome";
+
+    };
+
+};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;.cfms-ticket-page {&amp;#13;
+    min-height: 100vh;&amp;#13;
+    background: #f3f6fa;&amp;#13;
+    padding: 35px;&amp;#13;
+    font-family: "Segoe UI", Arial, sans-serif;&amp;#13;
+    color: #102235;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.ticket-header {&amp;#13;
+    background: white;&amp;#13;
+    border-radius: 16px;&amp;#13;
+    padding: 25px 30px;&amp;#13;
+    margin-bottom: 25px;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+    justify-content: space-between;&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    border: 1px solid #dce4eb;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.ticket-header h1 {&amp;#13;
+    margin: 0 0 7px;&amp;#13;
+    font-size: 29px;&amp;#13;
+    font-weight: 750;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.ticket-header p {&amp;#13;
+    margin: 0;&amp;#13;
+    color: #63768a;&amp;#13;
+    font-size: 16px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.back-btn {&amp;#13;
+    border: 1px solid #cfd9e2;&amp;#13;
+    background: white;&amp;#13;
+    color: #34506a;&amp;#13;
+    padding: 10px 18px;&amp;#13;
+    border-radius: 8px;&amp;#13;
+    cursor: pointer;&amp;#13;
+    font-size: 15px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.ticket-card {&amp;#13;
+    background: white;&amp;#13;
+    max-width: 850px;&amp;#13;
+    margin: auto;&amp;#13;
+&amp;#13;
+    padding: 35px;&amp;#13;
+&amp;#13;
+    border-radius: 18px;&amp;#13;
+&amp;#13;
+    border: 1px solid #dce4eb;&amp;#13;
+&amp;#13;
+    box-shadow:&amp;#13;
+        0 8px 25px rgba(30, 50, 70, .06);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.form-group {&amp;#13;
+    margin-bottom: 24px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.form-group label {&amp;#13;
+    display: block;&amp;#13;
+    font-size: 16px;&amp;#13;
+    font-weight: 700;&amp;#13;
+    margin-bottom: 9px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.form-control {&amp;#13;
+    width: 100%;&amp;#13;
+    box-sizing: border-box;&amp;#13;
+&amp;#13;
+    border: 1px solid #ccd7e0;&amp;#13;
+&amp;#13;
+    border-radius: 9px;&amp;#13;
+&amp;#13;
+    padding: 13px 15px;&amp;#13;
+&amp;#13;
+    font-size: 15px;&amp;#13;
+&amp;#13;
+    background: #ffffff;&amp;#13;
+&amp;#13;
+    outline: none;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.form-control:focus {&amp;#13;
+    border-color: #159c91;&amp;#13;
+&amp;#13;
+    box-shadow:&amp;#13;
+        0 0 0 3px rgba(21,156,145,.10);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.description {&amp;#13;
+    resize: vertical;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.submit-btn {&amp;#13;
+    width: 100%;&amp;#13;
+    height: 52px;&amp;#13;
+&amp;#13;
+    border: none;&amp;#13;
+    border-radius: 9px;&amp;#13;
+&amp;#13;
+    background: #117f75;&amp;#13;
+&amp;#13;
+    color: white;&amp;#13;
+&amp;#13;
+    font-size: 17px;&amp;#13;
+    font-weight: 700;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.submit-btn:hover {&amp;#13;
+    background: #096b62;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.submit-btn:disabled {&amp;#13;
+    opacity: .6;&amp;#13;
+    cursor: not-allowed;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.success-message {&amp;#13;
+    margin-top: 20px;&amp;#13;
+    padding: 14px;&amp;#13;
+&amp;#13;
+    border-radius: 8px;&amp;#13;
+&amp;#13;
+    background: #e7f7ee;&amp;#13;
+    color: #137442;&amp;#13;
+&amp;#13;
+    text-align: center;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.error-message {&amp;#13;
+    margin-top: 20px;&amp;#13;
+    padding: 14px;&amp;#13;
+&amp;#13;
+    border-radius: 8px;&amp;#13;
+&amp;#13;
+    background: #fff0f0;&amp;#13;
+    color: #c62828;&amp;#13;
+&amp;#13;
+    text-align: center;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+@media(max-width:600px) {&amp;#13;
+&amp;#13;
+    .cfms-ticket-page {&amp;#13;
+        padding: 18px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .ticket-header {&amp;#13;
+        align-items: flex-start;&amp;#13;
+        gap: 15px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .ticket-header h1 {&amp;#13;
+        font-size: 23px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .ticket-card {&amp;#13;
+        padding: 22px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+}&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;cfms_raise_ticket&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]&gt;&lt;/link&gt;&lt;name&gt;CFMS Raise Ticket&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;false&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+
+    data.success = false;
+    data.message = "";
+
+
+    if (input &amp;&amp; input.action == "create_ticket") {
+
+        if (!input.category ||
+            !input.subject ||
+            !input.description) {
+
+            data.success = false;
+            data.message =
+                "Please fill all required fields.";
+
+            return;
+        }
+
+
+        var ticket = new GlideRecord("incident");
+
+        ticket.initialize();
+
+
+        ticket.caller_id = gs.getUserID();
+
+        ticket.short_description =
+            "[CFMS] " + input.subject;
+
+        ticket.description =
+            "Category: " + input.category +
+            "\n\n" +
+            input.description;
+
+        ticket.contact_type = "self-service";
+
+        ticket.urgency = 3;
+        ticket.impact = 3;
+
+
+        var ticketNumber = ticket.insert();
+
+
+        if (ticketNumber) {
+
+            data.success = true;
+
+            data.number =
+                ticket.getValue("number");
+
+            data.message =
+                "Ticket " +
+                ticket.getValue("number") +
+                " has been raised successfully.";
+
+        } else {
+
+            data.success = false;
+
+            data.message =
+                "Unable to create the ticket.";
+
+        }
+
+    }
+
+})();]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-09-23 09:37:18&lt;/sys_created_on&gt;&lt;sys_id&gt;fc4faeb4496f03107f44f280a62db53f&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;CFMS Raise Ticket&lt;/sys_name&gt;&lt;sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Campus Food Services Assistant"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_fc4faeb4496f03107f44f280a62db53f&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-09-23 09:39:10&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div class="cfms-ticket-page"&gt;
+
+    &lt;div class="ticket-header"&gt;
+        &lt;div&gt;
+            &lt;h1&gt;]]&gt;🎫&lt;![CDATA[ Raise a Ticket&lt;/h1&gt;
+            &lt;p&gt;Report any campus food or mess-related issue.&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;button class="back-btn" ng-click="c.goBack()"&gt;
+            ← Back
+        &lt;/button&gt;
+    &lt;/div&gt;
+
+
+    &lt;div class="ticket-card"&gt;
+
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;Issue Category&lt;/label&gt;
+
+            &lt;select
+                ng-model="c.data.category"
+                class="form-control"&gt;
+
+                &lt;option value=""&gt;Select an issue&lt;/option&gt;
+                &lt;option value="Food Quality"&gt;Food Quality&lt;/option&gt;
+                &lt;option value="Hygiene"&gt;Hygiene&lt;/option&gt;
+                &lt;option value="Billing"&gt;Billing&lt;/option&gt;
+                &lt;option value="Diet"&gt;Diet&lt;/option&gt;
+                &lt;option value="Mess Service"&gt;Mess Service&lt;/option&gt;
+                &lt;option value="Other"&gt;Other&lt;/option&gt;
+
+            &lt;/select&gt;
+        &lt;/div&gt;
+
+
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;Subject&lt;/label&gt;
+
+            &lt;input
+                type="text"
+                class="form-control"
+                ng-model="c.data.subject"
+                placeholder="Enter your issue title"&gt;
+        &lt;/div&gt;
+
+
+        &lt;div class="form-group"&gt;
+            &lt;label&gt;Describe Your Issue&lt;/label&gt;
+
+            &lt;textarea
+                class="form-control description"
+                ng-model="c.data.description"
+                placeholder="Explain your issue clearly..."
+                rows="6"&gt;
+            &lt;/textarea&gt;
+        &lt;/div&gt;
+
+
+        &lt;button
+            class="submit-btn"
+            ng-click="c.submitTicket()"
+            ng-disabled="c.loading"&gt;
+
+            &lt;span ng-if="!c.loading"&gt;
+                Submit Ticket →
+            &lt;/span&gt;
+
+            &lt;span ng-if="c.loading"&gt;
+                Submitting...
+            &lt;/span&gt;
+
+        &lt;/button&gt;
+
+
+        &lt;div
+            class="success-message"
+            ng-if="c.successMessage"&gt;
+
+            ✓ {{c.successMessage}}
+
+        &lt;/div&gt;
+
+
+        &lt;div
+            class="error-message"
+            ng-if="c.errorMessage"&gt;
+
+            {{c.errorMessage}}
+
+        &lt;/div&gt;
+
+    &lt;/div&gt;
+
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>1054600869</payload_hash>
+        <record_name>CFMS Raise Ticket</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-23 09:39:10</sys_created_on>
+        <sys_id>739032f8496f03107f44f280a62db50b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0cda2249a0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-23 09:39:10</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>739032f8b86f031037c989cd53a8b50a</update_guid>
+        <update_guid_history>739032f8b86f031037c989cd53a8b50a:1054600869,e830f678696f0310c7f9c2ac496f5c75:62673981</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="CFMS Raise Ticket">9a567e7d802743107f4447e44ab1d5d3</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 12:38:07</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>12301094218c4f328227b3a2c666b724</sys_id>
+        <sys_metadata>fc4faeb4496f03107f44f280a62db53f</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>CFMS Raise Ticket</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>sp_widget_fc4faeb4496f03107f44f280a62db53f</sys_update_name>
+        <sys_update_version display_value="sp_widget_fc4faeb4496f03107f44f280a62db53f">739032f8496f03107f44f280a62db50b</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 12:38:07</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
