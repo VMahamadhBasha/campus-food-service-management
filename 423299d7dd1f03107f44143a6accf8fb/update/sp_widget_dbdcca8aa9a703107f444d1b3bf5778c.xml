@@ -1,0 +1,1974 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($scope) {
+
+    var c = this;
+
+
+    // =========================
+    // DEFAULT SECTION
+    // =========================
+
+    c.activeSection = 'dashboard';
+
+    c.selectedAssignment = null;
+
+
+    // =========================
+    // SIDEBAR
+    // =========================
+
+    c.selectSection = function(section) {
+
+        c.activeSection = section;
+
+        c.selectedAssignment = null;
+
+    };
+
+
+    // =========================
+    // OPEN ASSIGNMENT
+    // =========================
+
+    c.openAssignment = function(assignment) {
+
+        c.selectedAssignment = assignment;
+
+        c.activeSection = 'assignments';
+
+    };
+
+
+    // =========================
+    // CLOSE ASSIGNMENT
+    // =========================
+
+    c.closeAssignment = function() {
+
+        c.selectedAssignment = null;
+
+    };
+
+
+    // =========================
+    // OPEN RECENT REQUEST
+    // =========================
+
+    c.openRequest = function(request) {
+
+        c.selectedAssignment = request;
+
+        c.activeSection = 'assignments';
+
+    };
+
+
+    // =========================
+    // PRIORITY CLASS
+    // =========================
+
+    c.getPriorityClass = function(priority) {
+
+        if (!priority) {
+
+            return 'other';
+
+        }
+
+
+        priority = priority.toLowerCase();
+
+
+        if (priority === 'high') {
+
+            return 'high';
+
+        }
+
+
+        if (priority === 'medium') {
+
+            return 'medium';
+
+        }
+
+
+        if (priority === 'low') {
+
+            return 'low';
+
+        }
+
+
+        return 'other';
+
+    };
+
+
+    // =========================
+    // STATUS CLASS
+    // =========================
+
+    c.getStatusClass = function(status) {
+
+        if (!status) {
+
+            return 'other';
+
+        }
+
+
+        status = status.toLowerCase();
+
+
+        if (status.indexOf('pending') !== -1) {
+
+            return 'pending';
+
+        }
+
+
+        if (status.indexOf('progress') !== -1) {
+
+            return 'progress';
+
+        }
+
+
+        if (status.indexOf('resolved') !== -1) {
+
+            return 'resolved';
+
+        }
+
+
+        if (status.indexOf('closed') !== -1) {
+
+            return 'resolved';
+
+        }
+
+
+        return 'other';
+
+    };
+
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =====================================&#13;
+   MAIN DASHBOARD&#13;
+===================================== */&#13;
+&#13;
+.admin-dashboard {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    min-height: 700px;&#13;
+&#13;
+    background: #f5f7fb;&#13;
+&#13;
+    color: #1f2937;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =====================================&#13;
+   SIDEBAR&#13;
+===================================== */&#13;
+&#13;
+.admin-sidebar {&#13;
+&#13;
+    width: 230px;&#13;
+&#13;
+    min-width: 230px;&#13;
+&#13;
+    background: #172554;&#13;
+&#13;
+    color: white;&#13;
+&#13;
+    padding: 25px 15px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-title {&#13;
+&#13;
+    font-size: 21px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    padding: 10px 15px 25px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-menu {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    flex-direction: column;&#13;
+&#13;
+    gap: 8px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-menu button {&#13;
+&#13;
+    width: 100%;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    background: transparent;&#13;
+&#13;
+    color: #dbeafe;&#13;
+&#13;
+    text-align: left;&#13;
+&#13;
+    padding: 13px 15px;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    font-size: 15px;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-menu button:hover {&#13;
+&#13;
+    background: #1e3a8a;&#13;
+&#13;
+    color: white;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-menu button.active {&#13;
+&#13;
+    background: #2563eb;&#13;
+&#13;
+    color: white;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =====================================&#13;
+   MAIN AREA&#13;
+===================================== */&#13;
+&#13;
+.admin-main {&#13;
+&#13;
+    flex: 1;&#13;
+&#13;
+    padding: 30px;&#13;
+&#13;
+    overflow-x: auto;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.welcome-section {&#13;
+&#13;
+    margin-bottom: 25px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.welcome-section h1 {&#13;
+&#13;
+    margin: 0 0 7px;&#13;
+&#13;
+    font-size: 28px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.welcome-section p {&#13;
+&#13;
+    margin: 0;&#13;
+&#13;
+    color: #6b7280;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =====================================&#13;
+   KPI CARDS&#13;
+===================================== */&#13;
+&#13;
+.kpi-grid {&#13;
+&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns: repeat(4, 1fr);&#13;
+&#13;
+    gap: 18px;&#13;
+&#13;
+    margin-bottom: 25px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.kpi-card {&#13;
+&#13;
+    background: white;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    padding: 20px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 15px;&#13;
+&#13;
+    box-shadow:&#13;
+        0 2px 8px rgba(0, 0, 0, 0.06);&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.kpi-icon {&#13;
+&#13;
+    width: 48px;&#13;
+&#13;
+    height: 48px;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    background: #eff6ff;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 23px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.kpi-card h3 {&#13;
+&#13;
+    margin: 0 0 5px;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    color: #6b7280;&#13;
+&#13;
+    font-weight: 500;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.kpi-card h2 {&#13;
+&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 25px;&#13;
+&#13;
+    color: #111827;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =====================================&#13;
+   DASHBOARD CARDS&#13;
+===================================== */&#13;
+&#13;
+.dashboard-card {&#13;
+&#13;
+    background: white;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    padding: 22px;&#13;
+&#13;
+    margin-bottom: 25px;&#13;
+&#13;
+    box-shadow:&#13;
+        0 2px 8px rgba(0, 0, 0, 0.06);&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.card-header {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    justify-content: space-between;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    margin-bottom: 18px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.card-header h2 {&#13;
+&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 19px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =====================================&#13;
+   TABLE&#13;
+===================================== */&#13;
+&#13;
+.table-container {&#13;
+&#13;
+    width: 100%;&#13;
+&#13;
+    overflow-x: auto;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+table {&#13;
+&#13;
+    width: 100%;&#13;
+&#13;
+    border-collapse: collapse;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+th {&#13;
+&#13;
+    background: #f8fafc;&#13;
+&#13;
+    color: #64748b;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    padding: 13px;&#13;
+&#13;
+    text-align: left;&#13;
+&#13;
+    white-space: nowrap;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+td {&#13;
+&#13;
+    padding: 14px 13px;&#13;
+&#13;
+    border-top: 1px solid #e5e7eb;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    white-space: nowrap;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+tbody tr {&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+tbody tr:hover {&#13;
+&#13;
+    background: #f8fafc;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.empty-message {&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+    color: #9ca3af;&#13;
+&#13;
+    padding: 25px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =====================================&#13;
+   STATUS BADGES&#13;
+===================================== */&#13;
+&#13;
+.status-badge,&#13;
+.priority-badge {&#13;
+&#13;
+    display: inline-block;&#13;
+&#13;
+    padding: 5px 10px;&#13;
+&#13;
+    border-radius: 20px;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.status-badge.pending {&#13;
+&#13;
+    background: #fef3c7;&#13;
+&#13;
+    color: #92400e;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.status-badge.progress {&#13;
+&#13;
+    background: #dbeafe;&#13;
+&#13;
+    color: #1e40af;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.status-badge.resolved {&#13;
+&#13;
+    background: #dcfce7;&#13;
+&#13;
+    color: #166534;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.status-badge.other {&#13;
+&#13;
+    background: #f3f4f6;&#13;
+&#13;
+    color: #4b5563;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =====================================&#13;
+   PRIORITY&#13;
+===================================== */&#13;
+&#13;
+.priority-badge.high {&#13;
+&#13;
+    background: #fee2e2;&#13;
+&#13;
+    color: #991b1b;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.priority-badge.medium {&#13;
+&#13;
+    background: #fef3c7;&#13;
+&#13;
+    color: #92400e;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.priority-badge.low {&#13;
+&#13;
+    background: #dcfce7;&#13;
+&#13;
+    color: #166534;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.priority-badge.other {&#13;
+&#13;
+    background: #f3f4f6;&#13;
+&#13;
+    color: #4b5563;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =====================================&#13;
+   QUICK ACTIONS&#13;
+===================================== */&#13;
+&#13;
+.quick-actions {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    gap: 15px;&#13;
+&#13;
+    flex-wrap: wrap;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.quick-actions button {&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    background: #eff6ff;&#13;
+&#13;
+    color: #1d4ed8;&#13;
+&#13;
+    padding: 12px 18px;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.quick-actions button:hover {&#13;
+&#13;
+    background: #dbeafe;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =====================================&#13;
+   ASSIGNMENT DETAILS&#13;
+===================================== */&#13;
+&#13;
+.back-button {&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    background: #eff6ff;&#13;
+&#13;
+    color: #1d4ed8;&#13;
+&#13;
+    padding: 8px 14px;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.details-grid {&#13;
+&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns: repeat(2, 1fr);&#13;
+&#13;
+    gap: 20px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.details-grid label {&#13;
+&#13;
+    display: block;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    color: #6b7280;&#13;
+&#13;
+    margin-bottom: 5px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.details-grid p {&#13;
+&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 15px;&#13;
+&#13;
+    font-weight: 500;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.description-box {&#13;
+&#13;
+    grid-column: 1 / -1;&#13;
+&#13;
+    background: #f8fafc;&#13;
+&#13;
+    padding: 15px;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =====================================&#13;
+   REPORT COUNT CARDS&#13;
+===================================== */&#13;
+&#13;
+.report-count-grid {&#13;
+&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns: repeat(4, 1fr);&#13;
+&#13;
+    gap: 15px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.report-count-card {&#13;
+&#13;
+    background: #f8fafc;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    padding: 18px;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.report-count-card h3 {&#13;
+&#13;
+    margin: 0 0 8px;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    color: #64748b;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.report-count-card h2 {&#13;
+&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 26px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =====================================&#13;
+   REPORT LIST&#13;
+===================================== */&#13;
+&#13;
+.report-list {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    flex-direction: column;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.report-row {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    justify-content: space-between;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    padding: 14px 5px;&#13;
+&#13;
+    border-bottom: 1px solid #e5e7eb;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.report-row:last-child {&#13;
+&#13;
+    border-bottom: none;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.report-row strong {&#13;
+&#13;
+    background: #eff6ff;&#13;
+&#13;
+    color: #1d4ed8;&#13;
+&#13;
+    padding: 5px 12px;&#13;
+&#13;
+    border-radius: 15px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =====================================&#13;
+   SPECIAL REPORT CARDS&#13;
+===================================== */&#13;
+&#13;
+.reports-grid {&#13;
+&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns: repeat(3, 1fr);&#13;
+&#13;
+    gap: 20px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.report-card {&#13;
+&#13;
+    background: white;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    padding: 25px;&#13;
+&#13;
+    min-height: 160px;&#13;
+&#13;
+    box-shadow:&#13;
+        0 2px 8px rgba(0, 0, 0, 0.06);&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.report-card:hover {&#13;
+&#13;
+    box-shadow:&#13;
+        0 4px 14px rgba(0, 0, 0, 0.10);&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.report-icon {&#13;
+&#13;
+    font-size: 30px;&#13;
+&#13;
+    margin-bottom: 12px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.report-card h2 {&#13;
+&#13;
+    font-size: 17px;&#13;
+&#13;
+    margin: 0 0 8px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.report-card p {&#13;
+&#13;
+    margin: 0;&#13;
+&#13;
+    color: #6b7280;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    line-height: 1.5;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =====================================&#13;
+   RESPONSIVE&#13;
+===================================== */&#13;
+&#13;
+@media (max-width: 1000px) {&#13;
+&#13;
+    .kpi-grid {&#13;
+&#13;
+        grid-template-columns: repeat(2, 1fr);&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .reports-grid {&#13;
+&#13;
+        grid-template-columns: repeat(2, 1fr);&#13;
+&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 800px) {&#13;
+&#13;
+    .report-count-grid {&#13;
+&#13;
+        grid-template-columns: repeat(2, 1fr);&#13;
+&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 700px) {&#13;
+&#13;
+    .admin-dashboard {&#13;
+&#13;
+        flex-direction: column;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .admin-sidebar {&#13;
+&#13;
+        width: 100%;&#13;
+&#13;
+        min-width: 100%;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .sidebar-menu {&#13;
+&#13;
+        flex-direction: row;&#13;
+&#13;
+        overflow-x: auto;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .sidebar-menu button {&#13;
+&#13;
+        white-space: nowrap;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .admin-main {&#13;
+&#13;
+        padding: 20px;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .kpi-grid {&#13;
+&#13;
+        grid-template-columns: 1fr;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .reports-grid {&#13;
+&#13;
+        grid-template-columns: 1fr;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .details-grid {&#13;
+&#13;
+        grid-template-columns: 1fr;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .description-box {&#13;
+&#13;
+        grid-column: auto;&#13;
+&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 500px) {&#13;
+&#13;
+    .report-count-grid {&#13;
+&#13;
+        grid-template-columns: 1fr;&#13;
+&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>food_service_admin_dashboard_widget</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Food  Service Admin Dashboard Widget</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+
+    // =========================
+    // DASHBOARD DATA
+    // =========================
+
+    data.totalRequests = 0;
+    data.pending = 0;
+    data.inProgress = 0;
+    data.closed = 0;
+
+    data.recentRequests = [];
+
+
+    // =========================
+    // ASSIGNMENT DATA
+    // =========================
+
+    data.totalAssigned = 0;
+    data.assignmentPending = 0;
+    data.assignmentProgress = 0;
+    data.assignmentResolved = 0;
+
+    data.assignments = [];
+
+
+    // =========================
+    // REPORT DATA
+    // =========================
+
+    data.problemReports = [];
+    data.messHallReports = [];
+    data.mealReports = [];
+
+    data.foodQualityCount = 0;
+    data.foodWastageCount = 0;
+    data.hygieneCount = 0;
+
+
+    // =========================
+    // FOOD COMPLAINT TABLE
+    // =========================
+
+    var complaintGR = new GlideRecord(
+        'x_snc_campus_foo_1_food_complaint'
+    );
+
+    complaintGR.orderByDesc('sys_created_on');
+
+    complaintGR.query();
+
+
+    while (complaintGR.next()) {
+
+
+        // =========================
+        // TOTAL REQUESTS
+        // =========================
+
+        data.totalRequests++;
+
+
+        // =========================
+        // STATE
+        // =========================
+
+        var state =
+            complaintGR.getDisplayValue('state');
+
+
+        if (!state) {
+
+            state = 'Pending';
+
+        }
+
+
+        var stateLower =
+            state.toLowerCase();
+
+
+        // =========================
+        // STATUS COUNTS
+        // =========================
+
+        if (
+            stateLower.indexOf('pending') !== -1
+        ) {
+
+            data.pending++;
+
+        }
+
+
+        else if (
+            stateLower.indexOf('progress') !== -1
+        ) {
+
+            data.inProgress++;
+
+        }
+
+
+        else if (
+            stateLower.indexOf('closed') !== -1
+        ) {
+
+            data.closed++;
+
+        }
+
+
+        // =========================
+        // REPORT VALUES
+        // =========================
+
+        var problemType =
+            complaintGR.getDisplayValue(
+                'problem_type'
+            );
+
+
+        var messHall =
+            complaintGR.getDisplayValue(
+                'mess_hall'
+            );
+
+
+        var mealType =
+            complaintGR.getDisplayValue(
+                'meal_type'
+            );
+
+
+        // =========================
+        // PROBLEM TYPE REPORT
+        // =========================
+
+        if (problemType) {
+
+            var foundProblem = false;
+
+
+            for (
+                var p = 0;
+                p < data.problemReports.length;
+                p++
+            ) {
+
+                if (
+                    data.problemReports[p].name ==
+                    problemType
+                ) {
+
+                    data.problemReports[p].count++;
+
+                    foundProblem = true;
+
+                    break;
+
+                }
+
+            }
+
+
+            if (!foundProblem) {
+
+                data.problemReports.push({
+
+                    name: problemType,
+
+                    count: 1
+
+                });
+
+            }
+
+        }
+
+
+        // =========================
+        // MESS HALL REPORT
+        // =========================
+
+        if (messHall) {
+
+            var foundMess = false;
+
+
+            for (
+                var m = 0;
+                m < data.messHallReports.length;
+                m++
+            ) {
+
+                if (
+                    data.messHallReports[m].name ==
+                    messHall
+                ) {
+
+                    data.messHallReports[m].count++;
+
+                    foundMess = true;
+
+                    break;
+
+                }
+
+            }
+
+
+            if (!foundMess) {
+
+                data.messHallReports.push({
+
+                    name: messHall,
+
+                    count: 1
+
+                });
+
+            }
+
+        }
+
+
+        // =========================
+        // MEAL TYPE REPORT
+        // =========================
+
+        if (mealType) {
+
+            var foundMeal = false;
+
+
+            for (
+                var l = 0;
+                l < data.mealReports.length;
+                l++
+            ) {
+
+                if (
+                    data.mealReports[l].name ==
+                    mealType
+                ) {
+
+                    data.mealReports[l].count++;
+
+                    foundMeal = true;
+
+                    break;
+
+                }
+
+            }
+
+
+            if (!foundMeal) {
+
+                data.mealReports.push({
+
+                    name: mealType,
+
+                    count: 1
+
+                });
+
+            }
+
+        }
+
+
+        // =========================
+        // USE CASE REPORTS
+        // =========================
+
+        var useCase =
+            complaintGR.getValue('use_case');
+
+
+        if (
+            useCase ==
+            'food_quality_complaint'
+        ) {
+
+            data.foodQualityCount++;
+
+        }
+
+
+        if (
+            useCase ==
+            'food_wastage_reporting'
+        ) {
+
+            data.foodWastageCount++;
+
+        }
+
+
+        if (
+            useCase ==
+            'food_hygiene_issue'
+        ) {
+
+            data.hygieneCount++;
+
+        }
+
+
+        // =========================
+        // RECENT 5 REQUESTS
+        // =========================
+
+        if (
+            data.recentRequests.length < 5
+        ) {
+
+            data.recentRequests.push({
+
+                sys_id:
+                    complaintGR.getUniqueValue(),
+
+                number:
+                    complaintGR.getDisplayValue(
+                        'number'
+                    ),
+
+                student:
+                    complaintGR.getDisplayValue(
+                        'student'
+                    ),
+
+                problem_type:
+                    complaintGR.getDisplayValue(
+                        'problem_type'
+                    ),
+
+                mess_hall:
+                    complaintGR.getDisplayValue(
+                        'mess_hall'
+                    ),
+
+                meal_type:
+                    complaintGR.getDisplayValue(
+                        'meal_type'
+                    ),
+
+                priority:
+                    complaintGR.getDisplayValue(
+                        'priority'
+                    ),
+
+                state:
+                    state,
+
+                description:
+                    complaintGR.getDisplayValue(
+                        'description'
+                    )
+
+            });
+
+        }
+
+    }
+
+
+    // ==================================================
+    // MY ASSIGNMENTS
+    // ==================================================
+
+    var messStaffGroup =
+        new GlideRecord('sys_user_group');
+
+
+    messStaffGroup.addQuery(
+        'name',
+        'Mess Staff'
+    );
+
+
+    messStaffGroup.query();
+
+
+    if (messStaffGroup.next()) {
+
+
+        // =========================
+        // ACTIVE ASSIGNMENTS
+        // =========================
+
+        var assignmentGR =
+            new GlideRecord(
+                'x_snc_campus_foo_1_food_complaint'
+            );
+
+
+        assignmentGR.addQuery(
+            'assignment_group',
+            messStaffGroup.getUniqueValue()
+        );
+
+
+        assignmentGR.addQuery(
+            'state',
+            '!=',
+            'Closed'
+        );
+
+
+        assignmentGR.orderByDesc(
+            'sys_created_on'
+        );
+
+
+        assignmentGR.query();
+
+
+        while (assignmentGR.next()) {
+
+
+            var assignmentState =
+                assignmentGR.getDisplayValue(
+                    'state'
+                );
+
+
+            if (!assignmentState) {
+
+                assignmentState = 'Pending';
+
+            }
+
+
+            var assignment = {
+
+                sys_id:
+                    assignmentGR.getUniqueValue(),
+
+                number:
+                    assignmentGR.getDisplayValue(
+                        'number'
+                    ),
+
+                student:
+                    assignmentGR.getDisplayValue(
+                        'student'
+                    ),
+
+                problem_type:
+                    assignmentGR.getDisplayValue(
+                        'problem_type'
+                    ),
+
+                mess_hall:
+                    assignmentGR.getDisplayValue(
+                        'mess_hall'
+                    ),
+
+                meal_type:
+                    assignmentGR.getDisplayValue(
+                        'meal_type'
+                    ),
+
+                priority:
+                    assignmentGR.getDisplayValue(
+                        'priority'
+                    ),
+
+                state:
+                    assignmentState,
+
+                description:
+                    assignmentGR.getDisplayValue(
+                        'description'
+                    )
+
+            };
+
+
+            data.assignments.push(
+                assignment
+            );
+
+
+            data.totalAssigned++;
+
+
+            var assignmentStateLower =
+                assignmentState.toLowerCase();
+
+
+            if (
+                assignmentStateLower.indexOf(
+                    'pending'
+                ) !== -1
+            ) {
+
+                data.assignmentPending++;
+
+            }
+
+
+            else if (
+                assignmentStateLower.indexOf(
+                    'progress'
+                ) !== -1
+            ) {
+
+                data.assignmentProgress++;
+
+            }
+
+        }
+
+
+        // =========================
+        // CLOSED ASSIGNMENTS
+        // =========================
+
+        var resolvedGR =
+            new GlideRecord(
+                'x_snc_campus_foo_1_food_complaint'
+            );
+
+
+        resolvedGR.addQuery(
+            'assignment_group',
+            messStaffGroup.getUniqueValue()
+        );
+
+
+        resolvedGR.addQuery(
+            'state',
+            'Closed'
+        );
+
+
+        resolvedGR.query();
+
+
+        while (resolvedGR.next()) {
+
+            data.assignmentResolved++;
+
+        }
+
+    }
+
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 04:15:34</sys_created_on>
+        <sys_id>dbdcca8aa9a703107f444d1b3bf5778c</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>Food  Service Admin Dashboard Widget</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_dbdcca8aa9a703107f444d1b3bf5778c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-27 05:14:54</sys_updated_on>
+        <template><![CDATA[<div class="admin-dashboard">
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+
+        <div class="sidebar-title">
+            Admin Panel
+        </div>
+
+        <div class="sidebar-menu">
+
+            <button ng-click="c.selectSection('dashboard')"
+                    ng-class="{'active': c.activeSection === 'dashboard'}">
+                ]]>🏠<![CDATA[ Dashboard
+            </button>
+
+            <button ng-click="c.selectSection('assignments')"
+                    ng-class="{'active': c.activeSection === 'assignments'}">
+                ]]>📋<![CDATA[ My Assignments
+            </button>
+
+            <button ng-click="c.selectSection('reports')"
+                    ng-class="{'active': c.activeSection === 'reports'}">
+                ]]>📊<![CDATA[ Reports
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="admin-main">
+
+        <!-- Dashboard -->
+        <div ng-if="c.activeSection === 'dashboard'">
+
+            <div class="welcome-section">
+                <h1>Admin Dashboard</h1>
+                <p>Manage and monitor CampusFood AI requests.</p>
+            </div>
+
+
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+
+                <div class="kpi-card">
+                    <div class="kpi-icon">]]>📋<![CDATA[</div>
+                    <div>
+                        <h3>Total Requests</h3>
+                        <h2>{{c.data.totalRequests}}</h2>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon">⏳</div>
+                    <div>
+                        <h3>Pending</h3>
+                        <h2>{{c.data.pending}}</h2>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon">]]>🔄<![CDATA[</div>
+                    <div>
+                        <h3>In Progress</h3>
+                        <h2>{{c.data.inProgress}}</h2>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon">✅</div>
+                    <div>
+                        <h3>Closed</h3>
+                        <h2>{{c.data.closed}}</h2>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Recent Requests -->
+            <div class="dashboard-card">
+
+                <div class="card-header">
+                    <h2>Recent Requests</h2>
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Ticket</th>
+                                <th>Problem</th>
+                                <th>Mess Hall</th>
+                                <th>Meal</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr ng-repeat="request in c.data.recentRequests"
+                                ng-click="c.openRequest(request)">
+
+                                <td>{{request.number}}</td>
+                                <td>{{request.problem_type}}</td>
+                                <td>{{request.mess_hall}}</td>
+                                <td>{{request.meal_type}}</td>
+
+                                <td>
+                                    <span class="status-badge"
+                                          ng-class="c.getStatusClass(request.state)">
+                                        {{request.state}}
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                            <tr ng-if="!c.data.recentRequests.length">
+                                <td colspan="5" class="empty-message">
+                                    No requests available.
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- Quick Actions -->
+            <div class="dashboard-card">
+
+                <div class="card-header">
+                    <h2>Quick Actions</h2>
+                </div>
+
+                <div class="quick-actions">
+
+                    <button ng-click="c.selectSection('assignments')">
+                        ]]>📋<![CDATA[ My Assignments
+                    </button>
+
+                    <button ng-click="c.selectSection('reports')">
+                        ]]>📊<![CDATA[ View Reports
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- My Assignments -->
+        <div ng-if="c.activeSection === 'assignments'">
+
+            <div class="welcome-section">
+                <h1>My Assignments</h1>
+                <p>View requests assigned to you.</p>
+            </div>
+
+            <div ng-if="!c.selectedAssignment">
+
+                <div class="kpi-grid">
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon">]]>📋<![CDATA[</div>
+                        <div>
+                            <h3>Total Assigned</h3>
+                            <h2>{{c.data.totalAssigned}}</h2>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon">⏳</div>
+                        <div>
+                            <h3>Pending</h3>
+                            <h2>{{c.data.assignmentPending}}</h2>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon">]]>🔄<![CDATA[</div>
+                        <div>
+                            <h3>In Progress</h3>
+                            <h2>{{c.data.assignmentProgress}}</h2>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon">✅</div>
+                        <div>
+                            <h3>Resolved</h3>
+                            <h2>{{c.data.assignmentResolved}}</h2>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+                        <h2>Assigned Requests</h2>
+                    </div>
+
+                    <div class="table-container">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>Ticket</th>
+                                    <th>Student</th>
+                                    <th>Problem</th>
+                                    <th>Mess Hall</th>
+                                    <th>Meal</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr ng-repeat="assignment in c.data.assignments"
+                                    ng-click="c.openAssignment(assignment)">
+
+                                    <td>{{assignment.number}}</td>
+                                    <td>{{assignment.student}}</td>
+                                    <td>{{assignment.problem_type}}</td>
+                                    <td>{{assignment.mess_hall}}</td>
+                                    <td>{{assignment.meal_type}}</td>
+
+                                    <td>
+                                        <span class="priority-badge"
+                                              ng-class="c.getPriorityClass(assignment.priority)">
+                                            {{assignment.priority}}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span class="status-badge"
+                                              ng-class="c.getStatusClass(assignment.state)">
+                                            {{assignment.state}}
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+                                <tr ng-if="!c.data.assignments.length">
+                                    <td colspan="7" class="empty-message">
+                                        No assignments available.
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Assignment Details -->
+            <div ng-if="c.selectedAssignment"
+                 class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>Assignment Details</h2>
+
+                    <button class="back-button"
+                            ng-click="c.closeAssignment()">
+                        ← Back
+                    </button>
+
+                </div>
+
+                <div class="details-grid">
+
+                    <div>
+                        <label>Ticket</label>
+                        <p>{{c.selectedAssignment.number}}</p>
+                    </div>
+
+                    <div>
+                        <label>Student</label>
+                        <p>{{c.selectedAssignment.student}}</p>
+                    </div>
+
+                    <div>
+                        <label>Problem</label>
+                        <p>{{c.selectedAssignment.problem_type}}</p>
+                    </div>
+
+                    <div>
+                        <label>Mess Hall</label>
+                        <p>{{c.selectedAssignment.mess_hall}}</p>
+                    </div>
+
+                    <div>
+                        <label>Meal Type</label>
+                        <p>{{c.selectedAssignment.meal_type}}</p>
+                    </div>
+
+                    <div>
+                        <label>Priority</label>
+                        <p>{{c.selectedAssignment.priority}}</p>
+                    </div>
+
+                    <div>
+                        <label>Status</label>
+                        <p>{{c.selectedAssignment.state}}</p>
+                    </div>
+
+                    <div class="description-box">
+                        <label>Description</label>
+                        <p>{{c.selectedAssignment.description}}</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Reports -->
+        <div ng-if="c.activeSection === 'reports'">
+
+            <div class="welcome-section">
+                <h1>Reports</h1>
+                <p>View CampusFood AI request reports.</p>
+            </div>
+
+
+            <div class="reports-grid">
+
+                <div class="report-card">
+                    <div class="report-icon">]]>📊<![CDATA[</div>
+                    <h2>Requests by Status</h2>
+                    <p>View requests based on their current status.</p>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-icon">]]>🍽<![CDATA[️</div>
+                    <h2>Requests by Problem Type</h2>
+                    <p>Analyze different food-related problems.</p>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-icon">]]>🏢<![CDATA[</div>
+                    <h2>Requests by Mess Hall</h2>
+                    <p>Compare requests from different mess halls.</p>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-icon">]]>🥗<![CDATA[</div>
+                    <h2>Requests by Meal Type</h2>
+                    <p>View Breakfast, Lunch and Dinner requests.</p>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-icon">⚠️</div>
+                    <h2>Food Quality</h2>
+                    <p>Track food quality complaints.</p>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-icon">♻️</div>
+                    <h2>Food Wastage</h2>
+                    <p>Track food wastage reports.</p>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-icon">]]>🧼<![CDATA[</div>
+                    <h2>Hygiene Issues</h2>
+                    <p>Track food hygiene complaints.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

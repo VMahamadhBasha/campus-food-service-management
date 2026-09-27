@@ -2,157 +2,95 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
         <client_script><![CDATA[api.controller=function() {
-  /* widget controller */
-  var c = this;
-};]]></client_script>
+    var c = this;
+
+    c.menuOpen = false;
+
+    c.closeMenu = function() {
+        c.menuOpen = false;
+    };
+}]]></client_script>
         <controller_as>c</controller_as>
-        <css>```css&#13;
-.cfs-navbar {&#13;
-  background: #ffffff;&#13;
-  border-bottom: 1px solid #e5e7eb;&#13;
+        <css>.cfa-navbar{&#13;
+  background:#0f172a;&#13;
+  color:#fff;&#13;
+  position:sticky;&#13;
+  top:0;&#13;
+  z-index:20;&#13;
+  border-bottom:1px solid #1e293b;&#13;
+}&#13;
+.cfa-navbar-inner{&#13;
+  max-width:1200px;&#13;
+  margin:0 auto;&#13;
+  padding:14px 24px;&#13;
+  display:flex;&#13;
+  align-items:center;&#13;
+  justify-content:space-between;&#13;
+}&#13;
+.cfa-brand{&#13;
+  font-weight:800;&#13;
+  font-size:16px;&#13;
+  display:flex;&#13;
+  align-items:center;&#13;
+  gap:8px;&#13;
+}&#13;
+.cfa-brand b{ color:#2dd4bf; }&#13;
+.cfa-logo{ font-size:20px; }&#13;
 &#13;
-  min-height: 70px;&#13;
+.cfa-nav-links{&#13;
+  display:flex;&#13;
+  gap:28px;&#13;
+}&#13;
+.cfa-nav-links a{&#13;
+  color:#cbd5e1;&#13;
+  text-decoration:none;&#13;
+  font-size:14px;&#13;
+  font-weight:600;&#13;
+  transition:.15s;&#13;
+}&#13;
+.cfa-nav-links a:hover{ color:#fff; }&#13;
 &#13;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);&#13;
+.cfa-nav-actions{&#13;
+  display:flex;&#13;
+  align-items:center;&#13;
+  gap:12px;&#13;
+}&#13;
+.cfa-login-btn{&#13;
+  background:#0d9488;&#13;
+  color:#fff;&#13;
+  padding:8px 18px;&#13;
+  border-radius:8px;&#13;
+  font-size:13.5px;&#13;
+  font-weight:700;&#13;
+  text-decoration:none;&#13;
+}&#13;
+.cfa-login-btn:hover{ background:#0f766e; }&#13;
+&#13;
+.cfa-menu-toggle{&#13;
+  display:none;&#13;
+  background:none;&#13;
+  border:none;&#13;
+  color:#fff;&#13;
+  font-size:20px;&#13;
+  cursor:pointer;&#13;
 }&#13;
 &#13;
-&#13;
-/* Container */&#13;
-&#13;
-.cfs-navbar .container {&#13;
-  min-height: 70px;&#13;
-&#13;
-  display: flex;&#13;
-  align-items: center;&#13;
-  justify-content: space-between;&#13;
-}&#13;
-&#13;
-&#13;
-/* Brand */&#13;
-&#13;
-.navbar-brand {&#13;
-  margin: 0;&#13;
-  padding: 0;&#13;
-}&#13;
-&#13;
-.navbar-brand a {&#13;
-  display: flex;&#13;
-  align-items: center;&#13;
-&#13;
-  gap: 10px;&#13;
-&#13;
-  text-decoration: none;&#13;
-&#13;
-  color: #1f2937;&#13;
-}&#13;
-&#13;
-.brand-icon {&#13;
-  width: 40px;&#13;
-  height: 40px;&#13;
-&#13;
-  display: flex;&#13;
-  align-items: center;&#13;
-  justify-content: center;&#13;
-&#13;
-  border-radius: 8px;&#13;
-&#13;
-  background: #0f766e;&#13;
-&#13;
-  color: #ffffff;&#13;
-&#13;
-  font-size: 18px;&#13;
-}&#13;
-&#13;
-.brand-name {&#13;
-  font-size: 17px;&#13;
-  font-weight: 600;&#13;
-}&#13;
-&#13;
-&#13;
-/* Navigation */&#13;
-&#13;
-.cfs-navbar .navbar-nav {&#13;
-  margin: 0;&#13;
-&#13;
-  display: flex;&#13;
-  align-items: center;&#13;
-&#13;
-  gap: 8px;&#13;
-}&#13;
-&#13;
-.cfs-navbar .navbar-nav &gt; li &gt; a {&#13;
-  color: #4b5563;&#13;
-&#13;
-  font-size: 14px;&#13;
-  font-weight: 500;&#13;
-&#13;
-  padding: 10px 14px;&#13;
-&#13;
-  border-radius: 6px;&#13;
-&#13;
-  text-decoration: none;&#13;
-}&#13;
-&#13;
-&#13;
-/* Hover */&#13;
-&#13;
-.cfs-navbar .navbar-nav &gt; li &gt; a:hover {&#13;
-  background: #f0fdfa;&#13;
-&#13;
-  color: #0f766e;&#13;
-}&#13;
-&#13;
-&#13;
-/* Login button */&#13;
-&#13;
-.cfs-navbar .login-btn {&#13;
-  background: #0f766e !important;&#13;
-&#13;
-  color: #ffffff !important;&#13;
-&#13;
-  margin-left: 8px;&#13;
-&#13;
-  padding: 10px 20px !important;&#13;
-&#13;
-  border-radius: 7px !important;&#13;
-&#13;
-  font-weight: 600 !important;&#13;
-}&#13;
-&#13;
-.cfs-navbar .login-btn:hover {&#13;
-  background: #115e59 !important;&#13;
-&#13;
-  color: #ffffff !important;&#13;
-}&#13;
-&#13;
-&#13;
-/* Mobile */&#13;
-&#13;
-@media (max-width: 767px) {&#13;
-&#13;
-  .cfs-navbar .container {&#13;
-    flex-direction: column;&#13;
-&#13;
-    padding: 12px 15px;&#13;
+@media(max-width:768px){&#13;
+  .cfa-nav-links{&#13;
+    display:none;&#13;
+    position:absolute;&#13;
+    top:100%;&#13;
+    left:0;&#13;
+    right:0;&#13;
+    background:#0f172a;&#13;
+    flex-direction:column;&#13;
+    padding:16px 24px;&#13;
+    gap:16px;&#13;
+    border-bottom:1px solid #1e293b;&#13;
   }&#13;
-&#13;
-  .cfs-navbar .navbar-nav {&#13;
-    width: 100%;&#13;
-&#13;
-    justify-content: center;&#13;
-&#13;
-    margin-top: 10px;&#13;
-&#13;
-    flex-wrap: wrap;&#13;
-  }&#13;
-&#13;
-  .cfs-navbar .navbar-nav &gt; li &gt; a {&#13;
-    padding: 8px 10px;&#13;
-  }&#13;
-&#13;
-}&#13;
-```&#13;
-</css>
+  .cfa-nav-links.open{ display:flex; }&#13;
+  .cfa-menu-toggle{ display:block; }&#13;
+}</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
@@ -170,62 +108,11 @@
         <roles/>
         <script><![CDATA[(function() {
 
-    data.loggedIn = gs.isLoggedIn();
+    // Native Service Portal login URL
+    data.loginUrl = '/sp?id=login';
 
-    data.userName = '';
-    data.userInitial = '';
-
-    if (data.loggedIn) {
-
-        var user = gs.getUser();
-
-        data.userName = user.getDisplayName();
-
-        if (data.userName) {
-            data.userInitial =
-                data.userName.substring(0, 1).toUpperCase();
-        }
-    }
-
-
-    /*
-     * NAVIGATION CONFIGURATION
-     *
-     * Change these values according
-     * to your actual portal page IDs.
-     */
-
-    data.menuItems = [
-
-        {
-            label: 'Home',
-            icon: 'fa fa-home',
-            url: '?id=food_home',
-            visible: true
-        },
-
-        {
-            label: 'Services',
-            icon: 'fa fa-th-large',
-            url: '?id=food_services',
-            visible: true
-        },
-
-        {
-            label: 'My Complaints',
-            icon: 'fa fa-list-alt',
-            url: '?id=my_complaints',
-            visible: data.loggedIn
-        },
-
-        {
-            label: 'Feedback',
-            icon: 'fa fa-comment',
-            url: '?id=food_feedback',
-            visible: data.loggedIn
-        }
-
-    ];
+    // Check whether the current user is logged in
+    data.isLoggedIn = !gs.getUser().isGuest();
 
 })();]]></script>
         <servicenow>false</servicenow>
@@ -233,79 +120,33 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 03:10:42</sys_created_on>
         <sys_id>b6a3b879806303107f4447e44ab1d577</sys_id>
-        <sys_mod_count>7</sys_mod_count>
+        <sys_mod_count>9</sys_mod_count>
         <sys_name>Food_Services_Navbar</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sp_widget_b6a3b879806303107f4447e44ab1d577</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-26 06:06:53</sys_updated_on>
-        <template><![CDATA[<nav class="cfs-navbar">
-
-  <div class="container">
-
-    <!-- Brand -->
-    <div class="navbar-brand">
-      <a href="?id=food_home">
-
-        <span class="brand-icon">
-          <i class="fa fa-cutlery"></i>
-        </span>
-
-        <span class="brand-name">
-          Campus Food Services
-        </span>
-
-      </a>
+        <sys_updated_on>2026-09-26 13:50:36</sys_updated_on>
+        <template><![CDATA[<div class="cfa-navbar">
+  <div class="cfa-navbar-inner">
+    <div class="cfa-brand">
+      <span class="cfa-logo">]]>🍳<![CDATA[</span>
+      <span>Campus<b>Food AI</b></span>
     </div>
 
+    <nav class="cfa-nav-links" ng-class="{'open': c.menuOpen}">
+      <a href="#home" ng-click="c.closeMenu()">Home</a>
+      <a href="#services" ng-click="c.closeMenu()">Services</a>
+      <a href="#about" ng-click="c.closeMenu()">About</a>
+      <a href="#contact" ng-click="c.closeMenu()">Contact</a>
+    </nav>
 
-    <!-- Navigation -->
-    <ul class="nav navbar-nav navbar-right">
-
-      <!-- Home -->
-      <li>
-        <a href="?id=food_home">
-          <i class="fa fa-home"></i>
-          <span>Home</span>
-        </a>
-      </li>
-       <li>
-        <a href="https://www.youtube.com/channel/UCoRtLMN2LTSEql7t81WXy0g">
-          <i class="fa fa-home"></i>
-          <span>you tube </span>
-        </a>
-      </li>
-
-
-      <!-- Services -->
-      <li>
-        <a href="?id=food_services">
-          <i class="fa fa-th-large"></i>
-          <span>Services</span>
-        </a>
-      </li>
-
-
-      <!-- About -->
-      <li>
-        <a href="?id=food_about">
-          <i class="fa fa-info-circle"></i>
-          <span>About</span>
-        </a>
-      </li>
-
-
-    <a href="/sp?id=login" class="login-btn">
-  <i class="fa fa-sign-in"></i>
-  <span>Login</span>
-</a>
-
-    </ul>
-
+    <div class="cfa-nav-actions">
+      <a class="cfa-login-btn" href="{{c.data.loginUrl}}">Login</a>
+      <button class="cfa-menu-toggle" ng-click="c.menuOpen = !c.menuOpen" aria-label="Toggle menu">☰</button>
+    </div>
   </div>
-
-</nav>]]></template>
+</div>]]></template>
     </sp_widget>
 </record_update>

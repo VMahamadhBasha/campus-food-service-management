@@ -1,0 +1,1847 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($scope) {
+
+    var c = this;
+
+
+    // ==============================
+    // Default section
+    // ==============================
+
+    c.activeSection = 'dashboard';
+
+
+    // ==============================
+    // Selected assignment
+    // ==============================
+
+    c.selectedAssignment = null;
+
+
+    // ==============================
+    // Sidebar navigation
+    // ==============================
+
+    c.selectSection = function(section) {
+
+        c.activeSection = section;
+
+        c.selectedAssignment = null;
+
+    };
+
+
+    // ==============================
+    // Open assignment
+    // ==============================
+
+    c.openAssignment = function(ticket) {
+
+        c.selectedAssignment = ticket;
+
+        // Automatically move to
+        // My Assignments section
+
+        c.activeSection = 'assignments';
+
+    };
+
+
+    // ==============================
+    // Close assignment details
+    // ==============================
+
+    c.closeAssignment = function() {
+
+        c.selectedAssignment = null;
+
+    };
+
+
+    // ==============================
+    // Priority CSS
+    // ==============================
+
+    c.getPriorityClass = function(priority) {
+
+        if (!priority) {
+            return 'other';
+        }
+
+
+        priority = priority.toLowerCase();
+
+
+        if (priority === 'high') {
+
+            return 'high';
+
+        }
+
+
+        if (priority === 'medium') {
+
+            return 'medium';
+
+        }
+
+
+        if (priority === 'low') {
+
+            return 'low';
+
+        }
+
+
+        return 'other';
+
+    };
+
+
+    // ==============================
+    // Status CSS
+    // ==============================
+
+    c.getStatusClass = function(status) {
+
+        if (!status) {
+            return 'other';
+        }
+
+
+        status = status.toLowerCase();
+
+
+        if (status.indexOf('pending') !== -1) {
+
+            return 'pending';
+
+        }
+
+
+        if (
+            status.indexOf('progress') !== -1
+        ) {
+
+            return 'progress';
+
+        }
+
+
+        if (
+            status.indexOf('resolved') !== -1
+        ) {
+
+            return 'resolved';
+
+        }
+
+
+        return 'other';
+
+    };
+
+
+    // ==============================
+    // Feedback
+    // ==============================
+
+    c.showFeedback = function() {
+
+        // Feedback section will be
+        // connected later.
+
+        alert('Feedback section will be connected soon.');
+
+    };
+
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================&#13;
+   MAIN LAYOUT&#13;
+   ========================= */&#13;
+&#13;
+.staff-dashboard {&#13;
+    display: flex;&#13;
+    min-height: calc(100vh - 70px);&#13;
+    background: #f5f7fb;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   SIDEBAR&#13;
+   ========================= */&#13;
+&#13;
+.sidebar {&#13;
+    width: 240px;&#13;
+    background: #ffffff;&#13;
+    border-right: 1px solid #e5e7eb;&#13;
+&#13;
+    display: flex;&#13;
+    flex-direction: column;&#13;
+    justify-content: space-between;&#13;
+&#13;
+    flex-shrink: 0;&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-menu {&#13;
+    padding: 25px 15px;&#13;
+}&#13;
+&#13;
+&#13;
+.menu-item {&#13;
+    padding: 13px 15px;&#13;
+    margin-bottom: 8px;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    color: #4b5563;&#13;
+&#13;
+    font-size: 15px;&#13;
+    font-weight: 500;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    transition: all 0.2s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.menu-item:hover {&#13;
+    background: #f3f4f6;&#13;
+}&#13;
+&#13;
+&#13;
+.menu-item.active {&#13;
+    background: #eef2ff;&#13;
+    color: #4f46e5;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   SIDEBAR USER&#13;
+   ========================= */&#13;
+&#13;
+.sidebar-user {&#13;
+    border-top: 1px solid #e5e7eb;&#13;
+&#13;
+    padding: 18px;&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-user-icon {&#13;
+    width: 38px;&#13;
+    height: 38px;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: #eef2ff;&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-user-name {&#13;
+    font-size: 14px;&#13;
+    font-weight: 600;&#13;
+&#13;
+    color: #1f2937;&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-user-role {&#13;
+    font-size: 12px;&#13;
+&#13;
+    color: #6b7280;&#13;
+&#13;
+    margin-top: 2px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   MAIN CONTENT&#13;
+   ========================= */&#13;
+&#13;
+.main-content {&#13;
+    flex: 1;&#13;
+&#13;
+    padding: 30px;&#13;
+&#13;
+    overflow-x: hidden;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   WELCOME&#13;
+   ========================= */&#13;
+&#13;
+.welcome-section {&#13;
+    margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+.welcome-section h1 {&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 27px;&#13;
+&#13;
+    color: #111827;&#13;
+}&#13;
+&#13;
+&#13;
+.welcome-section p {&#13;
+    margin-top: 7px;&#13;
+&#13;
+    color: #6b7280;&#13;
+&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   KPI CARDS&#13;
+   ========================= */&#13;
+&#13;
+.kpi-grid {&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns: repeat(4, 1fr);&#13;
+&#13;
+    gap: 18px;&#13;
+&#13;
+    margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+.kpi-card {&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #e5e7eb;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    padding: 20px;&#13;
+&#13;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);&#13;
+}&#13;
+&#13;
+&#13;
+.kpi-icon {&#13;
+    font-size: 23px;&#13;
+&#13;
+    margin-bottom: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+.kpi-title {&#13;
+    font-size: 13px;&#13;
+&#13;
+    color: #6b7280;&#13;
+&#13;
+    margin-bottom: 5px;&#13;
+}&#13;
+&#13;
+&#13;
+.kpi-value {&#13;
+    font-size: 25px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    color: #111827;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   CONTENT CARD&#13;
+   ========================= */&#13;
+&#13;
+.content-card {&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #e5e7eb;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    padding: 22px;&#13;
+&#13;
+    margin-bottom: 25px;&#13;
+&#13;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);&#13;
+}&#13;
+&#13;
+&#13;
+.section-header h2 {&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 19px;&#13;
+&#13;
+    color: #111827;&#13;
+}&#13;
+&#13;
+&#13;
+.section-header p {&#13;
+    margin-top: 5px;&#13;
+&#13;
+    color: #6b7280;&#13;
+&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   TABLE&#13;
+   ========================= */&#13;
+&#13;
+.table-container {&#13;
+    width: 100%;&#13;
+&#13;
+    overflow-x: auto;&#13;
+&#13;
+    margin-top: 18px;&#13;
+}&#13;
+&#13;
+&#13;
+table {&#13;
+    width: 100%;&#13;
+&#13;
+    border-collapse: collapse;&#13;
+&#13;
+    min-width: 700px;&#13;
+}&#13;
+&#13;
+&#13;
+th {&#13;
+    text-align: left;&#13;
+&#13;
+    padding: 12px;&#13;
+&#13;
+    background: #f9fafb;&#13;
+&#13;
+    color: #6b7280;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    border-bottom: 1px solid #e5e7eb;&#13;
+}&#13;
+&#13;
+&#13;
+td {&#13;
+    padding: 14px 12px;&#13;
+&#13;
+    color: #374151;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    border-bottom: 1px solid #f0f0f0;&#13;
+}&#13;
+&#13;
+&#13;
+tr:last-child td {&#13;
+    border-bottom: none;&#13;
+}&#13;
+&#13;
+&#13;
+tbody tr {&#13;
+    cursor: pointer;&#13;
+&#13;
+    transition: background 0.2s ease;&#13;
+}&#13;
+&#13;
+&#13;
+tbody tr:hover {&#13;
+    background: #f9fafb;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   STATUS&#13;
+   ========================= */&#13;
+&#13;
+.status {&#13;
+    display: inline-block;&#13;
+&#13;
+    padding: 5px 9px;&#13;
+&#13;
+    border-radius: 15px;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+.status.pending {&#13;
+    background: #fef3c7;&#13;
+&#13;
+    color: #92400e;&#13;
+}&#13;
+&#13;
+&#13;
+.status.progress {&#13;
+    background: #dbeafe;&#13;
+&#13;
+    color: #1e40af;&#13;
+}&#13;
+&#13;
+&#13;
+.status.resolved {&#13;
+    background: #dcfce7;&#13;
+&#13;
+    color: #166534;&#13;
+}&#13;
+&#13;
+&#13;
+.status.other {&#13;
+    background: #f3f4f6;&#13;
+&#13;
+    color: #374151;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   PRIORITY&#13;
+   ========================= */&#13;
+&#13;
+.priority {&#13;
+    font-size: 12px;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+.priority.high {&#13;
+    color: #dc2626;&#13;
+}&#13;
+&#13;
+&#13;
+.priority.medium {&#13;
+    color: #d97706;&#13;
+}&#13;
+&#13;
+&#13;
+.priority.low {&#13;
+    color: #16a34a;&#13;
+}&#13;
+&#13;
+&#13;
+.priority.other {&#13;
+    color: #6b7280;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   QUICK ACTIONS&#13;
+   ========================= */&#13;
+&#13;
+.quick-section h2 {&#13;
+    font-size: 19px;&#13;
+&#13;
+    margin-bottom: 15px;&#13;
+&#13;
+    color: #111827;&#13;
+}&#13;
+&#13;
+&#13;
+.quick-grid {&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns: repeat(2, 1fr);&#13;
+&#13;
+    gap: 18px;&#13;
+}&#13;
+&#13;
+&#13;
+.quick-card {&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #e5e7eb;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    padding: 20px;&#13;
+&#13;
+    text-align: left;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    flex-direction: column;&#13;
+&#13;
+    gap: 6px;&#13;
+&#13;
+    transition: all 0.2s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.quick-card:hover {&#13;
+    transform: translateY(-2px);&#13;
+&#13;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);&#13;
+}&#13;
+&#13;
+&#13;
+.quick-card span {&#13;
+    font-size: 23px;&#13;
+}&#13;
+&#13;
+&#13;
+.quick-card strong {&#13;
+    font-size: 15px;&#13;
+&#13;
+    color: #111827;&#13;
+}&#13;
+&#13;
+&#13;
+.quick-card small {&#13;
+    font-size: 12px;&#13;
+&#13;
+    color: #6b7280;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   MY ASSIGNMENTS&#13;
+   ========================= */&#13;
+&#13;
+.page-title {&#13;
+    margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+.page-title h1 {&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 27px;&#13;
+&#13;
+    color: #111827;&#13;
+}&#13;
+&#13;
+&#13;
+.page-title p {&#13;
+    margin-top: 7px;&#13;
+&#13;
+    color: #6b7280;&#13;
+&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   ASSIGNMENT SUMMARY&#13;
+   ========================= */&#13;
+&#13;
+.assignment-summary {&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns: repeat(3, 1fr);&#13;
+&#13;
+    gap: 18px;&#13;
+&#13;
+    margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+.summary-card {&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #e5e7eb;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    padding: 18px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 14px;&#13;
+&#13;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);&#13;
+}&#13;
+&#13;
+&#13;
+.summary-icon {&#13;
+    width: 42px;&#13;
+    height: 42px;&#13;
+&#13;
+    border-radius: 9px;&#13;
+&#13;
+    background: #f3f4f6;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 21px;&#13;
+}&#13;
+&#13;
+&#13;
+.summary-title {&#13;
+    color: #6b7280;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    margin-bottom: 3px;&#13;
+}&#13;
+&#13;
+&#13;
+.summary-value {&#13;
+    color: #111827;&#13;
+&#13;
+    font-size: 23px;&#13;
+&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   ASSIGNMENT DETAILS&#13;
+   ========================= */&#13;
+&#13;
+.assignment-details {&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #e5e7eb;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    padding: 22px;&#13;
+&#13;
+    margin-top: 25px;&#13;
+&#13;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);&#13;
+}&#13;
+&#13;
+&#13;
+.details-header {&#13;
+    display: flex;&#13;
+&#13;
+    justify-content: space-between;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+.details-header h2 {&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 19px;&#13;
+&#13;
+    color: #111827;&#13;
+}&#13;
+&#13;
+&#13;
+.details-header p {&#13;
+    margin-top: 5px;&#13;
+&#13;
+    color: #6b7280;&#13;
+&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+.back-button {&#13;
+    border: 1px solid #d1d5db;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    color: #374151;&#13;
+&#13;
+    padding: 9px 14px;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+.back-button:hover {&#13;
+    background: #f3f4f6;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   DETAIL GRID&#13;
+   ========================= */&#13;
+&#13;
+.detail-grid {&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns: repeat(3, 1fr);&#13;
+&#13;
+    gap: 18px;&#13;
+&#13;
+    margin-bottom: 20px;&#13;
+}&#13;
+&#13;
+&#13;
+.detail-item {&#13;
+    background: #f9fafb;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    padding: 15px;&#13;
+}&#13;
+&#13;
+&#13;
+.detail-item label,&#13;
+.description-box label {&#13;
+    display: block;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    color: #6b7280;&#13;
+&#13;
+    margin-bottom: 6px;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+.detail-item p {&#13;
+    margin: 0;&#13;
+&#13;
+    color: #111827;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    font-weight: 500;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   DESCRIPTION&#13;
+   ========================= */&#13;
+&#13;
+.description-box {&#13;
+    background: #f9fafb;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    padding: 16px;&#13;
+}&#13;
+&#13;
+&#13;
+.description-box p {&#13;
+    margin: 0;&#13;
+&#13;
+    color: #374151;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    line-height: 1.6;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   NO RECORDS&#13;
+   ========================= */&#13;
+&#13;
+.no-records {&#13;
+    text-align: center;&#13;
+&#13;
+    padding: 30px !important;&#13;
+&#13;
+    color: #6b7280;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   RESPONSIVE&#13;
+   ========================= */&#13;
+&#13;
+@media (max-width: 1000px) {&#13;
+&#13;
+    .kpi-grid {&#13;
+        grid-template-columns: repeat(2, 1fr);&#13;
+    }&#13;
+&#13;
+    .detail-grid {&#13;
+        grid-template-columns: repeat(2, 1fr);&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 700px) {&#13;
+&#13;
+    .staff-dashboard {&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+&#13;
+    .sidebar {&#13;
+        width: 100%;&#13;
+&#13;
+        border-right: none;&#13;
+&#13;
+        border-bottom: 1px solid #e5e7eb;&#13;
+    }&#13;
+&#13;
+&#13;
+    .sidebar-menu {&#13;
+        display: flex;&#13;
+&#13;
+        gap: 8px;&#13;
+&#13;
+        padding: 10px;&#13;
+    }&#13;
+&#13;
+&#13;
+    .menu-item {&#13;
+        margin-bottom: 0;&#13;
+&#13;
+        white-space: nowrap;&#13;
+    }&#13;
+&#13;
+&#13;
+    .sidebar-user {&#13;
+        display: none;&#13;
+    }&#13;
+&#13;
+&#13;
+    .main-content {&#13;
+        padding: 20px;&#13;
+    }&#13;
+&#13;
+&#13;
+    .kpi-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+&#13;
+    .quick-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+&#13;
+    .assignment-summary {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+&#13;
+    .detail-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+&#13;
+    .details-header {&#13;
+        align-items: flex-start;&#13;
+&#13;
+        gap: 15px;&#13;
+&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>food_service_staff_dashboard</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Food Service Staff dashboard</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    // ==============================
+    // Logged-in user
+    // ==============================
+
+    data.userName = gs.getUserDisplayName();
+
+    data.totalAssigned = 0;
+    data.pending = 0;
+    data.resolved = 0;
+    data.feedback = 0;
+
+    data.assignments = [];
+    data.recentAssignments = [];
+
+
+    // ==============================
+    // Find Mess Staff group
+    // ==============================
+
+    var groupGR = new GlideRecord('sys_user_group');
+
+    groupGR.addQuery('name', 'Mess Staff');
+    groupGR.setLimit(1);
+    groupGR.query();
+
+
+    if (!groupGR.next()) {
+
+        gs.info('CampusFood AI: Mess Staff group not found.');
+
+        return;
+    }
+
+
+    var groupID = groupGR.getUniqueValue();
+
+
+    // ==============================
+    // Get Food Complaint records
+    // Assignment Group = Mess Staff
+    // State != Closed
+    // ==============================
+
+    var complaintGR = new GlideRecord(
+        'x_snc_campus_foo_1_food_complaint'
+    );
+
+
+    complaintGR.addQuery(
+        'assignment_group',
+        groupID
+    );
+
+
+    // Standard ServiceNow Task:
+    // 3 = Closed Complete
+    complaintGR.addQuery(
+        'state',
+        '!=',
+        '3'
+    );
+
+
+    complaintGR.orderByDesc('sys_created_on');
+
+    complaintGR.query();
+
+
+    while (complaintGR.next()) {
+
+        var record = {};
+
+
+        // ==============================
+        // Basic information
+        // ==============================
+
+        record.sys_id =
+            complaintGR.getUniqueValue();
+
+
+        record.number =
+            complaintGR.getDisplayValue('number');
+
+
+        // ==============================
+        // Student
+        // ==============================
+
+        record.student =
+            complaintGR.getDisplayValue('student');
+
+
+        // ==============================
+        // Problem
+        // ==============================
+
+        record.problem =
+            complaintGR.getDisplayValue('problem_type');
+
+
+        // ==============================
+        // Mess Hall
+        // ==============================
+
+        record.mess =
+            complaintGR.getDisplayValue('mess_hall');
+
+
+        // ==============================
+        // Meal
+        // ==============================
+
+        record.meal =
+            complaintGR.getDisplayValue('meal_type');
+
+
+        // ==============================
+        // Priority
+        // ==============================
+
+        record.priority =
+            complaintGR.getDisplayValue('priority');
+
+
+        // ==============================
+        // State
+        // ==============================
+
+        record.status =
+            complaintGR.getDisplayValue('state');
+
+
+        // ==============================
+        // Description
+        // ==============================
+
+        record.description =
+            complaintGR.getDisplayValue('description');
+
+
+        // ==============================
+        // Add record to assignments
+        // ==============================
+
+        data.assignments.push(record);
+
+    }
+
+
+    // ==============================
+    // Total Assigned
+    // ==============================
+
+    data.totalAssigned =
+        data.assignments.length;
+
+
+    // ==============================
+    // Count Pending
+    // ==============================
+
+    for (var i = 0; i < data.assignments.length; i++) {
+
+        var currentStatus =
+            data.assignments[i].status.toLowerCase();
+
+
+        if (currentStatus.indexOf('pending') !== -1) {
+
+            data.pending++;
+
+        }
+
+    }
+
+
+    // ==============================
+    // Recent Assignments
+    // ==============================
+
+    for (
+        var j = 0;
+        j < data.assignments.length && j < 5;
+        j++
+    ) {
+
+        data.recentAssignments.push(
+            data.assignments[j]
+        );
+
+    }
+
+
+    // ==============================
+    // Feedback
+    // ==============================
+    // Feedback integration will be
+    // connected after the feedback
+    // relationship field is confirmed.
+
+    data.feedback = 0;
+
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 03:54:09</sys_created_on>
+        <sys_id>8ea78ecea96703107f444d1b3bf577b3</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Food Service Staff dashboard</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_8ea78ecea96703107f444d1b3bf577b3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-27 04:06:33</sys_updated_on>
+        <template><![CDATA[<div class="staff-dashboard">
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+
+        <div class="sidebar-menu">
+
+            <div class="menu-item"
+                 ng-class="{active: c.activeSection === 'dashboard'}"
+                 ng-click="c.selectSection('dashboard')">
+
+                ]]>🏠<![CDATA[ Dashboard
+
+            </div>
+
+            <div class="menu-item"
+                 ng-class="{active: c.activeSection === 'assignments'}"
+                 ng-click="c.selectSection('assignments')">
+
+                ]]>📋<![CDATA[ My Assignments
+
+            </div>
+
+        </div>
+
+
+        <!-- Sidebar User -->
+        <div class="sidebar-user">
+
+            <div class="sidebar-user-icon">
+                ]]>👤
+<![CDATA[            </div>
+
+            <div class="sidebar-user-info">
+
+                <div class="sidebar-user-name">
+                    {{c.data.userName}}
+                </div>
+
+                <div class="sidebar-user-role">
+                    Staff
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="main-content">
+
+
+        <!-- ================= DASHBOARD ================= -->
+        <div ng-if="c.activeSection === 'dashboard'">
+
+            <!-- Welcome -->
+            <section class="welcome-section">
+
+                <h1>
+                    ]]>👋<![CDATA[ Welcome back, {{c.data.userName}}!
+                </h1>
+
+                <p>
+                    Manage your assigned food service requests.
+                </p>
+
+            </section>
+
+
+            <!-- KPI CARDS -->
+            <section class="kpi-grid">
+
+
+                <!-- Total Assigned -->
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ]]>🎫
+<![CDATA[                    </div>
+
+                    <div class="kpi-title">
+                        Total Assigned
+                    </div>
+
+                    <div class="kpi-value">
+                        {{c.data.totalAssigned}}
+                    </div>
+
+                </div>
+
+
+                <!-- Pending -->
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ]]>🔴
+<![CDATA[                    </div>
+
+                    <div class="kpi-title">
+                        Pending
+                    </div>
+
+                    <div class="kpi-value">
+                        {{c.data.pending}}
+                    </div>
+
+                </div>
+
+
+                <!-- Resolved -->
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ]]>🟢
+<![CDATA[                    </div>
+
+                    <div class="kpi-title">
+                        Resolved
+                    </div>
+
+                    <div class="kpi-value">
+                        {{c.data.resolved}}
+                    </div>
+
+                </div>
+
+
+                <!-- Feedback -->
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ⭐
+                    </div>
+
+                    <div class="kpi-title">
+                        Feedback
+                    </div>
+
+                    <div class="kpi-value">
+                        {{c.data.feedback}}
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= RECENT ASSIGNMENTS ================= -->
+            <section class="content-card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            ]]>📋<![CDATA[ Recent Assignments
+                        </h2>
+
+                        <p>
+                            Recently assigned food service requests
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Ticket</th>
+                                <th>Student</th>
+                                <th>Problem</th>
+                                <th>Mess</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr ng-repeat="ticket in c.data.recentAssignments"
+                                ng-click="c.openAssignment(ticket)">
+
+                                <td>
+                                    {{ticket.number}}
+                                </td>
+
+                                <td>
+                                    {{ticket.student}}
+                                </td>
+
+                                <td>
+                                    {{ticket.problem}}
+                                </td>
+
+                                <td>
+                                    {{ticket.mess}}
+                                </td>
+
+                                <td>
+
+                                    <span class="priority"
+                                          ng-class="c.getPriorityClass(ticket.priority)">
+
+                                        {{ticket.priority}}
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="status"
+                                          ng-class="c.getStatusClass(ticket.status)">
+
+                                        {{ticket.status}}
+
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- No records -->
+                            <tr ng-if="c.data.recentAssignments.length === 0">
+
+                                <td colspan="6"
+                                    class="no-records">
+
+                                    No assignments found.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= QUICK ACTIONS ================= -->
+            <section class="quick-section">
+
+                <h2>
+                    ⚡ Quick Actions
+                </h2>
+
+
+                <div class="quick-grid">
+
+
+                    <button class="quick-card"
+                            ng-click="c.selectSection('assignments')">
+
+                        <span>
+                            ]]>📋
+<![CDATA[                        </span>
+
+                        <strong>
+                            My Assignments
+                        </strong>
+
+                        <small>
+                            View assigned requests
+                        </small>
+
+                    </button>
+
+
+                    <button class="quick-card"
+                            ng-click="c.showFeedback()">
+
+                        <span>
+                            ⭐
+                        </span>
+
+                        <strong>
+                            Feedback
+                        </strong>
+
+                        <small>
+                            View student feedback
+                        </small>
+
+                    </button>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- ================= MY ASSIGNMENTS ================= -->
+        <div ng-if="c.activeSection === 'assignments'"
+             class="feature-section">
+
+
+            <!-- Page Title -->
+            <div class="page-title">
+
+                <h1>
+                    ]]>📋<![CDATA[ My Assignments
+                </h1>
+
+                <p>
+                    View and manage food service requests assigned to you.
+                </p>
+
+            </div>
+
+
+            <!-- Assignment Summary -->
+            <div class="assignment-summary">
+
+
+                <div class="summary-card">
+
+                    <span class="summary-icon">
+                        ]]>🎫
+<![CDATA[                    </span>
+
+                    <div>
+
+                        <div class="summary-title">
+                            Total Assigned
+                        </div>
+
+                        <div class="summary-value">
+                            {{c.data.totalAssigned}}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span class="summary-icon">
+                        ]]>🔴
+<![CDATA[                    </span>
+
+                    <div>
+
+                        <div class="summary-title">
+                            Pending
+                        </div>
+
+                        <div class="summary-value">
+                            {{c.data.pending}}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span class="summary-icon">
+                        ]]>🟢
+<![CDATA[                    </span>
+
+                    <div>
+
+                        <div class="summary-title">
+                            Resolved
+                        </div>
+
+                        <div class="summary-value">
+                            {{c.data.resolved}}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Assignment Table -->
+            <div class="content-card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            Assigned Requests
+                        </h2>
+
+                        <p>
+                            Food service requests assigned to the Mess Staff group.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Ticket</th>
+                                <th>Student</th>
+                                <th>Problem</th>
+                                <th>Mess Hall</th>
+                                <th>Meal</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr ng-repeat="ticket in c.data.assignments"
+                                ng-click="c.openAssignment(ticket)">
+
+                                <td>
+                                    {{ticket.number}}
+                                </td>
+
+                                <td>
+                                    {{ticket.student}}
+                                </td>
+
+                                <td>
+                                    {{ticket.problem}}
+                                </td>
+
+                                <td>
+                                    {{ticket.mess}}
+                                </td>
+
+                                <td>
+                                    {{ticket.meal}}
+                                </td>
+
+                                <td>
+
+                                    <span class="priority"
+                                          ng-class="c.getPriorityClass(ticket.priority)">
+
+                                        {{ticket.priority}}
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="status"
+                                          ng-class="c.getStatusClass(ticket.status)">
+
+                                        {{ticket.status}}
+
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr ng-if="c.data.assignments.length === 0">
+
+                                <td colspan="7"
+                                    class="no-records">
+
+                                    No assignments found.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= ASSIGNMENT DETAILS ================= -->
+            <div class="assignment-details"
+                 ng-if="c.selectedAssignment">
+
+
+                <div class="details-header">
+
+                    <div>
+
+                        <h2>
+                            ]]>📄<![CDATA[ Assignment Details
+                        </h2>
+
+                        <p>
+                            Details of the selected food service request.
+                        </p>
+
+                    </div>
+
+
+                    <button class="back-button"
+                            ng-click="c.closeAssignment()">
+
+                        ← Back
+
+                    </button>
+
+                </div>
+
+
+                <div class="detail-grid">
+
+
+                    <div class="detail-item">
+
+                        <label>
+                            Ticket Number
+                        </label>
+
+                        <p>
+                            {{c.selectedAssignment.number}}
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <label>
+                            Student
+                        </label>
+
+                        <p>
+                            {{c.selectedAssignment.student}}
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <label>
+                            Problem
+                        </label>
+
+                        <p>
+                            {{c.selectedAssignment.problem}}
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <label>
+                            Mess Hall
+                        </label>
+
+                        <p>
+                            {{c.selectedAssignment.mess}}
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <label>
+                            Meal
+                        </label>
+
+                        <p>
+                            {{c.selectedAssignment.meal}}
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <label>
+                            Priority
+                        </label>
+
+                        <p>
+                            {{c.selectedAssignment.priority}}
+                        </p>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <label>
+                            Status
+                        </label>
+
+                        <p>
+                            {{c.selectedAssignment.status}}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="description-box">
+
+                    <label>
+                        Description
+                    </label>
+
+                    <p>
+                        {{c.selectedAssignment.description}}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

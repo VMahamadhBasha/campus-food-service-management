@@ -7,6 +7,7 @@
         <element label="Knowledge Insights" max_length="255" name="knowledge_insights" type="string_full_utf8"/>
         <element label="Missed Meal Request" max_length="40" name="missed_meal_request" type="string"/>
         <element label="Latest Ticket" max_length="32" name="latest_ticket" reference="x_snc_campus_foo_1_food_complaint" type="reference"/>
+        <element label="Related Knowledge Articles" max_length="255" name="related_knowledge_articles" type="string_full_utf8"/>
         <element label="Assigned to" max_length="32" name="assigned_to" reference="sys_user" type="reference"/>
         <element default="False" label="Feedback Available" max_length="40" name="feedback_available" type="boolean"/>
         <element label="Notes" max_length="255" name="notes" type="string_full_utf8"/>

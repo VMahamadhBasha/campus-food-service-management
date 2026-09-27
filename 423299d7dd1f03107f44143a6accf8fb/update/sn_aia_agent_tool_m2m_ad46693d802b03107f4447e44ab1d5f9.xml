@@ -2,27 +2,32 @@
     <sn_aia_agent_tool_m2m action="INSERT_OR_UPDATE">
         <active>true</active>
         <agent display_value="Campus Food Intelligence Agent">be219d21112703107f44be1983f83811</agent>
-        <description>Retrieves relevant Knowledge articles for the current Food Base Problem.
+        <description>Retrieves relevant campus food-service Knowledge articles for the current Food Base Problem.
 
-The search must be based on the actual Food Base Problem context, especially:
+The search must prioritize the exact Use Case and problem context from the current Food Base Problem.
+
+Match Knowledge articles using:
 - Use Case
 - Problem Type
 - Meal Type
 - Mess Hall
 - Description
 
-Only use Knowledge articles that are relevant to the current problem.
+For Allergy Management Request, prioritize Knowledge related to allergy management, allergen handling, allergic reactions, and dietary allergy safety.
 
-For an Allergy Management Request, prioritize allergy and allergen-management guidance.
+Do not return Knowledge articles that are unrelated to the current Use Case.
 
-Do not use Knowledge articles to determine Priority.</description>
+Do not use Knowledge articles to determine Priority.
+
+Return only actual Knowledge articles from the configured Knowledge source.
+Do not return Food Base Problem records or other non-Knowledge records.</description>
         <display_mode>inline</display_mode>
         <display_output>true</display_output>
         <document_status/>
         <entity>sn_aia_agent</entity>
         <entity_id>be219d21112703107f44be1983f83811</entity_id>
         <execution_mode>autopilot</execution_mode>
-        <inputs>[{"name":"search_type","description":"Search type","value":"hybrid"},{"name":"query","description":"search query for retrieving relevant information from Knowledge Table"},{"name":"search_profile","value":"sn_aia_ai_agents_agent_search","label":"[AI Agents] - Agent Search","description":"Search profile"},{"name":"sources","label":["Knowledge Table"],"value":["kb_knowledge"],"description":"Search sources"},{"name":"fields","label":["Number [kb_knowledge]","Short description [kb_knowledge]","Article body [kb_knowledge]"],"value":["kb_knowledge.number","kb_knowledge.short_description","kb_knowledge.text"],"description":"Fields to be returned"},{"name":"search_results_limit","value":"3","description":"Search results limit"},{"name":"semantic_index_names","label":["body","title"],"value":["body","title"],"description":"Semantic indexed fields"},{"name":"document_match_threshold","value":"00.72","description":"Document matching threshold"},{"name":"chunking_mode","value":"SMALL_TO_BIG"},{"name":"chunk_unit","value":"WORDS"},{"name":"chunk_size","value":"750"},{"name":"expanded_snippet_size","value":"750"}]</inputs>
+        <inputs>[{"name":"search_type","description":"Search type","value":"keyword"},{"name":"query","description":"search query for retrieving relevant information from Knowledge Table"},{"name":"search_profile","value":"sn_aia_ai_agents_agent_search","label":"[AI Agents] - Agent Search","description":"Search profile"},{"name":"sources","label":["Knowledge Table"],"value":["kb_knowledge"],"description":"Search sources"},{"name":"fields","label":["Number [kb_knowledge]","Short description [kb_knowledge]","Article body [kb_knowledge]"],"value":["kb_knowledge.number","kb_knowledge.short_description","kb_knowledge.text"],"description":"Fields to be returned"},{"name":"search_results_limit","value":"5","description":"Search results limit"},{"name":"semantic_index_names","label":["body","title"],"value":["body","title"],"description":"Semantic indexed fields"},{"name":"document_match_threshold","value":"00.85","description":"Document matching threshold"}]</inputs>
         <max_auto_executions>10</max_auto_executions>
         <name>Find Food Knowledge</name>
         <output_transformation_strategy>custom</output_transformation_strategy>
@@ -38,7 +43,7 @@ Do not use Knowledge articles to determine Priority.</description>
         <sys_created_on>2026-09-26 06:48:16</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_id>ad46693d802b03107f4447e44ab1d5f9</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>4</sys_mod_count>
         <sys_name>Find Food Knowledge</sys_name>
         <sys_overrides/>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
@@ -46,7 +51,7 @@ Do not use Knowledge articles to determine Priority.</description>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sn_aia_agent_tool_m2m_ad46693d802b03107f4447e44ab1d5f9</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-26 09:41:14</sys_updated_on>
+        <sys_updated_on>2026-09-27 02:54:28</sys_updated_on>
         <timeout/>
         <tool display_value="AIA RAG Retriever">8021ddea2b0d52101d72fb466e91bfd1</tool>
         <tool_attributes>{}</tool_attributes>

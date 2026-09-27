@@ -6,7 +6,8 @@ Review the available Food Base Problem record and student complaint. Identify th
 
 Retrieve relevant campus food-service knowledge articles and use them to provide useful knowledge insights and a recommended action. Return a complete analysis containing the normalized problem type, priority, priority reason, knowledge insights, recommended action, and related knowledge articles.
 
-Use only information available in the Food Base Problem record, student complaint, configured priority rules, and retrieved knowledge. Do not invent missing information, unsupported facts, priority values, knowledge articles, or actions.</description>
+Use only information available in the Food Base Problem record, student complaint, configured priority rules, and retrieved knowledge. Do not invent missing information, unsupported facts, priority values, knowledge articles, or actions.
+The agent must dynamically analyze the Food Base Problem record provided for each execution and must not rely on any hard-coded record number or fixed values.</description>
         <document_id>be219d21112703107f44be1983f83811</document_id>
         <document_table>sn_aia_agent</document_table>
         <internal_name>global.x_snc_campus_foo_1.Campus Food Intelligence Agent</internal_name>
@@ -16,13 +17,13 @@ Use only information available in the Food Base Problem record, student complain
         <sys_created_on>2026-09-25 11:46:15</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_id>bce0a5a111a703107f44be1983f838e4</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>1</sys_mod_count>
         <sys_name>Campus Food Intelligence Agent</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sn_aia_skill_metadata_bce0a5a111a703107f44be1983f838e4</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-25 11:46:15</sys_updated_on>
+        <sys_updated_on>2026-09-27 02:45:45</sys_updated_on>
     </sn_aia_skill_metadata>
 </record_update>

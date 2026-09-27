@@ -29,26 +29,54 @@
 
 14. Use the Food Base Problem and relevant Knowledge results to generate recommended_action.
 
-15. Generate related_knowledge_articles using the relevant retrieved article Number and Short description.
+15. Generate related_knowledge_articles using only relevant retrieved article Number and Short description.
 
 16. Perform the final reasoning and transformation after all required tools have completed.
 
-17. Return ONLY valid JSON containing exactly these six fields:
-problem_type_normalized
-priority
-priority_reason
-knowledge_insights
-recommended_action
-related_knowledge_articles
+17. Prepare exactly these six final values:
+- problem_type_normalized
+- priority
+- priority_reason
+- knowledge_insights
+- recommended_action
+- related_knowledge_articles
 
-18. Do not return any additional text, tool output, Resolution Steps, URLs, or fields.</instructions>
+18. Use the Update Food Base Problem AI Analysis tool to update the SAME Food Base Problem record retrieved in step 2.
+
+19. Pass ONLY the current Food Base Problem Number to the update tool as:
+food_base_problem_number
+
+20. Pass the dynamically generated values to the corresponding update inputs:
+- problem_type_normalized
+- priority
+- priority_reason
+- knowledge_insights
+- recommended_action
+- related_knowledge_articles
+
+21. Never use a hard-coded Food Base Problem Number or fixed output values. The update must dynamically use the record being processed in the current execution.
+
+22. Verify that the update operation has completed successfully before returning the final response.
+
+23. After the update succeeds, return ONLY valid JSON containing exactly these six fields:
+
+{
+  "problem_type_normalized": "",
+  "priority": "",
+  "priority_reason": "",
+  "knowledge_insights": "",
+  "recommended_action": "",
+  "related_knowledge_articles": []
+}
+
+24. Do not return any additional text, tool output, Resolution Steps, URLs, raw article body, or additional fields.</instructions>
         <state>published</state>
         <sys_class_name>sn_aia_version</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-25 10:38:58</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_id>9b7195a1112703107f44be1983f83857</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>V1</sys_name>
         <sys_overrides/>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
@@ -56,7 +84,7 @@ related_knowledge_articles
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sn_aia_version_9b7195a1112703107f44be1983f83857</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-26 07:17:41</sys_updated_on>
+        <sys_updated_on>2026-09-27 02:45:44</sys_updated_on>
         <target_id>be219d21112703107f44be1983f83811</target_id>
         <target_table>sn_aia_agent</target_table>
         <version_name>V1</version_name>
