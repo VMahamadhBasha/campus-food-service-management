@@ -1,0 +1,3507 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+
+    var c = this;
+
+
+    /* =========================================
+       FORM
+       ========================================= */
+
+    c.form = {
+
+        ticket: "",
+
+        rating: 0,
+
+        comments: ""
+
+    };
+
+
+    c.submitting = false;
+
+
+    /* =========================================
+       SELECT RATING
+       ========================================= */
+
+    c.setRating = function(rating) {
+
+        c.form.rating = rating;
+
+    };
+
+
+    /* =========================================
+       RATING TEXT
+       ========================================= */
+
+    c.ratingText = function() {
+
+        switch (c.form.rating) {
+
+            case 1:
+                return "Very Poor";
+
+            case 2:
+                return "Poor";
+
+            case 3:
+                return "Average";
+
+            case 4:
+                return "Good";
+
+            case 5:
+                return "Excellent";
+
+            default:
+                return "";
+
+        }
+
+    };
+
+
+    /* =========================================
+       SUBMIT FEEDBACK
+       ========================================= */
+
+    c.submitFeedback = function() {
+
+        if (c.submitting) {
+
+            return;
+
+        }
+
+
+        /* -------------------------------------
+           VALIDATION
+           ------------------------------------- */
+
+        if (!c.form.ticket) {
+
+            c.data.error =
+                "Please select a resolved request.";
+
+            return;
+
+        }
+
+
+        if (!c.form.rating ||
+            c.form.rating < 1) {
+
+            c.data.error =
+                "Please select a rating.";
+
+            return;
+
+        }
+
+
+        if (!c.form.comments ||
+            !c.form.comments.trim()) {
+
+            c.data.error =
+                "Please enter your comments.";
+
+            return;
+
+        }
+
+
+        c.data.error = "";
+
+        c.submitting = true;
+
+
+        /* -------------------------------------
+           SEND TO SERVER
+           ------------------------------------- */
+
+        c.server.get({
+
+            action:
+                "submit_feedback",
+
+            ticket:
+                c.form.ticket,
+
+            rating:
+                c.form.rating,
+
+            comments:
+                c.form.comments
+
+        }).then(function(response) {
+
+            c.data.success =
+                response.data.success;
+
+            c.data.error =
+                response.data.error;
+
+
+            c.submitting = false;
+
+
+            if (response.data.success) {
+
+                c.form = {
+
+                    ticket: "",
+
+                    rating: 0,
+
+                    comments: ""
+
+                };
+
+            }
+
+        }, function() {
+
+            c.submitting = false;
+
+            c.data.error =
+                "Something went wrong while submitting feedback.";
+
+        });
+
+    };
+
+
+    /* =========================================
+       RESET
+       ========================================= */
+
+    c.resetFeedback = function() {
+
+        c.data.success = false;
+
+        c.data.error = "";
+
+        c.form = {
+
+            ticket: "",
+
+            rating: 0,
+
+            comments: ""
+
+        };
+
+    };
+
+
+    /* =========================================
+       BACK TO DASHBOARD
+       ========================================= */
+
+    c.backToDashboard = function() {
+
+        window.location.href =
+            "?id=cfms_student";
+
+    };
+
+
+    /* =========================================
+       MY REQUESTS
+       ========================================= */
+
+    c.myRequests = function() {
+
+        window.location.href =
+            "?id=cfms_requests";
+
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================&#13;
+   CFMS STUDENT FEEDBACK&#13;
+   ========================================= */&#13;
+&#13;
+.cfms-feedback-page {&#13;
+    min-height: 100vh;&#13;
+&#13;
+    background: #f0fbfc;&#13;
+&#13;
+    color: #263238;&#13;
+&#13;
+    font-family:&#13;
+        "Segoe UI",&#13;
+        Tahoma,&#13;
+        Geneva,&#13;
+        Verdana,&#13;
+        sans-serif;&#13;
+&#13;
+    padding-bottom: 50px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   HEADER&#13;
+   ========================================= */&#13;
+&#13;
+.feedback-header {&#13;
+    min-height: 105px;&#13;
+&#13;
+    background: #00acc1;&#13;
+&#13;
+    color: white;&#13;
+&#13;
+    padding: 25px 7%;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+}&#13;
+&#13;
+&#13;
+.header-left {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 18px;&#13;
+}&#13;
+&#13;
+&#13;
+.back-btn {&#13;
+    width: 42px;&#13;
+    height: 42px;&#13;
+&#13;
+    border: 1px solid rgba(255,255,255,0.7);&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    background: transparent;&#13;
+&#13;
+    color: white;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    font-size: 16px;&#13;
+}&#13;
+&#13;
+&#13;
+.back-btn:hover {&#13;
+    background: white;&#13;
+&#13;
+    color: #00acc1;&#13;
+}&#13;
+&#13;
+&#13;
+.header-left h1 {&#13;
+    margin: 0 0 5px;&#13;
+&#13;
+    font-size: 29px;&#13;
+}&#13;
+&#13;
+&#13;
+.header-left p {&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    opacity: 0.9;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   CONTAINER&#13;
+   ========================================= */&#13;
+&#13;
+.feedback-container {&#13;
+    max-width: 1050px;&#13;
+&#13;
+    margin: 35px auto;&#13;
+&#13;
+    padding: 0 25px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   LAYOUT&#13;
+   ========================================= */&#13;
+&#13;
+.feedback-layout {&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns:&#13;
+        330px&#13;
+        minmax(0, 1fr);&#13;
+&#13;
+    gap: 25px;&#13;
+&#13;
+    align-items: start;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   LEFT INFORMATION&#13;
+   ========================================= */&#13;
+&#13;
+.feedback-info {&#13;
+    padding: 30px;&#13;
+&#13;
+    background: #4dd0e1;&#13;
+&#13;
+    border-radius: 15px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+&#13;
+.info-icon {&#13;
+    width: 58px;&#13;
+    height: 58px;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: white;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 25px;&#13;
+&#13;
+    margin-bottom: 20px;&#13;
+}&#13;
+&#13;
+&#13;
+.feedback-info h2 {&#13;
+    margin: 0 0 12px;&#13;
+&#13;
+    font-size: 25px;&#13;
+&#13;
+    color: #263238;&#13;
+}&#13;
+&#13;
+&#13;
+.feedback-info &gt; p {&#13;
+    margin: 0 0 25px;&#13;
+&#13;
+    color: #37474f;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    line-height: 1.7;&#13;
+}&#13;
+&#13;
+&#13;
+.info-item {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 10px;&#13;
+&#13;
+    margin-bottom: 17px;&#13;
+&#13;
+    color: #37474f;&#13;
+&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+.info-item i {&#13;
+    color: #00acc1;&#13;
+&#13;
+    width: 20px;&#13;
+&#13;
+    text-align: center;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   FEEDBACK CARD&#13;
+   ========================================= */&#13;
+&#13;
+.feedback-card {&#13;
+    background: white;&#13;
+&#13;
+    border: 1px solid #e1eff1;&#13;
+&#13;
+    border-radius: 15px;&#13;
+&#13;
+    padding: 32px;&#13;
+&#13;
+    box-shadow:&#13;
+        0 5px 20px rgba(0,0,0,0.06);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   CARD HEADING&#13;
+   ========================================= */&#13;
+&#13;
+.card-heading {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 14px;&#13;
+&#13;
+    padding-bottom: 22px;&#13;
+&#13;
+    margin-bottom: 25px;&#13;
+&#13;
+    border-bottom: 1px solid #edf3f4;&#13;
+}&#13;
+&#13;
+&#13;
+.heading-icon {&#13;
+    width: 50px;&#13;
+    height: 50px;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    background: #e0f7fa;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 21px;&#13;
+}&#13;
+&#13;
+&#13;
+.card-heading h2 {&#13;
+    margin: 0 0 5px;&#13;
+&#13;
+    font-size: 21px;&#13;
+}&#13;
+&#13;
+&#13;
+.card-heading p {&#13;
+    margin: 0;&#13;
+&#13;
+    color: #78909c;&#13;
+&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   FORM&#13;
+   ========================================= */&#13;
+&#13;
+.form-group {&#13;
+    margin-bottom: 24px;&#13;
+}&#13;
+&#13;
+&#13;
+.form-group label {&#13;
+    display: block;&#13;
+&#13;
+    margin-bottom: 8px;&#13;
+&#13;
+    color: #37474f;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+.required {&#13;
+    color: #e53935;&#13;
+}&#13;
+&#13;
+&#13;
+.form-control {&#13;
+    width: 100%;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    min-height: 44px;&#13;
+&#13;
+    padding: 10px 13px;&#13;
+&#13;
+    border: 1px solid #cfdfe2;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    background: white;&#13;
+&#13;
+    color: #263238;&#13;
+&#13;
+    font-family: inherit;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    outline: none;&#13;
+&#13;
+    transition: 0.2s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.form-control:focus {&#13;
+    border-color: #00acc1;&#13;
+&#13;
+    box-shadow:&#13;
+        0 0 0 3px rgba(0,172,193,0.10);&#13;
+}&#13;
+&#13;
+&#13;
+.comments-box {&#13;
+    min-height: 140px;&#13;
+&#13;
+    resize: vertical;&#13;
+&#13;
+    line-height: 1.6;&#13;
+}&#13;
+&#13;
+&#13;
+.field-help {&#13;
+    display: block;&#13;
+&#13;
+    margin-top: 7px;&#13;
+&#13;
+    color: #90a4ae;&#13;
+&#13;
+    font-size: 11px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   STAR RATING&#13;
+   ========================================= */&#13;
+&#13;
+.rating-container {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 7px;&#13;
+&#13;
+    padding: 5px 0;&#13;
+}&#13;
+&#13;
+&#13;
+.star-btn {&#13;
+    width: 38px;&#13;
+    height: 38px;&#13;
+&#13;
+    padding: 0;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    background: transparent;&#13;
+&#13;
+    color: #cfd8dc;&#13;
+&#13;
+    font-size: 25px;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    transition: 0.15s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.star-btn:hover {&#13;
+    color: #ffca28;&#13;
+&#13;
+    transform: scale(1.12);&#13;
+}&#13;
+&#13;
+&#13;
+.star-btn.selected {&#13;
+    color: #ffb300;&#13;
+}&#13;
+&#13;
+&#13;
+.rating-text {&#13;
+    margin-top: 5px;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   CHARACTER COUNT&#13;
+   ========================================= */&#13;
+&#13;
+.character-count {&#13;
+    text-align: right;&#13;
+&#13;
+    margin-top: 5px;&#13;
+&#13;
+    color: #90a4ae;&#13;
+&#13;
+    font-size: 11px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   FORM ACTIONS&#13;
+   ========================================= */&#13;
+&#13;
+.form-actions {&#13;
+    display: flex;&#13;
+&#13;
+    justify-content: flex-end;&#13;
+&#13;
+    gap: 12px;&#13;
+&#13;
+    padding-top: 18px;&#13;
+&#13;
+    border-top: 1px solid #edf3f4;&#13;
+}&#13;
+&#13;
+&#13;
+.cancel-btn {&#13;
+    padding: 11px 21px;&#13;
+&#13;
+    border: 1px solid #cfdfe2;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    background: white;&#13;
+&#13;
+    color: #546e7a;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+.cancel-btn:hover {&#13;
+    background: #f5fafa;&#13;
+}&#13;
+&#13;
+&#13;
+.submit-btn {&#13;
+    padding: 11px 22px;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    background: #00acc1;&#13;
+&#13;
+    color: white;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+.submit-btn:hover {&#13;
+    background: #008fa1;&#13;
+}&#13;
+&#13;
+&#13;
+.submit-btn:disabled {&#13;
+    opacity: 0.65;&#13;
+&#13;
+    cursor: not-allowed;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   ERROR&#13;
+   ========================================= */&#13;
+&#13;
+.error-message {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 10px;&#13;
+&#13;
+    padding: 14px 16px;&#13;
+&#13;
+    margin-bottom: 20px;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    background: #ffebee;&#13;
+&#13;
+    border: 1px solid #ffcdd2;&#13;
+&#13;
+    color: #c62828;&#13;
+&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   SUCCESS&#13;
+   ========================================= */&#13;
+&#13;
+.success-card {&#13;
+    background: white;&#13;
+&#13;
+    border-radius: 15px;&#13;
+&#13;
+    padding: 55px 35px;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+    box-shadow:&#13;
+        0 5px 20px rgba(0,0,0,0.06);&#13;
+&#13;
+    border: 1px solid #e1eff1;&#13;
+}&#13;
+&#13;
+&#13;
+.success-icon {&#13;
+    width: 75px;&#13;
+    height: 75px;&#13;
+&#13;
+    margin: 0 auto 20px;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: #e8f5e9;&#13;
+&#13;
+    color: #43a047;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 32px;&#13;
+}&#13;
+&#13;
+&#13;
+.success-card h2 {&#13;
+    margin: 0 0 12px;&#13;
+&#13;
+    color: #263238;&#13;
+&#13;
+    font-size: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+.success-card p {&#13;
+    max-width: 550px;&#13;
+&#13;
+    margin: 0 auto;&#13;
+&#13;
+    color: #78909c;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    line-height: 1.7;&#13;
+}&#13;
+&#13;
+&#13;
+.success-actions {&#13;
+    display: flex;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    gap: 12px;&#13;
+&#13;
+    margin-top: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+.primary-btn {&#13;
+    padding: 11px 20px;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    background: #00acc1;&#13;
+&#13;
+    color: white;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+.secondary-btn {&#13;
+    padding: 11px 20px;&#13;
+&#13;
+    border: 1px solid #00acc1;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    background: white;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   NO FEEDBACK&#13;
+   ========================================= */&#13;
+&#13;
+.no-feedback-card {&#13;
+    background: white;&#13;
+&#13;
+    border-radius: 15px;&#13;
+&#13;
+    padding: 55px 25px;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+    border: 1px solid #e1eff1;&#13;
+&#13;
+    box-shadow:&#13;
+        0 5px 20px rgba(0,0,0,0.05);&#13;
+}&#13;
+&#13;
+&#13;
+.no-feedback-icon {&#13;
+    width: 70px;&#13;
+    height: 70px;&#13;
+&#13;
+    margin: 0 auto 18px;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: #e0f7fa;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 29px;&#13;
+}&#13;
+&#13;
+&#13;
+.no-feedback-card h2 {&#13;
+    margin: 0 0 10px;&#13;
+&#13;
+    font-size: 23px;&#13;
+}&#13;
+&#13;
+&#13;
+.no-feedback-card p {&#13;
+    max-width: 500px;&#13;
+&#13;
+    margin: 0 auto 20px;&#13;
+&#13;
+    color: #78909c;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    line-height: 1.6;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   RESPONSIVE&#13;
+   ========================================= */&#13;
+&#13;
+@media (max-width: 800px) {&#13;
+&#13;
+    .feedback-layout {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+    .feedback-header {&#13;
+        padding: 22px 20px;&#13;
+    }&#13;
+&#13;
+    .header-left h1 {&#13;
+        font-size: 23px;&#13;
+    }&#13;
+&#13;
+    .feedback-container {&#13;
+        margin-top: 20px;&#13;
+&#13;
+        padding: 0 15px;&#13;
+    }&#13;
+&#13;
+    .feedback-card {&#13;
+        padding: 23px;&#13;
+    }&#13;
+&#13;
+    .form-actions,&#13;
+    .success-actions {&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+    .cancel-btn,&#13;
+    .submit-btn,&#13;
+    .primary-btn,&#13;
+    .secondary-btn {&#13;
+        width: 100%;&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>cfms_feedback_widget</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>CFMS Student Feedback</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    /* =========================================
+       DEFAULT DATA
+       ========================================= */
+
+    data.resolvedRequests = [];
+
+    data.success = false;
+
+    data.error = "";
+
+
+    /* =========================================
+       LOGIN CHECK
+       ========================================= */
+
+    if (!gs.isLoggedIn()) {
+
+        data.error =
+            "Please login before submitting feedback.";
+
+        return;
+    }
+
+
+    /* =========================================
+       ROLE CHECK
+       ========================================= */
+
+    if (!gs.hasRole("cfms_student") &&
+        !gs.hasRole("admin")) {
+
+        data.error =
+            "You are not authorized to submit feedback.";
+
+        return;
+    }
+
+
+    /* =========================================
+       SUBMIT FEEDBACK
+       ========================================= */
+
+    if (input &&
+        input.action == "submit_feedback") {
+
+
+        var ticketId =
+            input.ticket || "";
+
+        var rating =
+            parseInt(input.rating, 10);
+
+        var comments =
+            input.comments || "";
+
+
+        /* -------------------------------------
+           VALIDATION
+           ------------------------------------- */
+
+        if (!ticketId) {
+
+            data.error =
+                "Please select a resolved request.";
+
+            return;
+        }
+
+
+        if (!rating ||
+            rating < 1 ||
+            rating > 5) {
+
+            data.error =
+                "Please select a rating from 1 to 5.";
+
+            return;
+        }
+
+
+        if (!comments ||
+            comments.trim() == "") {
+
+            data.error =
+                "Please enter your comments.";
+
+            return;
+        }
+
+
+        /* -------------------------------------
+           VERIFY INCIDENT
+           
+           The ticket MUST:
+           1. Exist
+           2. Belong to current student
+           3. Be resolved/closed
+           ------------------------------------- */
+
+        var ticketGR =
+            new GlideRecord("incident");
+
+
+        if (!ticketGR.get(ticketId)) {
+
+            data.error =
+                "The selected request could not be found.";
+
+            return;
+        }
+
+
+        /* Student ownership */
+
+        if (ticketGR.getValue("caller_id") !=
+            gs.getUserID()) {
+
+            data.error =
+                "You are not authorized to give feedback for this request.";
+
+            return;
+        }
+
+
+        /* Resolved check */
+
+        var ticketState =
+            ticketGR.getValue("state");
+
+
+        if (ticketState != "6" &&
+            ticketState != "7") {
+
+            data.error =
+                "Feedback can only be submitted for a resolved request.";
+
+            return;
+        }
+
+
+        /* -------------------------------------
+           CHECK DUPLICATE FEEDBACK
+           ------------------------------------- */
+
+        var existingFeedback =
+            new GlideRecord("u_cfms_feedback");
+
+
+        existingFeedback.addQuery(
+            "u_student",
+            gs.getUserID()
+        );
+
+        existingFeedback.addQuery(
+            "u_ticket",
+            ticketId
+        );
+
+        existingFeedback.setLimit(1);
+
+        existingFeedback.query();
+
+
+        if (existingFeedback.next()) {
+
+            data.error =
+                "You have already submitted feedback for this request.";
+
+            return;
+        }
+
+
+        /* -------------------------------------
+           CREATE FEEDBACK
+           ------------------------------------- */
+
+        var feedbackGR =
+            new GlideRecord("u_cfms_feedback");
+
+
+        feedbackGR.initialize();
+
+
+        feedbackGR.setValue(
+            "u_student",
+            gs.getUserID()
+        );
+
+
+        feedbackGR.setValue(
+            "u_ticket",
+            ticketId
+        );
+
+
+        feedbackGR.setValue(
+            "u_rating",
+            rating
+        );
+
+
+        feedbackGR.setValue(
+            "u_comments",
+            comments
+        );
+
+
+        var feedbackId =
+            feedbackGR.insert();
+
+
+        if (!feedbackId) {
+
+            data.error =
+                "Unable to submit feedback. Please try again.";
+
+            return;
+        }
+
+
+        /* -------------------------------------
+           SUCCESS
+           ------------------------------------- */
+
+        data.success = true;
+
+        return;
+    }
+
+
+    /* =========================================
+       GET RESOLVED REQUESTS
+       ========================================= */
+
+    var gr =
+        new GlideRecord("incident");
+
+
+    /*
+     * Only this student's requests
+     */
+
+    gr.addQuery(
+        "caller_id",
+        gs.getUserID()
+    );
+
+
+    /*
+     * Only resolved or closed
+     */
+
+    var stateQuery =
+        gr.addQuery("state", "6");
+
+    stateQuery.addOrCondition(
+        "state",
+        "7"
+    );
+
+
+    gr.orderByDesc(
+        "sys_updated_on"
+    );
+
+    gr.query();
+
+
+    while (gr.next()) {
+
+
+        /*
+         * Check whether feedback already exists
+         */
+
+        var feedbackCheck =
+            new GlideRecord("u_cfms_feedback");
+
+
+        feedbackCheck.addQuery(
+            "u_student",
+            gs.getUserID()
+        );
+
+        feedbackCheck.addQuery(
+            "u_ticket",
+            gr.getUniqueValue()
+        );
+
+        feedbackCheck.setLimit(1);
+
+        feedbackCheck.query();
+
+
+        /*
+         * Only show requests that
+         * have not already received feedback.
+         */
+
+        if (feedbackCheck.next()) {
+
+            continue;
+
+        }
+
+
+        data.resolvedRequests.push({
+
+            sys_id:
+                gr.getUniqueValue(),
+
+            number:
+                gr.getValue("number"),
+
+            short_description:
+                gr.getValue(
+                    "short_description"
+                ),
+
+            resolvedDate:
+                gr.getDisplayValue(
+                    "sys_updated_on"
+                )
+
+        });
+
+    }
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 11:13:31</sys_created_on>
+        <sys_id>cefdcc51a0af03107f4432329b8a156b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>CFMS Student Feedback</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_cefdcc51a0af03107f4432329b8a156b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 11:13:31</sys_updated_on>
+        <template><![CDATA[<div class="cfms-feedback-page">
+
+    <!-- =====================================
+         HEADER
+         ===================================== -->
+
+    <div class="feedback-header">
+
+        <div class="header-left">
+
+            <button
+                class="back-btn"
+                ng-click="c.backToDashboard()">
+
+                <i class="fa fa-arrow-left"></i>
+
+            </button>
+
+            <div>
+
+                <h1>Student Feedback</h1>
+
+                <p>
+                    Share your experience and help us improve
+                    campus food services.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         MAIN CONTENT
+         ===================================== -->
+
+    <div class="feedback-container">
+
+
+        <!-- =================================
+             SUCCESS MESSAGE
+             ================================= -->
+
+        <div
+            class="success-card"
+            ng-if="c.data.success">
+
+            <div class="success-icon">
+
+                <i class="fa fa-check"></i>
+
+            </div>
+
+            <h2>
+                Thank You for Your Feedback!
+            </h2>
+
+            <p>
+                Your feedback has been submitted successfully.
+                It will help us improve the campus food experience.
+            </p>
+
+            <div class="success-actions">
+
+                <button
+                    class="primary-btn"
+                    ng-click="c.backToDashboard()">
+
+                    Back to Dashboard
+
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    ng-click="c.resetFeedback()">
+
+                    Give More Feedback
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================
+             ERROR
+             ================================= -->
+
+        <div
+            class="error-message"
+            ng-if="c.data.error">
+
+            <i class="fa fa-exclamation-circle"></i>
+
+            <span>
+                {{c.data.error}}
+            </span>
+
+        </div>
+
+
+        <!-- =================================
+             FEEDBACK FORM
+             ================================= -->
+
+        <div
+            class="feedback-layout"
+            ng-if="!c.data.success">
+
+
+            <!-- LEFT INFORMATION -->
+
+            <div class="feedback-info">
+
+                <div class="info-icon">
+
+                    <i class="fa fa-star"></i>
+
+                </div>
+
+                <h2>
+                    Your Voice Matters
+                </h2>
+
+                <p>
+                    Your feedback helps the campus food
+                    service team understand what is working
+                    well and where improvements are needed.
+                </p>
+
+
+                <div class="info-item">
+
+                    <i class="fa fa-check-circle"></i>
+
+                    <span>
+                        Rate your food service experience
+                    </span>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <i class="fa fa-comment"></i>
+
+                    <span>
+                        Share your suggestions
+                    </span>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <i class="fa fa-line-chart"></i>
+
+                    <span>
+                        Help improve campus dining
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT FORM -->
+
+            <div class="feedback-card">
+
+                <div class="card-heading">
+
+                    <div class="heading-icon">
+
+                        <i class="fa fa-comment-o"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Give Feedback
+                        </h2>
+
+                        <p>
+                            Tell us about your experience.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RESOLVED REQUEST -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Resolved Request
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <select
+                        class="form-control"
+                        ng-model="c.form.ticket"
+                        required>
+
+                        <option value="">
+                            Select a resolved request
+                        </option>
+
+                        <option
+                            ng-repeat="request in c.data.resolvedRequests"
+                            value="{{request.sys_id}}">
+
+                            {{request.number}}
+                            -
+                            {{request.short_description}}
+
+                        </option>
+
+                    </select>
+
+
+                    <small class="field-help">
+
+                        Feedback can only be submitted
+                        for resolved requests.
+
+                    </small>
+
+                </div>
+
+
+                <!-- RATING -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Overall Rating
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <div class="rating-container">
+
+
+                        <button
+                            type="button"
+                            class="star-btn"
+                            ng-repeat="star in [1,2,3,4,5]"
+                            ng-click="c.setRating(star)"
+                            ng-class="{
+                                'selected':
+                                star <= c.form.rating
+                            }">
+
+                            <i class="fa fa-star"></i>
+
+                        </button>
+
+
+                    </div>
+
+
+                    <div
+                        class="rating-text"
+                        ng-if="c.form.rating">
+
+                        {{c.ratingText()}}
+
+                    </div>
+
+
+                    <small class="field-help">
+
+                        1 = Very Poor &nbsp;&nbsp;
+                        5 = Excellent
+
+                    </small>
+
+                </div>
+
+
+                <!-- COMMENTS -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Comments
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <textarea
+                        class="form-control comments-box"
+                        ng-model="c.form.comments"
+                        rows="6"
+                        maxlength="1000"
+                        placeholder="Tell us about your experience..."
+                        required>
+                    </textarea>
+
+
+                    <div class="character-count">
+
+                        {{c.form.comments.length || 0}} / 1000
+
+                    </div>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        ng-click="c.backToDashboard()">
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="submit-btn"
+                        ng-click="c.submitFeedback()"
+                        ng-disabled="c.submitting">
+
+                        <i
+                            class="fa"
+                            ng-class="c.submitting
+                                ? 'fa-spinner fa-spin'
+                                : 'fa-paper-plane'">
+                        </i>
+
+                        <span ng-if="!c.submitting">
+                            Submit Feedback
+                        </span>
+
+                        <span ng-if="c.submitting">
+                            Submitting...
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================
+             NO RESOLVED REQUESTS
+             ================================= -->
+
+        <div
+            class="no-feedback-card"
+            ng-if="
+                !c.data.success &&
+                !c.data.error &&
+                c.data.resolvedRequests.length == 0
+            ">
+
+            <div class="no-feedback-icon">
+
+                <i class="fa fa-clock-o"></i>
+
+            </div>
+
+            <h2>
+                No Resolved Requests Yet
+            </h2>
+
+            <p>
+                You can submit feedback after one of
+                your food requests has been resolved.
+            </p>
+
+            <button
+                class="primary-btn"
+                ng-click="c.myRequests()">
+
+                View My Requests
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>sp_widget_cefdcc51a0af03107f4432329b8a156b</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller = function() {
+
+    var c = this;
+
+
+    /* =========================================
+       FORM
+       ========================================= */
+
+    c.form = {
+
+        ticket: "",
+
+        rating: 0,
+
+        comments: ""
+
+    };
+
+
+    c.submitting = false;
+
+
+    /* =========================================
+       SELECT RATING
+       ========================================= */
+
+    c.setRating = function(rating) {
+
+        c.form.rating = rating;
+
+    };
+
+
+    /* =========================================
+       RATING TEXT
+       ========================================= */
+
+    c.ratingText = function() {
+
+        switch (c.form.rating) {
+
+            case 1:
+                return "Very Poor";
+
+            case 2:
+                return "Poor";
+
+            case 3:
+                return "Average";
+
+            case 4:
+                return "Good";
+
+            case 5:
+                return "Excellent";
+
+            default:
+                return "";
+
+        }
+
+    };
+
+
+    /* =========================================
+       SUBMIT FEEDBACK
+       ========================================= */
+
+    c.submitFeedback = function() {
+
+        if (c.submitting) {
+
+            return;
+
+        }
+
+
+        /* -------------------------------------
+           VALIDATION
+           ------------------------------------- */
+
+        if (!c.form.ticket) {
+
+            c.data.error =
+                "Please select a resolved request.";
+
+            return;
+
+        }
+
+
+        if (!c.form.rating ||
+            c.form.rating &lt; 1) {
+
+            c.data.error =
+                "Please select a rating.";
+
+            return;
+
+        }
+
+
+        if (!c.form.comments ||
+            !c.form.comments.trim()) {
+
+            c.data.error =
+                "Please enter your comments.";
+
+            return;
+
+        }
+
+
+        c.data.error = "";
+
+        c.submitting = true;
+
+
+        /* -------------------------------------
+           SEND TO SERVER
+           ------------------------------------- */
+
+        c.server.get({
+
+            action:
+                "submit_feedback",
+
+            ticket:
+                c.form.ticket,
+
+            rating:
+                c.form.rating,
+
+            comments:
+                c.form.comments
+
+        }).then(function(response) {
+
+            c.data.success =
+                response.data.success;
+
+            c.data.error =
+                response.data.error;
+
+
+            c.submitting = false;
+
+
+            if (response.data.success) {
+
+                c.form = {
+
+                    ticket: "",
+
+                    rating: 0,
+
+                    comments: ""
+
+                };
+
+            }
+
+        }, function() {
+
+            c.submitting = false;
+
+            c.data.error =
+                "Something went wrong while submitting feedback.";
+
+        });
+
+    };
+
+
+    /* =========================================
+       RESET
+       ========================================= */
+
+    c.resetFeedback = function() {
+
+        c.data.success = false;
+
+        c.data.error = "";
+
+        c.form = {
+
+            ticket: "",
+
+            rating: 0,
+
+            comments: ""
+
+        };
+
+    };
+
+
+    /* =========================================
+       BACK TO DASHBOARD
+       ========================================= */
+
+    c.backToDashboard = function() {
+
+        window.location.href =
+            "?id=cfms_student";
+
+    };
+
+
+    /* =========================================
+       MY REQUESTS
+       ========================================= */
+
+    c.myRequests = function() {
+
+        window.location.href =
+            "?id=cfms_requests";
+
+    };
+
+};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;/* =========================================&amp;#13;
+   CFMS STUDENT FEEDBACK&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.cfms-feedback-page {&amp;#13;
+    min-height: 100vh;&amp;#13;
+&amp;#13;
+    background: #f0fbfc;&amp;#13;
+&amp;#13;
+    color: #263238;&amp;#13;
+&amp;#13;
+    font-family:&amp;#13;
+        "Segoe UI",&amp;#13;
+        Tahoma,&amp;#13;
+        Geneva,&amp;#13;
+        Verdana,&amp;#13;
+        sans-serif;&amp;#13;
+&amp;#13;
+    padding-bottom: 50px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   HEADER&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.feedback-header {&amp;#13;
+    min-height: 105px;&amp;#13;
+&amp;#13;
+    background: #00acc1;&amp;#13;
+&amp;#13;
+    color: white;&amp;#13;
+&amp;#13;
+    padding: 25px 7%;&amp;#13;
+&amp;#13;
+    box-sizing: border-box;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.header-left {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 18px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.back-btn {&amp;#13;
+    width: 42px;&amp;#13;
+    height: 42px;&amp;#13;
+&amp;#13;
+    border: 1px solid rgba(255,255,255,0.7);&amp;#13;
+&amp;#13;
+    border-radius: 8px;&amp;#13;
+&amp;#13;
+    background: transparent;&amp;#13;
+&amp;#13;
+    color: white;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+&amp;#13;
+    font-size: 16px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.back-btn:hover {&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.header-left h1 {&amp;#13;
+    margin: 0 0 5px;&amp;#13;
+&amp;#13;
+    font-size: 29px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.header-left p {&amp;#13;
+    margin: 0;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+&amp;#13;
+    opacity: 0.9;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   CONTAINER&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.feedback-container {&amp;#13;
+    max-width: 1050px;&amp;#13;
+&amp;#13;
+    margin: 35px auto;&amp;#13;
+&amp;#13;
+    padding: 0 25px;&amp;#13;
+&amp;#13;
+    box-sizing: border-box;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   LAYOUT&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.feedback-layout {&amp;#13;
+    display: grid;&amp;#13;
+&amp;#13;
+    grid-template-columns:&amp;#13;
+        330px&amp;#13;
+        minmax(0, 1fr);&amp;#13;
+&amp;#13;
+    gap: 25px;&amp;#13;
+&amp;#13;
+    align-items: start;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   LEFT INFORMATION&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.feedback-info {&amp;#13;
+    padding: 30px;&amp;#13;
+&amp;#13;
+    background: #4dd0e1;&amp;#13;
+&amp;#13;
+    border-radius: 15px;&amp;#13;
+&amp;#13;
+    box-sizing: border-box;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.info-icon {&amp;#13;
+    width: 58px;&amp;#13;
+    height: 58px;&amp;#13;
+&amp;#13;
+    border-radius: 50%;&amp;#13;
+&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    font-size: 25px;&amp;#13;
+&amp;#13;
+    margin-bottom: 20px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.feedback-info h2 {&amp;#13;
+    margin: 0 0 12px;&amp;#13;
+&amp;#13;
+    font-size: 25px;&amp;#13;
+&amp;#13;
+    color: #263238;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.feedback-info &amp;gt; p {&amp;#13;
+    margin: 0 0 25px;&amp;#13;
+&amp;#13;
+    color: #37474f;&amp;#13;
+&amp;#13;
+    font-size: 14px;&amp;#13;
+&amp;#13;
+    line-height: 1.7;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.info-item {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 10px;&amp;#13;
+&amp;#13;
+    margin-bottom: 17px;&amp;#13;
+&amp;#13;
+    color: #37474f;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.info-item i {&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    width: 20px;&amp;#13;
+&amp;#13;
+    text-align: center;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   FEEDBACK CARD&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.feedback-card {&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    border: 1px solid #e1eff1;&amp;#13;
+&amp;#13;
+    border-radius: 15px;&amp;#13;
+&amp;#13;
+    padding: 32px;&amp;#13;
+&amp;#13;
+    box-shadow:&amp;#13;
+        0 5px 20px rgba(0,0,0,0.06);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   CARD HEADING&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.card-heading {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 14px;&amp;#13;
+&amp;#13;
+    padding-bottom: 22px;&amp;#13;
+&amp;#13;
+    margin-bottom: 25px;&amp;#13;
+&amp;#13;
+    border-bottom: 1px solid #edf3f4;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.heading-icon {&amp;#13;
+    width: 50px;&amp;#13;
+    height: 50px;&amp;#13;
+&amp;#13;
+    border-radius: 10px;&amp;#13;
+&amp;#13;
+    background: #e0f7fa;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    font-size: 21px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.card-heading h2 {&amp;#13;
+    margin: 0 0 5px;&amp;#13;
+&amp;#13;
+    font-size: 21px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.card-heading p {&amp;#13;
+    margin: 0;&amp;#13;
+&amp;#13;
+    color: #78909c;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   FORM&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.form-group {&amp;#13;
+    margin-bottom: 24px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.form-group label {&amp;#13;
+    display: block;&amp;#13;
+&amp;#13;
+    margin-bottom: 8px;&amp;#13;
+&amp;#13;
+    color: #37474f;&amp;#13;
+&amp;#13;
+    font-size: 14px;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.required {&amp;#13;
+    color: #e53935;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.form-control {&amp;#13;
+    width: 100%;&amp;#13;
+&amp;#13;
+    box-sizing: border-box;&amp;#13;
+&amp;#13;
+    min-height: 44px;&amp;#13;
+&amp;#13;
+    padding: 10px 13px;&amp;#13;
+&amp;#13;
+    border: 1px solid #cfdfe2;&amp;#13;
+&amp;#13;
+    border-radius: 7px;&amp;#13;
+&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    color: #263238;&amp;#13;
+&amp;#13;
+    font-family: inherit;&amp;#13;
+&amp;#13;
+    font-size: 14px;&amp;#13;
+&amp;#13;
+    outline: none;&amp;#13;
+&amp;#13;
+    transition: 0.2s ease;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.form-control:focus {&amp;#13;
+    border-color: #00acc1;&amp;#13;
+&amp;#13;
+    box-shadow:&amp;#13;
+        0 0 0 3px rgba(0,172,193,0.10);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.comments-box {&amp;#13;
+    min-height: 140px;&amp;#13;
+&amp;#13;
+    resize: vertical;&amp;#13;
+&amp;#13;
+    line-height: 1.6;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.field-help {&amp;#13;
+    display: block;&amp;#13;
+&amp;#13;
+    margin-top: 7px;&amp;#13;
+&amp;#13;
+    color: #90a4ae;&amp;#13;
+&amp;#13;
+    font-size: 11px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   STAR RATING&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.rating-container {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 7px;&amp;#13;
+&amp;#13;
+    padding: 5px 0;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.star-btn {&amp;#13;
+    width: 38px;&amp;#13;
+    height: 38px;&amp;#13;
+&amp;#13;
+    padding: 0;&amp;#13;
+&amp;#13;
+    border: none;&amp;#13;
+&amp;#13;
+    background: transparent;&amp;#13;
+&amp;#13;
+    color: #cfd8dc;&amp;#13;
+&amp;#13;
+    font-size: 25px;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+&amp;#13;
+    transition: 0.15s ease;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.star-btn:hover {&amp;#13;
+    color: #ffca28;&amp;#13;
+&amp;#13;
+    transform: scale(1.12);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.star-btn.selected {&amp;#13;
+    color: #ffb300;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.rating-text {&amp;#13;
+    margin-top: 5px;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   CHARACTER COUNT&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.character-count {&amp;#13;
+    text-align: right;&amp;#13;
+&amp;#13;
+    margin-top: 5px;&amp;#13;
+&amp;#13;
+    color: #90a4ae;&amp;#13;
+&amp;#13;
+    font-size: 11px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   FORM ACTIONS&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.form-actions {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    justify-content: flex-end;&amp;#13;
+&amp;#13;
+    gap: 12px;&amp;#13;
+&amp;#13;
+    padding-top: 18px;&amp;#13;
+&amp;#13;
+    border-top: 1px solid #edf3f4;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.cancel-btn {&amp;#13;
+    padding: 11px 21px;&amp;#13;
+&amp;#13;
+    border: 1px solid #cfdfe2;&amp;#13;
+&amp;#13;
+    border-radius: 7px;&amp;#13;
+&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    color: #546e7a;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.cancel-btn:hover {&amp;#13;
+    background: #f5fafa;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.submit-btn {&amp;#13;
+    padding: 11px 22px;&amp;#13;
+&amp;#13;
+    border: none;&amp;#13;
+&amp;#13;
+    border-radius: 7px;&amp;#13;
+&amp;#13;
+    background: #00acc1;&amp;#13;
+&amp;#13;
+    color: white;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.submit-btn:hover {&amp;#13;
+    background: #008fa1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.submit-btn:disabled {&amp;#13;
+    opacity: 0.65;&amp;#13;
+&amp;#13;
+    cursor: not-allowed;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   ERROR&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.error-message {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 10px;&amp;#13;
+&amp;#13;
+    padding: 14px 16px;&amp;#13;
+&amp;#13;
+    margin-bottom: 20px;&amp;#13;
+&amp;#13;
+    border-radius: 8px;&amp;#13;
+&amp;#13;
+    background: #ffebee;&amp;#13;
+&amp;#13;
+    border: 1px solid #ffcdd2;&amp;#13;
+&amp;#13;
+    color: #c62828;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   SUCCESS&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.success-card {&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    border-radius: 15px;&amp;#13;
+&amp;#13;
+    padding: 55px 35px;&amp;#13;
+&amp;#13;
+    text-align: center;&amp;#13;
+&amp;#13;
+    box-shadow:&amp;#13;
+        0 5px 20px rgba(0,0,0,0.06);&amp;#13;
+&amp;#13;
+    border: 1px solid #e1eff1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.success-icon {&amp;#13;
+    width: 75px;&amp;#13;
+    height: 75px;&amp;#13;
+&amp;#13;
+    margin: 0 auto 20px;&amp;#13;
+&amp;#13;
+    border-radius: 50%;&amp;#13;
+&amp;#13;
+    background: #e8f5e9;&amp;#13;
+&amp;#13;
+    color: #43a047;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    font-size: 32px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.success-card h2 {&amp;#13;
+    margin: 0 0 12px;&amp;#13;
+&amp;#13;
+    color: #263238;&amp;#13;
+&amp;#13;
+    font-size: 25px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.success-card p {&amp;#13;
+    max-width: 550px;&amp;#13;
+&amp;#13;
+    margin: 0 auto;&amp;#13;
+&amp;#13;
+    color: #78909c;&amp;#13;
+&amp;#13;
+    font-size: 14px;&amp;#13;
+&amp;#13;
+    line-height: 1.7;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.success-actions {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    gap: 12px;&amp;#13;
+&amp;#13;
+    margin-top: 25px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.primary-btn {&amp;#13;
+    padding: 11px 20px;&amp;#13;
+&amp;#13;
+    border: none;&amp;#13;
+&amp;#13;
+    border-radius: 7px;&amp;#13;
+&amp;#13;
+    background: #00acc1;&amp;#13;
+&amp;#13;
+    color: white;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.secondary-btn {&amp;#13;
+    padding: 11px 20px;&amp;#13;
+&amp;#13;
+    border: 1px solid #00acc1;&amp;#13;
+&amp;#13;
+    border-radius: 7px;&amp;#13;
+&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   NO FEEDBACK&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.no-feedback-card {&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    border-radius: 15px;&amp;#13;
+&amp;#13;
+    padding: 55px 25px;&amp;#13;
+&amp;#13;
+    text-align: center;&amp;#13;
+&amp;#13;
+    border: 1px solid #e1eff1;&amp;#13;
+&amp;#13;
+    box-shadow:&amp;#13;
+        0 5px 20px rgba(0,0,0,0.05);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.no-feedback-icon {&amp;#13;
+    width: 70px;&amp;#13;
+    height: 70px;&amp;#13;
+&amp;#13;
+    margin: 0 auto 18px;&amp;#13;
+&amp;#13;
+    border-radius: 50%;&amp;#13;
+&amp;#13;
+    background: #e0f7fa;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    font-size: 29px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.no-feedback-card h2 {&amp;#13;
+    margin: 0 0 10px;&amp;#13;
+&amp;#13;
+    font-size: 23px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.no-feedback-card p {&amp;#13;
+    max-width: 500px;&amp;#13;
+&amp;#13;
+    margin: 0 auto 20px;&amp;#13;
+&amp;#13;
+    color: #78909c;&amp;#13;
+&amp;#13;
+    font-size: 14px;&amp;#13;
+&amp;#13;
+    line-height: 1.6;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   RESPONSIVE&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+@media (max-width: 800px) {&amp;#13;
+&amp;#13;
+    .feedback-layout {&amp;#13;
+        grid-template-columns: 1fr;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+@media (max-width: 600px) {&amp;#13;
+&amp;#13;
+    .feedback-header {&amp;#13;
+        padding: 22px 20px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .header-left h1 {&amp;#13;
+        font-size: 23px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .feedback-container {&amp;#13;
+        margin-top: 20px;&amp;#13;
+&amp;#13;
+        padding: 0 15px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .feedback-card {&amp;#13;
+        padding: 23px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .form-actions,&amp;#13;
+    .success-actions {&amp;#13;
+        flex-direction: column;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .cancel-btn,&amp;#13;
+    .submit-btn,&amp;#13;
+    .primary-btn,&amp;#13;
+    .secondary-btn {&amp;#13;
+        width: 100%;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+}&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;cfms_feedback_widget&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]&gt;&lt;/link&gt;&lt;name&gt;CFMS Student Feedback&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;false&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+
+    /* =========================================
+       DEFAULT DATA
+       ========================================= */
+
+    data.resolvedRequests = [];
+
+    data.success = false;
+
+    data.error = "";
+
+
+    /* =========================================
+       LOGIN CHECK
+       ========================================= */
+
+    if (!gs.isLoggedIn()) {
+
+        data.error =
+            "Please login before submitting feedback.";
+
+        return;
+    }
+
+
+    /* =========================================
+       ROLE CHECK
+       ========================================= */
+
+    if (!gs.hasRole("cfms_student") &amp;&amp;
+        !gs.hasRole("admin")) {
+
+        data.error =
+            "You are not authorized to submit feedback.";
+
+        return;
+    }
+
+
+    /* =========================================
+       SUBMIT FEEDBACK
+       ========================================= */
+
+    if (input &amp;&amp;
+        input.action == "submit_feedback") {
+
+
+        var ticketId =
+            input.ticket || "";
+
+        var rating =
+            parseInt(input.rating, 10);
+
+        var comments =
+            input.comments || "";
+
+
+        /* -------------------------------------
+           VALIDATION
+           ------------------------------------- */
+
+        if (!ticketId) {
+
+            data.error =
+                "Please select a resolved request.";
+
+            return;
+        }
+
+
+        if (!rating ||
+            rating &lt; 1 ||
+            rating &gt; 5) {
+
+            data.error =
+                "Please select a rating from 1 to 5.";
+
+            return;
+        }
+
+
+        if (!comments ||
+            comments.trim() == "") {
+
+            data.error =
+                "Please enter your comments.";
+
+            return;
+        }
+
+
+        /* -------------------------------------
+           VERIFY INCIDENT
+           
+           The ticket MUST:
+           1. Exist
+           2. Belong to current student
+           3. Be resolved/closed
+           ------------------------------------- */
+
+        var ticketGR =
+            new GlideRecord("incident");
+
+
+        if (!ticketGR.get(ticketId)) {
+
+            data.error =
+                "The selected request could not be found.";
+
+            return;
+        }
+
+
+        /* Student ownership */
+
+        if (ticketGR.getValue("caller_id") !=
+            gs.getUserID()) {
+
+            data.error =
+                "You are not authorized to give feedback for this request.";
+
+            return;
+        }
+
+
+        /* Resolved check */
+
+        var ticketState =
+            ticketGR.getValue("state");
+
+
+        if (ticketState != "6" &amp;&amp;
+            ticketState != "7") {
+
+            data.error =
+                "Feedback can only be submitted for a resolved request.";
+
+            return;
+        }
+
+
+        /* -------------------------------------
+           CHECK DUPLICATE FEEDBACK
+           ------------------------------------- */
+
+        var existingFeedback =
+            new GlideRecord("u_cfms_feedback");
+
+
+        existingFeedback.addQuery(
+            "u_student",
+            gs.getUserID()
+        );
+
+        existingFeedback.addQuery(
+            "u_ticket",
+            ticketId
+        );
+
+        existingFeedback.setLimit(1);
+
+        existingFeedback.query();
+
+
+        if (existingFeedback.next()) {
+
+            data.error =
+                "You have already submitted feedback for this request.";
+
+            return;
+        }
+
+
+        /* -------------------------------------
+           CREATE FEEDBACK
+           ------------------------------------- */
+
+        var feedbackGR =
+            new GlideRecord("u_cfms_feedback");
+
+
+        feedbackGR.initialize();
+
+
+        feedbackGR.setValue(
+            "u_student",
+            gs.getUserID()
+        );
+
+
+        feedbackGR.setValue(
+            "u_ticket",
+            ticketId
+        );
+
+
+        feedbackGR.setValue(
+            "u_rating",
+            rating
+        );
+
+
+        feedbackGR.setValue(
+            "u_comments",
+            comments
+        );
+
+
+        var feedbackId =
+            feedbackGR.insert();
+
+
+        if (!feedbackId) {
+
+            data.error =
+                "Unable to submit feedback. Please try again.";
+
+            return;
+        }
+
+
+        /* -------------------------------------
+           SUCCESS
+           ------------------------------------- */
+
+        data.success = true;
+
+        return;
+    }
+
+
+    /* =========================================
+       GET RESOLVED REQUESTS
+       ========================================= */
+
+    var gr =
+        new GlideRecord("incident");
+
+
+    /*
+     * Only this student's requests
+     */
+
+    gr.addQuery(
+        "caller_id",
+        gs.getUserID()
+    );
+
+
+    /*
+     * Only resolved or closed
+     */
+
+    var stateQuery =
+        gr.addQuery("state", "6");
+
+    stateQuery.addOrCondition(
+        "state",
+        "7"
+    );
+
+
+    gr.orderByDesc(
+        "sys_updated_on"
+    );
+
+    gr.query();
+
+
+    while (gr.next()) {
+
+
+        /*
+         * Check whether feedback already exists
+         */
+
+        var feedbackCheck =
+            new GlideRecord("u_cfms_feedback");
+
+
+        feedbackCheck.addQuery(
+            "u_student",
+            gs.getUserID()
+        );
+
+        feedbackCheck.addQuery(
+            "u_ticket",
+            gr.getUniqueValue()
+        );
+
+        feedbackCheck.setLimit(1);
+
+        feedbackCheck.query();
+
+
+        /*
+         * Only show requests that
+         * have not already received feedback.
+         */
+
+        if (feedbackCheck.next()) {
+
+            continue;
+
+        }
+
+
+        data.resolvedRequests.push({
+
+            sys_id:
+                gr.getUniqueValue(),
+
+            number:
+                gr.getValue("number"),
+
+            short_description:
+                gr.getValue(
+                    "short_description"
+                ),
+
+            resolvedDate:
+                gr.getDisplayValue(
+                    "sys_updated_on"
+                )
+
+        });
+
+    }
+
+})();]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-09-24 11:13:31&lt;/sys_created_on&gt;&lt;sys_id&gt;cefdcc51a0af03107f4432329b8a156b&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;CFMS Student Feedback&lt;/sys_name&gt;&lt;sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Campus Food Services Assistant"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_cefdcc51a0af03107f4432329b8a156b&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-09-24 11:13:31&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div class="cfms-feedback-page"&gt;
+
+    &lt;!-- =====================================
+         HEADER
+         ===================================== --&gt;
+
+    &lt;div class="feedback-header"&gt;
+
+        &lt;div class="header-left"&gt;
+
+            &lt;button
+                class="back-btn"
+                ng-click="c.backToDashboard()"&gt;
+
+                &lt;i class="fa fa-arrow-left"&gt;&lt;/i&gt;
+
+            &lt;/button&gt;
+
+            &lt;div&gt;
+
+                &lt;h1&gt;Student Feedback&lt;/h1&gt;
+
+                &lt;p&gt;
+                    Share your experience and help us improve
+                    campus food services.
+                &lt;/p&gt;
+
+            &lt;/div&gt;
+
+        &lt;/div&gt;
+
+    &lt;/div&gt;
+
+
+    &lt;!-- =====================================
+         MAIN CONTENT
+         ===================================== --&gt;
+
+    &lt;div class="feedback-container"&gt;
+
+
+        &lt;!-- =================================
+             SUCCESS MESSAGE
+             ================================= --&gt;
+
+        &lt;div
+            class="success-card"
+            ng-if="c.data.success"&gt;
+
+            &lt;div class="success-icon"&gt;
+
+                &lt;i class="fa fa-check"&gt;&lt;/i&gt;
+
+            &lt;/div&gt;
+
+            &lt;h2&gt;
+                Thank You for Your Feedback!
+            &lt;/h2&gt;
+
+            &lt;p&gt;
+                Your feedback has been submitted successfully.
+                It will help us improve the campus food experience.
+            &lt;/p&gt;
+
+            &lt;div class="success-actions"&gt;
+
+                &lt;button
+                    class="primary-btn"
+                    ng-click="c.backToDashboard()"&gt;
+
+                    Back to Dashboard
+
+                &lt;/button&gt;
+
+                &lt;button
+                    class="secondary-btn"
+                    ng-click="c.resetFeedback()"&gt;
+
+                    Give More Feedback
+
+                &lt;/button&gt;
+
+            &lt;/div&gt;
+
+        &lt;/div&gt;
+
+
+        &lt;!-- =================================
+             ERROR
+             ================================= --&gt;
+
+        &lt;div
+            class="error-message"
+            ng-if="c.data.error"&gt;
+
+            &lt;i class="fa fa-exclamation-circle"&gt;&lt;/i&gt;
+
+            &lt;span&gt;
+                {{c.data.error}}
+            &lt;/span&gt;
+
+        &lt;/div&gt;
+
+
+        &lt;!-- =================================
+             FEEDBACK FORM
+             ================================= --&gt;
+
+        &lt;div
+            class="feedback-layout"
+            ng-if="!c.data.success"&gt;
+
+
+            &lt;!-- LEFT INFORMATION --&gt;
+
+            &lt;div class="feedback-info"&gt;
+
+                &lt;div class="info-icon"&gt;
+
+                    &lt;i class="fa fa-star"&gt;&lt;/i&gt;
+
+                &lt;/div&gt;
+
+                &lt;h2&gt;
+                    Your Voice Matters
+                &lt;/h2&gt;
+
+                &lt;p&gt;
+                    Your feedback helps the campus food
+                    service team understand what is working
+                    well and where improvements are needed.
+                &lt;/p&gt;
+
+
+                &lt;div class="info-item"&gt;
+
+                    &lt;i class="fa fa-check-circle"&gt;&lt;/i&gt;
+
+                    &lt;span&gt;
+                        Rate your food service experience
+                    &lt;/span&gt;
+
+                &lt;/div&gt;
+
+
+                &lt;div class="info-item"&gt;
+
+                    &lt;i class="fa fa-comment"&gt;&lt;/i&gt;
+
+                    &lt;span&gt;
+                        Share your suggestions
+                    &lt;/span&gt;
+
+                &lt;/div&gt;
+
+
+                &lt;div class="info-item"&gt;
+
+                    &lt;i class="fa fa-line-chart"&gt;&lt;/i&gt;
+
+                    &lt;span&gt;
+                        Help improve campus dining
+                    &lt;/span&gt;
+
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+
+
+            &lt;!-- RIGHT FORM --&gt;
+
+            &lt;div class="feedback-card"&gt;
+
+                &lt;div class="card-heading"&gt;
+
+                    &lt;div class="heading-icon"&gt;
+
+                        &lt;i class="fa fa-comment-o"&gt;&lt;/i&gt;
+
+                    &lt;/div&gt;
+
+                    &lt;div&gt;
+
+                        &lt;h2&gt;
+                            Give Feedback
+                        &lt;/h2&gt;
+
+                        &lt;p&gt;
+                            Tell us about your experience.
+                        &lt;/p&gt;
+
+                    &lt;/div&gt;
+
+                &lt;/div&gt;
+
+
+                &lt;!-- RESOLVED REQUEST --&gt;
+
+                &lt;div class="form-group"&gt;
+
+                    &lt;label&gt;
+
+                        Resolved Request
+
+                        &lt;span class="required"&gt;
+                            *
+                        &lt;/span&gt;
+
+                    &lt;/label&gt;
+
+
+                    &lt;select
+                        class="form-control"
+                        ng-model="c.form.ticket"
+                        required&gt;
+
+                        &lt;option value=""&gt;
+                            Select a resolved request
+                        &lt;/option&gt;
+
+                        &lt;option
+                            ng-repeat="request in c.data.resolvedRequests"
+                            value="{{request.sys_id}}"&gt;
+
+                            {{request.number}}
+                            -
+                            {{request.short_description}}
+
+                        &lt;/option&gt;
+
+                    &lt;/select&gt;
+
+
+                    &lt;small class="field-help"&gt;
+
+                        Feedback can only be submitted
+                        for resolved requests.
+
+                    &lt;/small&gt;
+
+                &lt;/div&gt;
+
+
+                &lt;!-- RATING --&gt;
+
+                &lt;div class="form-group"&gt;
+
+                    &lt;label&gt;
+
+                        Overall Rating
+
+                        &lt;span class="required"&gt;
+                            *
+                        &lt;/span&gt;
+
+                    &lt;/label&gt;
+
+
+                    &lt;div class="rating-container"&gt;
+
+
+                        &lt;button
+                            type="button"
+                            class="star-btn"
+                            ng-repeat="star in [1,2,3,4,5]"
+                            ng-click="c.setRating(star)"
+                            ng-class="{
+                                'selected':
+                                star &lt;= c.form.rating
+                            }"&gt;
+
+                            &lt;i class="fa fa-star"&gt;&lt;/i&gt;
+
+                        &lt;/button&gt;
+
+
+                    &lt;/div&gt;
+
+
+                    &lt;div
+                        class="rating-text"
+                        ng-if="c.form.rating"&gt;
+
+                        {{c.ratingText()}}
+
+                    &lt;/div&gt;
+
+
+                    &lt;small class="field-help"&gt;
+
+                        1 = Very Poor &amp;nbsp;&amp;nbsp;
+                        5 = Excellent
+
+                    &lt;/small&gt;
+
+                &lt;/div&gt;
+
+
+                &lt;!-- COMMENTS --&gt;
+
+                &lt;div class="form-group"&gt;
+
+                    &lt;label&gt;
+
+                        Comments
+
+                        &lt;span class="required"&gt;
+                            *
+                        &lt;/span&gt;
+
+                    &lt;/label&gt;
+
+
+                    &lt;textarea
+                        class="form-control comments-box"
+                        ng-model="c.form.comments"
+                        rows="6"
+                        maxlength="1000"
+                        placeholder="Tell us about your experience..."
+                        required&gt;
+                    &lt;/textarea&gt;
+
+
+                    &lt;div class="character-count"&gt;
+
+                        {{c.form.comments.length || 0}} / 1000
+
+                    &lt;/div&gt;
+
+                &lt;/div&gt;
+
+
+                &lt;!-- SUBMIT --&gt;
+
+                &lt;div class="form-actions"&gt;
+
+                    &lt;button
+                        type="button"
+                        class="cancel-btn"
+                        ng-click="c.backToDashboard()"&gt;
+
+                        Cancel
+
+                    &lt;/button&gt;
+
+
+                    &lt;button
+                        type="button"
+                        class="submit-btn"
+                        ng-click="c.submitFeedback()"
+                        ng-disabled="c.submitting"&gt;
+
+                        &lt;i
+                            class="fa"
+                            ng-class="c.submitting
+                                ? 'fa-spinner fa-spin'
+                                : 'fa-paper-plane'"&gt;
+                        &lt;/i&gt;
+
+                        &lt;span ng-if="!c.submitting"&gt;
+                            Submit Feedback
+                        &lt;/span&gt;
+
+                        &lt;span ng-if="c.submitting"&gt;
+                            Submitting...
+                        &lt;/span&gt;
+
+                    &lt;/button&gt;
+
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+
+        &lt;/div&gt;
+
+
+        &lt;!-- =================================
+             NO RESOLVED REQUESTS
+             ================================= --&gt;
+
+        &lt;div
+            class="no-feedback-card"
+            ng-if="
+                !c.data.success &amp;&amp;
+                !c.data.error &amp;&amp;
+                c.data.resolvedRequests.length == 0
+            "&gt;
+
+            &lt;div class="no-feedback-icon"&gt;
+
+                &lt;i class="fa fa-clock-o"&gt;&lt;/i&gt;
+
+            &lt;/div&gt;
+
+            &lt;h2&gt;
+                No Resolved Requests Yet
+            &lt;/h2&gt;
+
+            &lt;p&gt;
+                You can submit feedback after one of
+                your food requests has been resolved.
+            &lt;/p&gt;
+
+            &lt;button
+                class="primary-btn"
+                ng-click="c.myRequests()"&gt;
+
+                View My Requests
+
+            &lt;/button&gt;
+
+        &lt;/div&gt;
+
+    &lt;/div&gt;
+
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>1301494988</payload_hash>
+        <record_name>CFMS Student Feedback</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 11:13:31</sys_created_on>
+        <sys_id>f3cf0855a0af03107f4432329b8a1588</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0d31ee0a90000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 11:13:31</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>f3cf085517af031037dd7c4a590dc887</update_guid>
+        <update_guid_history>f3cf085517af031037dd7c4a590dc887:1301494988</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="CFMS Student Feedback">54a67ebd802743107f4447e44ab1d52f</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 12:39:21</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>2301b002ef5d4a37966aa25c81fe6ad9</sys_id>
+        <sys_metadata>cefdcc51a0af03107f4432329b8a156b</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>CFMS Student Feedback</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>sp_widget_cefdcc51a0af03107f4432329b8a156b</sys_update_name>
+        <sys_update_version display_value="sp_widget_cefdcc51a0af03107f4432329b8a156b">f3cf0855a0af03107f4432329b8a1588</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 12:39:21</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

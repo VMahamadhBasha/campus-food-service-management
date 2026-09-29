@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>false</active>
+        <api_name>x_snc_campus_foo_1.CampusFoodSPEntryPage</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>CampusFood role-based post-login dashboard routing</description>
+        <mobile_callable>false</mobile_callable>
+        <name>CampusFoodSPEntryPage</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var CampusFoodSPEntryPage = Class.create();
+
+CampusFoodSPEntryPage.prototype = {
+
+    initialize: function() {
+        this.portal = "/food_services/";
+    },
+
+    getFirstPageURL: function() {
+
+        if (gs.getUser().hasRole('x_snc_campus_foo_1.admin')) {
+            return this.portal + "?id=food_service_admin_dashboard_page";
+        }
+
+        if (gs.getUser().hasRole('x_snc_campus_foo_1.manager')) {
+            return this.portal + "?id=food_service_manager_dashboard_page";
+        }
+
+        if (gs.getUser().hasRole('x_snc_campus_foo_1.staff')) {
+            return this.portal + "?id=food_services_staff_dashboard_page";
+        }
+
+        if (gs.getUser().hasRole('x_snc_campus_foo_1.student')) {
+            return this.portal + "?id=food_service_student_dashbaord";
+        }
+
+        return this.portal;
+    },
+
+    type: 'CampusFoodSPEntryPage'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 17:00:24</sys_created_on>
+        <sys_id>02d9f89228ab03107f44eaabb20e2ce2</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>CampusFoodSPEntryPage</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_script_include_02d9f89228ab03107f44eaabb20e2ce2</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-27 17:12:09</sys_updated_on>
+    </sys_script_include>
+</record_update>

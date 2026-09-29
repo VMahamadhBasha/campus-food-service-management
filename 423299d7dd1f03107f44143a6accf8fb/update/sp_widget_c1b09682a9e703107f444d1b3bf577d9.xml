@@ -1,0 +1,3062 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($scope) {
+
+    var c = this;
+
+
+    // =====================================================
+    // DEFAULT SECTION
+    // =====================================================
+
+    c.activeSection = 'dashboard';
+
+
+    // =====================================================
+    // ASSIGNMENT FILTERS
+    // =====================================================
+
+    c.assignmentFilters = {
+
+        use_case: '',
+
+        current_priority: ''
+
+    };
+
+
+    c.filteredAssignmentIds = [];
+
+
+    // =====================================================
+    // FORM VARIABLES
+    // =====================================================
+
+    c.showRecordForm = false;
+
+    c.selectedRecord = null;
+
+    c.formError = '';
+
+    c.formSuccess = '';
+
+    c.savingRecord = false;
+
+    c.notesVisible = false;
+
+
+    // =====================================================
+    // LOAD ASSIGNMENT FILTER RESULTS
+    // =====================================================
+
+    c.applyAssignmentFilters = function() {
+
+        c.filteredAssignmentIds = [];
+
+        var ids =
+            c.data.myAssignmentIds || [];
+
+
+        for (
+            var i = 0;
+            i < ids.length;
+            i++
+        ) {
+
+            var id = ids[i];
+
+            var record =
+                c.data.records[id];
+
+
+            if (!record) {
+                continue;
+            }
+
+
+            var useCaseMatch =
+                !c.assignmentFilters.use_case ||
+                record.use_case_value ===
+                c.assignmentFilters.use_case;
+
+
+            var priorityMatch =
+                !c.assignmentFilters.current_priority ||
+                record.current_priority_value ===
+                c.assignmentFilters.current_priority;
+
+
+            if (
+                useCaseMatch &&
+                priorityMatch
+            ) {
+
+                c.filteredAssignmentIds.push(id);
+
+            }
+
+        }
+
+    };
+
+
+    // =====================================================
+    // CLEAR FILTERS
+    // =====================================================
+
+    c.clearAssignmentFilters = function() {
+
+        c.assignmentFilters.use_case = '';
+
+        c.assignmentFilters.current_priority = '';
+
+        c.applyAssignmentFilters();
+
+    };
+
+
+    // =====================================================
+    // SECTION NAVIGATION
+    // =====================================================
+
+    c.selectSection = function(section) {
+
+        c.activeSection = section;
+
+        c.closeRecordForm();
+
+    };
+
+
+    // =====================================================
+    // OPEN RECORD
+    // =====================================================
+
+    c.openRecord = function(sysId) {
+
+        c.formError = '';
+
+        c.formSuccess = '';
+
+        c.savingRecord = false;
+
+
+        var record =
+            c.data.records[sysId];
+
+
+        if (!record) {
+
+            c.formError =
+                'Unable to find the selected record.';
+
+            return;
+
+        }
+
+
+        c.selectedRecord =
+            angular.copy(record);
+
+
+        if (!c.selectedRecord.approval) {
+
+            c.selectedRecord.approval =
+                'requested';
+
+        }
+
+
+        c.selectedRecord.approval =
+            String(
+                c.selectedRecord.approval
+            ).toLowerCase();
+
+
+        c.updateNotesVisibility();
+
+
+        c.showRecordForm = true;
+
+    };
+
+
+    // =====================================================
+    // NOTES VISIBILITY
+    // =====================================================
+
+    c.updateNotesVisibility = function() {
+
+        if (
+            c.selectedRecord &&
+            c.selectedRecord.approval === 'rejected'
+        ) {
+
+            c.notesVisible = true;
+
+        } else {
+
+            c.notesVisible = false;
+
+        }
+
+    };
+
+
+    // =====================================================
+    // CLOSE RECORD FORM
+    // =====================================================
+
+    c.closeRecordForm = function() {
+
+        c.showRecordForm = false;
+
+        c.selectedRecord = null;
+
+        c.formError = '';
+
+        c.formSuccess = '';
+
+        c.savingRecord = false;
+
+        c.notesVisible = false;
+
+    };
+
+
+    // =====================================================
+    // SAVE EXISTING RECORD
+    // =====================================================
+
+    c.saveRecord = function() {
+
+        c.formError = '';
+
+        c.formSuccess = '';
+
+
+        if (!c.selectedRecord) {
+
+            c.formError =
+                'No record selected.';
+
+            return;
+
+        }
+
+
+        // ---------------------------------------------
+        // REJECTED REQUIRES NOTES
+        // ---------------------------------------------
+
+        if (
+            c.selectedRecord.approval === 'rejected' &&
+            !String(
+                c.selectedRecord.notes || ''
+            ).trim()
+        ) {
+
+            c.formError =
+                'Notes are required when rejecting a request.';
+
+            return;
+
+        }
+
+
+        c.savingRecord = true;
+
+
+        c.server.get({
+
+            action: 'saveRecord',
+
+            sys_id:
+                c.selectedRecord.sys_id,
+
+            approval:
+                c.selectedRecord.approval,
+
+            notes:
+                c.selectedRecord.notes || ''
+
+        }).then(function(response) {
+
+
+            // -----------------------------------------
+            // SAVE SUCCESS
+            // -----------------------------------------
+
+            if (
+                response.data &&
+                response.data.saveSuccess
+            ) {
+
+                c.data =
+                    response.data;
+
+
+                c.formSuccess =
+                    'Record updated successfully.';
+
+
+                c.assignmentFilters = {
+
+                    use_case: '',
+
+                    current_priority: ''
+
+                };
+
+
+                c.applyAssignmentFilters();
+
+
+                // -------------------------------------
+                // CLOSE FORM
+                // -------------------------------------
+
+                c.showRecordForm = false;
+
+                c.selectedRecord = null;
+
+            } else {
+
+                c.formError =
+                    response.data.saveError ||
+                    'Unable to update the record.';
+
+            }
+
+
+            c.savingRecord = false;
+
+
+        }, function() {
+
+            c.formError =
+                'An error occurred while updating the record.';
+
+            c.savingRecord = false;
+
+        });
+
+    };
+
+
+    // =====================================================
+    // PRIORITY CLASS
+    // =====================================================
+
+    c.getPriorityClass = function(priority) {
+
+        if (!priority) {
+            return '';
+        }
+
+
+        var value =
+            String(priority).toLowerCase();
+
+
+        if (
+            value.indexOf('critical') >= 0 ||
+            value == '1'
+        ) {
+
+            return 'critical';
+
+        }
+
+
+        if (
+            value.indexOf('high') >= 0 ||
+            value == '2'
+        ) {
+
+            return 'high';
+
+        }
+
+
+        if (
+            value.indexOf('medium') >= 0 ||
+            value == '3'
+        ) {
+
+            return 'medium';
+
+        }
+
+
+        if (
+            value.indexOf('low') >= 0 ||
+            value == '4'
+        ) {
+
+            return 'low';
+
+        }
+
+
+        return '';
+
+    };
+
+
+    // =====================================================
+    // STATE CLASS
+    // =====================================================
+
+    c.getStateClass = function(state) {
+
+        if (!state) {
+            return '';
+        }
+
+
+        var value =
+            String(state).toLowerCase();
+
+
+        if (value.indexOf('closed') >= 0) {
+
+            return 'closed';
+
+        }
+
+
+        if (value.indexOf('open') >= 0) {
+
+            return 'open';
+
+        }
+
+
+        return '';
+
+    };
+
+
+    // =====================================================
+    // APPROVAL CLASS
+    // =====================================================
+
+    c.getApprovalClass = function(approval) {
+
+        if (!approval) {
+            return '';
+        }
+
+
+        var value =
+            String(approval).toLowerCase();
+
+
+        if (value === 'approved') {
+
+            return 'approved';
+
+        }
+
+
+        if (value === 'rejected') {
+
+            return 'rejected';
+
+        }
+
+
+        if (value === 'requested') {
+
+            return 'requested';
+
+        }
+
+
+        return '';
+
+    };
+
+
+    // =====================================================
+    // INITIAL FILTER LOAD
+    // =====================================================
+
+    c.applyAssignmentFilters();
+
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>  .manager-dashboard {&#13;
+      display: flex;&#13;
+      min-height: 100vh;&#13;
+      background: #f5f7fb;&#13;
+      font-family: Arial, sans-serif;&#13;
+  }&#13;
+&#13;
+&#13;
+  /* ================= SIDEBAR ================= */&#13;
+&#13;
+  .manager-sidebar {&#13;
+      width: 240px;&#13;
+      min-height: 100vh;&#13;
+      background: #172033;&#13;
+      padding: 25px 15px;&#13;
+      box-sizing: border-box;&#13;
+  }&#13;
+&#13;
+&#13;
+  .sidebar-title {&#13;
+      color: white;&#13;
+      font-size: 20px;&#13;
+      font-weight: bold;&#13;
+      padding: 10px 15px 25px 15px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .sidebar-item {&#13;
+      width: 100%;&#13;
+      border: none;&#13;
+      background: transparent;&#13;
+      color: #cbd3e1;&#13;
+      padding: 14px 15px;&#13;
+      margin-bottom: 8px;&#13;
+      border-radius: 8px;&#13;
+      display: flex;&#13;
+      align-items: center;&#13;
+      gap: 12px;&#13;
+      font-size: 15px;&#13;
+      text-align: left;&#13;
+      cursor: pointer;&#13;
+      transition: 0.2s;&#13;
+  }&#13;
+&#13;
+&#13;
+  .sidebar-item:hover {&#13;
+      background: #26344e;&#13;
+      color: white;&#13;
+  }&#13;
+&#13;
+&#13;
+  .sidebar-item.active {&#13;
+      background: #2f80ed;&#13;
+      color: white;&#13;
+  }&#13;
+&#13;
+&#13;
+  /* ================= MAIN ================= */&#13;
+&#13;
+  .manager-main {&#13;
+      flex: 1;&#13;
+      padding: 30px;&#13;
+      box-sizing: border-box;&#13;
+      overflow-x: hidden;&#13;
+  }&#13;
+&#13;
+&#13;
+  .page-header {&#13;
+      display: flex;&#13;
+      justify-content: space-between;&#13;
+      align-items: center;&#13;
+      margin-bottom: 25px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .page-header h1 {&#13;
+      margin: 0 0 7px 0;&#13;
+      font-size: 28px;&#13;
+      color: #172033;&#13;
+  }&#13;
+&#13;
+&#13;
+  .page-header p {&#13;
+      margin: 0;&#13;
+      color: #6b7280;&#13;
+      font-size: 14px;&#13;
+  }&#13;
+&#13;
+&#13;
+  /* ================= KPI ================= */&#13;
+&#13;
+  .kpi-grid {&#13;
+      display: grid;&#13;
+      grid-template-columns: repeat(4, 1fr);&#13;
+      gap: 18px;&#13;
+      margin-bottom: 25px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .kpi-card {&#13;
+      background: white;&#13;
+      border-radius: 12px;&#13;
+      padding: 20px;&#13;
+      display: flex;&#13;
+      align-items: center;&#13;
+      gap: 15px;&#13;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);&#13;
+  }&#13;
+&#13;
+&#13;
+  .kpi-icon {&#13;
+      width: 48px;&#13;
+      height: 48px;&#13;
+      border-radius: 10px;&#13;
+      background: #eef4ff;&#13;
+      display: flex;&#13;
+      align-items: center;&#13;
+      justify-content: center;&#13;
+      font-size: 23px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .kpi-card h3 {&#13;
+      margin: 0 0 5px 0;&#13;
+      font-size: 25px;&#13;
+      color: #172033;&#13;
+  }&#13;
+&#13;
+&#13;
+  .kpi-card p {&#13;
+      margin: 0;&#13;
+      color: #6b7280;&#13;
+      font-size: 13px;&#13;
+  }&#13;
+&#13;
+&#13;
+  /* ================= CARDS ================= */&#13;
+&#13;
+  .dashboard-card {&#13;
+      background: white;&#13;
+      border-radius: 12px;&#13;
+      margin-bottom: 25px;&#13;
+      padding: 22px;&#13;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);&#13;
+  }&#13;
+&#13;
+&#13;
+  .card-header {&#13;
+      display: flex;&#13;
+      justify-content: space-between;&#13;
+      align-items: center;&#13;
+      margin-bottom: 18px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .card-header h2 {&#13;
+      margin: 0;&#13;
+      font-size: 19px;&#13;
+      color: #172033;&#13;
+  }&#13;
+&#13;
+&#13;
+  .view-button {&#13;
+      border: none;&#13;
+      background: #2f80ed;&#13;
+      color: white;&#13;
+      padding: 8px 14px;&#13;
+      border-radius: 6px;&#13;
+      cursor: pointer;&#13;
+  }&#13;
+&#13;
+&#13;
+  .view-button:hover {&#13;
+      background: #216fd1;&#13;
+  }&#13;
+&#13;
+&#13;
+  /* ================= TABLE ================= */&#13;
+&#13;
+  .table-container {&#13;
+      width: 100%;&#13;
+      overflow-x: auto;&#13;
+  }&#13;
+&#13;
+&#13;
+  table {&#13;
+      width: 100%;&#13;
+      border-collapse: collapse;&#13;
+  }&#13;
+&#13;
+&#13;
+  thead {&#13;
+      background: #f5f7fb;&#13;
+  }&#13;
+&#13;
+&#13;
+  th {&#13;
+      padding: 13px;&#13;
+      text-align: left;&#13;
+      font-size: 13px;&#13;
+      color: #4b5563;&#13;
+      white-space: nowrap;&#13;
+  }&#13;
+&#13;
+&#13;
+  td {&#13;
+      padding: 14px 13px;&#13;
+      border-top: 1px solid #edf0f5;&#13;
+      font-size: 13px;&#13;
+      color: #374151;&#13;
+  }&#13;
+&#13;
+&#13;
+  .clickable-row {&#13;
+      cursor: pointer;&#13;
+  }&#13;
+&#13;
+&#13;
+  .clickable-row:hover {&#13;
+      background: #f8fafc;&#13;
+  }&#13;
+&#13;
+&#13;
+  /* ================= STATUS ================= */&#13;
+&#13;
+  .status-badge,&#13;
+  .priority-badge {&#13;
+      display: inline-block;&#13;
+      padding: 5px 9px;&#13;
+      border-radius: 20px;&#13;
+      font-size: 11px;&#13;
+      font-weight: bold;&#13;
+  }&#13;
+&#13;
+&#13;
+  .status-badge.pending {&#13;
+      background: #fff4d6;&#13;
+      color: #9a6700;&#13;
+  }&#13;
+&#13;
+&#13;
+  .status-badge.progress {&#13;
+      background: #e5f1ff;&#13;
+      color: #1d5fa7;&#13;
+  }&#13;
+&#13;
+&#13;
+  .status-badge.resolved {&#13;
+      background: #e5f7ed;&#13;
+      color: #19703c;&#13;
+  }&#13;
+&#13;
+&#13;
+  .status-badge.other {&#13;
+      background: #eeeeee;&#13;
+      color: #555555;&#13;
+  }&#13;
+&#13;
+&#13;
+  .priority-badge.high {&#13;
+      background: #ffe4e4;&#13;
+      color: #b42318;&#13;
+  }&#13;
+&#13;
+&#13;
+  .priority-badge.medium {&#13;
+      background: #fff1d6;&#13;
+      color: #9a6700;&#13;
+  }&#13;
+&#13;
+&#13;
+  .priority-badge.low {&#13;
+      background: #e6f7eb;&#13;
+      color: #18743c;&#13;
+  }&#13;
+&#13;
+&#13;
+  .priority-badge.other {&#13;
+      background: #eeeeee;&#13;
+      color: #555555;&#13;
+  }&#13;
+&#13;
+&#13;
+  /* ================= QUICK ACTIONS ================= */&#13;
+&#13;
+  .quick-actions {&#13;
+      display: grid;&#13;
+      grid-template-columns: repeat(3, 1fr);&#13;
+      gap: 15px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .quick-actions button {&#13;
+      border: 1px solid #e5e7eb;&#13;
+      background: white;&#13;
+      padding: 18px;&#13;
+      border-radius: 10px;&#13;
+      cursor: pointer;&#13;
+      font-size: 14px;&#13;
+      color: #374151;&#13;
+      display: flex;&#13;
+      align-items: center;&#13;
+      justify-content: center;&#13;
+      gap: 10px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .quick-actions button:hover {&#13;
+      background: #f5f8ff;&#13;
+      border-color: #2f80ed;&#13;
+  }&#13;
+&#13;
+&#13;
+  /* ================= DETAILS ================= */&#13;
+&#13;
+  .close-button {&#13;
+      border: none;&#13;
+      background: #f1f3f6;&#13;
+      width: 32px;&#13;
+      height: 32px;&#13;
+      border-radius: 50%;&#13;
+      cursor: pointer;&#13;
+  }&#13;
+&#13;
+&#13;
+  .details-grid {&#13;
+      display: grid;&#13;
+      grid-template-columns: repeat(3, 1fr);&#13;
+      gap: 18px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .detail-item {&#13;
+      background: #f8fafc;&#13;
+      padding: 14px;&#13;
+      border-radius: 8px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .detail-item label,&#13;
+  .description-box label {&#13;
+      display: block;&#13;
+      color: #6b7280;&#13;
+      font-size: 12px;&#13;
+      margin-bottom: 6px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .detail-item span {&#13;
+      color: #172033;&#13;
+      font-size: 14px;&#13;
+      font-weight: 600;&#13;
+  }&#13;
+&#13;
+&#13;
+  .description-box {&#13;
+      margin-top: 20px;&#13;
+      background: #f8fafc;&#13;
+      padding: 15px;&#13;
+      border-radius: 8px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .description-box p {&#13;
+      margin: 0;&#13;
+      color: #374151;&#13;
+      line-height: 1.6;&#13;
+  }&#13;
+&#13;
+&#13;
+  /* ================= REPORTS ================= */&#13;
+&#13;
+  .report-grid {&#13;
+      display: grid;&#13;
+      grid-template-columns: repeat(3, 1fr);&#13;
+      gap: 15px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .report-item {&#13;
+      background: #f8fafc;&#13;
+      padding: 20px;&#13;
+      border-radius: 10px;&#13;
+      display: flex;&#13;
+      justify-content: space-between;&#13;
+      align-items: center;&#13;
+  }&#13;
+&#13;
+&#13;
+  .report-item span {&#13;
+      color: #4b5563;&#13;
+  }&#13;
+&#13;
+&#13;
+  .report-item strong {&#13;
+      font-size: 22px;&#13;
+      color: #172033;&#13;
+  }&#13;
+&#13;
+&#13;
+  .report-list {&#13;
+      display: flex;&#13;
+      flex-direction: column;&#13;
+  }&#13;
+&#13;
+&#13;
+  .report-row {&#13;
+      display: flex;&#13;
+      justify-content: space-between;&#13;
+      padding: 14px 5px;&#13;
+      border-bottom: 1px solid #edf0f5;&#13;
+  }&#13;
+&#13;
+&#13;
+  .report-row span {&#13;
+      color: #374151;&#13;
+  }&#13;
+&#13;
+&#13;
+  .report-row strong {&#13;
+      color: #172033;&#13;
+  }&#13;
+&#13;
+&#13;
+  .special-report-grid {&#13;
+      display: grid;&#13;
+      grid-template-columns: repeat(3, 1fr);&#13;
+      gap: 18px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .special-report-card {&#13;
+      background: white;&#13;
+      border-radius: 12px;&#13;
+      padding: 22px;&#13;
+      text-align: center;&#13;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);&#13;
+  }&#13;
+&#13;
+&#13;
+  .special-icon {&#13;
+      font-size: 32px;&#13;
+      margin-bottom: 10px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .special-report-card h3 {&#13;
+      margin: 5px 0;&#13;
+      color: #172033;&#13;
+  }&#13;
+&#13;
+&#13;
+  .special-report-card strong {&#13;
+      display: block;&#13;
+      font-size: 28px;&#13;
+      margin: 8px 0;&#13;
+      color: #2f80ed;&#13;
+  }&#13;
+&#13;
+&#13;
+  .special-report-card p {&#13;
+      margin: 0;&#13;
+      color: #6b7280;&#13;
+      font-size: 13px;&#13;
+  }&#13;
+&#13;
+&#13;
+  /* ================= NO DATA ================= */&#13;
+&#13;
+  .no-data {&#13;
+      text-align: center;&#13;
+      padding: 30px;&#13;
+      color: #9ca3af;&#13;
+  }&#13;
+&#13;
+&#13;
+  /* ================= RESPONSIVE ================= */&#13;
+&#13;
+  @media (max-width: 1100px) {&#13;
+&#13;
+      .kpi-grid {&#13;
+          grid-template-columns: repeat(2, 1fr);&#13;
+      }&#13;
+&#13;
+      .details-grid {&#13;
+          grid-template-columns: repeat(2, 1fr);&#13;
+      }&#13;
+&#13;
+  }&#13;
+&#13;
+&#13;
+  @media (max-width: 800px) {&#13;
+&#13;
+      .manager-sidebar {&#13;
+          width: 200px;&#13;
+      }&#13;
+&#13;
+      .manager-main {&#13;
+          padding: 20px;&#13;
+      }&#13;
+&#13;
+      .quick-actions {&#13;
+          grid-template-columns: 1fr;&#13;
+      }&#13;
+&#13;
+      .report-grid {&#13;
+          grid-template-columns: 1fr;&#13;
+      }&#13;
+&#13;
+      .special-report-grid {&#13;
+          grid-template-columns: 1fr;&#13;
+      }&#13;
+&#13;
+  }&#13;
+&#13;
+&#13;
+  @media (max-width: 600px) {&#13;
+&#13;
+      .manager-dashboard {&#13;
+          flex-direction: column;&#13;
+      }&#13;
+&#13;
+      .manager-sidebar {&#13;
+          width: 100%;&#13;
+          min-height: auto;&#13;
+      }&#13;
+&#13;
+      .manager-main {&#13;
+          padding: 15px;&#13;
+      }&#13;
+&#13;
+      .kpi-grid {&#13;
+          grid-template-columns: 1fr;&#13;
+      }&#13;
+&#13;
+      .details-grid {&#13;
+          grid-template-columns: 1fr;&#13;
+      }&#13;
+&#13;
+      .page-header h1 {&#13;
+          font-size: 23px;&#13;
+      }&#13;
+&#13;
+  }&#13;
+/* ================= DASHBOARD KPI LAYOUT ================= */&#13;
+&#13;
+.kpi-grid {&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(4, 1fr);&#13;
+    gap: 18px;&#13;
+    margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+/* Dashboard has 3 KPI cards */&#13;
+&#13;
+.manager-main &gt; div &gt; .kpi-grid:not(.assignment-kpis) {&#13;
+    grid-template-columns: repeat(3, 1fr);&#13;
+}&#13;
+&#13;
+&#13;
+/* Assignment page has 3 KPI cards */&#13;
+&#13;
+.assignment-kpis {&#13;
+    grid-template-columns: repeat(3, 1fr);&#13;
+}&#13;
+&#13;
+&#13;
+/* ================= RESPONSIVE KPI ================= */&#13;
+&#13;
+@media (max-width: 1100px) {&#13;
+&#13;
+    .kpi-grid,&#13;
+    .manager-main &gt; div &gt; .kpi-grid:not(.assignment-kpis),&#13;
+    .assignment-kpis {&#13;
+&#13;
+        grid-template-columns: repeat(2, 1fr);&#13;
+&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+    .kpi-grid,&#13;
+    .manager-main &gt; div &gt; .kpi-grid:not(.assignment-kpis),&#13;
+    .assignment-kpis {&#13;
+&#13;
+        grid-template-columns: 1fr;&#13;
+&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>food_service_manager_dashboard_widget</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Food Service Manager Dashboard Widget</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    // =====================================================
+    // TABLES
+    // =====================================================
+
+    var foodComplaintTable =
+        'x_snc_campus_foo_1_food_complaint';
+
+    var complaintTaskTable =
+        'x_snc_campus_foo_1_complain_tasks';
+
+    var managerGroup =
+        '9374d15fdd1f03107f44143a6accf88d';
+
+
+    // =====================================================
+    // MAIN DATA STRUCTURE
+    // =====================================================
+
+    data.records = {};
+
+    data.myAssignmentIds = [];
+
+    data.recentAssignmentIds = [];
+
+    data.historyIds = [];
+
+
+    // =====================================================
+    // DASHBOARD KPI VALUES
+    // =====================================================
+
+    data.totalRequests = 0;
+
+    data.pendingRequests = 0;
+
+    data.resolvedRequests = 0;
+
+
+    // =====================================================
+    // ASSIGNMENT KPI VALUES
+    // =====================================================
+
+    data.totalAssigned = 0;
+
+    data.assignmentPending = 0;
+
+    data.assignmentResolved = 0;
+
+
+    // =====================================================
+    // RECENT FOOD COMPLAINT REQUESTS
+    // =====================================================
+
+    data.recentRequests = [];
+
+
+    // =====================================================
+    // FILTER OPTIONS
+    // =====================================================
+
+    data.filterOptions = {
+
+        useCases: [],
+
+        priorities: []
+
+    };
+
+
+    // =====================================================
+    // REPORT DATA
+    // =====================================================
+
+    data.reports = {
+
+        useCase: [],
+
+        priority: [],
+
+        approval: [],
+
+        time: []
+
+    };
+
+
+    // =====================================================
+    // STAFF PERFORMANCE
+    // KEEP AS PLACEHOLDER FOR NOW
+    // =====================================================
+
+    data.totalStaff = 0;
+
+    data.staffAssigned = 0;
+
+    data.staffPending = 0;
+
+    data.staffResolved = 0;
+
+    data.staffPerformance = [];
+
+
+    // =====================================================
+    // SAVE / UPDATE EXISTING COMPLAINT TASK
+    // =====================================================
+
+    if (input && input.action == 'saveRecord') {
+
+        data.saveSuccess = false;
+
+        data.saveError = '';
+
+        var updateGR =
+            new GlideRecord(complaintTaskTable);
+
+
+        if (input.sys_id &&
+            updateGR.get(input.sys_id)) {
+
+
+            // ---------------------------------------------
+            // APPROVAL
+            // ---------------------------------------------
+
+            updateGR.setValue(
+                'approval',
+                input.approval || ''
+            );
+
+
+            // ---------------------------------------------
+            // NOTES
+            // ---------------------------------------------
+
+            updateGR.setValue(
+                'notes',
+                input.notes || ''
+            );
+
+
+            // ---------------------------------------------
+            // CLOSE WHEN APPROVED / REJECTED
+            // ---------------------------------------------
+
+            if (
+                input.approval == 'approved' ||
+                input.approval == 'rejected'
+            ) {
+
+                updateGR.setValue(
+                    'active',
+                    false
+                );
+
+                updateGR.setValue(
+                    'closed_at',
+                    new GlideDateTime()
+                );
+
+                updateGR.setValue(
+                    'closed_by',
+                    gs.getUserID()
+                );
+
+            }
+
+
+            updateGR.update();
+
+            data.saveSuccess = true;
+
+
+        } else {
+
+            data.saveError =
+                'Unable to find the selected record.';
+
+        }
+
+    }
+
+
+    // =====================================================
+    // DASHBOARD TOTAL REQUESTS
+    // FOOD COMPLAINT TABLE
+    // =====================================================
+
+    var totalGR =
+        new GlideAggregate(foodComplaintTable);
+
+    totalGR.addAggregate('COUNT');
+
+    totalGR.query();
+
+    if (totalGR.next()) {
+
+        data.totalRequests =
+            parseInt(
+                totalGR.getAggregate('COUNT'),
+                10
+            );
+
+    }
+
+
+    // =====================================================
+    // RESOLVED REQUESTS
+    // FOOD COMPLAINT TABLE
+    // STATE = CLOSED
+    // =====================================================
+
+    var resolvedGR =
+        new GlideAggregate(foodComplaintTable);
+
+    resolvedGR.addQuery(
+        'state',
+        'closed'
+    );
+
+    resolvedGR.addAggregate('COUNT');
+
+    resolvedGR.query();
+
+    if (resolvedGR.next()) {
+
+        data.resolvedRequests =
+            parseInt(
+                resolvedGR.getAggregate('COUNT'),
+                10
+            );
+
+    }
+
+
+    // =====================================================
+    // RECENT FOOD COMPLAINT REQUESTS
+    // =====================================================
+
+    var recentGR =
+        new GlideRecord(foodComplaintTable);
+
+    recentGR.orderByDesc('sys_created_on');
+
+    recentGR.setLimit(5);
+
+    recentGR.query();
+
+
+    while (recentGR.next()) {
+
+        data.recentRequests.push({
+
+            sys_id:
+                recentGR.getUniqueValue(),
+
+            number:
+                recentGR.getDisplayValue('number'),
+
+            student:
+                recentGR.getDisplayValue('student'),
+
+            problem_type:
+                recentGR.getDisplayValue('problem_type'),
+
+            mess_hall:
+                recentGR.getDisplayValue('mess_hall'),
+
+            meal_type:
+                recentGR.getDisplayValue('meal_type'),
+
+            priority:
+                recentGR.getDisplayValue('priority'),
+
+            state:
+                recentGR.getDisplayValue('state'),
+
+            description:
+                recentGR.getDisplayValue('description')
+
+        });
+
+    }
+
+
+    // =====================================================
+    // USE CASE FILTER OPTIONS
+    // FROM SYS_CHOICE
+    // =====================================================
+
+    var useCaseChoice =
+        new GlideRecord('sys_choice');
+
+    useCaseChoice.addQuery(
+        'name',
+        complaintTaskTable
+    );
+
+    useCaseChoice.addQuery(
+        'element',
+        'use_case'
+    );
+
+    useCaseChoice.addQuery(
+        'inactive',
+        false
+    );
+
+    useCaseChoice.addQuery(
+        'language',
+        'en'
+    );
+
+    useCaseChoice.orderBy('sequence');
+
+    useCaseChoice.query();
+
+
+    while (useCaseChoice.next()) {
+
+        data.filterOptions.useCases.push({
+
+            value:
+                useCaseChoice.getValue('value'),
+
+            label:
+                useCaseChoice.getValue('label')
+
+        });
+
+    }
+
+
+    // =====================================================
+    // CURRENT PRIORITY FILTER OPTIONS
+    // FROM SYS_CHOICE
+    // =====================================================
+
+    var priorityChoice =
+        new GlideRecord('sys_choice');
+
+    priorityChoice.addQuery(
+        'name',
+        complaintTaskTable
+    );
+
+    priorityChoice.addQuery(
+        'element',
+        'current_priority'
+    );
+
+    priorityChoice.addQuery(
+        'inactive',
+        false
+    );
+
+    priorityChoice.addQuery(
+        'language',
+        'en'
+    );
+
+    priorityChoice.orderBy('sequence');
+
+    priorityChoice.query();
+
+
+    while (priorityChoice.next()) {
+
+        data.filterOptions.priorities.push({
+
+            value:
+                priorityChoice.getValue('value'),
+
+            label:
+                priorityChoice.getValue('label')
+
+        });
+
+    }
+
+
+    // =====================================================
+    // TEMPORARY REPORT OBJECTS
+    // =====================================================
+
+    var useCaseTotals = {};
+
+    var priorityTotals = {};
+
+    var approvalTotals = {};
+
+    var timeTotals = {};
+
+
+    // =====================================================
+    // COMPLAINT TASKS
+    //
+    // IMPORTANT:
+    // REPORTS USE ALL COMPLAINT TASKS.
+    //
+    // MANAGER ASSIGNMENTS USE ONLY MANAGER GROUP.
+    // =====================================================
+
+    var taskGR =
+        new GlideRecord(complaintTaskTable);
+
+    taskGR.orderByDesc('sys_created_on');
+
+    taskGR.query();
+
+
+    while (taskGR.next()) {
+
+        var sysId =
+            taskGR.getUniqueValue();
+
+        var taskGroup =
+            taskGR.getValue('assignment_group');
+
+        var approvalValue =
+            taskGR.getValue('approval');
+
+        var approvalDisplay =
+            taskGR.getDisplayValue('approval');
+
+        var studentCount =
+            parseInt(
+                taskGR.getValue('student_count'),
+                10
+            );
+
+
+        if (isNaN(studentCount)) {
+            studentCount = 0;
+        }
+
+
+        // =================================================
+        // REPORT 1
+        // REQUESTS BY USE CASE
+        // SUM STUDENT COUNT
+        // =================================================
+
+        var useCaseValue =
+            taskGR.getValue('use_case');
+
+        var useCaseDisplay =
+            taskGR.getDisplayValue('use_case');
+
+
+        if (useCaseValue) {
+
+            if (!useCaseTotals[useCaseValue]) {
+
+                useCaseTotals[useCaseValue] = {
+
+                    label:
+                        useCaseDisplay,
+
+                    total: 0
+
+                };
+
+            }
+
+            useCaseTotals[useCaseValue].total +=
+                studentCount;
+
+        }
+
+
+        // =================================================
+        // REPORT 2
+        // REQUESTS BY PRIORITY
+        // SUM STUDENT COUNT
+        // =================================================
+
+        var priorityValue =
+            taskGR.getValue('current_priority');
+
+        var priorityDisplay =
+            taskGR.getDisplayValue('current_priority');
+
+
+        if (priorityValue) {
+
+            if (!priorityTotals[priorityValue]) {
+
+                priorityTotals[priorityValue] = {
+
+                    label:
+                        priorityDisplay,
+
+                    total: 0
+
+                };
+
+            }
+
+            priorityTotals[priorityValue].total +=
+                studentCount;
+
+        }
+
+
+        // =================================================
+        // REPORT 3
+        // APPROVAL STATUS
+        // SUM STUDENT COUNT
+        // =================================================
+
+        var approvalKey =
+            approvalValue || 'empty';
+
+        var approvalLabel =
+            approvalDisplay || 'Not Set';
+
+
+        if (!approvalTotals[approvalKey]) {
+
+            approvalTotals[approvalKey] = {
+
+                label:
+                    approvalLabel,
+
+                total: 0
+
+            };
+
+        }
+
+        approvalTotals[approvalKey].total +=
+            studentCount;
+
+
+        // =================================================
+        // REPORT 4
+        // REQUESTS OVER TIME
+        // BASED ON SYS_CREATED_ON
+        // SUM STUDENT COUNT
+        // =================================================
+
+        var createdValue =
+            taskGR.getValue('sys_created_on');
+
+
+        if (createdValue) {
+
+            var createdDate =
+                new GlideDateTime(createdValue);
+
+            var timeKey =
+                createdDate.getLocalDate().getByFormat('yyyy-MM');
+
+            if (!timeTotals[timeKey]) {
+
+                timeTotals[timeKey] = {
+
+                    label:
+                        timeKey,
+
+                    total: 0
+
+                };
+
+            }
+
+            timeTotals[timeKey].total +=
+                studentCount;
+
+        }
+
+
+        // =================================================
+        // MANAGER GROUP DATA
+        // =================================================
+
+        if (taskGroup == managerGroup) {
+
+            // ---------------------------------------------
+            // ASSIGNMENT KPI
+            // ---------------------------------------------
+
+            data.totalAssigned++;
+
+
+            if (approvalValue == 'requested') {
+
+                data.assignmentPending++;
+
+            }
+
+
+            if (
+                approvalValue == 'approved' ||
+                approvalValue == 'rejected'
+            ) {
+
+                data.assignmentResolved++;
+
+            }
+
+
+            // ---------------------------------------------
+            // MAIN PENDING KPI
+            // MANAGER GROUP + REQUESTED
+            // ---------------------------------------------
+
+            if (approvalValue == 'requested') {
+
+                data.pendingRequests++;
+
+            }
+
+
+            // ---------------------------------------------
+            // STORE RECORD ONCE
+            // ---------------------------------------------
+
+            data.records[sysId] = {
+
+                sys_id:
+                    sysId,
+
+                number:
+                    taskGR.getDisplayValue('number'),
+
+                use_case:
+                    useCaseDisplay,
+
+                use_case_value:
+                    useCaseValue,
+
+                current_priority:
+                    priorityDisplay,
+
+                current_priority_value:
+                    priorityValue,
+
+                student_count:
+                    taskGR.getDisplayValue('student_count'),
+
+                problem_type:
+                    taskGR.getDisplayValue('problem_type'),
+
+                short_description:
+                    taskGR.getDisplayValue('short_description'),
+
+                use_case_number:
+                    taskGR.getDisplayValue('use_case_number'),
+
+                meal_type:
+                    taskGR.getDisplayValue('meal_type'),
+
+                priority_reason:
+                    taskGR.getDisplayValue('priority_reason'),
+
+                recomended_actions:
+                    taskGR.getDisplayValue('recomended_actions'),
+
+                approval:
+                    approvalValue || '',
+
+                approval_display:
+                    approvalDisplay || '',
+
+                notes:
+                    taskGR.getDisplayValue('notes'),
+
+                description:
+                    taskGR.getDisplayValue('description'),
+
+                comments:
+                    taskGR.getDisplayValue('comments'),
+
+                mnager_response:
+                    taskGR.getDisplayValue('mnager_response'),
+
+                resolution_status:
+                    taskGR.getDisplayValue('resolution_status'),
+
+                due_date:
+                    taskGR.getDisplayValue('due_date'),
+
+                opened_at:
+                    taskGR.getDisplayValue('opened_at'),
+
+                opened_by:
+                    taskGR.getDisplayValue('opened_by'),
+
+                sys_created_on:
+                    taskGR.getDisplayValue('sys_created_on'),
+
+                closed_at:
+                    taskGR.getDisplayValue('closed_at'),
+
+                closed_by:
+                    taskGR.getDisplayValue('closed_by')
+
+            };
+
+
+            // ---------------------------------------------
+            // PENDING ASSIGNMENTS
+            // ---------------------------------------------
+
+            if (approvalValue == 'requested') {
+
+                data.myAssignmentIds.push(sysId);
+
+            }
+
+
+            // ---------------------------------------------
+            // HISTORY
+            // ---------------------------------------------
+
+            if (
+                approvalValue == 'approved' ||
+                approvalValue == 'rejected'
+            ) {
+
+                data.historyIds.push(sysId);
+
+            }
+
+        }
+
+    }
+
+
+    // =====================================================
+    // RECENT ASSIGNMENTS
+    // =====================================================
+
+    for (
+        var a = 0;
+        a < data.myAssignmentIds.length && a < 5;
+        a++
+    ) {
+
+        data.recentAssignmentIds.push(
+            data.myAssignmentIds[a]
+        );
+
+    }
+
+
+    // =====================================================
+    // CONVERT REPORT OBJECTS TO ARRAYS
+    // =====================================================
+
+    for (var uc in useCaseTotals) {
+
+        data.reports.useCase.push(
+            useCaseTotals[uc]
+        );
+
+    }
+
+
+    for (var pr in priorityTotals) {
+
+        data.reports.priority.push(
+            priorityTotals[pr]
+        );
+
+    }
+
+
+    for (var ap in approvalTotals) {
+
+        data.reports.approval.push(
+            approvalTotals[ap]
+        );
+
+    }
+
+
+    for (var tm in timeTotals) {
+
+        data.reports.time.push(
+            timeTotals[tm]
+        );
+
+    }
+
+
+    // =====================================================
+    // SORT TIME REPORT
+    // =====================================================
+
+    data.reports.time.sort(function(a, b) {
+
+        if (a.label < b.label) {
+            return -1;
+        }
+
+        if (a.label > b.label) {
+            return 1;
+        }
+
+        return 0;
+
+    });
+
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 04:32:23</sys_created_on>
+        <sys_id>c1b09682a9e703107f444d1b3bf577d9</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Food Service Manager Dashboard Widget</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_c1b09682a9e703107f444d1b3bf577d9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 11:01:02</sys_updated_on>
+        <template><![CDATA[<div class="manager-dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="manager-sidebar">
+
+        <div class="sidebar-title">
+            Manager Panel
+        </div>
+
+
+        <button class="sidebar-item"
+                ng-class="{active: c.activeSection == 'dashboard'}"
+                ng-click="c.selectSection('dashboard')">
+
+            <span>]]>🏠<![CDATA[</span>
+            <span>Dashboard</span>
+
+        </button>
+
+
+        <button class="sidebar-item"
+                ng-class="{active: c.activeSection == 'assignments'}"
+                ng-click="c.selectSection('assignments')">
+
+            <span>]]>📋<![CDATA[</span>
+            <span>My Assignments</span>
+
+        </button>
+
+
+        <button class="sidebar-item"
+                ng-class="{active: c.activeSection == 'reports'}"
+                ng-click="c.selectSection('reports')">
+
+            <span>]]>📊<![CDATA[</span>
+            <span>Reports</span>
+
+        </button>
+
+
+        <button class="sidebar-item"
+                ng-class="{active: c.activeSection == 'staff'}"
+                ng-click="c.selectSection('staff')">
+
+            <span>]]>👥<![CDATA[</span>
+            <span>Staff Performance</span>
+
+        </button>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="manager-main">
+
+
+        <!-- ================= DASHBOARD ================= -->
+
+        <div ng-if="c.activeSection == 'dashboard'">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>Manager Dashboard</h1>
+
+                    <p>
+                        Monitor campus food services and overall operations.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- KPI CARDS -->
+
+            <div class="kpi-grid">
+
+
+                <!-- TOTAL REQUESTS -->
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ]]>📋
+<![CDATA[                    </div>
+
+                    <div>
+
+                        <h3>
+                            {{c.data.totalRequests}}
+                        </h3>
+
+                        <p>
+                            Total Requests
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PENDING REQUESTS -->
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ⏳
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            {{c.data.pendingRequests}}
+                        </h3>
+
+                        <p>
+                            Pending Requests
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RESOLVED REQUESTS -->
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ✅
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            {{c.data.resolvedRequests}}
+                        </h3>
+
+                        <p>
+                            Resolved Requests
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- RECENT REQUESTS -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Recent Requests
+                    </h2>
+
+                    <button class="view-button"
+                            ng-click="c.selectSection('reports')">
+
+                        View Reports
+
+                    </button>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Ticket</th>
+                                <th>Student</th>
+                                <th>Problem</th>
+                                <th>Mess Hall</th>
+                                <th>Meal</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            <tr ng-repeat="request in c.data.recentRequests">
+
+                                <td>
+                                    {{request.number}}
+                                </td>
+
+                                <td>
+                                    {{request.student}}
+                                </td>
+
+                                <td>
+                                    {{request.problem_type}}
+                                </td>
+
+                                <td>
+                                    {{request.mess_hall}}
+                                </td>
+
+                                <td>
+                                    {{request.meal_type}}
+                                </td>
+
+                                <td>
+
+                                    <span class="priority-badge"
+                                          ng-class="c.getPriorityClass(request.priority)">
+
+                                        {{request.priority}}
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="status-badge"
+                                          ng-class="c.getStatusClass(request.state)">
+
+                                        {{request.state}}
+
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr ng-if="c.data.recentRequests.length == 0">
+
+                                <td colspan="7"
+                                    class="no-data">
+
+                                    No requests available.
+
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUICK ACTIONS -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Quick Actions
+                    </h2>
+
+                </div>
+
+
+                <div class="quick-actions">
+
+
+                    <button ng-click="c.selectSection('assignments')">
+
+                        ]]>📋
+
+<![CDATA[                        <span>
+                            My Assignments
+                        </span>
+
+                    </button>
+
+
+                    <button ng-click="c.selectSection('reports')">
+
+                        ]]>📊
+
+<![CDATA[                        <span>
+                            View Reports
+                        </span>
+
+                    </button>
+
+
+                    <button ng-click="c.selectSection('staff')">
+
+                        ]]>👥
+
+<![CDATA[                        <span>
+                            Staff Performance
+                        </span>
+
+                    </button>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= MY ASSIGNMENTS ================= -->
+
+        <div ng-if="c.activeSection == 'assignments'">
+
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        My Assignments
+                    </h1>
+
+                    <p>
+                        Active requests assigned to Hostel Management.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ASSIGNMENT SUMMARY -->
+
+            <div class="kpi-grid assignment-kpis">
+
+
+                <!-- TOTAL ASSIGNED -->
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ]]>📋
+<![CDATA[                    </div>
+
+                    <div>
+
+                        <h3>
+                            {{c.data.totalAssigned}}
+                        </h3>
+
+                        <p>
+                            Total Assigned
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PENDING -->
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ⏳
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            {{c.data.assignmentPending}}
+                        </h3>
+
+                        <p>
+                            Pending
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RESOLVED -->
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ✅
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            {{c.data.assignmentResolved}}
+                        </h3>
+
+                        <p>
+                            Resolved
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ASSIGNMENT TABLE -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Assigned Requests
+                    </h2>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Ticket</th>
+                                <th>Student</th>
+                                <th>Problem</th>
+                                <th>Mess Hall</th>
+                                <th>Meal</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            <tr ng-repeat="assignment in c.data.assignments"
+                                ng-click="c.openAssignment(assignment)"
+                                class="clickable-row">
+
+
+                                <td>
+                                    {{assignment.number}}
+                                </td>
+
+
+                                <td>
+                                    {{assignment.student}}
+                                </td>
+
+
+                                <td>
+                                    {{assignment.problem_type}}
+                                </td>
+
+
+                                <td>
+                                    {{assignment.mess_hall}}
+                                </td>
+
+
+                                <td>
+                                    {{assignment.meal_type}}
+                                </td>
+
+
+                                <td>
+
+                                    <span class="priority-badge"
+                                          ng-class="c.getPriorityClass(assignment.priority)">
+
+                                        {{assignment.priority}}
+
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="status-badge"
+                                          ng-class="c.getStatusClass(assignment.status)">
+
+                                        {{assignment.status}}
+
+                                    </span>
+
+                                </td>
+
+
+                            </tr>
+
+
+                            <tr ng-if="c.data.assignments.length == 0">
+
+                                <td colspan="7"
+                                    class="no-data">
+
+                                    No assignments available.
+
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- ASSIGNMENT DETAILS -->
+
+            <div class="dashboard-card"
+                 ng-if="c.selectedAssignment">
+
+
+                <div class="card-header">
+
+                    <h2>
+                        Assignment Details
+                    </h2>
+
+
+                    <button class="close-button"
+                            ng-click="c.closeAssignment()">
+
+                        ✕
+
+                    </button>
+
+                </div>
+
+
+                <div class="details-grid">
+
+
+                    <div class="detail-item">
+
+                        <label>
+                            Ticket
+                        </label>
+
+                        <span>
+                            {{c.selectedAssignment.number}}
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <label>
+                            Student
+                        </label>
+
+                        <span>
+                            {{c.selectedAssignment.student}}
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <label>
+                            Problem
+                        </label>
+
+                        <span>
+                            {{c.selectedAssignment.problem_type}}
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <label>
+                            Mess Hall
+                        </label>
+
+                        <span>
+                            {{c.selectedAssignment.mess_hall}}
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <label>
+                            Meal
+                        </label>
+
+                        <span>
+                            {{c.selectedAssignment.meal_type}}
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <label>
+                            Priority
+                        </label>
+
+                        <span>
+                            {{c.selectedAssignment.priority}}
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <label>
+                            Status
+                        </label>
+
+                        <span>
+                            {{c.selectedAssignment.status}}
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="description-box">
+
+                    <label>
+                        Description
+                    </label>
+
+                    <p>
+                        {{c.selectedAssignment.description}}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= REPORTS ================= -->
+
+        <div ng-if="c.activeSection == 'reports'">
+
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        Reports
+                    </h1>
+
+                    <p>
+                        Monitor food service requests and issues.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATUS REPORT -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Requests by Status
+                    </h2>
+
+                </div>
+
+
+                <div class="report-grid">
+
+
+                    <div class="report-item">
+
+                        <span>
+                            Pending
+                        </span>
+
+                        <strong>
+                            {{c.data.pendingRequests}}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="report-item">
+
+                        <span>
+                            Resolved
+                        </span>
+
+                        <strong>
+                            {{c.data.resolvedRequests}}
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- PROBLEM REPORT -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Requests by Problem Type
+                    </h2>
+
+                </div>
+
+
+                <div class="report-list">
+
+                    <div class="report-row"
+                         ng-repeat="item in c.data.problemReports">
+
+                        <span>
+                            {{item.name}}
+                        </span>
+
+                        <strong>
+                            {{item.count}}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="no-data"
+                         ng-if="!c.data.problemReports || c.data.problemReports.length == 0">
+
+                        No problem data available.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MESS HALL REPORT -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Requests by Mess Hall
+                    </h2>
+
+                </div>
+
+
+                <div class="report-list">
+
+                    <div class="report-row"
+                         ng-repeat="item in c.data.messHallReports">
+
+                        <span>
+                            {{item.name}}
+                        </span>
+
+                        <strong>
+                            {{item.count}}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="no-data"
+                         ng-if="!c.data.messHallReports || c.data.messHallReports.length == 0">
+
+                        No mess hall data available.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MEAL REPORT -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Requests by Meal Type
+                    </h2>
+
+                </div>
+
+
+                <div class="report-list">
+
+                    <div class="report-row"
+                         ng-repeat="item in c.data.mealReports">
+
+                        <span>
+                            {{item.name}}
+                        </span>
+
+                        <strong>
+                            {{item.count}}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="no-data"
+                         ng-if="!c.data.mealReports || c.data.mealReports.length == 0">
+
+                        No meal data available.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SPECIAL REPORTS -->
+
+            <div class="special-report-grid">
+
+
+                <div class="special-report-card">
+
+                    <div class="special-icon">
+                        ]]>🍽<![CDATA[️
+                    </div>
+
+                    <h3>
+                        Food Quality
+                    </h3>
+
+                    <strong>
+                        {{c.data.foodQuality || 0}}
+                    </strong>
+
+                    <p>
+                        Food quality complaints
+                    </p>
+
+                </div>
+
+
+                <div class="special-report-card">
+
+                    <div class="special-icon">
+                        ♻️
+                    </div>
+
+                    <h3>
+                        Food Wastage
+                    </h3>
+
+                    <strong>
+                        {{c.data.foodWastage || 0}}
+                    </strong>
+
+                    <p>
+                        Food wastage reports
+                    </p>
+
+                </div>
+
+
+                <div class="special-report-card">
+
+                    <div class="special-icon">
+                        ]]>🧼
+<![CDATA[                    </div>
+
+                    <h3>
+                        Hygiene
+                    </h3>
+
+                    <strong>
+                        {{c.data.hygiene || 0}}
+                    </strong>
+
+                    <p>
+                        Hygiene issues
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= STAFF PERFORMANCE ================= -->
+
+        <div ng-if="c.activeSection == 'staff'">
+
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        Staff Performance
+                    </h1>
+
+                    <p>
+                        Monitor staff workload and request resolution.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STAFF SUMMARY -->
+
+            <div class="kpi-grid">
+
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ]]>👥
+<![CDATA[                    </div>
+
+                    <div>
+
+                        <h3>
+                            {{c.data.totalStaff || 0}}
+                        </h3>
+
+                        <p>
+                            Total Staff
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ]]>📋
+<![CDATA[                    </div>
+
+                    <div>
+
+                        <h3>
+                            {{c.data.staffAssigned || 0}}
+                        </h3>
+
+                        <p>
+                            Assigned Requests
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ⏳
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            {{c.data.staffPending || 0}}
+                        </h3>
+
+                        <p>
+                            Pending
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ✅
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            {{c.data.staffResolved || 0}}
+                        </h3>
+
+                        <p>
+                            Resolved
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- STAFF TABLE -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Staff Performance
+                    </h2>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Staff Name</th>
+                                <th>Assigned</th>
+                                <th>Pending</th>
+                                <th>In Progress</th>
+                                <th>Resolved</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            <tr ng-repeat="staff in c.data.staffPerformance">
+
+                                <td>
+                                    {{staff.name}}
+                                </td>
+
+                                <td>
+                                    {{staff.assigned}}
+                                </td>
+
+                                <td>
+                                    {{staff.pending}}
+                                </td>
+
+                                <td>
+                                    {{staff.progress}}
+                                </td>
+
+                                <td>
+                                    {{staff.resolved}}
+                                </td>
+
+                            </tr>
+
+
+                            <tr ng-if="!c.data.staffPerformance || c.data.staffPerformance.length == 0">
+
+                                <td colspan="5"
+                                    class="no-data">
+
+                                    No staff performance data available.
+
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

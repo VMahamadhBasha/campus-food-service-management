@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sn_aia_tool">
+    <sn_aia_tool action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description>Analyzes a Food Base Problem record and returns exactly six structured analysis fields: problem_type_normalized, priority, priority_reason, knowledge_insights, recommended_action, and related_knowledge_articles.</description>
+        <input_schema>[{"name":"food_base_problem_number","description":"The Food Base Problem Number to analyze, for example FBP0001054.","mandatory":true}]</input_schema>
+        <name>Analyze Food Base Problem</name>
+        <record_type>custom</record_type>
+        <script><![CDATA[(function execute(inputs) {
+
+    var gr = new GlideRecord('x_snc_campus_foo_1_food_base_problem');
+
+    /*
+     * Retrieve Food Base Problem directly using its Number
+     */
+    if (!gr.get('number', inputs.food_base_problem_number)) {
+
+        return JSON.stringify({
+            problem_type_normalized: "Not specified",
+            priority: "Not specified",
+            priority_reason:
+                "Food Base Problem " +
+                inputs.food_base_problem_number +
+                " could not be found.",
+            knowledge_insights: "",
+            recommended_action: "",
+            related_knowledge_articles: []
+        });
+    }
+
+    /*
+     * Read the record
+     */
+    var useCase = gr.getDisplayValue('use_case') || "";
+
+    var studentCount =
+        parseInt(gr.getValue('student_count'), 10) || 0;
+
+    /*
+     * Problem Type Normalized
+     * Determined from Use Case
+     */
+    var problemTypeNormalized = useCase;
+
+    /*
+     * Priority
+     * Determined ONLY by:
+     * 1. Use Case
+     * 2. Student Count
+     */
+
+    var priority = "Not specified";
+    var priorityReason = "";
+
+    /*
+     * Emergency Food Assistance
+     */
+
+    if (useCase === "Emergency Food Assistance") {
+
+        priority = "Critical";
+
+        priorityReason =
+            "Use Case is Emergency Food Assistance. " +
+            "This use case is configured as Always Critical. " +
+            "Therefore, the Priority is Critical.";
+
+    }
+
+    /*
+     * Allergy Management Request
+     */
+
+    else if (useCase === "Allergy Management Request") {
+
+        if (studentCount === 0) {
+
+            priority = "Low";
+
+            priorityReason =
+                "Use Case is Allergy Management Request. " +
+                "Student Count is 0. " +
+                "The configured range for 0 students is Low. " +
+                "Therefore, the Priority is Low.";
+
+        }
+
+        else if (studentCount >= 1 && studentCount <= 4) {
+
+            priority = "High";
+
+            priorityReason =
+                "Use Case is Allergy Management Request. " +
+                "Student Count is " + studentCount + ". " +
+                "The configured range for 1–4 students is High. " +
+                "Therefore, the Priority is High.";
+
+        }
+
+        else {
+
+            priority = "Critical";
+
+            priorityReason =
+                "Use Case is Allergy Management Request. " +
+                "Student Count is " + studentCount + ". " +
+                "The configured range for 5 or more students is Critical. " +
+                "Therefore, the Priority is Critical.";
+        }
+
+    }
+
+    /*
+     * Standard 0–2 / 3–4 / 5–7 / 8+ rules
+     */
+
+    else if (
+        useCase === "Food Quality Complaint" ||
+        useCase === "Meal Not Available" ||
+        useCase === "Special Diet Request" ||
+        useCase === "Missed Meal Request" ||
+        useCase === "Food Wastage Reporting" ||
+        useCase === "Hostel Mess Billing Issue"
+    ) {
+
+        if (studentCount <= 2) {
+
+            priority = "Low";
+
+        }
+
+        else if (studentCount <= 4) {
+
+            priority = "Medium";
+
+        }
+
+        else if (studentCount <= 7) {
+
+            priority = "High";
+
+        }
+
+        else {
+
+            priority = "Critical";
+        }
+
+        priorityReason =
+            "Use Case is " + useCase +
+            ". Student Count is " + studentCount +
+            ". The configured range is " +
+            "0–2 = Low, 3–4 = Medium, 5–7 = High, " +
+            "and 8+ = Critical. " +
+            "Therefore, the Priority is " + priority + ".";
+
+    }
+
+    /*
+     * Food Hygiene Issue
+     */
+
+    else if (useCase === "Food Hygiene Issue") {
+
+        if (studentCount === 0) {
+
+            priority = "Low";
+
+        }
+
+        else if (studentCount <= 4) {
+
+            priority = "High";
+
+        }
+
+        else {
+
+            priority = "Critical";
+        }
+
+        priorityReason =
+            "Use Case is Food Hygiene Issue. " +
+            "Student Count is " + studentCount +
+            ". The configured range is 0 = Low, " +
+            "1–4 = High, and 5+ = Critical. " +
+            "Therefore, the Priority is " + priority + ".";
+
+    }
+
+    /*
+     * 0–4 / 5–7 / 8–10 / 11+ rules
+     */
+
+    else if (
+        useCase === "Food Menu Feedback" ||
+        useCase === "Meal Reservation / Pre-Booking" ||
+        useCase === "Smart Menu Recommendation"
+    ) {
+
+        if (studentCount <= 4) {
+
+            priority = "Low";
+
+        }
+
+        else if (studentCount <= 7) {
+
+            priority = "Medium";
+
+        }
+
+        else if (studentCount <= 10) {
+
+            priority = "High";
+
+        }
+
+        else {
+
+            priority = "Critical";
+        }
+
+        priorityReason =
+            "Use Case is " + useCase +
+            ". Student Count is " + studentCount +
+            ". The configured range is " +
+            "0–4 = Low, 5–7 = Medium, 8–10 = High, " +
+            "and 11+ = Critical. " +
+            "Therefore, the Priority is " + priority + ".";
+
+    }
+
+    /*
+     * Unknown Use Case
+     */
+
+    else {
+
+        priority = "Not specified";
+
+        priorityReason =
+            "The Use Case '" + useCase +
+            "' does not match a configured priority rule. " +
+            "Therefore, the Priority cannot be determined.";
+    }
+
+
+    /*
+     * AI-generated fields
+     *
+     * These fields are intentionally left empty.
+     * The AI Agent must generate them using:
+     * - Food Base Problem details
+     * - Find Food Knowledge results
+     *
+     * Do NOT hard-code recommended_action here.
+     */
+
+    var knowledgeInsights = "";
+
+    var recommendedAction = "";
+
+    var relatedKnowledgeArticles = [];
+
+
+    /*
+     * Return exactly six fields
+     */
+
+    return JSON.stringify({
+
+        problem_type_normalized: problemTypeNormalized,
+
+        priority: priority,
+
+        priority_reason: priorityReason,
+
+        knowledge_insights: knowledgeInsights,
+
+        recommended_action: recommendedAction,
+
+        related_knowledge_articles: relatedKnowledgeArticles
+
+    });
+
+})(inputs);]]></script>
+        <sys_class_name>sn_aia_tool</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 08:44:31</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>d4e086b5802f03107f4447e44ab1d5f2</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Analyze Food Base Problem</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sn_aia_tool_d4e086b5802f03107f4447e44ab1d5f2</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 09:15:44</sys_updated_on>
+        <target_document/>
+        <target_document_table>sn_aia_tool</target_document_table>
+        <type>script</type>
+    </sn_aia_tool>
+</record_update>

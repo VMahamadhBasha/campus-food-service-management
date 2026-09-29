@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+    var c = this;
+
+    c.menuOpen = false;
+
+    c.closeMenu = function() {
+        c.menuOpen = false;
+    };
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.cfa-navbar{&#13;
+  background:#0f172a;&#13;
+  color:#fff;&#13;
+  position:sticky;&#13;
+  top:0;&#13;
+  z-index:20;&#13;
+  border-bottom:1px solid #1e293b;&#13;
+}&#13;
+.cfa-navbar-inner{&#13;
+  max-width:1200px;&#13;
+  margin:0 auto;&#13;
+  padding:14px 24px;&#13;
+  display:flex;&#13;
+  align-items:center;&#13;
+  justify-content:space-between;&#13;
+}&#13;
+.cfa-brand{&#13;
+  font-weight:800;&#13;
+  font-size:16px;&#13;
+  display:flex;&#13;
+  align-items:center;&#13;
+  gap:8px;&#13;
+}&#13;
+.cfa-brand b{ color:#2dd4bf; }&#13;
+.cfa-logo{ font-size:20px; }&#13;
+&#13;
+.cfa-nav-links{&#13;
+  display:flex;&#13;
+  gap:28px;&#13;
+}&#13;
+.cfa-nav-links a{&#13;
+  color:#cbd5e1;&#13;
+  text-decoration:none;&#13;
+  font-size:14px;&#13;
+  font-weight:600;&#13;
+  transition:.15s;&#13;
+}&#13;
+.cfa-nav-links a:hover{ color:#fff; }&#13;
+&#13;
+.cfa-nav-actions{&#13;
+  display:flex;&#13;
+  align-items:center;&#13;
+  gap:12px;&#13;
+}&#13;
+.cfa-login-btn{&#13;
+  background:#0d9488;&#13;
+  color:#fff;&#13;
+  padding:8px 18px;&#13;
+  border-radius:8px;&#13;
+  font-size:13.5px;&#13;
+  font-weight:700;&#13;
+  text-decoration:none;&#13;
+}&#13;
+.cfa-login-btn:hover{ background:#0f766e; }&#13;
+&#13;
+.cfa-menu-toggle{&#13;
+  display:none;&#13;
+  background:none;&#13;
+  border:none;&#13;
+  color:#fff;&#13;
+  font-size:20px;&#13;
+  cursor:pointer;&#13;
+}&#13;
+&#13;
+@media(max-width:768px){&#13;
+  .cfa-nav-links{&#13;
+    display:none;&#13;
+    position:absolute;&#13;
+    top:100%;&#13;
+    left:0;&#13;
+    right:0;&#13;
+    background:#0f172a;&#13;
+    flex-direction:column;&#13;
+    padding:16px 24px;&#13;
+    gap:16px;&#13;
+    border-bottom:1px solid #1e293b;&#13;
+  }&#13;
+  .cfa-nav-links.open{ display:flex; }&#13;
+  .cfa-menu-toggle{ display:block; }&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>food_services_navbar</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Food_Services_Navbar</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    // Native Service Portal login URL
+    data.loginUrl = '/sp?id=login';
+
+    // Check whether the current user is logged in
+    data.isLoggedIn = !gs.getUser().isGuest();
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 03:10:42</sys_created_on>
+        <sys_id>b6a3b879806303107f4447e44ab1d577</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>Food_Services_Navbar</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_b6a3b879806303107f4447e44ab1d577</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 13:50:36</sys_updated_on>
+        <template><![CDATA[<div class="cfa-navbar">
+  <div class="cfa-navbar-inner">
+    <div class="cfa-brand">
+      <span class="cfa-logo">]]>🍳<![CDATA[</span>
+      <span>Campus<b>Food AI</b></span>
+    </div>
+
+    <nav class="cfa-nav-links" ng-class="{'open': c.menuOpen}">
+      <a href="#home" ng-click="c.closeMenu()">Home</a>
+      <a href="#services" ng-click="c.closeMenu()">Services</a>
+      <a href="#about" ng-click="c.closeMenu()">About</a>
+      <a href="#contact" ng-click="c.closeMenu()">Contact</a>
+    </nav>
+
+    <div class="cfa-nav-actions">
+      <a class="cfa-login-btn" href="{{c.data.loginUrl}}">Login</a>
+      <button class="cfa-menu-toggle" ng-click="c.menuOpen = !c.menuOpen" aria-label="Toggle menu">☰</button>
+    </div>
+  </div>
+</div>]]></template>
+    </sp_widget>
+</record_update>

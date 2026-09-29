@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_design_topic">
+    <sys_cb_design_topic action="INSERT_OR_UPDATE">
+        <compiled_topic display_value="_PRVW__e62014c0e3364d788f9c4682cbc5a042">c57bb132042343107f44b8d89e324c68</compiled_topic>
+        <design_definition>{"type":"FlowTopic","triggers":[{"type":"Trigger","name":"f90fa4d545b94fedb093a403954fd22b","triggerType":"request","applicability":{"type":"Applicability","mode":"script","value":"true"},"id":"f90fa4d545b94fedb093a403954fd22b"}],"goals":[{"name":"primary","trigger_id":"f90fa4d545b94fedb093a403954fd22b","nodes":[{"type":"StartGoal","goal_id":"primary","greeting_msg":{"type":"String","mode":"string","value":""},"id":"422cef72b27f41e1962ba507420bc2c2","name":"Start","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","confirmation_msg":{"type":"String","mode":"string","value":""},"id":"8430d13144e547dfb63c6f9cf2eabdd6","name":"End","expert_mode":false},{"type":"InputPrompt","variable_id":"015ed5ce947747738ad7796457476e67","message":{"type":"String","mode":"string","value":"gs.getMessageLang(\"Please describe your complaint in detail.\", vaContext.getRequesterLang())"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true},"request_feedback":true,"skippable":{"type":"Applicability","mode":"script","value":"false"},"skipreprompt":{"type":"Applicability","mode":"script","value":"false"},"metadataScript":"","cardName":"","cardFields":[],"id":"12c7c4c62be241e4a30af764c995c7e3","name":"complaint_description","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"formatType":"Text","validationScript":"","description":""},{"type":"ChoiceInputPrompt","expression_mode":"simple","metadataScript":"","cardName":"","cardFields":[],"id":"8bce82fe8f4043fd98c88dcc253d6f25","name":"complaint_category","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"variable_id":"08e8162569fd47c88b1aa2f8fa0a3946","message":{"type":"String","mode":"string","value":"gs.getMessageLang(\"“What type of complaint would you like to report?\", vaContext.getRequesterLang())"},"request_feedback":false,"skippable":{"type":"Applicability","mode":"script","value":"false"},"skipreprompt":{"type":"Applicability","mode":"script","value":"false"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true},"description":""},{"type":"ChoiceInputPrompt","expression_mode":"simple","metadataScript":"","cardName":"","cardFields":[],"id":"f489780f65664d13a7c55a3ed8ceed05","name":"Mess Hall location","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"variable_id":"6ba6344cd37347b79d06e0bd0bdeb50e","message":{"type":"String","mode":"string","value":"gs.getMessageLang(\"select location\", vaContext.getRequesterLang())"},"request_feedback":false,"skippable":{"type":"Applicability","mode":"script","value":"false"},"skipreprompt":{"type":"Applicability","mode":"script","value":"false"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true},"description":""}],"edges":[{"type":"Edge","source_node_id":"422cef72b27f41e1962ba507420bc2c2","target_node_id":"12c7c4c62be241e4a30af764c995c7e3","id":"d57fec64f4d1449e9c39b42077614230"},{"type":"Edge","source_node_id":"12c7c4c62be241e4a30af764c995c7e3","target_node_id":"8bce82fe8f4043fd98c88dcc253d6f25","id":"46da064c7def4257953b6719ce2e3ae3"},{"type":"Edge","source_node_id":"8bce82fe8f4043fd98c88dcc253d6f25","target_node_id":"f489780f65664d13a7c55a3ed8ceed05","id":"30c79920018b439b88ad5dcdc11df1c9"},{"type":"Edge","source_node_id":"f489780f65664d13a7c55a3ed8ceed05","target_node_id":"8430d13144e547dfb63c6f9cf2eabdd6","id":"c056b7437c924947b47f721190ad3f52"}],"id":"primary"}],"script_variables":[],"glide_variables":[{"type":"Reference","table":"sys_user","auto_select":false,"id":"current-user","name":"user","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false},{"type":"String","name":"complaint_description","list":false,"id":"015ed5ce947747738ad7796457476e67","formatType":"Text","validationScript":"","secure":false,"sensitive":false,"aiInput":false},{"type":"Choice","choices":[{"name":"Food Quality","element":"Food Quality"},{"name":"Food Hygiene","element":"Food Hygiene"},{"name":"Service Issue","element":"Service Issue"},{"name":"Staff Behaviour","element":"Staff Behaviour"},{"name":"Payment Issue","element":"Payment Issue"},{"name":"Other","element":"Other"}],"id":"08e8162569fd47c88b1aa2f8fa0a3946","name":"complaint_category","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false,"label":"Complaint_category"},{"type":"Choice","choices":[{"name":"Hall A","element":"Hall A"},{"name":"Hall B","element":"Hall B"},{"name":"Hall C","element":"Hall C"},{"name":"Hall D","element":"Hall D"},{"name":"Hall E","element":"Hall E"}],"id":"6ba6344cd37347b79d06e0bd0bdeb50e","name":"mess_hall_location","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false,"label":"Mess Hall Location"}],"applicability":{"type":"Applicability","mode":"script","value":"true"},"roles":[],"scope":"423299d7dd1f03107f44143a6accf8fb","domain":"global","topic_type":"STANDARD","channels":[],"dialog_acts_enabled":false,"id":"ccf631f204ef03107f44b8d89e324c9a","name":"_PRVW__e62014c0e3364d788f9c4682cbc5a042","key_phrases":["report_cfms_complaint"],"nlu_provider":"","nlu_model":"","nlu_model_label":"","nlu_intent":"","nlu_intent_label":"","flexible_conversation_switching":false,"autopilot_topic":false,"design_categories":[],"triggerable_by_notification":false,"description":"Helps students and staff report a campus complaint by collecting the complaint details and submitting the complaint to the CFMS system.","model_type":"nlu_keyword","foundational":false,"modify_confirmation_enabled":false,"context_profiles":[],"title":"report_cfms_complaint","library":false,"readOnly":false,"nluMapping":"[]"}</design_definition>
+        <design_topic_id>ccf631f204ef03107f44b8d89e324c9a</design_topic_id>
+        <graph>{
+  "graph_api_version": "1.0.82",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "422cef72b27f41e1962ba507420bc2c2": {
+          "id": "422cef72b27f41e1962ba507420bc2c2",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "8430d13144e547dfb63c6f9cf2eabdd6": {
+          "id": "8430d13144e547dfb63c6f9cf2eabdd6",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "12c7c4c62be241e4a30af764c995c7e3": {
+          "id": "12c7c4c62be241e4a30af764c995c7e3",
+          "stepType": "TextPrompt",
+          "name": "complaint_description",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Please describe your complaint in detail."
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "015ed5ce947747738ad7796457476e67",
+          "detailDescription": "",
+          "inputType": {
+            "format": "Text",
+            "script": ""
+          },
+          "requestFeedback": true
+        },
+        "8bce82fe8f4043fd98c88dcc253d6f25": {
+          "name": "complaint_category",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "“What type of complaint would you like to report?"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "08e8162569fd47c88b1aa2f8fa0a3946",
+          "detailDescription": "",
+          "id": "8bce82fe8f4043fd98c88dcc253d6f25",
+          "stepType": "ChoicePrompt",
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false
+        },
+        "f489780f65664d13a7c55a3ed8ceed05": {
+          "name": "Mess Hall location",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "select location"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "6ba6344cd37347b79d06e0bd0bdeb50e",
+          "detailDescription": "",
+          "id": "f489780f65664d13a7c55a3ed8ceed05",
+          "stepType": "ChoicePrompt",
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false
+        }
+      },
+      "edges": [
+        {
+          "id": "d57fec64f4d1449e9c39b42077614230",
+          "edgeType": "Edge",
+          "source": "422cef72b27f41e1962ba507420bc2c2",
+          "target": "12c7c4c62be241e4a30af764c995c7e3",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "46da064c7def4257953b6719ce2e3ae3",
+          "edgeType": "Edge",
+          "source": "12c7c4c62be241e4a30af764c995c7e3",
+          "target": "8bce82fe8f4043fd98c88dcc253d6f25",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "30c79920018b439b88ad5dcdc11df1c9",
+          "edgeType": "Edge",
+          "source": "8bce82fe8f4043fd98c88dcc253d6f25",
+          "target": "f489780f65664d13a7c55a3ed8ceed05",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "c056b7437c924947b47f721190ad3f52",
+          "edgeType": "Edge",
+          "source": "f489780f65664d13a7c55a3ed8ceed05",
+          "target": "8430d13144e547dfb63c6f9cf2eabdd6",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "015ed5ce947747738ad7796457476e67": {
+      "id": "015ed5ce947747738ad7796457476e67",
+      "name": "complaint_description",
+      "label": "Complaint_description",
+      "varType": "string",
+      "secure": false,
+      "category": "vaInputs",
+      "encryptionHashFunction": "SHA-256",
+      "encryptionSalt": {
+        "value": "MTc5MDY3ODExNzk1NyBWQSBEZXNpZ25lciBpcyBhd2Vzb21l",
+        "mode": "simple"
+      },
+      "nodeId": "12c7c4c62be241e4a30af764c995c7e3",
+      "isHidden": false
+    },
+    "08e8162569fd47c88b1aa2f8fa0a3946": {
+      "id": "08e8162569fd47c88b1aa2f8fa0a3946",
+      "name": "complaint_category",
+      "label": "Complaint_category",
+      "varType": "choice",
+      "choices": [
+        {
+          "label": "Food Quality",
+          "value": "Food Quality"
+        },
+        {
+          "label": "Food Hygiene",
+          "value": "Food Hygiene",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Service Issue",
+          "value": "Service Issue"
+        },
+        {
+          "label": "Staff Behaviour",
+          "value": "Staff Behaviour",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Payment Issue",
+          "value": "Payment Issue",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Other",
+          "value": "Other",
+          "checked": true,
+          "meta": {}
+        }
+      ],
+      "category": "vaInputs",
+      "nodeId": "8bce82fe8f4043fd98c88dcc253d6f25",
+      "isHidden": false
+    },
+    "6ba6344cd37347b79d06e0bd0bdeb50e": {
+      "id": "6ba6344cd37347b79d06e0bd0bdeb50e",
+      "name": "mess_hall_location",
+      "label": "Mess Hall Location",
+      "varType": "choice",
+      "choices": [
+        {
+          "label": "Hall A",
+          "value": "Hall A"
+        },
+        {
+          "label": "Hall B",
+          "value": "Hall B"
+        },
+        {
+          "label": "Hall C",
+          "value": "Hall C",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Hall D",
+          "value": "Hall D",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Hall E",
+          "value": "Hall E",
+          "checked": true,
+          "meta": {}
+        }
+      ],
+      "category": "vaInputs",
+      "nodeId": "f489780f65664d13a7c55a3ed8ceed05",
+      "isHidden": false
+    }
+  }
+}</graph>
+        <name>_PRVW__e62014c0e3364d788f9c4682cbc5a042</name>
+        <sys_class_name>sys_cb_design_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 10:54:43</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>097bb132042343107f44b8d89e324c6f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>FlowTopic</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_cb_design_topic_097bb132042343107f44b8d89e324c6f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 10:54:43</sys_updated_on>
+        <type>FlowTopic</type>
+    </sys_cb_design_topic>
+</record_update>

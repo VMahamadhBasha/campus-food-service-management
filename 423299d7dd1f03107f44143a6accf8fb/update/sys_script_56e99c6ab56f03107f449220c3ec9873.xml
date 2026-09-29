@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_snc_campus_foo_1_food_complaint</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition/>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Route Food Complaint</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
+
+    var messStaffUseCases = [
+        'Food Quality Complaint',
+        'Meal Not Available',
+        'Meal Reservation / Pre-Booking',
+        'Emergency Food Assistance',
+        'Missed Meal Request',
+		'Food Hygiene Issue'
+    ];
+
+    var adminUseCases = [
+        'Special Diet Request',
+        'Smart Menu Recommendation',
+        'Food Wastage Reporting',
+        'Allergy Management Request',
+        'Hostel Mess Billing Issue',
+        'Food Menu Feedback'
+    ];
+
+    var useCase = current.getDisplayValue('use_case');
+
+    if (messStaffUseCases.indexOf(useCase) !== -1) {
+
+        var messGroup = new GlideRecord('sys_user_group');
+        messGroup.addQuery('name', 'Mess Staff');
+        messGroup.setLimit(1);
+        messGroup.query();
+
+        if (messGroup.next()) {
+            current.assignment_group = messGroup.getUniqueValue();
+        }
+
+    } else if (adminUseCases.indexOf(useCase) !== -1) {
+
+        var adminGroup = new GlideRecord('sys_user_group');
+        adminGroup.addQuery('name', 'Admin Staff');
+        adminGroup.setLimit(1);
+        adminGroup.query();
+
+        if (adminGroup.next()) {
+            current.assignment_group = adminGroup.getUniqueValue();
+        }
+    }
+
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-28 09:14:10</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>56e99c6ab56f03107f449220c3ec9873</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Route Food Complaint</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_script_56e99c6ab56f03107f449220c3ec9873</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-28 09:14:10</sys_updated_on>
+        <template/>
+        <when>before</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=56e99c6ab56f03107f449220c3ec9873"/>
+</record_update>

@@ -1,0 +1,3059 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function($scope, $http) {
+
+    var c = this;
+
+
+    // ==========================================
+    // ACTIVE SECTION
+    // ==========================================
+
+    c.activeSection = 'dashboard';
+
+
+    // ==========================================
+    // COMPLAINT FORM
+    // ==========================================
+
+    c.complaintForm = {
+
+        use_case: '',
+        mess_hall: '',
+        meal_type: '',
+        problem_type: '',
+        description: ''
+
+    };
+
+
+    c.complaintSubmitted = false;
+
+    c.complaintSubmitting = false;
+
+    c.complaintError = '';
+
+    c.complaintNumber = '';
+
+    c.complaintSysId = '';
+
+
+    // ==========================================
+    // FEEDBACK FORM
+    // ==========================================
+
+    c.feedbackForm = {
+
+        overall_rating: '',
+
+        resolution_satisfaction: '',
+
+        feedback_comments: ''
+
+    };
+
+
+    // ==========================================
+    // SELECTED FEEDBACK
+    // ==========================================
+
+    c.data.selectedFeedback = null;
+
+    c.data.selectedFeedbackSysId = null;
+
+
+    // ==========================================
+    // SECTION NAVIGATION
+    // ==========================================
+
+    c.selectSection = function(section) {
+
+        c.activeSection = section;
+
+        c.complaintError = '';
+
+    };
+
+
+    // ==========================================
+    // SUBMIT COMPLAINT
+    // ==========================================
+
+    c.submitComplaint = function() {
+
+        c.complaintError = '';
+
+        c.complaintSubmitting = true;
+
+
+        c.server.get({
+
+            action: 'createComplaint',
+
+            use_case:
+                c.complaintForm.use_case,
+
+            mess_hall:
+                c.complaintForm.mess_hall,
+
+            meal_type:
+                c.complaintForm.meal_type,
+
+            problem_type:
+                c.complaintForm.problem_type,
+
+            description:
+                c.complaintForm.description
+
+        }).then(function(response) {
+
+            c.complaintSubmitting = false;
+
+
+            if (
+                response.data.success
+            ) {
+
+                c.complaintSubmitted = true;
+
+                c.complaintNumber =
+                    response.data.complaintNumber;
+
+                c.complaintSysId =
+                    response.data.complaintSysId;
+
+
+                // ==================================
+                // FILE UPLOAD
+                // ==================================
+
+                var fileInput =
+                    document.getElementById(
+                        'complaintDocument'
+                    );
+
+
+                if (
+                    fileInput &&
+                    fileInput.files &&
+                    fileInput.files.length > 0
+                ) {
+
+                    var file =
+                        fileInput.files[0];
+
+                    var formData =
+                        new FormData();
+
+                    formData.append(
+                        'file',
+                        file
+                    );
+
+
+                    var attachmentUrl =
+                        '/api/now/attachment/file' +
+                        '?table_name=' +
+                        'x_snc_campus_foo_1_food_complaint' +
+                        '&table_sys_id=' +
+                        c.complaintSysId +
+                        '&file_name=' +
+                        encodeURIComponent(
+                            file.name
+                        );
+
+
+                    $http({
+
+                        method: 'POST',
+
+                        url: attachmentUrl,
+
+                        data: formData,
+
+                        transformRequest:
+                            angular.identity,
+
+                        headers: {
+
+                            'Content-Type':
+                                undefined
+
+                        }
+
+                    });
+
+                }
+
+
+                c.server.update();
+
+
+            } else {
+
+                c.complaintError =
+                    response.data.message ||
+                    'Unable to submit complaint.';
+
+            }
+
+
+        }, function() {
+
+            c.complaintSubmitting = false;
+
+            c.complaintError =
+                'Something went wrong. Please try again.';
+
+        });
+
+    };
+
+
+    // ==========================================
+    // NEW COMPLAINT
+    // ==========================================
+
+    c.newComplaint = function() {
+
+        c.complaintForm = {
+
+            use_case: '',
+            mess_hall: '',
+            meal_type: '',
+            problem_type: '',
+            description: ''
+
+        };
+
+
+        c.complaintSubmitted = false;
+
+        c.complaintSubmitting = false;
+
+        c.complaintError = '';
+
+        c.complaintNumber = '';
+
+        c.complaintSysId = '';
+
+
+        var fileInput =
+            document.getElementById(
+                'complaintDocument'
+            );
+
+
+        if (fileInput) {
+
+            fileInput.value = '';
+
+        }
+
+    };
+
+
+    // ==========================================
+    // OPEN FEEDBACK
+    // ==========================================
+
+    c.openFeedback = function(sysId) {
+
+
+        // ======================================
+        // GET EXACT RECORD
+        // ======================================
+
+        var feedback =
+            c.data.feedbacks[sysId];
+
+
+        if (!feedback) {
+
+            return;
+
+        }
+
+
+        // ======================================
+        // SAVE SYS ID
+        // ======================================
+
+        c.data.selectedFeedbackSysId =
+            sysId;
+
+
+        // ======================================
+        // SAVE SELECTED RECORD
+        // ======================================
+
+        c.data.selectedFeedback =
+            feedback;
+
+
+        // ======================================
+        // LOAD EXISTING VALUES
+        // ======================================
+
+        c.feedbackForm = {
+
+            overall_rating:
+                feedback.overall_rating || '',
+
+            resolution_satisfaction:
+                feedback.resolution_satisfaction || '',
+
+            feedback_comments:
+                feedback.feedback_comments || ''
+
+        };
+
+    };
+
+
+    // ==========================================
+    // SUBMIT FEEDBACK
+    // ==========================================
+
+    c.submitFeedback = function() {
+
+
+        // ======================================
+        // CHECK REQUIRED FIELDS
+        // ======================================
+
+        if (
+            !c.feedbackForm.overall_rating ||
+            !c.feedbackForm.resolution_satisfaction
+        ) {
+
+            alert(
+                'Please select Overall Rating and Resolution Satisfaction.'
+            );
+
+            return;
+
+        }
+
+
+        // ======================================
+        // CHECK SYS ID
+        // ======================================
+
+        if (
+            !c.data.selectedFeedbackSysId
+        ) {
+
+            alert(
+                'Feedback record not selected.'
+            );
+
+            return;
+
+        }
+
+
+        // ======================================
+        // SEND TO SERVER
+        // ======================================
+
+        c.server.get({
+
+            action: 'submitFeedback',
+
+            feedbackSysId:
+                c.data.selectedFeedbackSysId,
+
+            overall_rating:
+                c.feedbackForm.overall_rating,
+
+            resolution_satisfaction:
+                c.feedbackForm.resolution_satisfaction,
+
+            feedback_comments:
+                c.feedbackForm.feedback_comments
+
+        }).then(function(response) {
+
+
+            // ==================================
+            // SUCCESS
+            // ==================================
+
+            if (
+                response.data.feedbackSuccess
+            ) {
+
+                alert(
+                    'Feedback submitted successfully.'
+                );
+
+
+                // ==============================
+                // CLEAR SELECTED RECORD
+                // ==============================
+
+                c.data.selectedFeedback =
+                    null;
+
+
+                c.data.selectedFeedbackSysId =
+                    null;
+
+
+                // ==============================
+                // CLEAR FORM
+                // ==============================
+
+                c.feedbackForm = {
+
+                    overall_rating: '',
+
+                    resolution_satisfaction: '',
+
+                    feedback_comments: ''
+
+                };
+
+
+                // ==============================
+                // REFRESH SERVER DATA
+                // ==============================
+
+                c.server.update();
+
+
+            } else {
+
+
+                alert(
+                    response.data.feedbackMessage ||
+                    'Unable to submit feedback.'
+                );
+
+            }
+
+        }, function() {
+
+
+            alert(
+                'Something went wrong while submitting feedback.'
+            );
+
+        });
+
+    };
+
+
+    // ==========================================
+    // CLOSE FEEDBACK
+    // ==========================================
+
+    c.closeFeedback = function() {
+
+
+        c.data.selectedFeedback =
+            null;
+
+
+        c.data.selectedFeedbackSysId =
+            null;
+
+
+        c.feedbackForm = {
+
+            overall_rating: '',
+
+            resolution_satisfaction: '',
+
+            feedback_comments: ''
+
+        };
+
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================================&#13;
+   STUDENT DASHBOARD&#13;
+   ========================================================= */&#13;
+&#13;
+.student-dashboard {&#13;
+    display: flex;&#13;
+    width: 100%;&#13;
+    min-height: 100vh;&#13;
+    background: #f5f7fa;&#13;
+    font-family: Arial, sans-serif;&#13;
+    color: #172033;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SIDEBAR&#13;
+   ========================================================= */&#13;
+&#13;
+.student-sidebar {&#13;
+    width: 230px;&#13;
+    min-width: 230px;&#13;
+    background: #172033;&#13;
+    color: #ffffff;&#13;
+    min-height: 100vh;&#13;
+    padding: 0;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.sidebar-title {&#13;
+    font-size: 20px;&#13;
+    font-weight: 700;&#13;
+    padding: 25px 20px;&#13;
+    border-bottom: 1px solid rgba(255,255,255,0.10);&#13;
+}&#13;
+&#13;
+.sidebar-item {&#13;
+    padding: 15px 20px;&#13;
+    font-size: 14px;&#13;
+    cursor: pointer;&#13;
+    color: #cbd5e1;&#13;
+    transition: 0.2s;&#13;
+}&#13;
+&#13;
+.sidebar-item:hover {&#13;
+    background: #243047;&#13;
+    color: #ffffff;&#13;
+}&#13;
+&#13;
+.sidebar-item.active {&#13;
+    background: #0d9488;&#13;
+    color: #ffffff;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   MAIN&#13;
+   ========================================================= */&#13;
+&#13;
+.student-main {&#13;
+    flex: 1;&#13;
+    min-width: 0;&#13;
+    padding: 30px;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   PAGE HEADER&#13;
+   ========================================================= */&#13;
+&#13;
+.page-header {&#13;
+    display: flex;&#13;
+    justify-content: space-between;&#13;
+    align-items: center;&#13;
+    margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+.page-header h1 {&#13;
+    margin: 0 0 6px 0;&#13;
+    font-size: 28px;&#13;
+    font-weight: 700;&#13;
+    color: #172033;&#13;
+}&#13;
+&#13;
+.page-header p {&#13;
+    margin: 0;&#13;
+    color: #64748b;&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   KPI CARDS&#13;
+   ========================================================= */&#13;
+&#13;
+.kpi-grid {&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(3, 1fr);&#13;
+    gap: 20px;&#13;
+    margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+.kpi-card {&#13;
+    background: #ffffff;&#13;
+    border-radius: 10px;&#13;
+    padding: 22px;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 15px;&#13;
+    border: 1px solid #e5e7eb;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.kpi-icon {&#13;
+    width: 50px;&#13;
+    height: 50px;&#13;
+    border-radius: 8px;&#13;
+    background: #ecfdf5;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    font-size: 23px;&#13;
+}&#13;
+&#13;
+.kpi-card h3 {&#13;
+    margin: 0 0 5px 0;&#13;
+    font-size: 24px;&#13;
+    color: #172033;&#13;
+}&#13;
+&#13;
+.kpi-card p {&#13;
+    margin: 0;&#13;
+    font-size: 13px;&#13;
+    color: #64748b;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   DASHBOARD CARD&#13;
+   ========================================================= */&#13;
+&#13;
+.dashboard-card {&#13;
+    width: 100%;&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #e5e7eb;&#13;
+    border-radius: 10px;&#13;
+    padding: 22px;&#13;
+    box-sizing: border-box;&#13;
+    margin-bottom: 25px;&#13;
+    overflow: hidden;&#13;
+}&#13;
+&#13;
+.card-header {&#13;
+    display: flex;&#13;
+    justify-content: space-between;&#13;
+    align-items: center;&#13;
+    margin-bottom: 20px;&#13;
+    gap: 15px;&#13;
+}&#13;
+&#13;
+.card-header h2 {&#13;
+    margin: 0;&#13;
+    font-size: 18px;&#13;
+    font-weight: 600;&#13;
+    color: #172033;&#13;
+}&#13;
+&#13;
+.card-header strong {&#13;
+    color: #0d9488;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   NORMAL TABLE&#13;
+   ========================================================= */&#13;
+&#13;
+.table-container {&#13;
+    width: 100%;&#13;
+    overflow-x: auto;&#13;
+}&#13;
+&#13;
+.table-container table {&#13;
+    width: 100%;&#13;
+    border-collapse: collapse;&#13;
+    border-spacing: 0;&#13;
+    background: #ffffff;&#13;
+}&#13;
+&#13;
+.table-container table th {&#13;
+    padding: 13px 15px;&#13;
+    background: #f8fafc;&#13;
+    color: #374151;&#13;
+    font-size: 13px;&#13;
+    font-weight: 600;&#13;
+    text-align: left;&#13;
+    border-bottom: 1px solid #e2e8f0;&#13;
+    white-space: nowrap;&#13;
+}&#13;
+&#13;
+.table-container table td {&#13;
+    padding: 13px 15px;&#13;
+    color: #475569;&#13;
+    font-size: 13px;&#13;
+    border-bottom: 1px solid #edf0f4;&#13;
+    vertical-align: middle;&#13;
+}&#13;
+&#13;
+.table-container table tbody tr:hover {&#13;
+    background: #f8fafc;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   STATUS&#13;
+   ========================================================= */&#13;
+&#13;
+.status-badge {&#13;
+    display: inline-block;&#13;
+    padding: 5px 10px;&#13;
+    border-radius: 20px;&#13;
+    background: #ecfdf5;&#13;
+    color: #047857;&#13;
+    font-size: 12px;&#13;
+    font-weight: 600;&#13;
+    white-space: nowrap;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   PRIORITY&#13;
+   ========================================================= */&#13;
+&#13;
+.priority-badge {&#13;
+    display: inline-block;&#13;
+    padding: 5px 10px;&#13;
+    border-radius: 20px;&#13;
+    background: #fff7ed;&#13;
+    color: #c2410c;&#13;
+    font-size: 12px;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   NO DATA&#13;
+   ========================================================= */&#13;
+&#13;
+.no-data {&#13;
+    text-align: center !important;&#13;
+    padding: 30px !important;&#13;
+    color: #94a3b8 !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   PLACEHOLDER&#13;
+   ========================================================= */&#13;
+&#13;
+.placeholder-section {&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #e5e7eb;&#13;
+    border-radius: 10px;&#13;
+    padding: 40px;&#13;
+    text-align: center;&#13;
+    color: #64748b;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FORM&#13;
+   ========================================================= */&#13;
+&#13;
+.form-group {&#13;
+    width: 100%;&#13;
+    margin-bottom: 20px;&#13;
+}&#13;
+&#13;
+.form-group label {&#13;
+    display: block;&#13;
+    margin-bottom: 7px;&#13;
+    font-size: 14px;&#13;
+    font-weight: 600;&#13;
+    color: #374151;&#13;
+}&#13;
+&#13;
+.form-control {&#13;
+    display: block;&#13;
+    width: 100%;&#13;
+    min-height: 42px;&#13;
+    padding: 10px 12px;&#13;
+    box-sizing: border-box;&#13;
+    border: 1px solid #d9dee8;&#13;
+    border-radius: 7px;&#13;
+    background: #ffffff;&#13;
+    color: #374151;&#13;
+    font-size: 14px;&#13;
+    font-family: inherit;&#13;
+    outline: none;&#13;
+}&#13;
+&#13;
+.form-control:focus {&#13;
+    border-color: #0d9488;&#13;
+    box-shadow: 0 0 0 2px rgba(13,148,136,0.10);&#13;
+}&#13;
+&#13;
+.description-field {&#13;
+    min-height: 130px;&#13;
+    resize: vertical;&#13;
+    line-height: 1.5;&#13;
+}&#13;
+&#13;
+.file-control {&#13;
+    display: block;&#13;
+    width: 100%;&#13;
+    padding: 9px;&#13;
+    box-sizing: border-box;&#13;
+    border: 1px solid #d9dee8;&#13;
+    border-radius: 7px;&#13;
+    background: #ffffff;&#13;
+    color: #475569;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   COMPLAINT BUTTON&#13;
+   ========================================================= */&#13;
+&#13;
+.submit-button {&#13;
+    border: none;&#13;
+    background: #0d9488;&#13;
+    color: #ffffff;&#13;
+    padding: 12px 25px;&#13;
+    border-radius: 7px;&#13;
+    cursor: pointer;&#13;
+    font-size: 14px;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.submit-button:hover {&#13;
+    background: #0f766e;&#13;
+}&#13;
+&#13;
+.submit-button:disabled {&#13;
+    opacity: 0.6;&#13;
+    cursor: not-allowed;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   ERROR&#13;
+   ========================================================= */&#13;
+&#13;
+.error-message {&#13;
+    margin-bottom: 15px;&#13;
+    padding: 12px 15px;&#13;
+    border-radius: 7px;&#13;
+    background: #fef2f2;&#13;
+    color: #b91c1c;&#13;
+    border: 1px solid #fecaca;&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SUCCESS CARD&#13;
+   ========================================================= */&#13;
+&#13;
+.success-card {&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #d1fae5;&#13;
+    border-radius: 10px;&#13;
+    padding: 40px;&#13;
+    text-align: center;&#13;
+}&#13;
+&#13;
+.success-icon {&#13;
+    width: 60px;&#13;
+    height: 60px;&#13;
+    margin: 0 auto 20px auto;&#13;
+    border-radius: 50%;&#13;
+    background: #d1fae5;&#13;
+    color: #047857;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    font-size: 30px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.success-card h2 {&#13;
+    margin: 0 0 10px 0;&#13;
+    color: #172033;&#13;
+    font-size: 22px;&#13;
+}&#13;
+&#13;
+.success-card p {&#13;
+    margin: 0 0 20px 0;&#13;
+    color: #64748b;&#13;
+}&#13;
+&#13;
+.complaint-number {&#13;
+    margin-bottom: 20px;&#13;
+    color: #475569;&#13;
+}&#13;
+&#13;
+.complaint-number strong {&#13;
+    color: #0d9488;&#13;
+}&#13;
+&#13;
+.new-complaint-button {&#13;
+    border: none;&#13;
+    background: #0d9488;&#13;
+    color: #ffffff;&#13;
+    padding: 11px 20px;&#13;
+    border-radius: 7px;&#13;
+    cursor: pointer;&#13;
+    font-size: 14px;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.new-complaint-button:hover {&#13;
+    background: #0f766e;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FEEDBACK SECTION&#13;
+   ========================================================= */&#13;
+&#13;
+.feedback-details-section {&#13;
+    width: 100%;&#13;
+    margin-bottom: 30px;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.feedback-form-row {&#13;
+    display: flex;&#13;
+    width: 100%;&#13;
+    gap: 20px;&#13;
+    margin-bottom: 20px;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.feedback-form-group {&#13;
+    flex: 1;&#13;
+    width: 100%;&#13;
+    margin-bottom: 20px;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.feedback-form-group label {&#13;
+    display: block;&#13;
+    margin-bottom: 7px;&#13;
+    color: #374151;&#13;
+    font-size: 14px;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.feedback-required {&#13;
+    color: #d32f2f;&#13;
+    margin-left: 3px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FEEDBACK INPUT CONTROLS&#13;
+   ========================================================= */&#13;
+&#13;
+.feedback-form-control {&#13;
+    display: block !important;&#13;
+    width: 100% !important;&#13;
+    min-height: 42px !important;&#13;
+    padding: 10px 12px !important;&#13;
+    box-sizing: border-box !important;&#13;
+    border: 1px solid #d9dee8 !important;&#13;
+    border-radius: 7px !important;&#13;
+    background: #ffffff !important;&#13;
+    color: #374151 !important;&#13;
+    font-size: 14px !important;&#13;
+    font-family: inherit !important;&#13;
+    outline: none !important;&#13;
+}&#13;
+&#13;
+.feedback-form-control:focus {&#13;
+    border-color: #0d9488 !important;&#13;
+    box-shadow: 0 0 0 2px rgba(13,148,136,0.10) !important;&#13;
+}&#13;
+&#13;
+.feedback-form-control[readonly] {&#13;
+    background: #f1f5f9 !important;&#13;
+    color: #64748b !important;&#13;
+    cursor: not-allowed;&#13;
+}&#13;
+&#13;
+.feedback-textarea {&#13;
+    min-height: 120px !important;&#13;
+    resize: vertical !important;&#13;
+    line-height: 1.5 !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FEEDBACK INPUT AREA&#13;
+   ========================================================= */&#13;
+&#13;
+.feedback-input-section {&#13;
+    width: 100%;&#13;
+    border-top: 1px solid #e2e8f0;&#13;
+    padding-top: 25px;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.feedback-input-section h3 {&#13;
+    margin: 0 0 20px 0;&#13;
+    font-size: 18px;&#13;
+    font-weight: 600;&#13;
+    color: #172033;&#13;
+}&#13;
+&#13;
+.feedback-submit-area {&#13;
+    width: 100%;&#13;
+    margin-top: 20px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FEEDBACK BUTTONS&#13;
+   ========================================================= */&#13;
+&#13;
+.feedback-action-button {&#13;
+    display: inline-block !important;&#13;
+    border: none !important;&#13;
+    background: #0d9488 !important;&#13;
+    color: #ffffff !important;&#13;
+    padding: 8px 14px !important;&#13;
+    border-radius: 6px !important;&#13;
+    cursor: pointer !important;&#13;
+    font-size: 13px !important;&#13;
+    font-weight: 600 !important;&#13;
+    white-space: nowrap !important;&#13;
+    line-height: normal !important;&#13;
+}&#13;
+&#13;
+.feedback-action-button:hover {&#13;
+    background: #0f766e !important;&#13;
+}&#13;
+&#13;
+.feedback-back-button {&#13;
+    display: inline-block;&#13;
+    border: none;&#13;
+    background: #f1f5f9;&#13;
+    color: #475569;&#13;
+    padding: 8px 15px;&#13;
+    border-radius: 6px;&#13;
+    cursor: pointer;&#13;
+    font-size: 13px;&#13;
+    font-weight: 500;&#13;
+}&#13;
+&#13;
+.feedback-back-button:hover {&#13;
+    background: #e2e8f0;&#13;
+}&#13;
+&#13;
+.feedback-submit-button {&#13;
+    display: inline-block;&#13;
+    border: none;&#13;
+    background: #0d9488;&#13;
+    color: #ffffff;&#13;
+    padding: 12px 25px;&#13;
+    border-radius: 7px;&#13;
+    cursor: pointer;&#13;
+    font-size: 14px;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.feedback-submit-button:hover {&#13;
+    background: #0f766e;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FEEDBACK TABLE&#13;
+   IMPORTANT:&#13;
+   These selectors are more specific than the normal&#13;
+   table/th/td CSS above.&#13;
+   ========================================================= */&#13;
+&#13;
+.feedback-table-container {&#13;
+    display: block;&#13;
+    width: 100%;&#13;
+    overflow-x: auto;&#13;
+    overflow-y: hidden;&#13;
+    box-sizing: border-box;&#13;
+    -webkit-overflow-scrolling: touch;&#13;
+}&#13;
+&#13;
+.feedback-table-container .feedback-table {&#13;
+    width: 100%;&#13;
+    min-width: 1400px;&#13;
+    border-collapse: collapse !important;&#13;
+    border-spacing: 0 !important;&#13;
+    background: #ffffff;&#13;
+    table-layout: auto;&#13;
+}&#13;
+&#13;
+&#13;
+/* FEEDBACK TABLE HEADER */&#13;
+&#13;
+.feedback-table-container .feedback-table thead tr th {&#13;
+    padding: 13px 15px !important;&#13;
+    background: #f8fafc !important;&#13;
+    color: #374151 !important;&#13;
+    font-size: 13px !important;&#13;
+    font-weight: 600 !important;&#13;
+    text-align: left !important;&#13;
+    border-bottom: 1px solid #e2e8f0 !important;&#13;
+    white-space: nowrap !important;&#13;
+    vertical-align: middle !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* FEEDBACK TABLE BODY */&#13;
+&#13;
+.feedback-table-container .feedback-table tbody tr td {&#13;
+    padding: 13px 15px !important;&#13;
+    background: #ffffff;&#13;
+    color: #475569 !important;&#13;
+    font-size: 13px !important;&#13;
+    border-bottom: 1px solid #edf0f4 !important;&#13;
+    vertical-align: middle !important;&#13;
+    white-space: nowrap !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* HOVER */&#13;
+&#13;
+.feedback-table-container .feedback-table tbody tr:hover td {&#13;
+    background: #f8fafc !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* FEEDBACK NUMBER */&#13;
+&#13;
+.feedback-table-container .feedback-number {&#13;
+    color: #0f766e !important;&#13;
+    font-weight: 600 !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* RATING */&#13;
+&#13;
+.feedback-table-container .feedback-rating {&#13;
+    color: #374151 !important;&#13;
+    font-weight: 600 !important;&#13;
+    text-align: center;&#13;
+}&#13;
+&#13;
+&#13;
+/* COMMENTS */&#13;
+&#13;
+.feedback-table-container .feedback-comment-cell {&#13;
+    max-width: 250px !important;&#13;
+    width: 250px !important;&#13;
+    overflow: hidden !important;&#13;
+    text-overflow: ellipsis !important;&#13;
+    white-space: nowrap !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* STATUS INSIDE FEEDBACK TABLE */&#13;
+&#13;
+.feedback-table-container .status-badge {&#13;
+    display: inline-block !important;&#13;
+    padding: 5px 10px !important;&#13;
+    border-radius: 20px !important;&#13;
+    background: #ecfdf5 !important;&#13;
+    color: #047857 !important;&#13;
+    font-size: 12px !important;&#13;
+    font-weight: 600 !important;&#13;
+    white-space: nowrap !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* ACTION COLUMN */&#13;
+&#13;
+.feedback-table-container .feedback-action-button {&#13;
+    margin: 0 !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FEEDBACK FORM CARD&#13;
+   ========================================================= */&#13;
+&#13;
+.feedback-form-card {&#13;
+    width: 100%;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   RESPONSIVE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 900px) {&#13;
+&#13;
+    .student-sidebar {&#13;
+        width: 190px;&#13;
+        min-width: 190px;&#13;
+    }&#13;
+&#13;
+    .student-main {&#13;
+        padding: 20px;&#13;
+    }&#13;
+&#13;
+    .kpi-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 700px) {&#13;
+&#13;
+    .student-dashboard {&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+    .student-sidebar {&#13;
+        width: 100%;&#13;
+        min-width: 100%;&#13;
+        min-height: auto;&#13;
+    }&#13;
+&#13;
+    .sidebar-title {&#13;
+        padding: 18px;&#13;
+    }&#13;
+&#13;
+    .sidebar-item {&#13;
+        display: inline-block;&#13;
+        padding: 12px 15px;&#13;
+    }&#13;
+&#13;
+    .student-main {&#13;
+        padding: 15px;&#13;
+    }&#13;
+&#13;
+    .page-header h1 {&#13;
+        font-size: 23px;&#13;
+    }&#13;
+&#13;
+    .feedback-form-row {&#13;
+        flex-direction: column;&#13;
+        gap: 0;&#13;
+    }&#13;
+&#13;
+    .feedback-form-group {&#13;
+        width: 100%;&#13;
+    }&#13;
+&#13;
+    .feedback-submit-button {&#13;
+        width: 100%;&#13;
+    }&#13;
+&#13;
+    .card-header {&#13;
+        align-items: flex-start;&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 480px) {&#13;
+&#13;
+    .student-main {&#13;
+        padding: 10px;&#13;
+    }&#13;
+&#13;
+    .dashboard-card {&#13;
+        padding: 15px;&#13;
+    }&#13;
+&#13;
+    .feedback-form-control {&#13;
+        font-size: 13px !important;&#13;
+    }&#13;
+&#13;
+    .feedback-input-section h3 {&#13;
+        font-size: 16px;&#13;
+    }&#13;
+&#13;
+    .feedback-submit-button {&#13;
+        width: 100%;&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>food_service_student_dashboard_widget</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Food Service Student Dashboard Widget</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    // ==========================================
+    // TEST USER
+    // ==========================================
+
+    var USER_ID =
+        '82f46a0ea96b03107f444d1b3bf577cf';
+
+    // Later:
+    // var USER_ID = gs.getUserID();
+
+
+    // ==========================================
+    // INITIAL DATA
+    // ==========================================
+
+    data.userId = USER_ID;
+
+    data.userName = '';
+
+    data.kpi = {
+        total: 0,
+        pending: 0,
+        resolved: 0
+    };
+
+    data.recentRequests = [];
+
+    data.myRequests = [];
+
+    data.feedbacks = {};
+
+    data.feedbackCount = 0;
+
+    data.selectedFeedback = null;
+
+    data.messHalls = [];
+
+    data.success = false;
+
+    data.message = '';
+
+    data.complaintNumber = '';
+
+    data.complaintSysId = '';
+
+    data.feedbackSuccess = false;
+
+    data.feedbackMessage = '';
+
+
+    // ==========================================
+    // GET USER
+    // ==========================================
+
+    var userGR =
+        new GlideRecord('sys_user');
+
+    if (userGR.get(USER_ID)) {
+
+        data.userName =
+            userGR.getDisplayValue('name');
+
+    }
+
+
+    // ==========================================
+    // LOAD MESS HALLS
+    // ==========================================
+
+    var messHallGR =
+        new GlideRecord(
+            'x_snc_campus_foo_1_mess_hall'
+        );
+
+    messHallGR.orderBy('name');
+
+    messHallGR.query();
+
+    while (messHallGR.next()) {
+
+        data.messHalls.push({
+
+            sys_id:
+                messHallGR.getUniqueValue(),
+
+            name:
+                messHallGR.getDisplayValue('name')
+
+        });
+
+    }
+
+
+    // ==========================================
+    // CREATE FOOD COMPLAINT
+    // ==========================================
+
+    if (
+        input &&
+        input.action == 'createComplaint'
+    ) {
+
+        var complaintGR =
+            new GlideRecord(
+                'x_snc_campus_foo_1_food_complaint'
+            );
+
+        complaintGR.initialize();
+
+        complaintGR.setValue(
+            'student',
+            USER_ID
+        );
+
+        complaintGR.setValue(
+            'use_case',
+            input.use_case
+        );
+
+        complaintGR.setValue(
+            'mess_hall',
+            input.mess_hall
+        );
+
+        complaintGR.setValue(
+            'meal_type',
+            input.meal_type
+        );
+
+        complaintGR.setValue(
+            'problem_type',
+            input.problem_type
+        );
+
+        complaintGR.setValue(
+            'description',
+            input.description
+        );
+
+        var complaintSysId =
+            complaintGR.insert();
+
+
+        if (complaintSysId) {
+
+            data.success = true;
+
+            data.complaintSysId =
+                complaintSysId;
+
+            data.complaintNumber =
+                complaintGR.getValue('number');
+
+            data.message =
+                'Food complaint submitted successfully.';
+
+        } else {
+
+            data.success = false;
+
+            data.message =
+                'Unable to create food complaint.';
+
+        }
+
+    }
+
+
+    // ==========================================
+    // LOAD FOOD COMPLAINTS
+    // ==========================================
+
+    var complaintListGR =
+        new GlideRecord(
+            'x_snc_campus_foo_1_food_complaint'
+        );
+
+    complaintListGR.addQuery(
+        'student',
+        USER_ID
+    );
+
+    complaintListGR.orderByDesc(
+        'sys_created_on'
+    );
+
+    complaintListGR.query();
+
+
+    while (complaintListGR.next()) {
+
+        var complaint = {
+
+            sys_id:
+                complaintListGR.getUniqueValue(),
+
+            number:
+                complaintListGR.getDisplayValue(
+                    'number'
+                ),
+
+            use_case:
+                complaintListGR.getDisplayValue(
+                    'use_case'
+                ),
+
+            mess_hall:
+                complaintListGR.getDisplayValue(
+                    'mess_hall'
+                ),
+
+            meal_type:
+                complaintListGR.getDisplayValue(
+                    'meal_type'
+                ),
+
+            problem_type:
+                complaintListGR.getDisplayValue(
+                    'problem_type'
+                ),
+
+            description:
+                complaintListGR.getDisplayValue(
+                    'description'
+                ),
+
+            state:
+                complaintListGR.getDisplayValue(
+                    'state'
+                ),
+
+            created:
+                complaintListGR.getDisplayValue(
+                    'sys_created_on'
+                )
+
+        };
+
+
+        data.myRequests.push(
+            complaint
+        );
+
+
+        // ======================================
+        // KPI
+        // ======================================
+
+        data.kpi.total++;
+
+
+        var state =
+            complaintListGR.getValue(
+                'state'
+            );
+
+
+        if (
+            state == '1' ||
+            state == '2'
+        ) {
+
+            data.kpi.pending++;
+
+        }
+
+
+        if (
+            state == '6' ||
+            state == '7'
+        ) {
+
+            data.kpi.resolved++;
+
+        }
+
+    }
+
+
+    // ==========================================
+    // RECENT REQUESTS
+    // ==========================================
+
+    for (
+        var i = 0;
+        i < data.myRequests.length &&
+        i < 5;
+        i++
+    ) {
+
+        data.recentRequests.push(
+            data.myRequests[i]
+        );
+
+    }
+
+
+    // ==========================================
+    // UPDATE FEEDBACK RECORD
+    // ==========================================
+
+    if (
+        input &&
+        input.action == 'submitFeedback'
+    ) {
+
+        var feedbackSysId =
+            input.feedbackSysId;
+
+
+        var feedbackUpdateGR =
+            new GlideRecord(
+                'x_snc_campus_foo_1_food_complaint_feedbacks'
+            );
+
+
+        // ======================================
+        // FIND SAME RECORD USING SYS_ID
+        // ======================================
+
+        if (
+            feedbackUpdateGR.get(
+                feedbackSysId
+            )
+        ) {
+
+
+            // ==================================
+            // SECURITY CHECK
+            // MAKE SURE RECORD BELONGS TO USER
+            // ==================================
+
+            if (
+                feedbackUpdateGR.getValue(
+                    'student'
+                ) == USER_ID
+            ) {
+
+
+                // ==============================
+                // OVERALL RATING
+                // ==============================
+
+                feedbackUpdateGR.setValue(
+                    'overall_rating',
+                    input.overall_rating
+                );
+
+
+                // ==============================
+                // RESOLUTION SATISFACTION
+                // ==============================
+
+                feedbackUpdateGR.setValue(
+                    'resolution_satisfaction',
+                    input.resolution_satisfaction
+                );
+
+
+                // ==============================
+                // FEEDBACK COMMENTS
+                // ==============================
+
+                feedbackUpdateGR.setValue(
+                    'feedback_comments',
+                    input.feedback_comments
+                );
+
+
+                // ==============================
+                // MARK SUBMITTED
+                // ==============================
+
+                feedbackUpdateGR.setValue(
+                    'feedback_submitted',
+                    true
+                );
+
+
+                // ==============================
+                // UPDATE SAME RECORD
+                // ==============================
+
+                feedbackUpdateGR.update();
+
+
+                data.feedbackSuccess =
+                    true;
+
+                data.feedbackMessage =
+                    'Feedback submitted successfully.';
+
+
+            } else {
+
+
+                data.feedbackSuccess =
+                    false;
+
+                data.feedbackMessage =
+                    'You are not allowed to update this feedback record.';
+
+            }
+
+
+        } else {
+
+
+            data.feedbackSuccess =
+                false;
+
+            data.feedbackMessage =
+                'Feedback record not found.';
+
+        }
+
+    }
+
+
+    // ==========================================
+    // LOAD FEEDBACK RECORDS
+    // ==========================================
+
+    var feedbackGR =
+        new GlideRecord(
+            'x_snc_campus_foo_1_food_complaint_feedbacks'
+        );
+
+
+    feedbackGR.addQuery(
+        'student',
+        USER_ID
+    );
+
+
+    feedbackGR.addQuery(
+        'feedback_submitted',
+        false
+    );
+
+
+    feedbackGR.orderByDesc(
+        'sys_created_on'
+    );
+
+
+    feedbackGR.query();
+
+
+    while (feedbackGR.next()) {
+
+
+        // ======================================
+        // GET SYS ID
+        // ======================================
+
+        var feedbackSysId =
+            feedbackGR.getUniqueValue();
+
+
+        // ======================================
+        // CREATE FEEDBACK OBJECT
+        // ======================================
+
+        var feedback = {
+
+            number:
+                feedbackGR.getDisplayValue(
+                    'number'
+                ),
+
+            base_problem:
+                feedbackGR.getDisplayValue(
+                    'base_problem'
+                ),
+
+            meal_type:
+                feedbackGR.getDisplayValue(
+                    'meal_type'
+                ),
+
+            mess_hall:
+                feedbackGR.getDisplayValue(
+                    'mess_hall'
+                ),
+
+            problem_type:
+                feedbackGR.getDisplayValue(
+                    'problem_type'
+                ),
+
+            use_case:
+                feedbackGR.getDisplayValue(
+                    'use_case'
+                ),
+
+            student:
+                feedbackGR.getDisplayValue(
+                    'student'
+                ),
+
+            overall_rating:
+                feedbackGR.getValue(
+                    'overall_rating'
+                ),
+
+            resolution_satisfaction:
+                feedbackGR.getValue(
+                    'resolution_satisfaction'
+                ),
+
+            feedback_comments:
+                feedbackGR.getValue(
+                    'feedback_comments'
+                ),
+
+            state:
+                feedbackGR.getDisplayValue(
+                    'status'
+                ),
+
+            created:
+                feedbackGR.getDisplayValue(
+                    'sys_created_on'
+                )
+
+        };
+
+
+        // ======================================
+        // SYS_ID AS KEY
+        // ======================================
+
+        data.feedbacks[feedbackSysId] =
+            feedback;
+
+
+        // ======================================
+        // COUNT
+        // ======================================
+
+        data.feedbackCount++;
+
+    }
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 05:02:27</sys_created_on>
+        <sys_id>fa879a02a92b03107f444d1b3bf5776f</sys_id>
+        <sys_mod_count>27</sys_mod_count>
+        <sys_name>Food Service Student Dashboard Widget</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_fa879a02a92b03107f444d1b3bf5776f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 06:01:17</sys_updated_on>
+        <template><![CDATA[<div class="student-dashboard">
+
+    <!-- ========================================== -->
+    <!-- SIDEBAR -->
+    <!-- ========================================== -->
+
+    <div class="student-sidebar">
+
+        <div class="sidebar-title">
+            Student Portal
+        </div>
+
+        <div
+            class="sidebar-item"
+            ng-class="{active: c.activeSection == 'dashboard'}"
+            ng-click="c.selectSection('dashboard')">
+            Dashboard
+        </div>
+
+        <div
+            class="sidebar-item"
+            ng-class="{active: c.activeSection == 'raise'}"
+            ng-click="c.selectSection('raise')">
+            Raise Complaint
+        </div>
+
+        <div
+            class="sidebar-item"
+            ng-class="{active: c.activeSection == 'requests'}"
+            ng-click="c.selectSection('requests')">
+            My Requests
+        </div>
+
+        <div
+            class="sidebar-item"
+            ng-class="{active: c.activeSection == 'feedback'}"
+            ng-click="c.selectSection('feedback')">
+            Feedback
+        </div>
+
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- MAIN -->
+    <!-- ========================================== -->
+
+    <div class="student-main">
+
+
+        <!-- ====================================== -->
+        <!-- DASHBOARD -->
+        <!-- ====================================== -->
+
+        <div ng-if="c.activeSection == 'dashboard'">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        Welcome, {{c.data.userName}}
+                    </h1>
+
+                    <p>
+                        Student Dashboard
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- KPI CARDS -->
+
+            <div class="kpi-grid">
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ]]>📋
+<![CDATA[                    </div>
+
+                    <div>
+                        <h3>
+                            {{c.data.kpi.total}}
+                        </h3>
+
+                        <p>
+                            Total Requests
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ⏳
+                    </div>
+
+                    <div>
+                        <h3>
+                            {{c.data.kpi.pending}}
+                        </h3>
+
+                        <p>
+                            Pending
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ✓
+                    </div>
+
+                    <div>
+                        <h3>
+                            {{c.data.kpi.resolved}}
+                        </h3>
+
+                        <p>
+                            Resolved
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECENT REQUESTS -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Recent Requests
+                    </h2>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Number
+                                </th>
+
+                                <th>
+                                    Problem Type
+                                </th>
+
+                                <th>
+                                    Meal Type
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Created
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr
+                                ng-repeat="request in c.data.recentRequests">
+
+                                <td>
+                                    <strong>
+                                        {{request.number}}
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    {{request.problem_type}}
+                                </td>
+
+                                <td>
+                                    {{request.meal_type}}
+                                </td>
+
+                                <td>
+
+                                    <span class="status-badge">
+                                        {{request.state}}
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    {{request.created}}
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                ng-if="c.data.recentRequests.length == 0">
+
+                                <td
+                                    colspan="5"
+                                    class="no-data">
+
+                                    No recent requests found.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ====================================== -->
+        <!-- RAISE COMPLAINT -->
+        <!-- ====================================== -->
+
+        <div ng-if="c.activeSection == 'raise'">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        Raise Food Complaint
+                    </h1>
+
+                    <p>
+                        Submit your food-related complaint.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUCCESS -->
+
+            <div
+                class="success-card"
+                ng-if="c.complaintSubmitted">
+
+                <div class="success-icon">
+                    ✓
+                </div>
+
+                <h2>
+                    Complaint Submitted Successfully
+                </h2>
+
+                <p>
+                    Your complaint has been submitted.
+                </p>
+
+                <div class="complaint-number">
+
+                    Complaint Number:
+                    <strong>
+                        {{c.complaintNumber}}
+                    </strong>
+
+                </div>
+
+                <button
+                    class="new-complaint-button"
+                    ng-click="c.newComplaint()">
+
+                    Raise New Complaint
+
+                </button>
+
+            </div>
+
+
+            <!-- COMPLAINT FORM -->
+
+            <div
+                class="dashboard-card"
+                ng-if="!c.complaintSubmitted">
+
+                <div class="form-group">
+
+                    <label>
+                        Use Case
+                    </label>
+
+                    <select
+                        class="form-control"
+                        ng-model="c.complaintForm.use_case">
+
+                        <option value="">
+                            -- Select Use Case --
+                        </option>
+
+                        <option value="food_wastage_reporting">
+                            Food Wastage Reporting
+                        </option>
+
+                        <option value="missed_meal_request">
+                            Missed Meal Request
+                        </option>
+
+                        <option value="emergency_food_assistance">
+                            Emergency Food Assistance
+                        </option>
+
+                        <option value="food_hygiene_issue">
+                            Food Hygiene Issue
+                        </option>
+
+                        <option value="hostel_mess_billing_issue">
+                            Hostel Mess Billing Issue
+                        </option>
+
+                        <option value="smart_menu_recommendation">
+                            Smart Menu Recommendation
+                        </option>
+
+                        <option value="meal_not_available">
+                            Meal Not Available
+                        </option>
+
+                        <option value="special_diet_request">
+                            Special Diet Request
+                        </option>
+
+                        <option value="food_menu_feedback">
+                            Food Menu Feedback
+                        </option>
+
+                        <option value="allergy_management_request">
+                            Allergy Management Request
+                        </option>
+
+                        <option value="food_quality_complaint">
+                            Food Quality Complaint
+                        </option>
+
+                        <option value="meal_reservation_pre_booking">
+                            Meal Reservation / Pre Booking
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Mess Hall
+                    </label>
+
+                    <select
+                        class="form-control"
+                        ng-model="c.complaintForm.mess_hall"
+                        ng-options="hall.sys_id as hall.name for hall in c.data.messHalls">
+
+                        <option value="">
+                            -- Select Mess Hall --
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Meal Type
+                    </label>
+
+                    <select
+                        class="form-control"
+                        ng-model="c.complaintForm.meal_type">
+
+                        <option value="">
+                            -- Select Meal Type --
+                        </option>
+
+                        <option value="breakfast">
+                            Breakfast
+                        </option>
+
+                        <option value="lunch">
+                            Lunch
+                        </option>
+
+                        <option value="dinner">
+                            Dinner
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Problem Type
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        ng-model="c.complaintForm.problem_type"
+                        placeholder="Enter problem type">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Description
+                    </label>
+
+                    <textarea
+                        class="form-control description-field"
+                        ng-model="c.complaintForm.description"
+                        placeholder="Describe your complaint">
+
+                    </textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Upload Document
+                    </label>
+
+                    <input
+                        type="file"
+                        id="complaintDocument"
+                        class="file-control">
+
+                </div>
+
+
+                <div
+                    class="error-message"
+                    ng-if="c.complaintError">
+
+                    {{c.complaintError}}
+
+                </div>
+
+
+                <button
+                    class="submit-button"
+                    ng-click="c.submitComplaint()"
+                    ng-disabled="c.complaintSubmitting">
+
+                    {{c.complaintSubmitting
+                        ? 'Submitting...'
+                        : 'Submit Complaint'}}
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ====================================== -->
+        <!-- MY REQUESTS -->
+        <!-- ====================================== -->
+
+        <div ng-if="c.activeSection == 'requests'">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        My Requests
+                    </h1>
+
+                    <p>
+                        View your submitted food complaints.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        My Food Complaints
+                    </h2>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Number
+                                </th>
+
+                                <th>
+                                    Use Case
+                                </th>
+
+                                <th>
+                                    Meal Type
+                                </th>
+
+                                <th>
+                                    Problem Type
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Created
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr
+                                ng-repeat="request in c.data.myRequests">
+
+                                <td>
+                                    <strong>
+                                        {{request.number}}
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    {{request.use_case}}
+                                </td>
+
+                                <td>
+                                    {{request.meal_type}}
+                                </td>
+
+                                <td>
+                                    {{request.problem_type}}
+                                </td>
+
+                                <td>
+
+                                    <span class="status-badge">
+                                        {{request.state}}
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    {{request.created}}
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                ng-if="c.data.myRequests.length == 0">
+
+                                <td
+                                    colspan="6"
+                                    class="no-data">
+
+                                    No requests found.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ====================================== -->
+        <!-- FEEDBACK -->
+        <!-- ====================================== -->
+
+        <div ng-if="c.activeSection == 'feedback'">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        Feedback
+                    </h1>
+
+                    <p>
+                        View your active food complaint feedback records.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================== -->
+            <!-- FEEDBACK TABLE -->
+            <!-- ================================== -->
+
+            <div
+                class="dashboard-card"
+                ng-if="!c.data.selectedFeedback">
+
+                <div class="card-header">
+
+                    <h2>
+                        My Feedback
+                    </h2>
+
+                    <div>
+
+                        Total Active Feedback:
+                        <strong>
+                            {{c.data.feedbackCount}}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Number
+                                </th>
+
+                                <th>
+                                    Base Problem
+                                </th>
+
+                                <th>
+                                    Meal Type
+                                </th>
+
+                                <th>
+                                    Mess Hall
+                                </th>
+
+                                <th>
+                                    Problem Type
+                                </th>
+
+                                <th>
+                                    Use Case
+                                </th>
+
+                                <th>
+                                    Student
+                                </th>
+
+                                <th>
+                                    Overall Rating
+                                </th>
+
+                                <th>
+                                    Resolution Satisfaction
+                                </th>
+
+                                <th>
+                                    Feedback Comments
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Created
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr
+                                ng-repeat="(sysId, f) in c.data.feedbacks">
+
+                                <td>
+
+                                    <strong>
+                                        {{f.number}}
+                                    </strong>
+
+                                </td>
+
+                                <td>
+                                    {{f.base_problem}}
+                                </td>
+
+                                <td>
+                                    {{f.meal_type}}
+                                </td>
+
+                                <td>
+                                    {{f.mess_hall}}
+                                </td>
+
+                                <td>
+                                    {{f.problem_type}}
+                                </td>
+
+                                <td>
+                                    {{f.use_case}}
+                                </td>
+
+                                <td>
+                                    {{f.student}}
+                                </td>
+
+                                <td>
+
+                                    <span
+                                        ng-if="f.overall_rating">
+
+                                        {{f.overall_rating}}
+
+                                    </span>
+
+                                    <span
+                                        ng-if="!f.overall_rating">
+
+                                        -
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span
+                                        ng-if="f.resolution_satisfaction">
+
+                                        {{f.resolution_satisfaction}}
+
+                                    </span>
+
+                                    <span
+                                        ng-if="!f.resolution_satisfaction">
+
+                                        -
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span
+                                        ng-if="f.feedback_comments">
+
+                                        {{f.feedback_comments}}
+
+                                    </span>
+
+                                    <span
+                                        ng-if="!f.feedback_comments">
+
+                                        -
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="status-badge">
+                                        {{f.state}}
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    {{f.created}}
+                                </td>
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="feedback-action-button"
+                                        ng-click="c.openFeedback(sysId)">
+
+                                        Give Feedback
+
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                ng-if="c.data.feedbackCount == 0">
+
+                                <td
+                                    colspan="13"
+                                    class="no-data">
+
+                                    No active feedback found.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================================== -->
+            <!-- SELECTED FEEDBACK FORM -->
+            <!-- ================================== -->
+
+            <div
+                class="dashboard-card"
+                ng-if="c.data.selectedFeedback">
+
+
+                <div class="card-header">
+
+                    <h2>
+                        Food Complaint Feedback
+                    </h2>
+
+
+                    <button
+                        type="button"
+                        class="feedback-back-button"
+                        ng-click="c.closeFeedback()">
+
+                        Back to Feedback
+
+                    </button>
+
+                </div>
+
+
+                <!-- DATABASE DATA -->
+
+                <div class="feedback-details-section">
+
+
+                    <div class="feedback-form-row">
+
+                        <div class="feedback-form-group">
+
+                            <label>
+                                Base Problem
+                            </label>
+
+                            <input
+                                type="text"
+                                class="feedback-form-control"
+                                ng-model="c.data.selectedFeedback.base_problem"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="feedback-form-group">
+
+                            <label>
+                                Meal Type
+                            </label>
+
+                            <input
+                                type="text"
+                                class="feedback-form-control"
+                                ng-model="c.data.selectedFeedback.meal_type"
+                                readonly>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="feedback-form-row">
+
+                        <div class="feedback-form-group">
+
+                            <label>
+                                Mess Hall
+                            </label>
+
+                            <input
+                                type="text"
+                                class="feedback-form-control"
+                                ng-model="c.data.selectedFeedback.mess_hall"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="feedback-form-group">
+
+                            <label>
+                                Number
+                            </label>
+
+                            <input
+                                type="text"
+                                class="feedback-form-control"
+                                ng-model="c.data.selectedFeedback.number"
+                                readonly>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="feedback-form-row">
+
+                        <div class="feedback-form-group">
+
+                            <label>
+                                Problem Type
+                            </label>
+
+                            <input
+                                type="text"
+                                class="feedback-form-control"
+                                ng-model="c.data.selectedFeedback.problem_type"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="feedback-form-group">
+
+                            <label>
+                                Use Case
+                            </label>
+
+                            <input
+                                type="text"
+                                class="feedback-form-control"
+                                ng-model="c.data.selectedFeedback.use_case"
+                                readonly>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="feedback-form-row">
+
+                        <div class="feedback-form-group">
+
+                            <label>
+                                Student
+                            </label>
+
+                            <input
+                                type="text"
+                                class="feedback-form-control"
+                                ng-model="c.data.selectedFeedback.student"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="feedback-form-group">
+
+                            <label>
+                                Feedback Number
+                            </label>
+
+                            <input
+                                type="text"
+                                class="feedback-form-control"
+                                ng-model="c.data.selectedFeedback.number"
+                                readonly>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- STUDENT INPUT -->
+
+                <div class="feedback-input-section">
+
+                    <h3>
+                        Student Feedback
+                    </h3>
+
+
+                    <div class="feedback-form-row">
+
+
+                        <div class="feedback-form-group">
+
+                            <label>
+
+                                Overall Rating
+
+                                <span class="feedback-required">
+                                    *
+                                </span>
+
+                            </label>
+
+
+                            <select
+                                class="feedback-form-control"
+                                ng-model="c.feedbackForm.overall_rating">
+
+                                <option value="">
+                                    -- Select Rating --
+                                </option>
+
+                                <option value="1">
+                                    1 - Very Poor
+                                </option>
+
+                                <option value="2">
+                                    2 - Poor
+                                </option>
+
+                                <option value="3">
+                                    3 - Average
+                                </option>
+
+                                <option value="4">
+                                    4 - Good
+                                </option>
+
+                                <option value="5">
+                                    5 - Excellent
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <div class="feedback-form-group">
+
+                            <label>
+
+                                Resolution Satisfaction
+
+                                <span class="feedback-required">
+                                    *
+                                </span>
+
+                            </label>
+
+
+                            <select
+                                class="feedback-form-control"
+                                ng-model="c.feedbackForm.resolution_satisfaction">
+
+                                <option value="">
+                                    -- Select Satisfaction --
+                                </option>
+
+                                <option value="1">
+                                    1 - Very Dissatisfied
+                                </option>
+
+                                <option value="2">
+                                    2 - Dissatisfied
+                                </option>
+
+                                <option value="3">
+                                    3 - Neutral
+                                </option>
+
+                                <option value="4">
+                                    4 - Satisfied
+                                </option>
+
+                                <option value="5">
+                                    5 - Very Satisfied
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="feedback-form-group">
+
+                        <label>
+                            Feedback Comments
+                        </label>
+
+                        <textarea
+                            class="feedback-form-control feedback-textarea"
+                            ng-model="c.feedbackForm.feedback_comments"
+                            placeholder="Enter your feedback comments...">
+                        </textarea>
+
+                    </div>
+
+
+
+                    <div class="feedback-submit-area">
+
+                        <button
+                            type="button"
+                            class="feedback-submit-button"
+                            ng-click="c.submitFeedback()">
+
+                            Submit Feedback
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_now_assist_deployment_menu_item">
+    <sys_now_assist_deployment_menu_item action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <icon>aab90f4b532f7210387c24d3a0f7b442</icon>
+        <label>Call Support (Daily 5AM - 11 PM)</label>
+        <now_assist_deployment display_value="Campus Service Assistant">f11fa936046f03107f44b8d89e324c96</now_assist_deployment>
+        <order>1</order>
+        <sys_class_name>sys_now_assist_deployment_menu_item</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 10:01:00</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>4e2fe576046f03107f44b8d89e324c27</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_now_assist_deployment_menu_item_4e2fe576046f03107f44b8d89e324c27</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 10:01:00</sys_updated_on>
+        <type>phone</type>
+        <value>1-800-555-5555</value>
+    </sys_now_assist_deployment_menu_item>
+</record_update>

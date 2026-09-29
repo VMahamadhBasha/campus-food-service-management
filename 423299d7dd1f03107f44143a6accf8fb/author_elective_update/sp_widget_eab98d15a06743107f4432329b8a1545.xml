@@ -1,0 +1,1733 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+
+    var c = this;
+
+    c.login = function() {
+
+        if (c.data.loggedIn) {
+
+            window.location.href =
+                "?id=cfms_student";
+
+            return;
+        }
+
+        var returnURL = encodeURIComponent(
+            "?id=cfms_student"
+        );
+
+        window.location.href =
+            "/login.do?sysparm_url=" + returnURL;
+    };
+
+
+    c.continueToDashboard = function() {
+
+        window.location.href =
+            "?id=cfms_student";
+
+    };
+
+
+    c.goHome = function() {
+
+        window.location.href =
+            "?id=cfms_home";
+
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.student-login-page {&#13;
+    min-height: 100vh;&#13;
+    position: relative;&#13;
+    overflow: hidden;&#13;
+&#13;
+    background: #f0fbfc;&#13;
+&#13;
+    font-family:&#13;
+        'Segoe UI',&#13;
+        Tahoma,&#13;
+        Geneva,&#13;
+        Verdana,&#13;
+        sans-serif;&#13;
+&#13;
+    color: #263238;&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    padding: 40px 20px;&#13;
+}&#13;
+&#13;
+&#13;
+/* Background circles */&#13;
+&#13;
+.bg-circle {&#13;
+    position: absolute;&#13;
+    border-radius: 50%;&#13;
+    opacity: 0.35;&#13;
+    pointer-events: none;&#13;
+}&#13;
+&#13;
+.circle-one {&#13;
+    width: 450px;&#13;
+    height: 450px;&#13;
+&#13;
+    background: #4dd0e1;&#13;
+&#13;
+    top: -220px;&#13;
+    right: -120px;&#13;
+}&#13;
+&#13;
+.circle-two {&#13;
+    width: 350px;&#13;
+    height: 350px;&#13;
+&#13;
+    background: #00acc1;&#13;
+&#13;
+    bottom: -180px;&#13;
+    left: -120px;&#13;
+}&#13;
+&#13;
+&#13;
+/* Main wrapper */&#13;
+&#13;
+.login-wrapper {&#13;
+    width: 100%;&#13;
+    max-width: 1100px;&#13;
+&#13;
+    min-height: 650px;&#13;
+&#13;
+    display: grid;&#13;
+    grid-template-columns: 1.1fr 0.9fr;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border-radius: 28px;&#13;
+&#13;
+    overflow: hidden;&#13;
+&#13;
+    position: relative;&#13;
+    z-index: 2;&#13;
+&#13;
+    box-shadow:&#13;
+        0 25px 60px rgba(0, 172, 193, 0.18);&#13;
+}&#13;
+&#13;
+&#13;
+/* Left section */&#13;
+&#13;
+.login-info {&#13;
+    background: linear-gradient(&#13;
+        145deg,&#13;
+        #00acc1,&#13;
+        #4dd0e1&#13;
+    );&#13;
+&#13;
+    padding: 55px;&#13;
+&#13;
+    color: #ffffff;&#13;
+&#13;
+    display: flex;&#13;
+    flex-direction: column;&#13;
+}&#13;
+&#13;
+&#13;
+/* Brand */&#13;
+&#13;
+.brand {&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 14px;&#13;
+}&#13;
+&#13;
+.brand-icon {&#13;
+    width: 50px;&#13;
+    height: 50px;&#13;
+&#13;
+    border-radius: 14px;&#13;
+&#13;
+    background: rgba(255,255,255,0.18);&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 23px;&#13;
+}&#13;
+&#13;
+.brand h2 {&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 25px;&#13;
+    font-weight: 800;&#13;
+}&#13;
+&#13;
+.brand span {&#13;
+    display: block;&#13;
+&#13;
+    margin-top: 3px;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    opacity: 0.9;&#13;
+}&#13;
+&#13;
+&#13;
+/* Welcome */&#13;
+&#13;
+.welcome-content {&#13;
+    margin-top: 90px;&#13;
+}&#13;
+&#13;
+.welcome-badge {&#13;
+    display: inline-flex;&#13;
+&#13;
+    align-items: center;&#13;
+    gap: 8px;&#13;
+&#13;
+    padding: 8px 14px;&#13;
+&#13;
+    border-radius: 50px;&#13;
+&#13;
+    background: rgba(255,255,255,0.17);&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    letter-spacing: 0.8px;&#13;
+}&#13;
+&#13;
+.welcome-content h1 {&#13;
+    margin: 22px 0 15px;&#13;
+&#13;
+    font-size: 46px;&#13;
+&#13;
+    line-height: 1.12;&#13;
+&#13;
+    font-weight: 800;&#13;
+}&#13;
+&#13;
+.welcome-content h1 span {&#13;
+    color: #ffffff;&#13;
+}&#13;
+&#13;
+.welcome-content p {&#13;
+    max-width: 480px;&#13;
+&#13;
+    font-size: 15px;&#13;
+&#13;
+    line-height: 1.7;&#13;
+&#13;
+    opacity: 0.92;&#13;
+&#13;
+    margin: 0;&#13;
+}&#13;
+&#13;
+&#13;
+/* Features */&#13;
+&#13;
+.features {&#13;
+    margin-top: auto;&#13;
+&#13;
+    display: flex;&#13;
+    flex-direction: column;&#13;
+&#13;
+    gap: 18px;&#13;
+}&#13;
+&#13;
+.feature {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 14px;&#13;
+}&#13;
+&#13;
+.feature-icon {&#13;
+    width: 42px;&#13;
+    height: 42px;&#13;
+&#13;
+    flex-shrink: 0;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    background: rgba(255,255,255,0.18);&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 17px;&#13;
+}&#13;
+&#13;
+.feature strong {&#13;
+    display: block;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    margin-bottom: 3px;&#13;
+}&#13;
+&#13;
+.feature span {&#13;
+    display: block;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    opacity: 0.85;&#13;
+}&#13;
+&#13;
+&#13;
+/* Right card */&#13;
+&#13;
+.login-card {&#13;
+    padding: 55px 50px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    flex-direction: column;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    background: #ffffff;&#13;
+}&#13;
+&#13;
+&#13;
+/* Card header */&#13;
+&#13;
+.card-header {&#13;
+    text-align: center;&#13;
+&#13;
+    margin-bottom: 35px;&#13;
+}&#13;
+&#13;
+.student-icon {&#13;
+    width: 75px;&#13;
+    height: 75px;&#13;
+&#13;
+    margin: 0 auto 20px;&#13;
+&#13;
+    border-radius: 22px;&#13;
+&#13;
+    background: #e0f7fa;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 30px;&#13;
+}&#13;
+&#13;
+.card-header h2 {&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 30px;&#13;
+&#13;
+    font-weight: 800;&#13;
+&#13;
+    color: #263238;&#13;
+}&#13;
+&#13;
+.card-header p {&#13;
+    margin: 9px 0 0;&#13;
+&#13;
+    color: #78909c;&#13;
+&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+/* Secure message */&#13;
+&#13;
+.secure-message {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: flex-start;&#13;
+&#13;
+    gap: 13px;&#13;
+&#13;
+    padding: 17px;&#13;
+&#13;
+    background: #f0fbfc;&#13;
+&#13;
+    border: 1px solid #b2ebf2;&#13;
+&#13;
+    border-radius: 14px;&#13;
+&#13;
+    margin-bottom: 22px;&#13;
+}&#13;
+&#13;
+.secure-message &gt; i {&#13;
+    color: #00acc1;&#13;
+&#13;
+    font-size: 18px;&#13;
+&#13;
+    margin-top: 2px;&#13;
+}&#13;
+&#13;
+.secure-message strong {&#13;
+    display: block;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    color: #263238;&#13;
+&#13;
+    margin-bottom: 4px;&#13;
+}&#13;
+&#13;
+.secure-message span {&#13;
+    display: block;&#13;
+&#13;
+    color: #607d8b;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    line-height: 1.5;&#13;
+}&#13;
+&#13;
+&#13;
+/* Login button */&#13;
+&#13;
+.login-btn {&#13;
+    width: 100%;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    padding: 15px 20px;&#13;
+&#13;
+    background: #00acc1;&#13;
+&#13;
+    color: #ffffff;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    transition: all 0.25s ease;&#13;
+&#13;
+    box-shadow:&#13;
+        0 8px 20px rgba(0,172,193,0.22);&#13;
+}&#13;
+&#13;
+.login-btn i {&#13;
+    margin-right: 8px;&#13;
+}&#13;
+&#13;
+.login-btn .fa-arrow-right {&#13;
+    margin-left: 8px;&#13;
+    margin-right: 0;&#13;
+}&#13;
+&#13;
+.login-btn:hover {&#13;
+    background: #008c9e;&#13;
+&#13;
+    transform: translateY(-2px);&#13;
+&#13;
+    box-shadow:&#13;
+        0 12px 25px rgba(0,172,193,0.28);&#13;
+}&#13;
+&#13;
+&#13;
+/* Divider */&#13;
+&#13;
+.divider {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 12px;&#13;
+&#13;
+    margin: 25px 0;&#13;
+&#13;
+    color: #90a4ae;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.divider::before,&#13;
+.divider::after {&#13;
+    content: "";&#13;
+&#13;
+    height: 1px;&#13;
+&#13;
+    background: #e0e0e0;&#13;
+&#13;
+    flex: 1;&#13;
+}&#13;
+&#13;
+&#13;
+/* Back button */&#13;
+&#13;
+.back-btn {&#13;
+    width: 100%;&#13;
+&#13;
+    padding: 13px;&#13;
+&#13;
+    border: 1px solid #cfd8dc;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    color: #546e7a;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    transition: all 0.2s ease;&#13;
+}&#13;
+&#13;
+.back-btn i {&#13;
+    margin-right: 7px;&#13;
+}&#13;
+&#13;
+.back-btn:hover {&#13;
+    border-color: #00acc1;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    background: #f0fbfc;&#13;
+}&#13;
+&#13;
+&#13;
+/* Already login */&#13;
+&#13;
+.already-login {&#13;
+    text-align: center;&#13;
+}&#13;
+&#13;
+.success-icon {&#13;
+    width: 60px;&#13;
+    height: 60px;&#13;
+&#13;
+    margin: 0 auto 18px;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: #e0f7fa;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 24px;&#13;
+}&#13;
+&#13;
+.already-login h3 {&#13;
+    margin: 0 0 8px;&#13;
+&#13;
+    font-size: 19px;&#13;
+}&#13;
+&#13;
+.already-login p {&#13;
+    margin: 0 0 22px;&#13;
+&#13;
+    color: #78909c;&#13;
+&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+/* Footer */&#13;
+&#13;
+.login-footer {&#13;
+    text-align: center;&#13;
+&#13;
+    margin-top: 30px;&#13;
+&#13;
+    padding-top: 20px;&#13;
+&#13;
+    border-top: 1px solid #eceff1;&#13;
+&#13;
+    color: #90a4ae;&#13;
+&#13;
+    font-size: 10px;&#13;
+}&#13;
+&#13;
+.login-footer i {&#13;
+    color: #00acc1;&#13;
+&#13;
+    margin-right: 5px;&#13;
+}&#13;
+&#13;
+&#13;
+/* Responsive */&#13;
+&#13;
+@media (max-width: 900px) {&#13;
+&#13;
+    .login-wrapper {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+    .login-info {&#13;
+        padding: 40px;&#13;
+    }&#13;
+&#13;
+    .welcome-content {&#13;
+        margin-top: 55px;&#13;
+    }&#13;
+&#13;
+    .welcome-content h1 {&#13;
+        font-size: 38px;&#13;
+    }&#13;
+&#13;
+    .features {&#13;
+        margin-top: 45px;&#13;
+    }&#13;
+&#13;
+    .login-card {&#13;
+        padding: 45px 35px;&#13;
+    }&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+    .student-login-page {&#13;
+        padding: 15px;&#13;
+    }&#13;
+&#13;
+    .login-wrapper {&#13;
+        border-radius: 20px;&#13;
+    }&#13;
+&#13;
+    .login-info {&#13;
+        padding: 30px 25px;&#13;
+    }&#13;
+&#13;
+    .welcome-content {&#13;
+        margin-top: 40px;&#13;
+    }&#13;
+&#13;
+    .welcome-content h1 {&#13;
+        font-size: 32px;&#13;
+    }&#13;
+&#13;
+    .login-card {&#13;
+        padding: 35px 25px;&#13;
+    }&#13;
+&#13;
+    .card-header h2 {&#13;
+        font-size: 26px;&#13;
+    }&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>cfms_student_login1</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>CFMS Student Login</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.loggedIn = gs.isLoggedIn();
+
+    data.userName = "";
+    data.userEmail = "";
+
+    if (data.loggedIn) {
+
+        var user = gs.getUser();
+
+        data.userName = user.getName();
+        data.userEmail = user.getEmail();
+
+    }
+
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 15:28:14</sys_created_on>
+        <sys_id>eab98d15a06743107f4432329b8a1545</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>CFMS Student Login</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_eab98d15a06743107f4432329b8a1545</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 15:39:25</sys_updated_on>
+        <template><![CDATA[<div class="student-login-page">
+
+  <!-- Background decoration -->
+  <div class="bg-circle circle-one"></div>
+  <div class="bg-circle circle-two"></div>
+
+  <div class="login-wrapper">
+
+    <!-- Left side -->
+    <div class="login-info">
+
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="fa fa-cutlery"></i>
+        </div>
+
+        <div>
+          <h2>CFMS</h2>
+          <span>Campus Food Management System</span>
+        </div>
+      </div>
+
+      <div class="welcome-content">
+        <span class="welcome-badge">
+          <i class="fa fa-graduation-cap"></i>
+          STUDENT PORTAL
+        </span>
+
+        <h1>
+          Good Food.<br>
+          <span>Better Campus.</span>
+        </h1>
+
+        <p>
+          Manage your campus food services, raise complaints,
+          track requests and share feedback — all in one place.
+        </p>
+      </div>
+
+      <div class="features">
+
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fa fa-list-alt"></i>
+          </div>
+          <div>
+            <strong>Raise Requests</strong>
+            <span>Report food and mess related issues.</span>
+          </div>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fa fa-clock-o"></i>
+          </div>
+          <div>
+            <strong>Track Requests</strong>
+            <span>Follow the progress of your complaints.</span>
+          </div>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fa fa-comments"></i>
+          </div>
+          <div>
+            <strong>Give Feedback</strong>
+            <span>Help improve your campus dining experience.</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Right side -->
+    <div class="login-card">
+
+      <div class="card-header">
+
+        <div class="student-icon">
+          <i class="fa fa-user"></i>
+        </div>
+
+        <h2>Student Login</h2>
+
+        <p>
+          Sign in to access your CFMS student dashboard
+        </p>
+
+      </div>
+
+
+      <!-- Logged in -->
+      <div ng-if="c.data.loggedIn" class="already-login">
+
+        <div class="success-icon">
+          <i class="fa fa-check"></i>
+        </div>
+
+        <h3>You are already signed in</h3>
+
+        <p>
+          Continue to your student dashboard.
+        </p>
+
+        <button
+          class="login-btn"
+          ng-click="c.continueToDashboard()">
+
+          Continue to Dashboard
+
+          <i class="fa fa-arrow-right"></i>
+
+        </button>
+
+      </div>
+
+
+      <!-- Not logged in -->
+      <div ng-if="!c.data.loggedIn">
+
+        <div class="secure-message">
+
+          <i class="fa fa-lock"></i>
+
+          <div>
+            <strong>Secure ServiceNow Login</strong>
+
+            <span>
+              You will be redirected to the secure
+              ServiceNow authentication page.
+            </span>
+          </div>
+
+        </div>
+
+
+        <button
+          class="login-btn"
+          ng-click="c.login()">
+
+          <i class="fa fa-sign-in"></i>
+
+          Login as Student
+
+        </button>
+
+
+        <div class="divider">
+          <span>OR</span>
+        </div>
+
+
+        <button
+          class="back-btn"
+          ng-click="c.goHome()">
+
+          <i class="fa fa-arrow-left"></i>
+
+          Back to Home
+
+        </button>
+
+      </div>
+
+
+      <div class="login-footer">
+
+        <i class="fa fa-shield"></i>
+
+        Your account is protected by ServiceNow authentication.
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>sp_widget_eab98d15a06743107f4432329b8a1545</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller = function() {
+
+    var c = this;
+
+    c.login = function() {
+
+        if (c.data.loggedIn) {
+
+            window.location.href =
+                "?id=cfms_student";
+
+            return;
+        }
+
+        var returnURL = encodeURIComponent(
+            "?id=cfms_student"
+        );
+
+        window.location.href =
+            "/login.do?sysparm_url=" + returnURL;
+    };
+
+
+    c.continueToDashboard = function() {
+
+        window.location.href =
+            "?id=cfms_student";
+
+    };
+
+
+    c.goHome = function() {
+
+        window.location.href =
+            "?id=cfms_home";
+
+    };
+
+};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;.student-login-page {&amp;#13;
+    min-height: 100vh;&amp;#13;
+    position: relative;&amp;#13;
+    overflow: hidden;&amp;#13;
+&amp;#13;
+    background: #f0fbfc;&amp;#13;
+&amp;#13;
+    font-family:&amp;#13;
+        'Segoe UI',&amp;#13;
+        Tahoma,&amp;#13;
+        Geneva,&amp;#13;
+        Verdana,&amp;#13;
+        sans-serif;&amp;#13;
+&amp;#13;
+    color: #263238;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+    align-items: center;&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    padding: 40px 20px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* Background circles */&amp;#13;
+&amp;#13;
+.bg-circle {&amp;#13;
+    position: absolute;&amp;#13;
+    border-radius: 50%;&amp;#13;
+    opacity: 0.35;&amp;#13;
+    pointer-events: none;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.circle-one {&amp;#13;
+    width: 450px;&amp;#13;
+    height: 450px;&amp;#13;
+&amp;#13;
+    background: #4dd0e1;&amp;#13;
+&amp;#13;
+    top: -220px;&amp;#13;
+    right: -120px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.circle-two {&amp;#13;
+    width: 350px;&amp;#13;
+    height: 350px;&amp;#13;
+&amp;#13;
+    background: #00acc1;&amp;#13;
+&amp;#13;
+    bottom: -180px;&amp;#13;
+    left: -120px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* Main wrapper */&amp;#13;
+&amp;#13;
+.login-wrapper {&amp;#13;
+    width: 100%;&amp;#13;
+    max-width: 1100px;&amp;#13;
+&amp;#13;
+    min-height: 650px;&amp;#13;
+&amp;#13;
+    display: grid;&amp;#13;
+    grid-template-columns: 1.1fr 0.9fr;&amp;#13;
+&amp;#13;
+    background: #ffffff;&amp;#13;
+&amp;#13;
+    border-radius: 28px;&amp;#13;
+&amp;#13;
+    overflow: hidden;&amp;#13;
+&amp;#13;
+    position: relative;&amp;#13;
+    z-index: 2;&amp;#13;
+&amp;#13;
+    box-shadow:&amp;#13;
+        0 25px 60px rgba(0, 172, 193, 0.18);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* Left section */&amp;#13;
+&amp;#13;
+.login-info {&amp;#13;
+    background: linear-gradient(&amp;#13;
+        145deg,&amp;#13;
+        #00acc1,&amp;#13;
+        #4dd0e1&amp;#13;
+    );&amp;#13;
+&amp;#13;
+    padding: 55px;&amp;#13;
+&amp;#13;
+    color: #ffffff;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+    flex-direction: column;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* Brand */&amp;#13;
+&amp;#13;
+.brand {&amp;#13;
+    display: flex;&amp;#13;
+    align-items: center;&amp;#13;
+    gap: 14px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.brand-icon {&amp;#13;
+    width: 50px;&amp;#13;
+    height: 50px;&amp;#13;
+&amp;#13;
+    border-radius: 14px;&amp;#13;
+&amp;#13;
+    background: rgba(255,255,255,0.18);&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+    align-items: center;&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    font-size: 23px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.brand h2 {&amp;#13;
+    margin: 0;&amp;#13;
+&amp;#13;
+    font-size: 25px;&amp;#13;
+    font-weight: 800;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.brand span {&amp;#13;
+    display: block;&amp;#13;
+&amp;#13;
+    margin-top: 3px;&amp;#13;
+&amp;#13;
+    font-size: 11px;&amp;#13;
+&amp;#13;
+    opacity: 0.9;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* Welcome */&amp;#13;
+&amp;#13;
+.welcome-content {&amp;#13;
+    margin-top: 90px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.welcome-badge {&amp;#13;
+    display: inline-flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+    gap: 8px;&amp;#13;
+&amp;#13;
+    padding: 8px 14px;&amp;#13;
+&amp;#13;
+    border-radius: 50px;&amp;#13;
+&amp;#13;
+    background: rgba(255,255,255,0.17);&amp;#13;
+&amp;#13;
+    font-size: 11px;&amp;#13;
+&amp;#13;
+    font-weight: 700;&amp;#13;
+&amp;#13;
+    letter-spacing: 0.8px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.welcome-content h1 {&amp;#13;
+    margin: 22px 0 15px;&amp;#13;
+&amp;#13;
+    font-size: 46px;&amp;#13;
+&amp;#13;
+    line-height: 1.12;&amp;#13;
+&amp;#13;
+    font-weight: 800;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.welcome-content h1 span {&amp;#13;
+    color: #ffffff;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.welcome-content p {&amp;#13;
+    max-width: 480px;&amp;#13;
+&amp;#13;
+    font-size: 15px;&amp;#13;
+&amp;#13;
+    line-height: 1.7;&amp;#13;
+&amp;#13;
+    opacity: 0.92;&amp;#13;
+&amp;#13;
+    margin: 0;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* Features */&amp;#13;
+&amp;#13;
+.features {&amp;#13;
+    margin-top: auto;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+    flex-direction: column;&amp;#13;
+&amp;#13;
+    gap: 18px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.feature {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 14px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.feature-icon {&amp;#13;
+    width: 42px;&amp;#13;
+    height: 42px;&amp;#13;
+&amp;#13;
+    flex-shrink: 0;&amp;#13;
+&amp;#13;
+    border-radius: 12px;&amp;#13;
+&amp;#13;
+    background: rgba(255,255,255,0.18);&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+    align-items: center;&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    font-size: 17px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.feature strong {&amp;#13;
+    display: block;&amp;#13;
+&amp;#13;
+    font-size: 14px;&amp;#13;
+&amp;#13;
+    margin-bottom: 3px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.feature span {&amp;#13;
+    display: block;&amp;#13;
+&amp;#13;
+    font-size: 12px;&amp;#13;
+&amp;#13;
+    opacity: 0.85;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* Right card */&amp;#13;
+&amp;#13;
+.login-card {&amp;#13;
+    padding: 55px 50px;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    flex-direction: column;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    background: #ffffff;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* Card header */&amp;#13;
+&amp;#13;
+.card-header {&amp;#13;
+    text-align: center;&amp;#13;
+&amp;#13;
+    margin-bottom: 35px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.student-icon {&amp;#13;
+    width: 75px;&amp;#13;
+    height: 75px;&amp;#13;
+&amp;#13;
+    margin: 0 auto 20px;&amp;#13;
+&amp;#13;
+    border-radius: 22px;&amp;#13;
+&amp;#13;
+    background: #e0f7fa;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+    align-items: center;&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    font-size: 30px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.card-header h2 {&amp;#13;
+    margin: 0;&amp;#13;
+&amp;#13;
+    font-size: 30px;&amp;#13;
+&amp;#13;
+    font-weight: 800;&amp;#13;
+&amp;#13;
+    color: #263238;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.card-header p {&amp;#13;
+    margin: 9px 0 0;&amp;#13;
+&amp;#13;
+    color: #78909c;&amp;#13;
+&amp;#13;
+    font-size: 14px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* Secure message */&amp;#13;
+&amp;#13;
+.secure-message {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: flex-start;&amp;#13;
+&amp;#13;
+    gap: 13px;&amp;#13;
+&amp;#13;
+    padding: 17px;&amp;#13;
+&amp;#13;
+    background: #f0fbfc;&amp;#13;
+&amp;#13;
+    border: 1px solid #b2ebf2;&amp;#13;
+&amp;#13;
+    border-radius: 14px;&amp;#13;
+&amp;#13;
+    margin-bottom: 22px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.secure-message &amp;gt; i {&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    font-size: 18px;&amp;#13;
+&amp;#13;
+    margin-top: 2px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.secure-message strong {&amp;#13;
+    display: block;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+&amp;#13;
+    color: #263238;&amp;#13;
+&amp;#13;
+    margin-bottom: 4px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.secure-message span {&amp;#13;
+    display: block;&amp;#13;
+&amp;#13;
+    color: #607d8b;&amp;#13;
+&amp;#13;
+    font-size: 11px;&amp;#13;
+&amp;#13;
+    line-height: 1.5;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* Login button */&amp;#13;
+&amp;#13;
+.login-btn {&amp;#13;
+    width: 100%;&amp;#13;
+&amp;#13;
+    border: none;&amp;#13;
+&amp;#13;
+    border-radius: 12px;&amp;#13;
+&amp;#13;
+    padding: 15px 20px;&amp;#13;
+&amp;#13;
+    background: #00acc1;&amp;#13;
+&amp;#13;
+    color: #ffffff;&amp;#13;
+&amp;#13;
+    font-size: 14px;&amp;#13;
+&amp;#13;
+    font-weight: 700;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+&amp;#13;
+    transition: all 0.25s ease;&amp;#13;
+&amp;#13;
+    box-shadow:&amp;#13;
+        0 8px 20px rgba(0,172,193,0.22);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.login-btn i {&amp;#13;
+    margin-right: 8px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.login-btn .fa-arrow-right {&amp;#13;
+    margin-left: 8px;&amp;#13;
+    margin-right: 0;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.login-btn:hover {&amp;#13;
+    background: #008c9e;&amp;#13;
+&amp;#13;
+    transform: translateY(-2px);&amp;#13;
+&amp;#13;
+    box-shadow:&amp;#13;
+        0 12px 25px rgba(0,172,193,0.28);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* Divider */&amp;#13;
+&amp;#13;
+.divider {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 12px;&amp;#13;
+&amp;#13;
+    margin: 25px 0;&amp;#13;
+&amp;#13;
+    color: #90a4ae;&amp;#13;
+&amp;#13;
+    font-size: 11px;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.divider::before,&amp;#13;
+.divider::after {&amp;#13;
+    content: "";&amp;#13;
+&amp;#13;
+    height: 1px;&amp;#13;
+&amp;#13;
+    background: #e0e0e0;&amp;#13;
+&amp;#13;
+    flex: 1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* Back button */&amp;#13;
+&amp;#13;
+.back-btn {&amp;#13;
+    width: 100%;&amp;#13;
+&amp;#13;
+    padding: 13px;&amp;#13;
+&amp;#13;
+    border: 1px solid #cfd8dc;&amp;#13;
+&amp;#13;
+    border-radius: 12px;&amp;#13;
+&amp;#13;
+    background: #ffffff;&amp;#13;
+&amp;#13;
+    color: #546e7a;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+&amp;#13;
+    transition: all 0.2s ease;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.back-btn i {&amp;#13;
+    margin-right: 7px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.back-btn:hover {&amp;#13;
+    border-color: #00acc1;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    background: #f0fbfc;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* Already login */&amp;#13;
+&amp;#13;
+.already-login {&amp;#13;
+    text-align: center;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.success-icon {&amp;#13;
+    width: 60px;&amp;#13;
+    height: 60px;&amp;#13;
+&amp;#13;
+    margin: 0 auto 18px;&amp;#13;
+&amp;#13;
+    border-radius: 50%;&amp;#13;
+&amp;#13;
+    background: #e0f7fa;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    font-size: 24px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.already-login h3 {&amp;#13;
+    margin: 0 0 8px;&amp;#13;
+&amp;#13;
+    font-size: 19px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.already-login p {&amp;#13;
+    margin: 0 0 22px;&amp;#13;
+&amp;#13;
+    color: #78909c;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* Footer */&amp;#13;
+&amp;#13;
+.login-footer {&amp;#13;
+    text-align: center;&amp;#13;
+&amp;#13;
+    margin-top: 30px;&amp;#13;
+&amp;#13;
+    padding-top: 20px;&amp;#13;
+&amp;#13;
+    border-top: 1px solid #eceff1;&amp;#13;
+&amp;#13;
+    color: #90a4ae;&amp;#13;
+&amp;#13;
+    font-size: 10px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.login-footer i {&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    margin-right: 5px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* Responsive */&amp;#13;
+&amp;#13;
+@media (max-width: 900px) {&amp;#13;
+&amp;#13;
+    .login-wrapper {&amp;#13;
+        grid-template-columns: 1fr;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .login-info {&amp;#13;
+        padding: 40px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .welcome-content {&amp;#13;
+        margin-top: 55px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .welcome-content h1 {&amp;#13;
+        font-size: 38px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .features {&amp;#13;
+        margin-top: 45px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .login-card {&amp;#13;
+        padding: 45px 35px;&amp;#13;
+    }&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+@media (max-width: 600px) {&amp;#13;
+&amp;#13;
+    .student-login-page {&amp;#13;
+        padding: 15px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .login-wrapper {&amp;#13;
+        border-radius: 20px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .login-info {&amp;#13;
+        padding: 30px 25px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .welcome-content {&amp;#13;
+        margin-top: 40px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .welcome-content h1 {&amp;#13;
+        font-size: 32px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .login-card {&amp;#13;
+        padding: 35px 25px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .card-header h2 {&amp;#13;
+        font-size: 26px;&amp;#13;
+    }&amp;#13;
+}&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;cfms_student_login1&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]&gt;&lt;/link&gt;&lt;name&gt;CFMS Student Login&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;false&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+
+    data.loggedIn = gs.isLoggedIn();
+
+    data.userName = "";
+    data.userEmail = "";
+
+    if (data.loggedIn) {
+
+        var user = gs.getUser();
+
+        data.userName = user.getName();
+        data.userEmail = user.getEmail();
+
+    }
+
+})();
+]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-09-24 15:28:14&lt;/sys_created_on&gt;&lt;sys_id&gt;eab98d15a06743107f4432329b8a1545&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;CFMS Student Login&lt;/sys_name&gt;&lt;sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Campus Food Services Assistant"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_eab98d15a06743107f4432329b8a1545&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-09-24 15:39:25&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div class="student-login-page"&gt;
+
+  &lt;!-- Background decoration --&gt;
+  &lt;div class="bg-circle circle-one"&gt;&lt;/div&gt;
+  &lt;div class="bg-circle circle-two"&gt;&lt;/div&gt;
+
+  &lt;div class="login-wrapper"&gt;
+
+    &lt;!-- Left side --&gt;
+    &lt;div class="login-info"&gt;
+
+      &lt;div class="brand"&gt;
+        &lt;div class="brand-icon"&gt;
+          &lt;i class="fa fa-cutlery"&gt;&lt;/i&gt;
+        &lt;/div&gt;
+
+        &lt;div&gt;
+          &lt;h2&gt;CFMS&lt;/h2&gt;
+          &lt;span&gt;Campus Food Management System&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class="welcome-content"&gt;
+        &lt;span class="welcome-badge"&gt;
+          &lt;i class="fa fa-graduation-cap"&gt;&lt;/i&gt;
+          STUDENT PORTAL
+        &lt;/span&gt;
+
+        &lt;h1&gt;
+          Good Food.&lt;br&gt;
+          &lt;span&gt;Better Campus.&lt;/span&gt;
+        &lt;/h1&gt;
+
+        &lt;p&gt;
+          Manage your campus food services, raise complaints,
+          track requests and share feedback — all in one place.
+        &lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;div class="features"&gt;
+
+        &lt;div class="feature"&gt;
+          &lt;div class="feature-icon"&gt;
+            &lt;i class="fa fa-list-alt"&gt;&lt;/i&gt;
+          &lt;/div&gt;
+          &lt;div&gt;
+            &lt;strong&gt;Raise Requests&lt;/strong&gt;
+            &lt;span&gt;Report food and mess related issues.&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class="feature"&gt;
+          &lt;div class="feature-icon"&gt;
+            &lt;i class="fa fa-clock-o"&gt;&lt;/i&gt;
+          &lt;/div&gt;
+          &lt;div&gt;
+            &lt;strong&gt;Track Requests&lt;/strong&gt;
+            &lt;span&gt;Follow the progress of your complaints.&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class="feature"&gt;
+          &lt;div class="feature-icon"&gt;
+            &lt;i class="fa fa-comments"&gt;&lt;/i&gt;
+          &lt;/div&gt;
+          &lt;div&gt;
+            &lt;strong&gt;Give Feedback&lt;/strong&gt;
+            &lt;span&gt;Help improve your campus dining experience.&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+
+    &lt;!-- Right side --&gt;
+    &lt;div class="login-card"&gt;
+
+      &lt;div class="card-header"&gt;
+
+        &lt;div class="student-icon"&gt;
+          &lt;i class="fa fa-user"&gt;&lt;/i&gt;
+        &lt;/div&gt;
+
+        &lt;h2&gt;Student Login&lt;/h2&gt;
+
+        &lt;p&gt;
+          Sign in to access your CFMS student dashboard
+        &lt;/p&gt;
+
+      &lt;/div&gt;
+
+
+      &lt;!-- Logged in --&gt;
+      &lt;div ng-if="c.data.loggedIn" class="already-login"&gt;
+
+        &lt;div class="success-icon"&gt;
+          &lt;i class="fa fa-check"&gt;&lt;/i&gt;
+        &lt;/div&gt;
+
+        &lt;h3&gt;You are already signed in&lt;/h3&gt;
+
+        &lt;p&gt;
+          Continue to your student dashboard.
+        &lt;/p&gt;
+
+        &lt;button
+          class="login-btn"
+          ng-click="c.continueToDashboard()"&gt;
+
+          Continue to Dashboard
+
+          &lt;i class="fa fa-arrow-right"&gt;&lt;/i&gt;
+
+        &lt;/button&gt;
+
+      &lt;/div&gt;
+
+
+      &lt;!-- Not logged in --&gt;
+      &lt;div ng-if="!c.data.loggedIn"&gt;
+
+        &lt;div class="secure-message"&gt;
+
+          &lt;i class="fa fa-lock"&gt;&lt;/i&gt;
+
+          &lt;div&gt;
+            &lt;strong&gt;Secure ServiceNow Login&lt;/strong&gt;
+
+            &lt;span&gt;
+              You will be redirected to the secure
+              ServiceNow authentication page.
+            &lt;/span&gt;
+          &lt;/div&gt;
+
+        &lt;/div&gt;
+
+
+        &lt;button
+          class="login-btn"
+          ng-click="c.login()"&gt;
+
+          &lt;i class="fa fa-sign-in"&gt;&lt;/i&gt;
+
+          Login as Student
+
+        &lt;/button&gt;
+
+
+        &lt;div class="divider"&gt;
+          &lt;span&gt;OR&lt;/span&gt;
+        &lt;/div&gt;
+
+
+        &lt;button
+          class="back-btn"
+          ng-click="c.goHome()"&gt;
+
+          &lt;i class="fa fa-arrow-left"&gt;&lt;/i&gt;
+
+          Back to Home
+
+        &lt;/button&gt;
+
+      &lt;/div&gt;
+
+
+      &lt;div class="login-footer"&gt;
+
+        &lt;i class="fa fa-shield"&gt;&lt;/i&gt;
+
+        Your account is protected by ServiceNow authentication.
+
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>2117310528</payload_hash>
+        <record_name>CFMS Student Login</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 15:39:25</sys_created_on>
+        <sys_id>66acc11da06743107f4432329b8a158a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0d412503e0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 15:39:25</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>66acc11db2674310af7dffe46f00c489</update_guid>
+        <update_guid_history>66acc11db2674310af7dffe46f00c489:2117310528,4f1acd9549674310e219bb664eeee006:-86737073</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="CFMS Student Login">788855fd80a703107f4447e44ab1d5f3</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 05:48:09</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>06e35c2275b3430093d4728d756ea871</sys_id>
+        <sys_metadata>eab98d15a06743107f4432329b8a1545</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>CFMS Student Login</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>sp_widget_eab98d15a06743107f4432329b8a1545</sys_update_name>
+        <sys_update_version display_value="sp_widget_eab98d15a06743107f4432329b8a1545">66acc11da06743107f4432329b8a158a</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 05:48:09</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

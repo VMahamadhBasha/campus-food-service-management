@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_agent_chat_config">
+    <sp_agent_chat_config action="DELETE">
+        <active>true</active>
+        <name>FoodAssist Chat Config</name>
+        <order>0</order>
+        <portal>4ddc79b049a703107f44f280a62db561</portal>
+        <public>false</public>
+        <roles/>
+        <server_script><![CDATA[(function($sp) {	return {		live_agent_queue: $sp.getDisplayValue('sp_chat_queue')		};})($sp);]]></server_script>
+        <sys_class_name>sp_agent_chat_config</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 09:23:55</sys_created_on>
+        <sys_id>f6a6a97a04eb03107f44b8d89e324c80</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>FoodAssist Chat Config</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_agent_chat_config_f6a6a97a04eb03107f44b8d89e324c80</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 09:40:23</sys_updated_on>
+    </sp_agent_chat_config>
+    <sys_translated_text action="DELETE" query="documentkey=f6a6a97a04eb03107f44b8d89e324c80"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>sp_agent_chat_config_f6a6a97a04eb03107f44b8d89e324c80</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_agent_chat_config"&gt;&lt;sp_agent_chat_config action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;name&gt;FoodAssist Chat Config&lt;/name&gt;&lt;order&gt;0&lt;/order&gt;&lt;portal&gt;4ddc79b049a703107f44f280a62db561&lt;/portal&gt;&lt;public&gt;false&lt;/public&gt;&lt;roles/&gt;&lt;server_script&gt;&lt;![CDATA[(function($sp) {	return {		live_agent_queue: $sp.getDisplayValue('sp_chat_queue')		};})($sp);]]&gt;&lt;/server_script&gt;&lt;sys_class_name&gt;sp_agent_chat_config&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-09-29 09:23:55&lt;/sys_created_on&gt;&lt;sys_id&gt;f6a6a97a04eb03107f44b8d89e324c80&lt;/sys_id&gt;&lt;sys_mod_count&gt;5&lt;/sys_mod_count&gt;&lt;sys_name&gt;FoodAssist Chat Config&lt;/sys_name&gt;&lt;sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Campus Food Services Assistant"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_agent_chat_config_f6a6a97a04eb03107f44b8d89e324c80&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-09-29 09:40:23&lt;/sys_updated_on&gt;&lt;/sp_agent_chat_config&gt;&lt;sys_translated_text action="delete_multiple" query="documentkey=f6a6a97a04eb03107f44b8d89e324c80"/&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>2143674550</payload_hash>
+        <record_name>FoodAssist Chat Config</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 09:40:23</sys_created_on>
+        <sys_id>947ae136042f03107f44b8d89e324cd9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0ec89693c0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 09:40:23</sys_updated_on>
+        <type>Service Portal Agent Chat Configuration</type>
+        <update_guid>587ae1363d2f0310d76370c27b43a6d8</update_guid>
+        <update_guid_history>587ae1363d2f0310d76370c27b43a6d8:2143674550,4bf8e5fed7eb031042b54bf68261fe32:-215136849,2fe865fe86eb031073439ec835422940:-1855252652,afe865fe7ceb03102286e8c99729cd3b:-215136849,5528a17e25eb0310404e108a5973e5d5:-1474850079,c3a6a97ae4eb0310c0693801e7f97183:497885931</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="FoodAssist Chat Config">e89eedb2046f03107f44b8d89e324cb8</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 09:58:25</sys_created_on>
+        <sys_db_object display_value="" name="sp_agent_chat_config">sp_agent_chat_config</sys_db_object>
+        <sys_id>33a28be5caaf4bc0bc33b06a47619000</sys_id>
+        <sys_metadata>f6a6a97a04eb03107f44b8d89e324c80</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>FoodAssist Chat Config</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>sp_agent_chat_config_f6a6a97a04eb03107f44b8d89e324c80</sys_update_name>
+        <sys_update_version display_value="sp_agent_chat_config_f6a6a97a04eb03107f44b8d89e324c80">947ae136042f03107f44b8d89e324cd9</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 09:58:25</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

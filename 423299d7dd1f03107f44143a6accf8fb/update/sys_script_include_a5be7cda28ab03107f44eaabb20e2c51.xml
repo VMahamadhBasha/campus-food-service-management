@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_snc_campus_foo_1.CampusFoodLogin</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>CampusFoodLogin</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var CampusFoodLogin = Class.create();
+
+CampusFoodLogin.prototype = {
+
+    validateLogin: function(username, password) {
+
+        var result = {
+            success: false,
+            message: '',
+            userId: '',
+            userName: '',
+            role: '',
+            dashboard: ''
+        };
+
+
+        // ==========================================
+        // CHECK USER
+        // ==========================================
+
+        if (!username || !password) {
+
+            result.message =
+                'Username and password are required.';
+
+            return result;
+        }
+
+
+        var userGR = new GlideRecord('sys_user');
+
+        userGR.addQuery('user_name', username);
+        userGR.addActiveQuery();
+        userGR.query();
+
+
+        if (!userGR.next()) {
+
+            result.message =
+                'Invalid username or password.';
+
+            return result;
+        }
+
+
+        result.userId =
+            userGR.getUniqueValue();
+
+        result.userName =
+            userGR.getDisplayValue('name');
+
+
+        // ==========================================
+        // CHECK USER'S GROUPS
+        // ==========================================
+
+        var memberGR =
+            new GlideRecord('sys_user_grmember');
+
+        memberGR.addQuery(
+            'user',
+            userGR.getUniqueValue()
+        );
+
+        memberGR.query();
+
+
+        while (memberGR.next()) {
+
+            var groupID =
+                memberGR.getValue('group');
+
+
+            // ==========================================
+            // CHECK ADMIN ROLE
+            // ==========================================
+
+            var groupRoleGR =
+                new GlideRecord('sys_group_has_role');
+
+            groupRoleGR.addQuery(
+                'group',
+                groupID
+            );
+
+            groupRoleGR.addQuery(
+                'role.name',
+                'x_snc_campus_foo_1.admin'
+            );
+
+            groupRoleGR.query();
+
+
+            if (groupRoleGR.next()) {
+
+                result.success = true;
+                result.role = 'ADMIN';
+
+                result.dashboard =
+                    '/food_services?id=food_service_admin_dashboard_page';
+
+                return result;
+            }
+
+
+            // ==========================================
+            // CHECK MANAGER ROLE
+            // ==========================================
+
+            groupRoleGR =
+                new GlideRecord('sys_group_has_role');
+
+            groupRoleGR.addQuery(
+                'group',
+                groupID
+            );
+
+            groupRoleGR.addQuery(
+                'role.name',
+                'x_snc_campus_foo_1.manager'
+            );
+
+            groupRoleGR.query();
+
+
+            if (groupRoleGR.next()) {
+
+                result.success = true;
+                result.role = 'MANAGER';
+
+                result.dashboard =
+                    '/food_services?id=food_service_manager_dashboard_page';
+
+                return result;
+            }
+
+
+            // ==========================================
+            // CHECK STAFF ROLE
+            // ==========================================
+
+            groupRoleGR =
+                new GlideRecord('sys_group_has_role');
+
+            groupRoleGR.addQuery(
+                'group',
+                groupID
+            );
+
+            groupRoleGR.addQuery(
+                'role.name',
+                'x_snc_campus_foo_1.staff'
+            );
+
+            groupRoleGR.query();
+
+
+            if (groupRoleGR.next()) {
+
+                result.success = true;
+                result.role = 'STAFF';
+
+                result.dashboard =
+                    '/food_services?id=food_services_staff_dashboard_page';
+
+                return result;
+            }
+
+
+            // ==========================================
+            // CHECK STUDENT ROLE
+            // ==========================================
+
+            groupRoleGR =
+                new GlideRecord('sys_group_has_role');
+
+            groupRoleGR.addQuery(
+                'group',
+                groupID
+            );
+
+            groupRoleGR.addQuery(
+                'role.name',
+                'x_snc_campus_foo_1.student'
+            );
+
+            groupRoleGR.query();
+
+
+            if (groupRoleGR.next()) {
+
+                result.success = true;
+                result.role = 'STUDENT';
+
+                result.dashboard =
+                    '/food_services?id=food_service_student_dashbaord';
+
+                return result;
+            }
+        }
+
+
+        // ==========================================
+        // NO CAMPUSFOOD ROLE FOUND
+        // ==========================================
+
+        result.message =
+            'User found, but no CampusFood role was found.';
+
+        return result;
+    },
+
+
+    type: 'CampusFoodLogin'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 17:23:03</sys_created_on>
+        <sys_id>a5be7cda28ab03107f44eaabb20e2c51</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>CampusFoodLogin</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_script_include_a5be7cda28ab03107f44eaabb20e2c51</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-27 17:49:16</sys_updated_on>
+    </sys_script_include>
+</record_update>

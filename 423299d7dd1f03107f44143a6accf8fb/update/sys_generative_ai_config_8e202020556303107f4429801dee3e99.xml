@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_generative_ai_config">
     <sys_generative_ai_config action="INSERT_OR_UPDATE">
-        <active>false</active>
+        <active>true</active>
         <additional_configurations>{"skill_config_id":"f38b1fc42de303107f44a1c965bbba3a"}</additional_configurations>
         <ai_suggested>false</ai_suggested>
         <definition>2b8bdbc42de303107f44a1c965bbbae5</definition>
@@ -10,7 +10,7 @@
         <min_word_count>-1</min_word_count>
         <model>llm_generic_small</model>
         <name>Food Complaint Classification</name>
-        <parent display_value="OneExtend Capability Definition: Classify Food Complaint (Now LLM Service - Now LLM Generic)">eb8d78582d6343107f44a1c965bbba14</parent>
+        <parent/>
         <prompt>You are the AI Priority and Knowledge Analysis component of the Campus Food Services Assistant (CFSA).
 
 Your task is to analyze a student's campus food-service complaint and generate exactly six outputs:
@@ -847,8 +847,8 @@ Do not return any additional fields.</prompt>
         <prompt_template_role>user</prompt_template_role>
         <provider_company/>
         <request_tokens>32018</request_tokens>
-        <show_in_prompt_library>false</show_in_prompt_library>
-        <state>finalized</state>
+        <show_in_prompt_library>true</show_in_prompt_library>
+        <state>published</state>
         <structured_output_enabled>false</structured_output_enabled>
         <structured_output_schema/>
         <sys_class_name>sys_generative_ai_config</sys_class_name>
@@ -857,7 +857,7 @@ Do not return any additional fields.</prompt>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>8e202020556303107f4429801dee3e99</sys_id>
-        <sys_mod_count>24</sys_mod_count>
+        <sys_mod_count>25</sys_mod_count>
         <sys_name>2b8bdbc42de303107f44a1c965bbbae5</sys_name>
         <sys_overrides/>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
@@ -865,7 +865,7 @@ Do not return any additional fields.</prompt>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sys_generative_ai_config_8e202020556303107f4429801dee3e99</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-25 13:03:05</sys_updated_on>
+        <sys_updated_on>2026-09-26 04:57:13</sys_updated_on>
         <temperature>0.2</temperature>
         <thinking_tokens>0</thinking_tokens>
         <version>3</version>

@@ -1,0 +1,1149 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function($scope, $window) {
+
+  var c = this;
+
+  c.reportComplaint = function() {
+    $window.location.href = '?id=campus_food_complaint';
+  };
+
+  c.myComplaints = function() {
+    $window.location.href = '?id=my_complaints';
+  };
+
+  c.complaintStatus = function() {
+    $window.location.href = '?id=complaint_status';
+  };
+
+  c.menu = function() {
+    $window.location.href = '?id=food_menu';
+  };
+
+  c.foodProblems = function() {
+    $window.location.href = '?id=food_problems';
+  };
+
+  c.assistance = function() {
+    alert('Campus Food Assistance is available here.');
+  };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* MAIN CONTAINER */&#13;
+&#13;
+.cfs-home {&#13;
+  font-family: Arial, sans-serif;&#13;
+  background: #f5f8fb;&#13;
+  color: #222;&#13;
+  min-height: 100vh;&#13;
+}&#13;
+&#13;
+&#13;
+/* TOP NAVBAR */&#13;
+&#13;
+.cfs-navbar {&#13;
+  background: #ffffff;&#13;
+  border-bottom: 1px solid #ddd;&#13;
+  min-height: 65px;&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: space-between;&#13;
+  padding: 0 30px;&#13;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);&#13;
+}&#13;
+&#13;
+&#13;
+.cfs-logo {&#13;
+  font-size: 20px;&#13;
+  color: #1976b5;&#13;
+}&#13;
+&#13;
+&#13;
+.cfs-nav-links {&#13;
+  display: flex;&#13;
+  gap: 24px;&#13;
+  align-items: center;&#13;
+}&#13;
+&#13;
+&#13;
+.cfs-nav-links a {&#13;
+  text-decoration: none;&#13;
+  color: #333;&#13;
+  font-size: 14px;&#13;
+  font-weight: 500;&#13;
+}&#13;
+&#13;
+&#13;
+.cfs-nav-links a:hover {&#13;
+  color: #1976b5;&#13;
+}&#13;
+&#13;
+&#13;
+/* HERO */&#13;
+&#13;
+.cfs-hero {&#13;
+  background: linear-gradient(&#13;
+    135deg,&#13;
+    #1976b5,&#13;
+    #2f8ac4&#13;
+  );&#13;
+&#13;
+  color: white;&#13;
+&#13;
+  margin: 25px auto;&#13;
+&#13;
+  max-width: 1100px;&#13;
+&#13;
+  min-height: 260px;&#13;
+&#13;
+  border-radius: 12px;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: space-between;&#13;
+&#13;
+  padding: 40px;&#13;
+}&#13;
+&#13;
+&#13;
+.hero-content {&#13;
+  max-width: 700px;&#13;
+}&#13;
+&#13;
+&#13;
+.hero-content h1 {&#13;
+  font-size: 34px;&#13;
+  margin-bottom: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+.hero-content p {&#13;
+  font-size: 17px;&#13;
+  line-height: 1.6;&#13;
+}&#13;
+&#13;
+&#13;
+.hero-image {&#13;
+  font-size: 100px;&#13;
+  padding-right: 30px;&#13;
+}&#13;
+&#13;
+&#13;
+/* BUTTONS */&#13;
+&#13;
+.hero-buttons {&#13;
+  margin-top: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+.btn-primary,&#13;
+.btn-secondary {&#13;
+  display: inline-block;&#13;
+  padding: 12px 20px;&#13;
+  margin-right: 10px;&#13;
+  border-radius: 6px;&#13;
+  text-decoration: none;&#13;
+  font-weight: bold;&#13;
+}&#13;
+&#13;
+&#13;
+.btn-primary {&#13;
+  background: white;&#13;
+  color: #1976b5;&#13;
+}&#13;
+&#13;
+&#13;
+.btn-secondary {&#13;
+  background: #075d78;&#13;
+  color: white;&#13;
+}&#13;
+&#13;
+&#13;
+/* SECTION TITLE */&#13;
+&#13;
+.section-title {&#13;
+  text-align: center;&#13;
+  margin: 35px 0 20px;&#13;
+  color: #333;&#13;
+}&#13;
+&#13;
+&#13;
+/* SERVICE CARDS */&#13;
+&#13;
+.service-container {&#13;
+  max-width: 1100px;&#13;
+  margin: auto;&#13;
+&#13;
+  display: grid;&#13;
+&#13;
+  grid-template-columns:&#13;
+    repeat(4, 1fr);&#13;
+&#13;
+  gap: 20px;&#13;
+}&#13;
+&#13;
+&#13;
+.service-card {&#13;
+  background: white;&#13;
+&#13;
+  border-radius: 10px;&#13;
+&#13;
+  padding: 25px;&#13;
+&#13;
+  text-align: center;&#13;
+&#13;
+  box-shadow:&#13;
+    0 2px 10px rgba(0,0,0,0.08);&#13;
+&#13;
+  transition: 0.2s;&#13;
+}&#13;
+&#13;
+&#13;
+.service-card:hover {&#13;
+  transform: translateY(-4px);&#13;
+}&#13;
+&#13;
+&#13;
+.service-icon {&#13;
+  font-size: 40px;&#13;
+  margin-bottom: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+.service-card h3 {&#13;
+  color: #1976b5;&#13;
+}&#13;
+&#13;
+&#13;
+.service-card p {&#13;
+  color: #666;&#13;
+  line-height: 1.5;&#13;
+  min-height: 65px;&#13;
+}&#13;
+&#13;
+&#13;
+.service-card a {&#13;
+  color: #1976b5;&#13;
+  text-decoration: none;&#13;
+  font-weight: bold;&#13;
+}&#13;
+&#13;
+&#13;
+/* FEATURES */&#13;
+&#13;
+.features-section {&#13;
+  max-width: 1100px;&#13;
+  margin: 45px auto;&#13;
+  text-align: center;&#13;
+}&#13;
+&#13;
+&#13;
+.features-section h2 {&#13;
+  margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+.features {&#13;
+  display: grid;&#13;
+&#13;
+  grid-template-columns:&#13;
+    repeat(4, 1fr);&#13;
+&#13;
+  gap: 20px;&#13;
+}&#13;
+&#13;
+&#13;
+.feature {&#13;
+  background: white;&#13;
+&#13;
+  padding: 22px;&#13;
+&#13;
+  border-radius: 10px;&#13;
+&#13;
+  box-shadow:&#13;
+    0 2px 8px rgba(0,0,0,0.07);&#13;
+}&#13;
+&#13;
+&#13;
+.feature span {&#13;
+  font-size: 32px;&#13;
+}&#13;
+&#13;
+&#13;
+.feature b {&#13;
+  display: block;&#13;
+  margin-top: 10px;&#13;
+  color: #1976b5;&#13;
+}&#13;
+&#13;
+&#13;
+.feature p {&#13;
+  color: #666;&#13;
+}&#13;
+&#13;
+&#13;
+/* FOOTER */&#13;
+&#13;
+.cfs-footer {&#13;
+  background: #075d78;&#13;
+&#13;
+  color: white;&#13;
+&#13;
+  text-align: center;&#13;
+&#13;
+  padding: 30px;&#13;
+&#13;
+  margin-top: 40px;&#13;
+}&#13;
+&#13;
+&#13;
+.cfs-footer p {&#13;
+  margin-bottom: 0;&#13;
+}&#13;
+&#13;
+&#13;
+/* MOBILE */&#13;
+&#13;
+@media (max-width: 900px) {&#13;
+&#13;
+  .cfs-navbar {&#13;
+    flex-direction: column;&#13;
+    padding: 15px;&#13;
+  }&#13;
+&#13;
+  .cfs-nav-links {&#13;
+    flex-wrap: wrap;&#13;
+    justify-content: center;&#13;
+    margin-top: 10px;&#13;
+  }&#13;
+&#13;
+  .cfs-hero {&#13;
+    flex-direction: column;&#13;
+    text-align: center;&#13;
+  }&#13;
+&#13;
+  .service-container,&#13;
+  .features {&#13;
+    grid-template-columns: 1fr 1fr;&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+  .service-container,&#13;
+  .features {&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>Campus Food Service Assistance Portal</description>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>campus_food_service</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Campus Food Service</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-23 05:31:40</sys_created_on>
+        <sys_id>62d731f4496703107f44f280a62db52b</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Campus Food Service</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_62d731f4496703107f44f280a62db52b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-23 06:30:36</sys_updated_on>
+        <template><![CDATA[<div class="cfs-home">
+
+  <!-- TOP NAVIGATION -->
+  <div class="cfs-navbar">
+
+    <div class="cfs-logo">
+      ]]>🍽<![CDATA[️ <b>Campus Food Service</b>
+    </div>
+
+    <div class="cfs-nav-links">
+      <a href="?id=campus_food_service">Home</a>
+      <a href="?id=campus_food_menu">Menu</a>
+      <a href="?id=campus_food_complaint">Complaints</a>
+      <a href="?id=complaint_status">Requests</a>
+      <a href="?id=food_status">System Status</a>
+      <a href="?id=food_cart">Cart</a>
+      <a href="?id=food_help">Help</a>
+    </div>
+
+  </div>
+
+
+  <!-- HERO SECTION -->
+  <div class="cfs-hero">
+
+    <div class="hero-content">
+
+      <h1>Welcome to Campus Food Service</h1>
+
+      <p>
+        Your one-stop portal for campus food services,
+        complaints, menu information and assistance.
+      </p>
+
+      <div class="hero-buttons">
+
+        <a href="?id=campus_food_complaint"
+           class="btn-primary">
+          ]]>📝<![CDATA[ Report Food Complaint
+        </a>
+
+        <a href="?id=campus_food_menu"
+           class="btn-secondary">
+          ]]>🍴<![CDATA[ View Today's Menu
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="hero-image">
+      ]]>🍱
+<![CDATA[    </div>
+
+  </div>
+
+
+  <!-- QUICK SERVICES -->
+  <h2 class="section-title">
+    Campus Food Services
+  </h2>
+
+  <div class="service-container">
+
+    <!-- Complaint -->
+    <div class="service-card">
+
+      <div class="service-icon">]]>📝<![CDATA[</div>
+
+      <h3>Report Complaint</h3>
+
+      <p>
+        Report stale food, poor quality,
+        hygiene or other food-related issues.
+      </p>
+
+      <a href="?id=campus_food_complaint">
+        Report Now →
+      </a>
+
+    </div>
+
+
+    <!-- Menu -->
+    <div class="service-card">
+
+      <div class="service-icon">]]>🍛<![CDATA[</div>
+
+      <h3>Mess Menu</h3>
+
+      <p>
+        Check today's breakfast, lunch,
+        snacks and dinner menu.
+      </p>
+
+      <a href="?id=campus_food_menu">
+        View Menu →
+      </a>
+
+    </div>
+
+
+    <!-- Complaint Status -->
+    <div class="service-card">
+
+      <div class="service-icon">]]>📊<![CDATA[</div>
+
+      <h3>Complaint Status</h3>
+
+      <p>
+        Track the status of your submitted
+        food complaints.
+      </p>
+
+      <a href="?id=complaint_status">
+        Check Status →
+      </a>
+
+    </div>
+
+
+    <!-- Food Problems -->
+    <div class="service-card">
+
+      <div class="service-icon">⚠️</div>
+
+      <h3>Food Problems</h3>
+
+      <p>
+        View common food issues and
+        available assistance.
+      </p>
+
+      <a href="?id=food_problems">
+        View Problems →
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <!-- FEATURES -->
+  <div class="features-section">
+
+    <h2>Why Use Campus Food Service?</h2>
+
+    <div class="features">
+
+      <div class="feature">
+        <span>]]>📱<![CDATA[</span>
+        <b>Easy Reporting</b>
+        <p>Report food problems quickly.</p>
+      </div>
+
+      <div class="feature">
+        <span>]]>🔍<![CDATA[</span>
+        <b>Track Complaints</b>
+        <p>Check your complaint status.</p>
+      </div>
+
+      <div class="feature">
+        <span>]]>🍽<![CDATA[️</span>
+        <b>Menu Information</b>
+        <p>View daily mess menu.</p>
+      </div>
+
+      <div class="feature">
+        <span>]]>🛡<![CDATA[️</span>
+        <b>Food Safety</b>
+        <p>Help maintain food quality.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- FOOTER -->
+  <div class="cfs-footer">
+
+    <b>Campus Food Service Assistant</b>
+
+    <p>
+      Improving campus food services through
+      easy reporting and quick assistance.
+    </p>
+
+  </div>
+
+</div>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>sp_widget_62d731f4496703107f44f280a62db52b</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller = function($scope, $window) {
+
+  var c = this;
+
+  c.reportComplaint = function() {
+    $window.location.href = '?id=campus_food_complaint';
+  };
+
+  c.myComplaints = function() {
+    $window.location.href = '?id=my_complaints';
+  };
+
+  c.complaintStatus = function() {
+    $window.location.href = '?id=complaint_status';
+  };
+
+  c.menu = function() {
+    $window.location.href = '?id=food_menu';
+  };
+
+  c.foodProblems = function() {
+    $window.location.href = '?id=food_problems';
+  };
+
+  c.assistance = function() {
+    alert('Campus Food Assistance is available here.');
+  };
+
+};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;/* MAIN CONTAINER */&amp;#13;
+&amp;#13;
+.cfs-home {&amp;#13;
+  font-family: Arial, sans-serif;&amp;#13;
+  background: #f5f8fb;&amp;#13;
+  color: #222;&amp;#13;
+  min-height: 100vh;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* TOP NAVBAR */&amp;#13;
+&amp;#13;
+.cfs-navbar {&amp;#13;
+  background: #ffffff;&amp;#13;
+  border-bottom: 1px solid #ddd;&amp;#13;
+  min-height: 65px;&amp;#13;
+  display: flex;&amp;#13;
+  align-items: center;&amp;#13;
+  justify-content: space-between;&amp;#13;
+  padding: 0 30px;&amp;#13;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.cfs-logo {&amp;#13;
+  font-size: 20px;&amp;#13;
+  color: #1976b5;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.cfs-nav-links {&amp;#13;
+  display: flex;&amp;#13;
+  gap: 24px;&amp;#13;
+  align-items: center;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.cfs-nav-links a {&amp;#13;
+  text-decoration: none;&amp;#13;
+  color: #333;&amp;#13;
+  font-size: 14px;&amp;#13;
+  font-weight: 500;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.cfs-nav-links a:hover {&amp;#13;
+  color: #1976b5;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* HERO */&amp;#13;
+&amp;#13;
+.cfs-hero {&amp;#13;
+  background: linear-gradient(&amp;#13;
+    135deg,&amp;#13;
+    #1976b5,&amp;#13;
+    #2f8ac4&amp;#13;
+  );&amp;#13;
+&amp;#13;
+  color: white;&amp;#13;
+&amp;#13;
+  margin: 25px auto;&amp;#13;
+&amp;#13;
+  max-width: 1100px;&amp;#13;
+&amp;#13;
+  min-height: 260px;&amp;#13;
+&amp;#13;
+  border-radius: 12px;&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  justify-content: space-between;&amp;#13;
+&amp;#13;
+  padding: 40px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.hero-content {&amp;#13;
+  max-width: 700px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.hero-content h1 {&amp;#13;
+  font-size: 34px;&amp;#13;
+  margin-bottom: 12px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.hero-content p {&amp;#13;
+  font-size: 17px;&amp;#13;
+  line-height: 1.6;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.hero-image {&amp;#13;
+  font-size: 100px;&amp;#13;
+  padding-right: 30px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* BUTTONS */&amp;#13;
+&amp;#13;
+.hero-buttons {&amp;#13;
+  margin-top: 25px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.btn-primary,&amp;#13;
+.btn-secondary {&amp;#13;
+  display: inline-block;&amp;#13;
+  padding: 12px 20px;&amp;#13;
+  margin-right: 10px;&amp;#13;
+  border-radius: 6px;&amp;#13;
+  text-decoration: none;&amp;#13;
+  font-weight: bold;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.btn-primary {&amp;#13;
+  background: white;&amp;#13;
+  color: #1976b5;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.btn-secondary {&amp;#13;
+  background: #075d78;&amp;#13;
+  color: white;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* SECTION TITLE */&amp;#13;
+&amp;#13;
+.section-title {&amp;#13;
+  text-align: center;&amp;#13;
+  margin: 35px 0 20px;&amp;#13;
+  color: #333;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* SERVICE CARDS */&amp;#13;
+&amp;#13;
+.service-container {&amp;#13;
+  max-width: 1100px;&amp;#13;
+  margin: auto;&amp;#13;
+&amp;#13;
+  display: grid;&amp;#13;
+&amp;#13;
+  grid-template-columns:&amp;#13;
+    repeat(4, 1fr);&amp;#13;
+&amp;#13;
+  gap: 20px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.service-card {&amp;#13;
+  background: white;&amp;#13;
+&amp;#13;
+  border-radius: 10px;&amp;#13;
+&amp;#13;
+  padding: 25px;&amp;#13;
+&amp;#13;
+  text-align: center;&amp;#13;
+&amp;#13;
+  box-shadow:&amp;#13;
+    0 2px 10px rgba(0,0,0,0.08);&amp;#13;
+&amp;#13;
+  transition: 0.2s;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.service-card:hover {&amp;#13;
+  transform: translateY(-4px);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.service-icon {&amp;#13;
+  font-size: 40px;&amp;#13;
+  margin-bottom: 10px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.service-card h3 {&amp;#13;
+  color: #1976b5;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.service-card p {&amp;#13;
+  color: #666;&amp;#13;
+  line-height: 1.5;&amp;#13;
+  min-height: 65px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.service-card a {&amp;#13;
+  color: #1976b5;&amp;#13;
+  text-decoration: none;&amp;#13;
+  font-weight: bold;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* FEATURES */&amp;#13;
+&amp;#13;
+.features-section {&amp;#13;
+  max-width: 1100px;&amp;#13;
+  margin: 45px auto;&amp;#13;
+  text-align: center;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.features-section h2 {&amp;#13;
+  margin-bottom: 25px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.features {&amp;#13;
+  display: grid;&amp;#13;
+&amp;#13;
+  grid-template-columns:&amp;#13;
+    repeat(4, 1fr);&amp;#13;
+&amp;#13;
+  gap: 20px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.feature {&amp;#13;
+  background: white;&amp;#13;
+&amp;#13;
+  padding: 22px;&amp;#13;
+&amp;#13;
+  border-radius: 10px;&amp;#13;
+&amp;#13;
+  box-shadow:&amp;#13;
+    0 2px 8px rgba(0,0,0,0.07);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.feature span {&amp;#13;
+  font-size: 32px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.feature b {&amp;#13;
+  display: block;&amp;#13;
+  margin-top: 10px;&amp;#13;
+  color: #1976b5;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.feature p {&amp;#13;
+  color: #666;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* FOOTER */&amp;#13;
+&amp;#13;
+.cfs-footer {&amp;#13;
+  background: #075d78;&amp;#13;
+&amp;#13;
+  color: white;&amp;#13;
+&amp;#13;
+  text-align: center;&amp;#13;
+&amp;#13;
+  padding: 30px;&amp;#13;
+&amp;#13;
+  margin-top: 40px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.cfs-footer p {&amp;#13;
+  margin-bottom: 0;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* MOBILE */&amp;#13;
+&amp;#13;
+@media (max-width: 900px) {&amp;#13;
+&amp;#13;
+  .cfs-navbar {&amp;#13;
+    flex-direction: column;&amp;#13;
+    padding: 15px;&amp;#13;
+  }&amp;#13;
+&amp;#13;
+  .cfs-nav-links {&amp;#13;
+    flex-wrap: wrap;&amp;#13;
+    justify-content: center;&amp;#13;
+    margin-top: 10px;&amp;#13;
+  }&amp;#13;
+&amp;#13;
+  .cfs-hero {&amp;#13;
+    flex-direction: column;&amp;#13;
+    text-align: center;&amp;#13;
+  }&amp;#13;
+&amp;#13;
+  .service-container,&amp;#13;
+  .features {&amp;#13;
+    grid-template-columns: 1fr 1fr;&amp;#13;
+  }&amp;#13;
+&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+@media (max-width: 600px) {&amp;#13;
+&amp;#13;
+  .service-container,&amp;#13;
+  .features {&amp;#13;
+    grid-template-columns: 1fr;&amp;#13;
+  }&amp;#13;
+&amp;#13;
+}&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description&gt;Campus Food Service Assistance Portal&lt;/description&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;campus_food_service&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]&gt;&lt;/link&gt;&lt;name&gt;Campus Food Service&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;false&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+})();]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-09-23 05:31:40&lt;/sys_created_on&gt;&lt;sys_id&gt;62d731f4496703107f44f280a62db52b&lt;/sys_id&gt;&lt;sys_mod_count&gt;2&lt;/sys_mod_count&gt;&lt;sys_name&gt;Campus Food Service&lt;/sys_name&gt;&lt;sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Campus Food Services Assistant"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_62d731f4496703107f44f280a62db52b&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-09-23 06:30:36&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div class="cfs-home"&gt;
+
+  &lt;!-- TOP NAVIGATION --&gt;
+  &lt;div class="cfs-navbar"&gt;
+
+    &lt;div class="cfs-logo"&gt;
+      ]]&gt;🍽&lt;![CDATA[️ &lt;b&gt;Campus Food Service&lt;/b&gt;
+    &lt;/div&gt;
+
+    &lt;div class="cfs-nav-links"&gt;
+      &lt;a href="?id=campus_food_service"&gt;Home&lt;/a&gt;
+      &lt;a href="?id=campus_food_menu"&gt;Menu&lt;/a&gt;
+      &lt;a href="?id=campus_food_complaint"&gt;Complaints&lt;/a&gt;
+      &lt;a href="?id=complaint_status"&gt;Requests&lt;/a&gt;
+      &lt;a href="?id=food_status"&gt;System Status&lt;/a&gt;
+      &lt;a href="?id=food_cart"&gt;Cart&lt;/a&gt;
+      &lt;a href="?id=food_help"&gt;Help&lt;/a&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+
+
+  &lt;!-- HERO SECTION --&gt;
+  &lt;div class="cfs-hero"&gt;
+
+    &lt;div class="hero-content"&gt;
+
+      &lt;h1&gt;Welcome to Campus Food Service&lt;/h1&gt;
+
+      &lt;p&gt;
+        Your one-stop portal for campus food services,
+        complaints, menu information and assistance.
+      &lt;/p&gt;
+
+      &lt;div class="hero-buttons"&gt;
+
+        &lt;a href="?id=campus_food_complaint"
+           class="btn-primary"&gt;
+          ]]&gt;📝&lt;![CDATA[ Report Food Complaint
+        &lt;/a&gt;
+
+        &lt;a href="?id=campus_food_menu"
+           class="btn-secondary"&gt;
+          ]]&gt;🍴&lt;![CDATA[ View Today's Menu
+        &lt;/a&gt;
+
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div class="hero-image"&gt;
+      ]]&gt;🍱
+&lt;![CDATA[    &lt;/div&gt;
+
+  &lt;/div&gt;
+
+
+  &lt;!-- QUICK SERVICES --&gt;
+  &lt;h2 class="section-title"&gt;
+    Campus Food Services
+  &lt;/h2&gt;
+
+  &lt;div class="service-container"&gt;
+
+    &lt;!-- Complaint --&gt;
+    &lt;div class="service-card"&gt;
+
+      &lt;div class="service-icon"&gt;]]&gt;📝&lt;![CDATA[&lt;/div&gt;
+
+      &lt;h3&gt;Report Complaint&lt;/h3&gt;
+
+      &lt;p&gt;
+        Report stale food, poor quality,
+        hygiene or other food-related issues.
+      &lt;/p&gt;
+
+      &lt;a href="?id=campus_food_complaint"&gt;
+        Report Now →
+      &lt;/a&gt;
+
+    &lt;/div&gt;
+
+
+    &lt;!-- Menu --&gt;
+    &lt;div class="service-card"&gt;
+
+      &lt;div class="service-icon"&gt;]]&gt;🍛&lt;![CDATA[&lt;/div&gt;
+
+      &lt;h3&gt;Mess Menu&lt;/h3&gt;
+
+      &lt;p&gt;
+        Check today's breakfast, lunch,
+        snacks and dinner menu.
+      &lt;/p&gt;
+
+      &lt;a href="?id=campus_food_menu"&gt;
+        View Menu →
+      &lt;/a&gt;
+
+    &lt;/div&gt;
+
+
+    &lt;!-- Complaint Status --&gt;
+    &lt;div class="service-card"&gt;
+
+      &lt;div class="service-icon"&gt;]]&gt;📊&lt;![CDATA[&lt;/div&gt;
+
+      &lt;h3&gt;Complaint Status&lt;/h3&gt;
+
+      &lt;p&gt;
+        Track the status of your submitted
+        food complaints.
+      &lt;/p&gt;
+
+      &lt;a href="?id=complaint_status"&gt;
+        Check Status →
+      &lt;/a&gt;
+
+    &lt;/div&gt;
+
+
+    &lt;!-- Food Problems --&gt;
+    &lt;div class="service-card"&gt;
+
+      &lt;div class="service-icon"&gt;⚠️&lt;/div&gt;
+
+      &lt;h3&gt;Food Problems&lt;/h3&gt;
+
+      &lt;p&gt;
+        View common food issues and
+        available assistance.
+      &lt;/p&gt;
+
+      &lt;a href="?id=food_problems"&gt;
+        View Problems →
+      &lt;/a&gt;
+
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+
+
+  &lt;!-- FEATURES --&gt;
+  &lt;div class="features-section"&gt;
+
+    &lt;h2&gt;Why Use Campus Food Service?&lt;/h2&gt;
+
+    &lt;div class="features"&gt;
+
+      &lt;div class="feature"&gt;
+        &lt;span&gt;]]&gt;📱&lt;![CDATA[&lt;/span&gt;
+        &lt;b&gt;Easy Reporting&lt;/b&gt;
+        &lt;p&gt;Report food problems quickly.&lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;div class="feature"&gt;
+        &lt;span&gt;]]&gt;🔍&lt;![CDATA[&lt;/span&gt;
+        &lt;b&gt;Track Complaints&lt;/b&gt;
+        &lt;p&gt;Check your complaint status.&lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;div class="feature"&gt;
+        &lt;span&gt;]]&gt;🍽&lt;![CDATA[️&lt;/span&gt;
+        &lt;b&gt;Menu Information&lt;/b&gt;
+        &lt;p&gt;View daily mess menu.&lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;div class="feature"&gt;
+        &lt;span&gt;]]&gt;🛡&lt;![CDATA[️&lt;/span&gt;
+        &lt;b&gt;Food Safety&lt;/b&gt;
+        &lt;p&gt;Help maintain food quality.&lt;/p&gt;
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+
+
+  &lt;!-- FOOTER --&gt;
+  &lt;div class="cfs-footer"&gt;
+
+    &lt;b&gt;Campus Food Service Assistant&lt;/b&gt;
+
+    &lt;p&gt;
+      Improving campus food services through
+      easy reporting and quick assistance.
+    &lt;/p&gt;
+
+  &lt;/div&gt;
+
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-271457929</payload_hash>
+        <record_name>Campus Food Service</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-23 06:30:36</sys_created_on>
+        <sys_id>ed7506f449e703107f44f280a62db5d3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0ccf580320000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-23 06:30:36</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>ed7506f4a0e70310758a441098e12ad2</update_guid>
+        <update_guid_history>ed7506f4a0e70310758a441098e12ad2:-271457929,12a0c2f80ca70310ffe056607260bc51:1856128104,52f775f458670310660e238c8ea17d34:1985689428</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Campus Food Service">a8267a7d802743107f4447e44ab1d5df</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 12:37:11</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>3516af0884e5426c926554302dcc3404</sys_id>
+        <sys_metadata>62d731f4496703107f44f280a62db52b</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Campus Food Service</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>sp_widget_62d731f4496703107f44f280a62db52b</sys_update_name>
+        <sys_update_version display_value="sp_widget_62d731f4496703107f44f280a62db52b">ed7506f449e703107f44f280a62db5d3</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 12:37:11</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

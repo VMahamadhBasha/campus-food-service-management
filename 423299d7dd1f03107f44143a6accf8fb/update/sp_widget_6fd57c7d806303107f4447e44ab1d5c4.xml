@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.welcome-section {&#13;
+  background: #f0fdfa;&#13;
+  padding: 70px 20px;&#13;
+}&#13;
+&#13;
+.welcome-container {&#13;
+  max-width: 1200px;&#13;
+  margin: auto;&#13;
+&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: space-between;&#13;
+&#13;
+  gap: 60px;&#13;
+}&#13;
+&#13;
+.welcome-content {&#13;
+  max-width: 680px;&#13;
+}&#13;
+&#13;
+.welcome-tag {&#13;
+  display: inline-flex;&#13;
+&#13;
+  gap: 8px;&#13;
+&#13;
+  padding: 7px 13px;&#13;
+&#13;
+  border-radius: 20px;&#13;
+&#13;
+  background: #ccfbf1;&#13;
+  color: #0f766e;&#13;
+&#13;
+  font-size: 13px;&#13;
+  font-weight: 600;&#13;
+}&#13;
+&#13;
+.welcome-content h1 {&#13;
+  margin-top: 18px;&#13;
+&#13;
+  font-size: 44px;&#13;
+  line-height: 1.15;&#13;
+&#13;
+  color: #111827;&#13;
+}&#13;
+&#13;
+.welcome-content p {&#13;
+  margin-top: 18px;&#13;
+&#13;
+  font-size: 17px;&#13;
+  line-height: 1.7;&#13;
+&#13;
+  color: #4b5563;&#13;
+}&#13;
+&#13;
+.welcome-buttons {&#13;
+  display: flex;&#13;
+  gap: 14px;&#13;
+&#13;
+  margin-top: 28px;&#13;
+}&#13;
+&#13;
+.primary-btn,&#13;
+.secondary-btn {&#13;
+  padding: 12px 20px;&#13;
+&#13;
+  border-radius: 8px;&#13;
+&#13;
+  text-decoration: none;&#13;
+&#13;
+  font-weight: 600;&#13;
+}&#13;
+&#13;
+.primary-btn {&#13;
+  background: #0f766e;&#13;
+  color: white;&#13;
+}&#13;
+&#13;
+.secondary-btn {&#13;
+  border: 1px solid #0f766e;&#13;
+  color: #0f766e;&#13;
+  background: white;&#13;
+}&#13;
+&#13;
+.welcome-card {&#13;
+  width: 300px;&#13;
+&#13;
+  padding: 35px;&#13;
+&#13;
+  background: white;&#13;
+&#13;
+  border-radius: 18px;&#13;
+&#13;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);&#13;
+&#13;
+  text-align: center;&#13;
+}&#13;
+&#13;
+.food-icon {&#13;
+  width: 70px;&#13;
+  height: 70px;&#13;
+&#13;
+  margin: auto;&#13;
+&#13;
+  border-radius: 50%;&#13;
+&#13;
+  background: #ccfbf1;&#13;
+  color: #0f766e;&#13;
+&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+&#13;
+  font-size: 28px;&#13;
+}&#13;
+&#13;
+.welcome-card h3 {&#13;
+  margin-top: 20px;&#13;
+}&#13;
+&#13;
+.welcome-card p {&#13;
+  color: #6b7280;&#13;
+  line-height: 1.6;&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>food_services_welcome_banner</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Food Services Welcome Banner</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.loggedIn = gs.isLoggedIn();
+
+    data.title =
+        'A Better Way to Manage Campus Food Services';
+
+    data.description =
+        'Report food-related issues, track complaints, ' +
+        'follow resolutions and share feedback through ' +
+        'one simple platform.';
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 03:17:48</sys_created_on>
+        <sys_id>6fd57c7d806303107f4447e44ab1d5c4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Food Services Welcome Banner</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_6fd57c7d806303107f4447e44ab1d5c4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 03:17:48</sys_updated_on>
+        <template><![CDATA[<section class="welcome-section">
+
+  <div class="welcome-container">
+
+    <div class="welcome-content">
+
+      <div class="welcome-tag">
+        <i class="fa fa-star"></i>
+        Campus Food Services
+      </div>
+
+      <h1>
+        {{c.data.title}}
+      </h1>
+
+      <p>
+        {{c.data.description}}
+      </p>
+
+      <div class="welcome-buttons">
+
+        <a href="?id=food_services"
+           class="primary-btn">
+
+          Explore Services
+
+          <i class="fa fa-arrow-right"></i>
+
+        </a>
+
+        <a href="?id=my_complaints"
+           ng-if="c.data.loggedIn"
+           class="secondary-btn">
+
+          My Complaints
+
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="welcome-card">
+
+      <div class="food-icon">
+        <i class="fa fa-cutlery"></i>
+      </div>
+
+      <h3>
+        Better Food Services
+      </h3>
+
+      <p>
+        Report issues, track complaints
+        and provide feedback easily.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>]]></template>
+    </sp_widget>
+</record_update>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_now_assist_deployment_config">
+    <sys_now_assist_deployment_config action="INSERT_OR_UPDATE">
+        <branding display_value="EC Branding">5d0eedb01b6d30508d16ca64604bcb02</branding>
+        <context_profile display_value="Campus Service Assistant">b51fa936046f03107f44b8d89e324c99</context_profile>
+        <now_assist_deployment display_value="Campus Service Assistant">f11fa936046f03107f44b8d89e324c96</now_assist_deployment>
+        <sys_class_name>sys_now_assist_deployment_config</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 10:00:43</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>061fa936046f03107f44b8d89e324c9c</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>f11fa936046f03107f44b8d89e324c96</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_now_assist_deployment_config_061fa936046f03107f44b8d89e324c9c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 10:18:01</sys_updated_on>
+    </sys_now_assist_deployment_config>
+</record_update>
