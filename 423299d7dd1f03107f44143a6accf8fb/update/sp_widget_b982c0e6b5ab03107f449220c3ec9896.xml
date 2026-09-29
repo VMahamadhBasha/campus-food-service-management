@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+
+    var c = this;
+
+    console.log("======================================");
+    console.log("     FOOD BASE PROBLEM DASHBOARD");
+    console.log("======================================");
+
+
+    // ==========================================
+    // DASHBOARD COUNTS
+    // ==========================================
+
+    console.log("Total Requests:",
+        c.data.totalRequests);
+
+    console.log("Pending:",
+        c.data.pending);
+
+    console.log("In Progress:",
+        c.data.inProgress);
+
+    console.log("Closed:",
+        c.data.closed);
+
+
+    // ==========================================
+    // RECENT REQUESTS
+    // ==========================================
+
+    console.log("======================================");
+    console.log("Recent Requests:");
+    console.log("======================================");
+
+    console.log(
+        "Number of Recent Requests:",
+        c.data.recentRequests.length
+    );
+
+    console.log(
+        c.data.recentRequests
+    );
+
+
+    // ==========================================
+    // PRINT EACH RECENT REQUEST
+    // ==========================================
+
+    for (var i = 0;
+         i < c.data.recentRequests.length;
+         i++) {
+
+        var request =
+            c.data.recentRequests[i];
+
+        console.log(
+            "Request " + (i + 1) + ":",
+            request
+        );
+
+    }
+
+
+    // ==========================================
+    // COMPLETE SERVER DATA
+    // ==========================================
+
+    console.log("======================================");
+    console.log("Complete Server Data:");
+    console.log("======================================");
+
+    console.log(c.data);
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.staff-dashboard {&#13;
+    display: flex;&#13;
+    min-height: 100vh;&#13;
+    background: #f5f7fa;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   SIDEBAR&#13;
+   ========================= */&#13;
+&#13;
+.sidebar {&#13;
+    width: 240px;&#13;
+    min-height: 100vh;&#13;
+    background: #ffffff;&#13;
+    border-right: 1px solid #e5e7eb;&#13;
+&#13;
+    display: flex;&#13;
+    flex-direction: column;&#13;
+    justify-content: space-between;&#13;
+&#13;
+    flex-shrink: 0;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   SIDEBAR MENU&#13;
+   ========================= */&#13;
+&#13;
+.sidebar-menu {&#13;
+    padding: 25px 15px;&#13;
+}&#13;
+&#13;
+&#13;
+.menu-item {&#13;
+    padding: 13px 15px;&#13;
+    margin-bottom: 8px;&#13;
+&#13;
+    border-radius: 6px;&#13;
+&#13;
+    color: #374151;&#13;
+    background: transparent;&#13;
+&#13;
+    font-size: 15px;&#13;
+    font-weight: 500;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    transition: background 0.2s ease,&#13;
+                color 0.2s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.menu-item:hover {&#13;
+    background: #f3f4f6;&#13;
+    color: #111827;&#13;
+}&#13;
+&#13;
+&#13;
+.menu-item.active {&#13;
+    background: #eef2ff;&#13;
+    color: #4f46e5;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   SIDEBAR USER&#13;
+   ========================= */&#13;
+&#13;
+.sidebar-user {&#13;
+    padding: 18px;&#13;
+&#13;
+    border-top: 1px solid #e5e7eb;&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-user-icon {&#13;
+    width: 38px;&#13;
+    height: 38px;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: #eef2ff;&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 18px;&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-user-info {&#13;
+    display: flex;&#13;
+    flex-direction: column;&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-user-name {&#13;
+    font-size: 14px;&#13;
+    font-weight: 600;&#13;
+&#13;
+    color: #1f2937;&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-user-role {&#13;
+    margin-top: 3px;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    color: #6b7280;&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>tooo</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>tooo</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    // ==========================================
+    // DASHBOARD DATA
+    // ==========================================
+
+    data.totalRequests = 0;
+    data.pending = 0;
+    data.inProgress = 0;
+    data.closed = 0;
+
+    data.recentRequests = [];
+
+
+    // ==========================================
+    // GROUP SYS IDS
+    // ==========================================
+
+    var hostelAdminGroup =
+        '1754d95bdd1f03107f44143a6accf85b';
+
+    var hostelManagementGroup =
+        '9374d15fdd1f03107f44143a6accf88d';
+
+
+    // ==========================================
+    // GET FOOD BASE PROBLEM RECORDS
+    // ==========================================
+
+    var problemGR = new GlideRecord(
+        'x_snc_campus_foo_1_food_base_problem'
+    );
+
+
+    // ==========================================
+    // ADMIN GROUP OR MANAGEMENT GROUP
+    // ==========================================
+
+    problemGR.addQuery(
+        'assignment_group',
+        'IN',
+        hostelAdminGroup + ',' + hostelManagementGroup
+    );
+
+    problemGR.query();
+
+
+    // ==========================================
+    // COUNT DASHBOARD RECORDS
+    // ==========================================
+
+    while (problemGR.next()) {
+
+        // Total Requests
+        data.totalRequests++;
+
+
+        // Get status
+        var status =
+            problemGR.getDisplayValue('status');
+
+
+        // ==========================================
+        // PENDING
+        // Active records
+        // ==========================================
+
+        if (status == 'Active') {
+
+            data.pending++;
+
+        }
+
+
+        // ==========================================
+        // IN PROGRESS
+        // Hostel Management Group
+        // ==========================================
+
+        if (
+            problemGR.getValue('assignment_group') ==
+            hostelManagementGroup
+        ) {
+
+            data.inProgress++;
+
+        }
+
+
+        // ==========================================
+        // CLOSED
+        // Non-active records
+        // ==========================================
+
+        if (status != 'Active') {
+
+            data.closed++;
+
+        }
+
+    }
+
+
+    // ==========================================
+    // RECENT REQUESTS
+    // HOSTEL ADMIN GROUP + ACTIVE
+    // ==========================================
+
+    var recentGR = new GlideRecord(
+        'x_snc_campus_foo_1_food_base_problem'
+    );
+
+
+    recentGR.addQuery(
+        'assignment_group',
+        hostelAdminGroup
+    );
+
+    recentGR.addQuery(
+        'status',
+        'Active'
+    );
+
+    recentGR.orderByDesc('sys_created_on');
+
+    recentGR.setLimit(5);
+
+    recentGR.query();
+
+
+    // ==========================================
+    // GET FIRST 5 RECENT REQUESTS
+    // ==========================================
+
+    while (recentGR.next()) {
+
+        var request = {};
+
+        request.sys_id =
+            recentGR.getUniqueValue();
+
+        request.number =
+            recentGR.getDisplayValue('number');
+
+        request.problem_type =
+            recentGR.getDisplayValue('problem_type');
+
+        request.mess_hall =
+            recentGR.getDisplayValue('mess_hall');
+
+        request.meal_type =
+            recentGR.getDisplayValue('meal_type');
+
+        // HTML already expects "state"
+        // Food Base Problem actual field is "status"
+        request.state =
+            recentGR.getDisplayValue('status');
+
+        request.description =
+            recentGR.getDisplayValue('description');
+
+        request.priority =
+            recentGR.getDisplayValue('current_priority');
+
+
+        data.recentRequests.push(request);
+
+    }
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-28 07:28:46</sys_created_on>
+        <sys_id>b982c0e6b5ab03107f449220c3ec9896</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>tooo</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_b982c0e6b5ab03107f449220c3ec9896</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-28 11:03:58</sys_updated_on>
+        <template><![CDATA[<!-- ================= MY ASSIGNMENTS ================= -->
+
+<div ng-if="c.activeSection === 'assignments'">
+
+    <div class="page-title">
+
+        <h1>]]>📋<![CDATA[ My Assignments</h1>
+
+        <p>
+            View food service problems assigned to the Mess Staff group.
+        </p>
+
+    </div>
+
+
+    <div class="content-card">
+
+        <div class="section-header">
+
+            <h2>Assigned Food Problems</h2>
+
+            <p>
+                Food Base Problems assigned to Mess Staff.
+            </p>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+
+                        <th>Number</th>
+                        <th>Use Case</th>
+                        <th>Mess Hall</th>
+                        <th>Meal Type</th>
+                        <th>Current Priority</th>
+                        <th>Priority Reason</th>
+                        <th>Student Count</th>
+                        <th>Problem Type</th>
+                        <th>State</th>
+                        <th>AI Summary</th>
+                        <th>Recommended Action</th>
+
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    <tr ng-repeat="problem in c.data.assignments">
+
+                        <td>
+                            {{problem.number}}
+                        </td>
+
+                        <td>
+                            {{problem.use_case}}
+                        </td>
+
+                        <td>
+                            {{problem.mess_hall}}
+                        </td>
+
+                        <td>
+                            {{problem.meal_type}}
+                        </td>
+
+                        <td>
+                            {{problem.current_priority}}
+                        </td>
+
+                        <td>
+                            {{problem.priority_reason}}
+                        </td>
+
+                        <td>
+                            {{problem.student_count}}
+                        </td>
+
+                        <td>
+                            {{problem.problem_type}}
+                        </td>
+
+                        <td>
+                            {{problem.status}}
+                        </td>
+
+                        <td>
+                            {{problem.ai_summary}}
+                        </td>
+
+                        <td>
+                            {{problem.recommended_action}}
+                        </td>
+
+                    </tr>
+
+
+                    <tr ng-if="!c.data.assignments.length">
+
+                        <td colspan="11" class="no-records">
+                            No assignments found.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

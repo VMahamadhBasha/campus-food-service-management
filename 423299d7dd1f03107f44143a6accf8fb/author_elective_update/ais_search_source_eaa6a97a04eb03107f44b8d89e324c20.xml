@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="ais_search_source">
+    <ais_search_source action="DELETE">
+        <active>true</active>
+        <condition table="kb_knowledge">kb_knowledge_base.active=true^workflow_state=published^valid_to&gt;=javascript:gs.beginningOfToday()^active=true^sys_class_name!=kb_knowledge_block<item endquery="false" field="kb_knowledge_base.active" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item display_value="Published" endquery="false" field="workflow_state" goto="false" newquery="false" operator="=" or="false" value="published"/>
+            <item endquery="false" field="valid_to" goto="false" newquery="false" operator="&gt;=" or="false" value="javascript:gs.beginningOfToday()"/>
+            <item endquery="false" field="active" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item display_value="kb_knowledge_block" endquery="false" field="sys_class_name" goto="false" newquery="false" operator="!=" or="false" value="kb_knowledge_block"/>
+        </condition>
+        <datasource display_value="">kb_knowledge</datasource>
+        <has_dynamic_filters>false</has_dynamic_filters>
+        <name>Now Assist Q&amp;A</name>
+        <sys_class_name>ais_search_source</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 09:23:53</sys_created_on>
+        <sys_id>eaa6a97a04eb03107f44b8d89e324c20</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Now Assist Q&amp;A</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>ais_search_source_eaa6a97a04eb03107f44b8d89e324c20</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 09:23:53</sys_updated_on>
+    </ais_search_source>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>ais_search_source_eaa6a97a04eb03107f44b8d89e324c20</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="ais_search_source"><ais_search_source action="INSERT_OR_UPDATE"><active>true</active><condition table="kb_knowledge">kb_knowledge_base.active=true^workflow_state=published^valid_to&gt;=javascript:gs.beginningOfToday()^active=true^sys_class_name!=kb_knowledge_block<item endquery="false" field="kb_knowledge_base.active" goto="false" newquery="false" operator="=" or="false" value="true"/><item display_value="Published" endquery="false" field="workflow_state" goto="false" newquery="false" operator="=" or="false" value="published"/><item endquery="false" field="valid_to" goto="false" newquery="false" operator="&gt;=" or="false" value="javascript:gs.beginningOfToday()"/><item endquery="false" field="active" goto="false" newquery="false" operator="=" or="false" value="true"/><item display_value="kb_knowledge_block" endquery="false" field="sys_class_name" goto="false" newquery="false" operator="!=" or="false" value="kb_knowledge_block"/></condition><datasource display_value="">kb_knowledge</datasource><has_dynamic_filters>false</has_dynamic_filters><name>Now Assist Q&amp;A</name><sys_class_name>ais_search_source</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-09-29 09:23:53</sys_created_on><sys_id>eaa6a97a04eb03107f44b8d89e324c20</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Now Assist Q&amp;A</sys_name><sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package><sys_policy/><sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope><sys_update_name>ais_search_source_eaa6a97a04eb03107f44b8d89e324c20</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-09-29 09:23:53</sys_updated_on></ais_search_source></record_update>]]></payload>
+        <payload_hash>-1923375093</payload_hash>
+        <record_name>Now Assist Q&amp;A</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 09:23:53</sys_created_on>
+        <sys_id>66a6a97a04eb03107f44b8d89e324c24</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0ec7a4d700000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 09:23:53</sys_updated_on>
+        <type>AI Search Search Source</type>
+        <update_guid>6aa6a97a6feb031039e4222397942023</update_guid>
+        <update_guid_history>6aa6a97a6feb031039e4222397942023:-1923375093</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Now Assist Q&amp;A">cb8e6db2046f03107f44b8d89e324cb8</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 09:58:21</sys_created_on>
+        <sys_db_object display_value="" name="ais_search_source">ais_search_source</sys_db_object>
+        <sys_id>0067f69e880a4dc98000595305cdb169</sys_id>
+        <sys_metadata>eaa6a97a04eb03107f44b8d89e324c20</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Now Assist Q&amp;A</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>ais_search_source_eaa6a97a04eb03107f44b8d89e324c20</sys_update_name>
+        <sys_update_version display_value="ais_search_source_eaa6a97a04eb03107f44b8d89e324c20">66a6a97a04eb03107f44b8d89e324c24</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 09:58:21</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

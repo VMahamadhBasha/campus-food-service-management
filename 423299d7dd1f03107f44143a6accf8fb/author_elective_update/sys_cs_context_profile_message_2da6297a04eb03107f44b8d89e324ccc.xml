@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cs_context_profile_message">
+    <sys_cs_context_profile_message action="DELETE">
+        <context_profile display_value="FoodAssist">91a6297a04eb03107f44b8d89e324c97</context_profile>
+        <message>Hi, I’m your Food AI assistant. How can I help You?</message>
+        <sys_class_name>sys_cs_context_profile_message</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 09:23:49</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>2da6297a04eb03107f44b8d89e324ccc</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Hi, I’m your Food AI assistant. How can I help You?</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_cs_context_profile_message_2da6297a04eb03107f44b8d89e324ccc</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 09:40:02</sys_updated_on>
+        <type>greeting</type>
+    </sys_cs_context_profile_message>
+    <sys_translated_text action="DELETE" query="documentkey=2da6297a04eb03107f44b8d89e324ccc"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>sys_cs_context_profile_message_2da6297a04eb03107f44b8d89e324ccc</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cs_context_profile_message"><sys_cs_context_profile_message action="INSERT_OR_UPDATE"><context_profile display_value="FoodAssist">91a6297a04eb03107f44b8d89e324c97</context_profile><message>Hi, I’m your Food AI assistant. How can I help You?</message><sys_class_name>sys_cs_context_profile_message</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-09-29 09:23:49</sys_created_on><sys_domain>global</sys_domain><sys_id>2da6297a04eb03107f44b8d89e324ccc</sys_id><sys_mod_count>1</sys_mod_count><sys_name>Hi, I’m your Food AI assistant. How can I help You?</sys_name><sys_overrides/><sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package><sys_policy/><sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope><sys_update_name>sys_cs_context_profile_message_2da6297a04eb03107f44b8d89e324ccc</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-09-29 09:40:02</sys_updated_on><type>greeting</type></sys_cs_context_profile_message><sys_translated_text action="delete_multiple" query="documentkey=2da6297a04eb03107f44b8d89e324ccc"/></record_update>]]></payload>
+        <payload_hash>-41595934</payload_hash>
+        <record_name>Hi, I’m your Food AI assistant. How can I help You?</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 09:40:02</sys_created_on>
+        <sys_id>875a6df2042f03107f44b8d89e324cdf</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0ec89165c0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 09:40:02</sys_updated_on>
+        <type>Custom Greetings and Setup Messages</type>
+        <update_guid>4b5a6df2ed2f03102530c2b425e33ade</update_guid>
+        <update_guid_history>4b5a6df2ed2f03102530c2b425e33ade:-41595934,29a6297a45eb0310493fbf9f81a7f4ce:-1816953529</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 09:57:59</sys_created_on>
+        <sys_db_object display_value="" name="sys_cs_context_profile_message">sys_cs_context_profile_message</sys_db_object>
+        <sys_id>315c1c2e6c484040b0e8dac659646900</sys_id>
+        <sys_metadata>2da6297a04eb03107f44b8d89e324ccc</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Hi, I’m your Food AI assistant. How can I help You?</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>sys_cs_context_profile_message_2da6297a04eb03107f44b8d89e324ccc</sys_update_name>
+        <sys_update_version display_value="sys_cs_context_profile_message_2da6297a04eb03107f44b8d89e324ccc">875a6df2042f03107f44b8d89e324cdf</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 09:57:59</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

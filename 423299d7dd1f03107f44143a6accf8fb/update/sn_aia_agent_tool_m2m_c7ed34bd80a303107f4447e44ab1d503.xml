@@ -8,7 +8,7 @@
         <document_status/>
         <entity>sn_aia_agent</entity>
         <entity_id>be219d21112703107f44be1983f83811</entity_id>
-        <execution_mode>copilot</execution_mode>
+        <execution_mode>autopilot</execution_mode>
         <inputs>[{"name":"food_base_problem_number","value":"","description":"The Food Base Problem Number, for example FBP0001054.","mandatory":true}]</inputs>
         <max_auto_executions>10</max_auto_executions>
         <name>Get Food Base Problem</name>
@@ -25,7 +25,7 @@
         <sys_created_on>2026-09-26 03:51:58</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_id>c7ed34bd80a303107f4447e44ab1d503</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>Get Food Base Problem</sys_name>
         <sys_overrides/>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
@@ -33,7 +33,7 @@
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sn_aia_agent_tool_m2m_c7ed34bd80a303107f4447e44ab1d503</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-26 08:35:40</sys_updated_on>
+        <sys_updated_on>2026-09-28 05:42:04</sys_updated_on>
         <timeout/>
         <tool display_value="Get Food Base Problem">c7edf0bd80a303107f4447e44ab1d5fc</tool>
         <tool_attributes>{}</tool_attributes>

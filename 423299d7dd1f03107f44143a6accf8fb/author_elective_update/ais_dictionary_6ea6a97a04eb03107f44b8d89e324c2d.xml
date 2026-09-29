@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="ais_dictionary">
+    <ais_dictionary action="DELETE">
+        <active>true</active>
+        <auto_refresh>24</auto_refresh>
+        <blocked_field/>
+        <case_sensitive>false</case_sensitive>
+        <data_source>kb_knowledge,sys_gen_ai_skill,sc_cat_item,sys_gen_ai_skill,sys_gen_ai_skill,sys_gen_ai_skill</data_source>
+        <derived>true</derived>
+        <field/>
+        <label>Now Assist in Virtual Agent - 119a6a57a04eb03107f44b8d89e324cad Default Spell Check Dictionary</label>
+        <last_derived/>
+        <locale>en</locale>
+        <name>x_snc_campus_foo_1_now_assist_in_virtual_agent_119a6a57a04eb03107f44b8d89e324cad_default_spell_check_dictionary</name>
+        <publish_id/>
+        <punctuation_sensitive>false</punctuation_sensitive>
+        <state>DRAFT</state>
+        <sys_class_name>ais_dictionary</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 09:23:53</sys_created_on>
+        <sys_id>6ea6a97a04eb03107f44b8d89e324c2d</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>x_snc_campus_foo_1_now_assist_in_virtual_agent_119a6a57a04eb03107f44b8d89e324cad_default_spell_check_dictionary</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>ais_dictionary_6ea6a97a04eb03107f44b8d89e324c2d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 09:23:55</sys_updated_on>
+        <type>SPELLCHECK</type>
+    </ais_dictionary>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>ais_dictionary_6ea6a97a04eb03107f44b8d89e324c2d</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="ais_dictionary"><ais_dictionary action="INSERT_OR_UPDATE"><active>true</active><auto_refresh>24</auto_refresh><blocked_field/><case_sensitive>false</case_sensitive><data_source>kb_knowledge,sys_gen_ai_skill,sc_cat_item,sys_gen_ai_skill,sys_gen_ai_skill,sys_gen_ai_skill</data_source><derived>true</derived><field/><label>Now Assist in Virtual Agent - 119a6a57a04eb03107f44b8d89e324cad Default Spell Check Dictionary</label><last_derived/><locale>en</locale><name>x_snc_campus_foo_1_now_assist_in_virtual_agent_119a6a57a04eb03107f44b8d89e324cad_default_spell_check_dictionary</name><publish_id/><punctuation_sensitive>false</punctuation_sensitive><state>DRAFT</state><sys_class_name>ais_dictionary</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-09-29 09:23:53</sys_created_on><sys_id>6ea6a97a04eb03107f44b8d89e324c2d</sys_id><sys_mod_count>5</sys_mod_count><sys_name>x_snc_campus_foo_1_now_assist_in_virtual_agent_119a6a57a04eb03107f44b8d89e324cad_default_spell_check_dictionary</sys_name><sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package><sys_policy/><sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope><sys_update_name>ais_dictionary_6ea6a97a04eb03107f44b8d89e324c2d</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-09-29 09:23:55</sys_updated_on><type>SPELLCHECK</type></ais_dictionary></record_update>]]></payload>
+        <payload_hash>1064041225</payload_hash>
+        <record_name>x_snc_campus_foo_1_now_assist_in_virtual_agent_119a6a57a04eb03107f44b8d89e324cad_default_spell_check</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>current</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 09:23:55</sys_created_on>
+        <sys_id>3ea6a97a04eb03107f44b8d89e324c7d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0ec7a547f0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 09:23:55</sys_updated_on>
+        <type>AI Search Dictionary</type>
+        <update_guid>fea6a97a58eb0310e906029e738d7a7c</update_guid>
+        <update_guid_history>fea6a97a58eb0310e906029e738d7a7c:1064041225,7ea6a97aa7eb0310469773b04e0d1070:-1681007094,f6a6a97a09eb03106fd8f5f4cda45964:-192498455,baa6a97a88eb0310696d68c7534d5857:1528604714,e6a6a97a58eb0310d2787deecc553147:-295321045,aea6a97a0aeb0310581d6fd45e15d52f:-1626546231</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="x_snc_campus_foo_1_now_assist_in_virtual_agent_119a6a57a04eb03107f44b8d89e324cad">4f8e6db2046f03107f44b8d89e324ca6</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 09:58:20</sys_created_on>
+        <sys_db_object display_value="" name="ais_dictionary">ais_dictionary</sys_db_object>
+        <sys_id>26469abf806f4a288af88f242c215a10</sys_id>
+        <sys_metadata>6ea6a97a04eb03107f44b8d89e324c2d</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_snc_campus_foo_1_now_assist_in_virtual_agent_119a6a57a04eb03107f44b8d89e324cad_default_spell_check_dictionary</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>ais_dictionary_6ea6a97a04eb03107f44b8d89e324c2d</sys_update_name>
+        <sys_update_version display_value="ais_dictionary_6ea6a97a04eb03107f44b8d89e324c2d">3ea6a97a04eb03107f44b8d89e324c7d</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 09:58:20</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
