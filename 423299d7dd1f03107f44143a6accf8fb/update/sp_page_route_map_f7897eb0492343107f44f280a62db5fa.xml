@@ -5,7 +5,7 @@
         <portals/>
         <roles/>
         <route_from_page display_value="student_welcome_dashboard">3b3e4abc492b03107f44f280a62db570</route_from_page>
-        <route_to_page display_value="ticket_history">f47fe6f4496f03107f44f280a62db5f8</route_to_page>
+        <route_to_page display_value="">f47fe6f4496f03107f44f280a62db5f8</route_to_page>
         <short_description>Student Welcome to Ticket History</short_description>
         <sys_class_name>sp_page_route_map</sys_class_name>
         <sys_created_by>admin</sys_created_by>

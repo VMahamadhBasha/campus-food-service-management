@@ -10,8 +10,8 @@
         <element label="Hostel Name" mandatory="true" max_length="100" name="hostel_name" type="string"/>
         <element choice="1" label="Dietary Preference" max_length="40" name="dietary_preference" type="choice">
             <choice>
-                <element inactive_on_update="false" label="other" value="other"/>
                 <element inactive_on_update="false" label="Non-Vegetarian" value="non-veg"/>
+                <element inactive_on_update="false" label="other" value="other"/>
                 <element inactive_on_update="false" label="vegetarian" value="veg"/>
             </choice>
         </element>

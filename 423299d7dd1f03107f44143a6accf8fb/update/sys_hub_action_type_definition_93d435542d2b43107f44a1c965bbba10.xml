@@ -34,7 +34,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>93d435542d2b43107f44a1c965bbba10</sys_id>
-        <sys_mod_count>47</sys_mod_count>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Campus Food Priority AI</sys_name>
         <sys_overrides/>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
@@ -42,7 +42,7 @@
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sys_hub_action_type_definition_93d435542d2b43107f44a1c965bbba10</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-24 05:46:40</sys_updated_on>
+        <sys_updated_on>2026-09-27 13:41:27</sys_updated_on>
         <system_level>false</system_level>
         <type/>
     </sys_hub_action_type_definition>
@@ -764,11 +764,11 @@
         <sys_created_on>2026-09-23 13:31:01</sys_created_on>
         <sys_id>04b5e37849e743107f44f280a62db51b</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Student Complaint</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_action_input_93d435542d2b43107f44a1c965bbba10_student_complaint_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-23 13:31:01</sys_updated_on>
         <url/>
@@ -787,11 +787,11 @@
         <sys_created_on>2026-09-24 05:16:45</sys_created_on>
         <sys_id>f52e3285a0a303107f4432329b8a1519</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Food Base Problem Number</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_action_input_93d435542d2b43107f44a1c965bbba10_food_base_problem_number_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-24 05:16:45</sys_updated_on>
         <url/>
@@ -811,11 +811,11 @@
         <sys_created_on>2026-09-21 16:34:20</sys_created_on>
         <sys_id>027cbdd02d6b43107f44a1c965bbbab0</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Don't Treat as Error</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_action_output_93d435542d2b43107f44a1c965bbba10___dont_treat_as_error___en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-21 16:34:20</sys_updated_on>
         <url/>
@@ -834,11 +834,11 @@
         <sys_created_on>2026-09-21 16:34:20</sys_created_on>
         <sys_id>427cbdd02d6b43107f44a1c965bbbaa4</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>AI Result</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_action_output_93d435542d2b43107f44a1c965bbba10_ai_result_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-21 16:34:20</sys_updated_on>
         <url/>
@@ -857,11 +857,11 @@
         <sys_created_on>2026-09-21 16:34:20</sys_created_on>
         <sys_id>f57cbdd02d6b43107f44a1c965bbba9c</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Action Status</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_action_output_93d435542d2b43107f44a1c965bbba10___action_status___en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-21 16:34:20</sys_updated_on>
         <url/>
@@ -1565,7 +1565,7 @@
         <sys_created_on>2026-09-22 10:40:39</sys_created_on>
         <sys_id>2215b92855af03107f4429801dee3e13</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Food Base Problem Sys ID</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
@@ -1588,7 +1588,7 @@
         <sys_created_on>2026-09-22 10:40:39</sys_created_on>
         <sys_id>ee15b92855af03107f4429801dee3e18</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Food Knowledge Search Query</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
@@ -1612,7 +1612,7 @@
         <sys_created_on>2026-09-21 16:42:51</sys_created_on>
         <sys_id>2a6eb9d42d6b43107f44a1c965bbba73</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Action Status</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
@@ -1635,7 +1635,7 @@
         <sys_created_on>2026-09-21 16:42:51</sys_created_on>
         <sys_id>aa6eb9d42d6b43107f44a1c965bbba79</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>AI Result</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
@@ -1658,7 +1658,7 @@
         <sys_created_on>2026-09-21 16:42:51</sys_created_on>
         <sys_id>ae6eb9d42d6b43107f44a1c965bbba82</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Don't Treat as Error</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>

@@ -37,7 +37,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>4d8f19a855ab03107f4429801dee3ee3</sys_id>
-        <sys_mod_count>106</sys_mod_count>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Flow-2 Food Complaint-Mess Staff Assignment</sys_name>
         <sys_overrides/>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
@@ -45,17 +45,17 @@
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sys_hub_flow_4d8f19a855ab03107f4429801dee3ee3</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-23 11:55:11</sys_updated_on>
+        <sys_updated_on>2026-09-27 13:41:59</sys_updated_on>
         <type>flow</type>
         <updation_source/>
         <version>2</version>
-        <version_record>b4cf0334492743107f44f280a62db5f6</version_record>
+        <version_record/>
     </sys_hub_flow>
     <sys_translated_text action="delete_multiple" query="documentkey=4d8f19a855ab03107f4429801dee3ee3"/>
     <sys_variable_value action="delete_multiple" query="document_key=4d8f19a855ab03107f4429801dee3ee3"/>
     <sys_flow_record_trigger action="INSERT_OR_UPDATE">
         <active>true</active>
-        <condition table="x_snc_campus_foo_1_complain_tasks">assignment_group=4f04d11fdd1f03107f44143a6accf8c1^NQresolution_status=Not Solved^ORresolution_status=Solved<item display_table="sys_user_group" display_value="Mess Staff Group" endquery="false" field="assignment_group" goto="false" newquery="false" operator="=" or="false" value="4f04d11fdd1f03107f44143a6accf8c1"/>
+        <condition table="x_snc_campus_foo_1_complain_tasks">assignment_group=4f04d11fdd1f03107f44143a6accf8c1^NQresolution_status=Not Solved^ORresolution_status=Solved<item display_table="sys_user_group" display_value="Hostel Mess Staff Group" endquery="false" field="assignment_group" goto="false" newquery="false" operator="=" or="false" value="4f04d11fdd1f03107f44143a6accf8c1"/>
             <item display_value="Not Resolved" endquery="false" field="resolution_status" goto="false" newquery="true" operator="=" or="false" value="Not Solved"/>
             <item display_value="Resolved" endquery="false" field="resolution_status" goto="false" newquery="false" operator="=" or="true" value="Solved"/>
         </condition>
@@ -685,11 +685,11 @@
         <sys_created_on>2026-09-22 09:06:37</sys_created_on>
         <sys_id>519f9da855ab03107f4429801dee3e16</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Table Name</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_4d8f19a855ab03107f4429801dee3ee3_table_name_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-22 09:06:37</sys_updated_on>
         <url/>
@@ -708,11 +708,11 @@
         <sys_created_on>2026-09-22 09:06:38</sys_created_on>
         <sys_id>959f9da855ab03107f4429801dee3e21</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Record</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_4d8f19a855ab03107f4429801dee3ee3_current_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-22 09:06:38</sys_updated_on>
         <url/>
@@ -731,11 +731,11 @@
         <sys_created_on>2026-09-22 09:06:38</sys_created_on>
         <sys_id>e99f9da855ab03107f4429801dee3e38</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Changed Fields</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_4d8f19a855ab03107f4429801dee3ee3_changed_fields_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-22 09:06:38</sys_updated_on>
         <url/>
@@ -1376,7 +1376,7 @@
         <sys_created_on>2026-09-23 09:38:49</sys_created_on>
         <sys_id>2280bab8496f03107f44f280a62db57d</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Record</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
@@ -1399,7 +1399,7 @@
         <sys_created_on>2026-09-23 09:38:49</sys_created_on>
         <sys_id>6280bab8496f03107f44f280a62db588</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Changed Fields</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
@@ -1422,7 +1422,7 @@
         <sys_created_on>2026-09-23 09:38:49</sys_created_on>
         <sys_id>b280bab8496f03107f44f280a62db59f</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Table Name</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>

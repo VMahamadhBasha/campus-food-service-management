@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="student_complaint" label="Student Complaint" language="en" table="var__m_sys_hub_action_input_93d435542d2b43107f44a1c965bbba10">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>student_complaint</element>
+            <help/>
+            <hint/>
+            <label>Student Complaint</label>
+            <language>en</language>
+            <name>var__m_sys_hub_action_input_93d435542d2b43107f44a1c965bbba10</name>
+            <plural/>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-23 13:31:01</sys_created_on>
+            <sys_id>04b5e37849e743107f44f280a62db51b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Student Complaint</sys_name>
+            <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+            <sys_update_name>sys_documentation_var__m_sys_hub_action_input_93d435542d2b43107f44a1c965bbba10_student_complaint_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-23 13:31:01</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

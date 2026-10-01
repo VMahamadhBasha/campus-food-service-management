@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="gsw_change_log">
+    <gsw_change_log action="INSERT_OR_UPDATE">
+        <change_date>2026-09-20 10:32:54</change_date>
+        <changed_by/>
+        <content display_value="Performance Analytics Content Pack for AWA">448d943f535e10108d1eddeeff7b12b8</content>
+        <related_change_log_entry/>
+        <related_task_entry/>
+        <sys_class_name>gsw_change_log</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-20 10:32:54</sys_created_on>
+        <sys_id>b120ebfb619f03107f44f4898ccc4c3b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>2026-09-20 10:32:54</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>gsw_change_log_b120ebfb619f03107f44f4898ccc4c3b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-20 10:32:54</sys_updated_on>
+        <type>6</type>
+    </gsw_change_log>
+</record_update>

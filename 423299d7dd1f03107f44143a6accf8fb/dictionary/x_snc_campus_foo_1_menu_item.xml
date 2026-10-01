@@ -5,8 +5,8 @@
         <element choice="1" label="Meal Type" mandatory="true" max_length="40" name="meal_type" type="choice">
             <choice>
                 <element inactive_on_update="false" label="BreakFast" value="breakfast"/>
-                <element inactive_on_update="false" label="Lunch" value="lunch"/>
                 <element inactive_on_update="false" label="Dinner" value="dinner"/>
+                <element inactive_on_update="false" label="Lunch" value="lunch"/>
             </choice>
         </element>
         <element label="Description" max_length="255" name="description" type="string_full_utf8"/>
@@ -17,7 +17,7 @@
             </choice>
         </element>
         <element label="Name" mandatory="true" max_length="100" name="name" type="string_full_utf8"/>
-        <element default="True&#13;&#10;" label="Active" max_length="40" name="active" type="boolean"/>
+        <element default="True" label="Active" max_length="40" name="active" type="boolean"/>
         <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
         <index name="index">
             <element name="sys_class_name"/>
