@@ -108,11 +108,7 @@
         <roles/>
         <script><![CDATA[(function() {
 
-    // Native Service Portal login URL
-    data.loginUrl = '/sp?id=login';
-
-    // Check whether the current user is logged in
-    data.isLoggedIn = !gs.getUser().isGuest();
+    data.loginUrl = '/sp?id=food_service_login_page';
 
 })();]]></script>
         <servicenow>false</servicenow>
@@ -120,14 +116,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 03:10:42</sys_created_on>
         <sys_id>b6a3b879806303107f4447e44ab1d577</sys_id>
-        <sys_mod_count>9</sys_mod_count>
+        <sys_mod_count>12</sys_mod_count>
         <sys_name>Food_Services_Navbar</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sp_widget_b6a3b879806303107f4447e44ab1d577</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-26 13:50:36</sys_updated_on>
+        <sys_updated_on>2026-10-01 06:54:39</sys_updated_on>
         <template><![CDATA[<div class="cfa-navbar">
   <div class="cfa-navbar-inner">
     <div class="cfa-brand">

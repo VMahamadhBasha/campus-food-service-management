@@ -1,0 +1,2409 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_topic">
+    <sys_cb_topic action="INSERT_OR_UPDATE">
+        <applicability/>
+        <applicability_mode>query</applicability_mode>
+        <autopilot_topic>false</autopilot_topic>
+        <category/>
+        <channels/>
+        <connect_queue/>
+        <context_profiles/>
+        <description>Helps CFMS managers manage campus food service complaints, monitor pending and high-priority complaints, review complaint details, assign and reassign complaints, review resolutions, and view complaint statistics.</description>
+        <dialog_acts_enabled>false</dialog_acts_enabled>
+        <expose_on_palette>false</expose_on_palette>
+        <flexible_conversation_switching>false</flexible_conversation_switching>
+        <foundational>false</foundational>
+        <graph>{
+  "graph_api_version": "1.0.82",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "6f3840397aeb4382900771d16d241a87": {
+          "id": "6f3840397aeb4382900771d16d241a87",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "73713f6946df41c2b9736d12c396e7c8": {
+          "id": "73713f6946df41c2b9736d12c396e7c8",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "9d137753540f4ac9bd9bcdf784cdece3": {
+          "id": "9d137753540f4ac9bd9bcdf784cdece3",
+          "stepType": "TextOutput",
+          "name": "Welcome_Manager",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "👋 Welcome to the Campus Food Management System."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "I'm your Manager Assistant. I can help you monitor food service complaints, review priority requests, manage assignments, review resolutions, and view complaint statistics."
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "_key": "5e074bfa19c74bfd85b1123231dc84fe"
+            }
+          ],
+          "isCollapsible": true,
+          "requestFeedback": true,
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "753d8f6a601249f99dfb54a944979993": {
+          "id": "753d8f6a601249f99dfb54a944979993",
+          "stepType": "StandaloneAIChoicePrompt",
+          "name": "Manager_Menu",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "781e4137d5044d43bad788590b8b4a75",
+              "displayName": "Manager_Menu",
+              "name": "manager_menu",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Please select an option to manage your campus food service operations:"
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "choice",
+              "variableId": "1fb4e95ec8604576a56816fbf46d97fd",
+              "choices": [
+                {
+                  "label": "View All Complaints",
+                  "value": "view_all"
+                },
+                {
+                  "label": "View Pending Complaints",
+                  "value": "view_pending"
+                },
+                {
+                  "label": "View High Priority Complaints",
+                  "value": "view_high_priority",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "View Complaint Details",
+                  "value": "view_details",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Assign Complaint",
+                  "value": "assign_complaint",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Reassign Complaint",
+                  "value": "reassign_complaint",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Review Resolution",
+                  "value": "review_resolution",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "View Complaint Statistics",
+                  "value": "view_statistics",
+                  "checked": true,
+                  "meta": {}
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "ChoicePrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "7729849f52d04092b789b10f4439559f"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_753d8f6a601249f99dfb54a944979993_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "1fb4e95ec8604576a56816fbf46d97fd"
+          ]
+        },
+        "6a017fe3825744499afd78558a1bcd36": {
+          "id": "6a017fe3825744499afd78558a1bcd36",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "47a6f1f73a3b452784d97d2753b38d61": {
+          "id": "47a6f1f73a3b452784d97d2753b38d61",
+          "stepType": "ImplicitEnd"
+        },
+        "363070297bef4afb9381a00619b85851": {
+          "id": "363070297bef4afb9381a00619b85851",
+          "stepType": "ImplicitEnd"
+        },
+        "2ecad061915248689c211dcd4ddce94e": {
+          "id": "2ecad061915248689c211dcd4ddce94e",
+          "stepType": "ImplicitEnd"
+        },
+        "e83d579925ce4919818ad7f99a3acfe7": {
+          "id": "e83d579925ce4919818ad7f99a3acfe7",
+          "stepType": "ImplicitEnd"
+        },
+        "5212789b49ec4f3980d3a54fee8447cd": {
+          "id": "5212789b49ec4f3980d3a54fee8447cd",
+          "stepType": "ImplicitEnd"
+        },
+        "7482851475be4d8d8e3133108622f001": {
+          "id": "7482851475be4d8d8e3133108622f001",
+          "stepType": "ImplicitEnd"
+        },
+        "69f9ccebfb234879b7867d267fb0f3c1": {
+          "id": "69f9ccebfb234879b7867d267fb0f3c1",
+          "stepType": "ImplicitEnd"
+        },
+        "ae53351233c04e1e82bcd7b78a583385": {
+          "id": "ae53351233c04e1e82bcd7b78a583385",
+          "stepType": "LookupRecord",
+          "name": "All_Complaints_Lookup",
+          "condition": {
+            "mode": "glide_query",
+            "value": "number=is not empty"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "c8175225cc3d41b7a337165dd2c16096"
+        },
+        "f36166df748f4c86b720379fe60226f6": {
+          "id": "f36166df748f4c86b720379fe60226f6",
+          "stepType": "TableOutput",
+          "name": "Display_All_Complaints",
+          "header": {
+            "value": "",
+            "mode": "simple"
+          },
+          "displayColumnHeaders": true,
+          "dataSourceType": "table",
+          "script": "",
+          "tableName": "incident",
+          "sortByColumns": [
+            {
+              "column": "number",
+              "sortDirection": "ASC"
+            }
+          ],
+          "tableCondition": {
+            "mode": "glide_query",
+            "value": "number=is not empty"
+          },
+          "columns": [
+            {
+              "key": "number",
+              "value": "Complaint Number",
+              "label": "Number"
+            },
+            {
+              "key": "short_description",
+              "value": "Complaint",
+              "label": "Short description"
+            },
+            {
+              "key": "state",
+              "value": "Status",
+              "label": "State"
+            },
+            {
+              "key": "priority",
+              "value": "Priority",
+              "label": "Priority"
+            }
+          ],
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "There are currently no food service complaints."
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "showLink": false
+        },
+        "04d671d74db44e0aadb7109a5339ea36": {
+          "id": "04d671d74db44e0aadb7109a5339ea36",
+          "stepType": "LookupRecord",
+          "name": "Manager_Pending_Lookup",
+          "condition": {
+            "mode": "glide_query",
+            "value": "state!=6^NQstate!=7"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "3f32023c9e954caa8027cd8fdc969b3d"
+        },
+        "51473b18d7f34adaa9c1dbf3c379426b": {
+          "id": "51473b18d7f34adaa9c1dbf3c379426b",
+          "stepType": "TableOutput",
+          "name": "Display_Manager_Pending",
+          "header": {
+            "value": "",
+            "mode": "simple"
+          },
+          "displayColumnHeaders": true,
+          "dataSourceType": "table",
+          "script": "",
+          "tableName": "incident",
+          "sortByColumns": [
+            {
+              "column": "number",
+              "sortDirection": "ASC"
+            }
+          ],
+          "tableCondition": {
+            "mode": "glide_query",
+            "value": "state!=6^state!=7"
+          },
+          "columns": [
+            {
+              "key": "number",
+              "value": "Complaint Number",
+              "label": "Number"
+            },
+            {
+              "key": "short_description",
+              "value": "Complaint",
+              "label": "Short description"
+            },
+            {
+              "key": "state",
+              "value": "Status",
+              "label": "State"
+            },
+            {
+              "key": "priority",
+              "value": "Priority",
+              "label": "Priority"
+            }
+          ],
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "There are currently no pending food service complaints."
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "showLink": false
+        },
+        "43e2ea33d52c4c84becf0a2dda485bfb": {
+          "id": "43e2ea33d52c4c84becf0a2dda485bfb",
+          "stepType": "LookupRecord",
+          "name": "High_Priority_Lookup",
+          "condition": {
+            "mode": "glide_query",
+            "value": "priority=1^ORpriority=2"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "987ace3bbede418d86ca2259ac2db9d3"
+        },
+        "2bc7b5b0d8a04665b48d819061c7c430": {
+          "id": "2bc7b5b0d8a04665b48d819061c7c430",
+          "stepType": "TableOutput",
+          "name": "Display_High_Priority",
+          "header": {
+            "value": "",
+            "mode": "simple"
+          },
+          "displayColumnHeaders": true,
+          "dataSourceType": "table",
+          "script": "",
+          "tableName": "incident",
+          "sortByColumns": [
+            {
+              "column": "number",
+              "sortDirection": "ASC"
+            }
+          ],
+          "tableCondition": {
+            "mode": "glide_query",
+            "value": "priority=1^ORpriority=2"
+          },
+          "columns": [
+            {
+              "key": "number",
+              "value": "Complaint Number",
+              "label": "Number"
+            },
+            {
+              "key": "short_description",
+              "value": "Complaint",
+              "label": "Short description"
+            },
+            {
+              "key": "state",
+              "value": "Status",
+              "label": "State"
+            },
+            {
+              "key": "priority",
+              "value": "Priority",
+              "label": "Priority"
+            }
+          ],
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "There are currently no high-priority complaints."
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "showLink": false
+        },
+        "148e7256820e4cbca93123a5f266b896": {
+          "id": "148e7256820e4cbca93123a5f266b896",
+          "stepType": "StandaloneAITextPrompt",
+          "name": "Manager_Complaint_Number",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "7405e6c00e86432894e29f0dd112be9a",
+              "displayName": "Manager_Complaint_Number",
+              "name": "manager_complaint_number",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Please enter the complaint number you want to view. For example, INC0010015."
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "string",
+              "variableId": "499cff62f39f4a52961243de320bbe58",
+              "choices": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "TextPrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "e11eba55c17d4566a83d7ed76c480b7f"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_148e7256820e4cbca93123a5f266b896_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "499cff62f39f4a52961243de320bbe58"
+          ]
+        },
+        "5cf308fe02be44f889c38eca1ac7ba9f": {
+          "id": "5cf308fe02be44f889c38eca1ac7ba9f",
+          "stepType": "LookupRecord",
+          "name": "Manager_Complaint_Details_Lookup",
+          "condition": {
+            "mode": "glide_query",
+            "value": "number={{vaInputs.manager_complaint_number}}"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "6c661e9c6b1149eaa42f6df6d5a6e14d"
+        },
+        "5c78069f15a9452f9bc13e20dd720735": {
+          "id": "5c78069f15a9452f9bc13e20dd720735",
+          "stepType": "TableOutput",
+          "name": "Display_Manager_Complaint_Deta",
+          "header": {
+            "value": "",
+            "mode": "simple"
+          },
+          "displayColumnHeaders": true,
+          "dataSourceType": "table",
+          "script": "",
+          "tableName": "incident",
+          "sortByColumns": [],
+          "tableCondition": {
+            "mode": "glide_query",
+            "value": "number={{vaInputs.manager_complaint_number}}"
+          },
+          "columns": [
+            {
+              "key": "number",
+              "value": "Complaint Number",
+              "label": "Number"
+            },
+            {
+              "key": "short_description",
+              "value": "Complaint",
+              "label": "Short description"
+            },
+            {
+              "key": "state",
+              "value": "Status",
+              "label": "State"
+            },
+            {
+              "key": "priority",
+              "value": "Priority",
+              "label": "Priority"
+            }
+          ],
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "I couldn't find a complaint with that number."
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "showLink": false
+        },
+        "3e55e1c8b07d4b5bbdc33b9ee471d5a3": {
+          "id": "3e55e1c8b07d4b5bbdc33b9ee471d5a3",
+          "stepType": "StandaloneAITextPrompt",
+          "name": "Assignment_Complaint_Number",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "add49ca4827740a0bae2953abc19c9e7",
+              "displayName": "Assignment_Complaint_Number",
+              "name": "assignment_complaint_number",
+              "description": "Please enter the complaint number you want to assign. For example, INC0010015.",
+              "discoverable": true,
+              "dynamicDescription": {
+                "value": "",
+                "mode": "simple"
+              },
+              "type": "string",
+              "variableId": "7d20f7cb93694de09e3d07332649b2c1",
+              "choices": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "TextPrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "b87a1bd1d6904097b02770b368181b1b"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_3e55e1c8b07d4b5bbdc33b9ee471d5a3_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "7d20f7cb93694de09e3d07332649b2c1"
+          ]
+        },
+        "0cad53a01b1d4f8d97b03c5c529e7011": {
+          "id": "0cad53a01b1d4f8d97b03c5c529e7011",
+          "stepType": "StandaloneAIReferenceChoicePrompt",
+          "name": "Assignment_Group",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "82c3d3b7ea9347fd9b446058e9da3a24",
+              "displayName": "Assignment_Group",
+              "name": "assignment_group",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Please select the assignment group for this complaint."
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "reference",
+              "variableId": "208739d8f9b24474ae19ad66ad821d7d",
+              "choices": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "mode": "glide_record",
+              "script": "",
+              "condition": {
+                "mode": "glide_query",
+                "value": "active=true"
+              },
+              "stepType": "ReferenceChoicePrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "15f330f5f96246e58a4aa09ca26ba505"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_0cad53a01b1d4f8d97b03c5c529e7011_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "208739d8f9b24474ae19ad66ad821d7d"
+          ]
+        },
+        "69f89e4ed1ad46fb98e2278517c29473": {
+          "id": "69f89e4ed1ad46fb98e2278517c29473",
+          "stepType": "LookupRecord",
+          "name": "Assign_Complaint_Lookup",
+          "condition": {
+            "mode": "glide_query",
+            "value": "number={{vaInputs.assignment_complaint_number}}"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "ecefdc7329c34fa8a1c5516b4a740240"
+        },
+        "eb67611058a64965bcc3def7cf079f6d": {
+          "id": "eb67611058a64965bcc3def7cf079f6d",
+          "stepType": "CrudAction",
+          "name": "Assign_Complaint_Record",
+          "template": {
+            "query": {
+              "terms": [
+                {
+                  "prefix": "",
+                  "operator": "=",
+                  "operand": "assignment_group",
+                  "expression": "{{vaInputs.assignment_group}}",
+                  "id": "8c4771142c664daaa8d5f88194af30b3"
+                }
+              ]
+            },
+            "queryString": "assignment_group={{vaInputs.assignment_group}}"
+          },
+          "mode": "update",
+          "record": "ecefdc7329c34fa8a1c5516b4a740240",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "attachments": [
+            {
+              "value": "",
+              "mode": "simple"
+            }
+          ],
+          "variableId": "52b2b7792842440cada8c55d58feff1e"
+        },
+        "d23295dc33e144d1af759914cc8105cd": {
+          "id": "d23295dc33e144d1af759914cc8105cd",
+          "stepType": "TextOutput",
+          "name": "Assignment_Success",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "✅ The complaint has been assigned successfully to the selected assignment group."
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "_key": "ded3b3067c5a46dbb75fd688525fe40f"
+            }
+          ],
+          "isCollapsible": true,
+          "requestFeedback": true,
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "46e55d3ee1b445fb9e9a80b43e4eda25": {
+          "id": "46e55d3ee1b445fb9e9a80b43e4eda25",
+          "stepType": "StandaloneAITextPrompt",
+          "name": "Reassign_Complaint_Number",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "0bdeb0eab55e4516a3402df74d4e2306",
+              "displayName": "Reassign_Complaint_Number",
+              "name": "reassign_complaint_number",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Please enter the complaint number you want to reassign. For example, INC0010015."
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "string",
+              "variableId": "fafc23b4527c4c87b5115b618bd8bb77",
+              "choices": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "TextPrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "506c1c1a0f4344798e63d5e9f6fdd245"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_46e55d3ee1b445fb9e9a80b43e4eda25_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "fafc23b4527c4c87b5115b618bd8bb77"
+          ]
+        },
+        "4c947a28fba249a3bc3502d77a5b567d": {
+          "id": "4c947a28fba249a3bc3502d77a5b567d",
+          "stepType": "StandaloneAIReferenceChoicePrompt",
+          "name": "New_Assignment_Group",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "652711e01bbc410581a379828ab886bb",
+              "displayName": "New_Assignment_Group",
+              "name": "new_assignment_group",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Please select the new assignment group for this complaint."
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "reference",
+              "variableId": "f189d30f159c47d2bc97f0504644a88c",
+              "choices": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "mode": "glide_record",
+              "script": "",
+              "condition": {
+                "mode": "glide_query",
+                "value": "active=true"
+              },
+              "stepType": "ReferenceChoicePrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "c50f0fcb80f446fd9b95e02b190e8653"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_4c947a28fba249a3bc3502d77a5b567d_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "f189d30f159c47d2bc97f0504644a88c"
+          ]
+        },
+        "97edfca5ffe84459b96a0f6153cef18a": {
+          "id": "97edfca5ffe84459b96a0f6153cef18a",
+          "stepType": "LookupRecord",
+          "name": "Reassign_Complaint_Lookup",
+          "condition": {
+            "mode": "glide_query",
+            "value": "number={{vaInputs.reassign_complaint_number}}"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "6213d991da7f4d008d3a4b5d46f5c1a8"
+        },
+        "f771412681a546ac830c7397d0fd2cc9": {
+          "id": "f771412681a546ac830c7397d0fd2cc9",
+          "stepType": "CrudAction",
+          "name": "Reassign_Complaint_Record",
+          "template": {
+            "query": {
+              "terms": [
+                {
+                  "prefix": "",
+                  "operator": "=",
+                  "operand": "assignment_group",
+                  "expression": "{{vaInputs.new_assignment_group}}",
+                  "id": "967bb0c9d50f460fa89355d02abc7f04"
+                }
+              ]
+            },
+            "queryString": "assignment_group={{vaInputs.new_assignment_group}}"
+          },
+          "mode": "update",
+          "record": "6213d991da7f4d008d3a4b5d46f5c1a8",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "attachments": [
+            {
+              "value": "",
+              "mode": "simple"
+            }
+          ],
+          "variableId": "6243933e707a466d8380c31866619d22"
+        },
+        "5dd84878da8e4b3ea9895a712945b60a": {
+          "id": "5dd84878da8e4b3ea9895a712945b60a",
+          "stepType": "TextOutput",
+          "name": "Reassignment_Success",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "✅ The complaint has been reassigned successfully to the selected assignment group."
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "_key": "58d15074fa5a446b81822c8066ff32aa"
+            }
+          ],
+          "isCollapsible": true,
+          "requestFeedback": true,
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "05c3f5a6d24a463999297a1737890019": {
+          "id": "05c3f5a6d24a463999297a1737890019",
+          "stepType": "StandaloneAITextPrompt",
+          "name": "Review_Resolution_Complaint_Number",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "726579e15a1d4a36bb273911da148ecf",
+              "displayName": "Review_Resolution_Complaint_Number",
+              "name": "review_resolution_complaint_number",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Please enter the complaint number whose resolution you want to review. For example, INC0010015."
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "string",
+              "variableId": "abd0b47db64c48bbb1cc6cb1a3db14e2",
+              "choices": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "TextPrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "9c53eacee2ad44ff955fb26e6ab372e1"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_05c3f5a6d24a463999297a1737890019_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "abd0b47db64c48bbb1cc6cb1a3db14e2"
+          ]
+        },
+        "2801578cae224873a654bd68f0f2dd8c": {
+          "id": "2801578cae224873a654bd68f0f2dd8c",
+          "stepType": "LookupRecord",
+          "name": "Review_Resolution_Lookup",
+          "condition": {
+            "mode": "glide_query",
+            "value": "number={{vaInputs.review_resolution_complaint_number}}"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "a60ca3fdc2da45bdabcae2cff4c2c559"
+        },
+        "a50ed74d54e643ff8fd11089ea55651d": {
+          "id": "a50ed74d54e643ff8fd11089ea55651d",
+          "stepType": "TableOutput",
+          "name": "Display_Resolution_Details",
+          "header": {
+            "value": "",
+            "mode": "simple"
+          },
+          "displayColumnHeaders": true,
+          "dataSourceType": "table",
+          "script": "",
+          "tableName": "incident",
+          "sortByColumns": [
+            {
+              "column": "number",
+              "sortDirection": "ASC"
+            }
+          ],
+          "tableCondition": {
+            "mode": "glide_query",
+            "value": "number={{vaInputs.review_resolution_complaint_number}}"
+          },
+          "columns": [
+            {
+              "key": "number",
+              "value": "Complaint Number",
+              "label": "Number"
+            },
+            {
+              "key": "short_description",
+              "value": "Complaint",
+              "label": "Short description"
+            },
+            {
+              "key": "state",
+              "value": "Status",
+              "label": "State"
+            },
+            {
+              "key": "priority",
+              "value": "Priority",
+              "label": "Priority"
+            }
+          ],
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "I couldn't find a complaint with that number or no resolution has been added yet."
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "showLink": false
+        },
+        "107d19550d374623979675a2228e7c42": {
+          "id": "107d19550d374623979675a2228e7c42",
+          "stepType": "LookupRecord",
+          "name": "Total_Complaints_Lookup",
+          "condition": {
+            "mode": "glide_query",
+            "value": "number!=empty"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "a77c01c2a3904c45a15370bcff66a9a7"
+        },
+        "3262aa41e0f340628fd1e2b0c7872026": {
+          "id": "3262aa41e0f340628fd1e2b0c7872026",
+          "stepType": "LookupRecord",
+          "name": "Pending_Complaints_Statistics",
+          "condition": {
+            "mode": "glide_query",
+            "value": "state!=7^state!=7"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "0be3a78a761343f69955f118854179ba"
+        },
+        "70c0096059414730afdc57ed9cb2a6a8": {
+          "id": "70c0096059414730afdc57ed9cb2a6a8",
+          "stepType": "LookupRecord",
+          "name": "High_Priority_Statistics",
+          "condition": {
+            "mode": "glide_query",
+            "value": "priority=1^ORpriority=2"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "6ab5b93015f24330b662955e3b40eef9"
+        },
+        "076c34ae94e34ebea37a6fbf1bc4968c": {
+          "id": "076c34ae94e34ebea37a6fbf1bc4968c",
+          "stepType": "LookupRecord",
+          "name": "Resolved_Complaints_Statistics",
+          "condition": {
+            "mode": "glide_query",
+            "value": "state=6"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "e3139bd7e4e3481c8ccc8e35118ba3a4"
+        },
+        "a0b3cfdb57ea448d8c5a01a850e0e42e": {
+          "id": "a0b3cfdb57ea448d8c5a01a850e0e42e",
+          "stepType": "LookupRecord",
+          "name": "Closed_Complaints_Statistics",
+          "condition": {
+            "mode": "glide_query",
+            "value": "state=7"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "01f527ab86e747e1ba7f531e1b6ba54e"
+        },
+        "f77d7698a8824f34998f5f6d28e2d50a": {
+          "id": "f77d7698a8824f34998f5f6d28e2d50a",
+          "stepType": "TextOutput",
+          "name": "Complaint_Statistics_Summary",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "📊"
+                    },
+                    {
+                      "text": " Complaint Statistics",
+                      "bold": true
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "• Total Complaints: Retrieved from the system"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "• Pending Complaints: Retrieved from the system"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "• High Priority Complaints: Retrieved from the system"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "• Resolved Complaints: Retrieved from the system"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "• Closed Complaints: Retrieved from the system"
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "_key": "5990c59e341842cbbb52008d8489e9f4"
+            }
+          ],
+          "isCollapsible": true,
+          "requestFeedback": true,
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        }
+      },
+      "edges": [
+        {
+          "id": "9e52841c857e4b7998dbb05e286b08cc",
+          "edgeType": "Edge",
+          "source": "107d19550d374623979675a2228e7c42",
+          "target": "3262aa41e0f340628fd1e2b0c7872026",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "7be634b81a3642d1905bac742a1baae3",
+          "edgeType": "Edge",
+          "source": "6f3840397aeb4382900771d16d241a87",
+          "target": "9d137753540f4ac9bd9bcdf784cdece3",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "94a362636af2452286dac727d142bc1d",
+          "edgeType": "Edge",
+          "source": "9d137753540f4ac9bd9bcdf784cdece3",
+          "target": "753d8f6a601249f99dfb54a944979993",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "ce5cfc8d87bd449d89e6839dd0d6f934",
+          "edgeType": "Edge",
+          "source": "753d8f6a601249f99dfb54a944979993",
+          "target": "6a017fe3825744499afd78558a1bcd36",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "15c129ecdfdc4adda813d928238f7e8d",
+          "edgeType": "Branch",
+          "source": "6a017fe3825744499afd78558a1bcd36",
+          "target": "ae53351233c04e1e82bcd7b78a583385",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.manager_menu=view_all",
+            "mode": "query"
+          },
+          "label": "View_All"
+        },
+        {
+          "id": "285d22906b1541f9bb98d3f88a1e79c2",
+          "edgeType": "Edge",
+          "source": "ae53351233c04e1e82bcd7b78a583385",
+          "target": "f36166df748f4c86b720379fe60226f6",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "c92d28b279eb4744aa2a911f0600bb12",
+          "edgeType": "Edge",
+          "source": "f36166df748f4c86b720379fe60226f6",
+          "target": "363070297bef4afb9381a00619b85851",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "fe9e184d7d494bf88d01c9907ab04fcc",
+          "edgeType": "Branch",
+          "source": "6a017fe3825744499afd78558a1bcd36",
+          "target": "04d671d74db44e0aadb7109a5339ea36",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.manager_menu=view_pending",
+            "mode": "query"
+          },
+          "label": "View_Pending"
+        },
+        {
+          "id": "16143a260dd94ee99c059f3771d3132f",
+          "edgeType": "Edge",
+          "source": "04d671d74db44e0aadb7109a5339ea36",
+          "target": "51473b18d7f34adaa9c1dbf3c379426b",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "3fef73972274407c8a1b3c5627616278",
+          "edgeType": "Edge",
+          "source": "51473b18d7f34adaa9c1dbf3c379426b",
+          "target": "69f9ccebfb234879b7867d267fb0f3c1",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "015c6682f0454128a2b124a7a03fc1d6",
+          "edgeType": "Branch",
+          "source": "6a017fe3825744499afd78558a1bcd36",
+          "target": "43e2ea33d52c4c84becf0a2dda485bfb",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.manager_menu=view_high_priority",
+            "mode": "query"
+          },
+          "label": "View_High_Priority"
+        },
+        {
+          "id": "6bac2aba284641028d28f08bea7f88cf",
+          "edgeType": "Edge",
+          "source": "43e2ea33d52c4c84becf0a2dda485bfb",
+          "target": "2bc7b5b0d8a04665b48d819061c7c430",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "2332695637e545aea48a5c2b053f68e7",
+          "edgeType": "Edge",
+          "source": "2bc7b5b0d8a04665b48d819061c7c430",
+          "target": "2ecad061915248689c211dcd4ddce94e",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "47b68d5ac28f4ce885c2c76221c3fdf8",
+          "edgeType": "Branch",
+          "source": "6a017fe3825744499afd78558a1bcd36",
+          "target": "148e7256820e4cbca93123a5f266b896",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.manager_menu=view_details",
+            "mode": "query"
+          },
+          "label": "View_Details"
+        },
+        {
+          "id": "127d05ca76c74aa1bd14b824770a225f",
+          "edgeType": "Edge",
+          "source": "148e7256820e4cbca93123a5f266b896",
+          "target": "5cf308fe02be44f889c38eca1ac7ba9f",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "1853fb6ac4864f8ca956832c1a22093d",
+          "edgeType": "Edge",
+          "source": "5cf308fe02be44f889c38eca1ac7ba9f",
+          "target": "5c78069f15a9452f9bc13e20dd720735",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "0d04c660ad5e4586bc985b0a3a8b1419",
+          "edgeType": "Edge",
+          "source": "5c78069f15a9452f9bc13e20dd720735",
+          "target": "7482851475be4d8d8e3133108622f001",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "18109fcf100440c8ac843889f37cecf2",
+          "edgeType": "Branch",
+          "source": "6a017fe3825744499afd78558a1bcd36",
+          "target": "3e55e1c8b07d4b5bbdc33b9ee471d5a3",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.manager_menu=assign_complaint",
+            "mode": "query"
+          },
+          "label": "Assign_Complaint"
+        },
+        {
+          "id": "ba7fad93d5a14eecbf87c8e71c2dca54",
+          "edgeType": "Edge",
+          "source": "3e55e1c8b07d4b5bbdc33b9ee471d5a3",
+          "target": "0cad53a01b1d4f8d97b03c5c529e7011",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "6683617451ad4c2e9787ccb76b84ab60",
+          "edgeType": "Edge",
+          "source": "0cad53a01b1d4f8d97b03c5c529e7011",
+          "target": "69f89e4ed1ad46fb98e2278517c29473",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "a3fcc507f119421aa13b0fa13186d611",
+          "edgeType": "Edge",
+          "source": "69f89e4ed1ad46fb98e2278517c29473",
+          "target": "eb67611058a64965bcc3def7cf079f6d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "62a040d291e5484f8053ad510c4953ec",
+          "edgeType": "Edge",
+          "source": "eb67611058a64965bcc3def7cf079f6d",
+          "target": "d23295dc33e144d1af759914cc8105cd",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "a91f5ee9b87949f685f5f9be0913dc0a",
+          "edgeType": "Edge",
+          "source": "d23295dc33e144d1af759914cc8105cd",
+          "target": "e83d579925ce4919818ad7f99a3acfe7",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "416cacdd96b64d0abc43ae641a0b6111",
+          "edgeType": "Branch",
+          "source": "6a017fe3825744499afd78558a1bcd36",
+          "target": "46e55d3ee1b445fb9e9a80b43e4eda25",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.manager_menu=reassign_complaint",
+            "mode": "query"
+          },
+          "label": "Reassign_Complaint"
+        },
+        {
+          "id": "1f23d97375d5403cb7d4c58ff29de24e",
+          "edgeType": "Edge",
+          "source": "46e55d3ee1b445fb9e9a80b43e4eda25",
+          "target": "4c947a28fba249a3bc3502d77a5b567d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "bf3b87e8f1bd4ee4a85ccd18e6fe5a3f",
+          "edgeType": "Edge",
+          "source": "4c947a28fba249a3bc3502d77a5b567d",
+          "target": "97edfca5ffe84459b96a0f6153cef18a",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "ed04d81beadb41488d7a72b3b3515a34",
+          "edgeType": "Edge",
+          "source": "97edfca5ffe84459b96a0f6153cef18a",
+          "target": "f771412681a546ac830c7397d0fd2cc9",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "b1848703dabd4935a243382e5f5fd961",
+          "edgeType": "Edge",
+          "source": "f771412681a546ac830c7397d0fd2cc9",
+          "target": "5dd84878da8e4b3ea9895a712945b60a",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "82dc2118aa414906b76d8d8e129047e4",
+          "edgeType": "Edge",
+          "source": "5dd84878da8e4b3ea9895a712945b60a",
+          "target": "5212789b49ec4f3980d3a54fee8447cd",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "3ce0be5d563b4c19abf28eda910db866",
+          "edgeType": "Branch",
+          "source": "6a017fe3825744499afd78558a1bcd36",
+          "target": "05c3f5a6d24a463999297a1737890019",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.manager_menu=review_resolution",
+            "mode": "query"
+          },
+          "label": "Review_Resolution"
+        },
+        {
+          "id": "8a2680c333874b9e97e12553aae40017",
+          "edgeType": "Edge",
+          "source": "05c3f5a6d24a463999297a1737890019",
+          "target": "2801578cae224873a654bd68f0f2dd8c",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "f8154486bd4846bdbc2ba50c02da3c82",
+          "edgeType": "Edge",
+          "source": "2801578cae224873a654bd68f0f2dd8c",
+          "target": "a50ed74d54e643ff8fd11089ea55651d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "089ab52d97e94ee3997fe8b3d935a1ff",
+          "edgeType": "Edge",
+          "source": "a50ed74d54e643ff8fd11089ea55651d",
+          "target": "73713f6946df41c2b9736d12c396e7c8",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "9ca06a4d6b244725b779d13867cda2f3",
+          "edgeType": "Branch",
+          "source": "6a017fe3825744499afd78558a1bcd36",
+          "target": "107d19550d374623979675a2228e7c42",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.manager_menu=view_statistics",
+            "mode": "query"
+          },
+          "label": "View_Statistics"
+        },
+        {
+          "id": "8e361920b0724d3fb9a843ca916c8506",
+          "edgeType": "Edge",
+          "source": "3262aa41e0f340628fd1e2b0c7872026",
+          "target": "70c0096059414730afdc57ed9cb2a6a8",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "ad0f49963b1b48bea49031795ccc17f5",
+          "edgeType": "Edge",
+          "source": "70c0096059414730afdc57ed9cb2a6a8",
+          "target": "076c34ae94e34ebea37a6fbf1bc4968c",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "f1dda2594fb546bba4e4b6c15c3b75a4",
+          "edgeType": "Edge",
+          "source": "076c34ae94e34ebea37a6fbf1bc4968c",
+          "target": "a0b3cfdb57ea448d8c5a01a850e0e42e",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "5b09e889e5a94fd7acbc84ef2d948afa",
+          "edgeType": "Edge",
+          "source": "a0b3cfdb57ea448d8c5a01a850e0e42e",
+          "target": "f77d7698a8824f34998f5f6d28e2d50a",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "01be6a15d0f148788060a96aac2d48b6",
+          "edgeType": "Edge",
+          "source": "f77d7698a8824f34998f5f6d28e2d50a",
+          "target": "47a6f1f73a3b452784d97d2753b38d61",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "7729849f52d04092b789b10f4439559f": {
+      "id": "7729849f52d04092b789b10f4439559f",
+      "name": "ai_data_collector_753d8f6a601249f99dfb54a944979993_output",
+      "label": "Ai_data_collector_753d8f6a601249f99dfb54a944979993_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "1fb4e95ec8604576a56816fbf46d97fd": {
+      "id": "1fb4e95ec8604576a56816fbf46d97fd",
+      "varType": "choice",
+      "category": "vaInputs",
+      "label": "Manager_Menu",
+      "name": "manager_menu",
+      "choices": [
+        {
+          "label": "View All Complaints",
+          "value": "view_all"
+        },
+        {
+          "label": "View Pending Complaints",
+          "value": "view_pending"
+        },
+        {
+          "label": "View High Priority Complaints",
+          "value": "view_high_priority",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "View Complaint Details",
+          "value": "view_details",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Assign Complaint",
+          "value": "assign_complaint",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Reassign Complaint",
+          "value": "reassign_complaint",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Review Resolution",
+          "value": "review_resolution",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "View Complaint Statistics",
+          "value": "view_statistics",
+          "checked": true,
+          "meta": {}
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "753d8f6a601249f99dfb54a944979993",
+      "isHidden": false,
+      "description": "",
+      "translation": true
+    },
+    "c8175225cc3d41b7a337165dd2c16096": {
+      "id": "c8175225cc3d41b7a337165dd2c16096",
+      "name": "all_complaints_lookup",
+      "label": "All_Complaints_Lookup",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "ae53351233c04e1e82bcd7b78a583385",
+      "isHidden": false
+    },
+    "3f32023c9e954caa8027cd8fdc969b3d": {
+      "id": "3f32023c9e954caa8027cd8fdc969b3d",
+      "name": "manager_pending_lookup",
+      "label": "Manager_Pending_Lookup",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "04d671d74db44e0aadb7109a5339ea36",
+      "isHidden": false
+    },
+    "987ace3bbede418d86ca2259ac2db9d3": {
+      "id": "987ace3bbede418d86ca2259ac2db9d3",
+      "name": "high_priority_lookup",
+      "label": "High_Priority_Lookup",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "43e2ea33d52c4c84becf0a2dda485bfb",
+      "isHidden": false
+    },
+    "e11eba55c17d4566a83d7ed76c480b7f": {
+      "id": "e11eba55c17d4566a83d7ed76c480b7f",
+      "name": "ai_data_collector_148e7256820e4cbca93123a5f266b896_output",
+      "label": "Ai_data_collector_148e7256820e4cbca93123a5f266b896_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "499cff62f39f4a52961243de320bbe58": {
+      "id": "499cff62f39f4a52961243de320bbe58",
+      "varType": "string",
+      "category": "vaInputs",
+      "label": "Manager_Complaint_Number",
+      "name": "manager_complaint_number",
+      "choices": [
+        {
+          "label": "",
+          "value": ""
+        },
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "148e7256820e4cbca93123a5f266b896",
+      "isHidden": false,
+      "description": ""
+    },
+    "6c661e9c6b1149eaa42f6df6d5a6e14d": {
+      "id": "6c661e9c6b1149eaa42f6df6d5a6e14d",
+      "name": "manager_complaint_details_lookup",
+      "label": "Manager_Complaint_Details_Lookup",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "5cf308fe02be44f889c38eca1ac7ba9f",
+      "isHidden": false
+    },
+    "b87a1bd1d6904097b02770b368181b1b": {
+      "id": "b87a1bd1d6904097b02770b368181b1b",
+      "name": "ai_data_collector_3e55e1c8b07d4b5bbdc33b9ee471d5a3_output",
+      "label": "Ai_data_collector_3e55e1c8b07d4b5bbdc33b9ee471d5a3_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "7d20f7cb93694de09e3d07332649b2c1": {
+      "id": "7d20f7cb93694de09e3d07332649b2c1",
+      "varType": "string",
+      "category": "vaInputs",
+      "label": "Assignment_Complaint_Number",
+      "name": "assignment_complaint_number",
+      "choices": [
+        {
+          "label": "",
+          "value": ""
+        },
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "3e55e1c8b07d4b5bbdc33b9ee471d5a3",
+      "isHidden": false,
+      "description": "Please enter the complaint number you want to assign. For example, INC0010015."
+    },
+    "15f330f5f96246e58a4aa09ca26ba505": {
+      "id": "15f330f5f96246e58a4aa09ca26ba505",
+      "name": "ai_data_collector_0cad53a01b1d4f8d97b03c5c529e7011_output",
+      "label": "Ai_data_collector_0cad53a01b1d4f8d97b03c5c529e7011_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "208739d8f9b24474ae19ad66ad821d7d": {
+      "id": "208739d8f9b24474ae19ad66ad821d7d",
+      "varType": "reference",
+      "category": "vaInputs",
+      "label": "Assignment_Group",
+      "name": "assignment_group",
+      "choices": [
+        {
+          "label": "",
+          "value": ""
+        },
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "mode": "glide_record",
+      "table": "sys_user_group",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "0cad53a01b1d4f8d97b03c5c529e7011",
+      "isHidden": false,
+      "description": ""
+    },
+    "ecefdc7329c34fa8a1c5516b4a740240": {
+      "id": "ecefdc7329c34fa8a1c5516b4a740240",
+      "name": "assign_complaint_lookup",
+      "label": "Assign_Complaint_Lookup",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "69f89e4ed1ad46fb98e2278517c29473",
+      "isHidden": false
+    },
+    "52b2b7792842440cada8c55d58feff1e": {
+      "id": "52b2b7792842440cada8c55d58feff1e",
+      "name": "assign_complaint_record",
+      "label": "Assign_Complaint_Record",
+      "varType": "reference",
+      "table": "",
+      "inactive": true,
+      "category": "vaInputs",
+      "nodeId": "eb67611058a64965bcc3def7cf079f6d",
+      "isHidden": false
+    },
+    "506c1c1a0f4344798e63d5e9f6fdd245": {
+      "id": "506c1c1a0f4344798e63d5e9f6fdd245",
+      "name": "ai_data_collector_46e55d3ee1b445fb9e9a80b43e4eda25_output",
+      "label": "Ai_data_collector_46e55d3ee1b445fb9e9a80b43e4eda25_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "fafc23b4527c4c87b5115b618bd8bb77": {
+      "id": "fafc23b4527c4c87b5115b618bd8bb77",
+      "varType": "string",
+      "category": "vaInputs",
+      "label": "Reassign_Complaint_Number",
+      "name": "reassign_complaint_number",
+      "choices": [
+        {
+          "label": "",
+          "value": ""
+        },
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "46e55d3ee1b445fb9e9a80b43e4eda25",
+      "isHidden": false,
+      "description": ""
+    },
+    "c50f0fcb80f446fd9b95e02b190e8653": {
+      "id": "c50f0fcb80f446fd9b95e02b190e8653",
+      "name": "ai_data_collector_4c947a28fba249a3bc3502d77a5b567d_output",
+      "label": "Ai_data_collector_4c947a28fba249a3bc3502d77a5b567d_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "f189d30f159c47d2bc97f0504644a88c": {
+      "id": "f189d30f159c47d2bc97f0504644a88c",
+      "varType": "reference",
+      "category": "vaInputs",
+      "label": "New_Assignment_Group",
+      "name": "new_assignment_group",
+      "choices": [
+        {
+          "label": "",
+          "value": ""
+        },
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "mode": "glide_record",
+      "table": "sys_user_group",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "4c947a28fba249a3bc3502d77a5b567d",
+      "isHidden": false,
+      "description": ""
+    },
+    "6213d991da7f4d008d3a4b5d46f5c1a8": {
+      "id": "6213d991da7f4d008d3a4b5d46f5c1a8",
+      "name": "reassign_complaint_lookup",
+      "label": "Reassign_Complaint_Lookup",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "97edfca5ffe84459b96a0f6153cef18a",
+      "isHidden": false
+    },
+    "6243933e707a466d8380c31866619d22": {
+      "id": "6243933e707a466d8380c31866619d22",
+      "name": "reassign_complaint_record",
+      "label": "Reassign_Complaint_Record",
+      "varType": "reference",
+      "table": "",
+      "inactive": true,
+      "category": "vaInputs",
+      "nodeId": "f771412681a546ac830c7397d0fd2cc9",
+      "isHidden": false
+    },
+    "9c53eacee2ad44ff955fb26e6ab372e1": {
+      "id": "9c53eacee2ad44ff955fb26e6ab372e1",
+      "name": "ai_data_collector_05c3f5a6d24a463999297a1737890019_output",
+      "label": "Ai_data_collector_05c3f5a6d24a463999297a1737890019_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "abd0b47db64c48bbb1cc6cb1a3db14e2": {
+      "id": "abd0b47db64c48bbb1cc6cb1a3db14e2",
+      "varType": "string",
+      "category": "vaInputs",
+      "label": "Review_Resolution_Complaint_Number",
+      "name": "review_resolution_complaint_number",
+      "choices": [
+        {
+          "label": "",
+          "value": ""
+        },
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "05c3f5a6d24a463999297a1737890019",
+      "isHidden": false,
+      "description": ""
+    },
+    "a60ca3fdc2da45bdabcae2cff4c2c559": {
+      "id": "a60ca3fdc2da45bdabcae2cff4c2c559",
+      "name": "review_resolution_lookup",
+      "label": "Review_Resolution_Lookup",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "2801578cae224873a654bd68f0f2dd8c",
+      "isHidden": false
+    },
+    "a77c01c2a3904c45a15370bcff66a9a7": {
+      "id": "a77c01c2a3904c45a15370bcff66a9a7",
+      "name": "total_complaints_lookup",
+      "label": "Total_Complaints_Lookup",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "107d19550d374623979675a2228e7c42",
+      "isHidden": false
+    },
+    "0be3a78a761343f69955f118854179ba": {
+      "id": "0be3a78a761343f69955f118854179ba",
+      "name": "pending_complaints_statistics",
+      "label": "Pending_Complaints_Statistics",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "3262aa41e0f340628fd1e2b0c7872026",
+      "isHidden": false
+    },
+    "6ab5b93015f24330b662955e3b40eef9": {
+      "id": "6ab5b93015f24330b662955e3b40eef9",
+      "name": "high_priority_statistics",
+      "label": "High_Priority_Statistics",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "70c0096059414730afdc57ed9cb2a6a8",
+      "isHidden": false
+    },
+    "e3139bd7e4e3481c8ccc8e35118ba3a4": {
+      "id": "e3139bd7e4e3481c8ccc8e35118ba3a4",
+      "name": "resolved_complaints_statistics",
+      "label": "Resolved_Complaints_Statistics",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "076c34ae94e34ebea37a6fbf1bc4968c",
+      "isHidden": false
+    },
+    "01f527ab86e747e1ba7f531e1b6ba54e": {
+      "id": "01f527ab86e747e1ba7f531e1b6ba54e",
+      "name": "closed_complaints_statistics",
+      "label": "Closed_Complaints_Statistics",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "a0b3cfdb57ea448d8c5a01a850e0e42e",
+      "isHidden": false
+    }
+  }
+}</graph>
+        <key_phrases/>
+        <library>false</library>
+        <live_agent>false</live_agent>
+        <model_type>llm</model_type>
+        <modify_confirmation_enabled>false</modify_confirmation_enabled>
+        <name>cfms_manager_assistant</name>
+        <nlu_intent/>
+        <nlu_intent_label/>
+        <nlu_model/>
+        <nlu_model_label/>
+        <nlu_provider/>
+        <palette_label/>
+        <roles>x_snc_campus_foo_1.x_cfsa_manager</roles>
+        <root_topic_id/>
+        <secure_custom_input_control>false</secure_custom_input_control>
+        <source_topic_id/>
+        <sys_class_name>sys_cb_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 13:43:36</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>2cbbebc3c8e743107f44b32b644b298d</sys_id>
+        <sys_mod_count>28</sys_mod_count>
+        <sys_name>cfms_manager_assistant</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_cb_topic_2cbbebc3c8e743107f44b32b644b298d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-01 05:35:41</sys_updated_on>
+        <title>CFMS Manager Assistant</title>
+        <triggerable_by_notification>false</triggerable_by_notification>
+        <type>STANDARD</type>
+    </sys_cb_topic>
+    <sys_translated_text action="delete_multiple" query="documentkey=2cbbebc3c8e743107f44b32b644b298d"/>
+</record_update>

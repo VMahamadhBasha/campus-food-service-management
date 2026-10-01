@@ -4,6 +4,48 @@
         <client_script><![CDATA[api.controller=function($scope) {
 
     var c = this;
+	// =====================================================
+// AI MANAGEMENT REPORT
+// =====================================================
+
+c.generatingReport = false;
+
+c.generateFoodManagementReport = function() {
+
+    c.generatingReport = true;
+
+    c.server.get({
+        action: 'generateFoodManagementReport'
+    }).then(function(response) {
+
+        c.generatingReport = false;
+
+        if (response.data && response.data.reportStarted) {
+
+            alert(
+                'Food Management Intelligence report generation started.'
+            );
+
+        } else {
+
+            alert(
+                response.data.reportError ||
+                'Unable to start the report generation.'
+            );
+
+        }
+
+    }, function() {
+
+        c.generatingReport = false;
+
+        alert(
+            'An error occurred while starting the report generation.'
+        );
+
+    });
+
+};
 
 
     // =====================================================
@@ -1081,6 +1123,34 @@
 &#13;
     }&#13;
 &#13;
+}&#13;
+/* ================= AI REPORT BUTTON ================= */&#13;
+&#13;
+.generate-report-button {&#13;
+    border: none;&#13;
+    background: #2f80ed;&#13;
+    color: white;&#13;
+    padding: 11px 18px;&#13;
+    border-radius: 8px;&#13;
+    cursor: pointer;&#13;
+    font-size: 14px;&#13;
+    font-weight: 600;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 8px;&#13;
+    box-shadow: 0 2px 8px rgba(47, 128, 237, 0.25);&#13;
+    transition: 0.2s;&#13;
+}&#13;
+&#13;
+.generate-report-button:hover {&#13;
+    background: #216fd1;&#13;
+    transform: translateY(-1px);&#13;
+}&#13;
+&#13;
+.generate-report-button:disabled {&#13;
+    background: #9bbce8;&#13;
+    cursor: not-allowed;&#13;
+    transform: none;&#13;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -1911,14 +1981,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-27 04:32:23</sys_created_on>
         <sys_id>c1b09682a9e703107f444d1b3bf577d9</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>Food Service Manager Dashboard Widget</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sp_widget_c1b09682a9e703107f444d1b3bf577d9</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-29 11:01:02</sys_updated_on>
+        <sys_updated_on>2026-10-01 09:12:21</sys_updated_on>
         <template><![CDATA[<div class="manager-dashboard">
 
     <!-- SIDEBAR -->
@@ -2612,6 +2682,20 @@
                 </div>
 
             </div>
+           <!-- GENERATE AI REPORT BUTTON -->
+        <button class="generate-report-button"
+                ng-click="c.generateFoodManagementReport()"
+                ng-disabled="c.generatingReport">
+
+            <span ng-if="!c.generatingReport">
+                ]]>🤖<![CDATA[ Generate Food Management Report
+            </span>
+
+            <span ng-if="c.generatingReport">
+                ⏳ Generating Report...
+            </span>
+
+        </button>
 
 
             <!-- STATUS REPORT -->

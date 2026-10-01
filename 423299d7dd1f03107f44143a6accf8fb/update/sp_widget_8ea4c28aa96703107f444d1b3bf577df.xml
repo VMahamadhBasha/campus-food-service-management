@@ -1,9 +1,225 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[api.controller=function() {
-  /* widget controller */
-  var c = this;
+        <client_script><![CDATA[api.controller = function($window) {
+
+    var c = this;
+
+    // ==========================================
+    // INITIAL DATA
+    // ==========================================
+
+    c.data.userName = "";
+    c.data.userRole = "";
+    c.profileMenuOpen = false;
+
+
+    // ==========================================
+    // GET LOGIN DATA FROM LOCAL STORAGE
+    // ==========================================
+
+    var campusLogin =
+        localStorage.getItem("campusLogin");
+
+    if (campusLogin) {
+
+        try {
+
+            var loginData =
+                JSON.parse(campusLogin);
+
+            if (loginData.userName) {
+
+                c.data.userName =
+                    loginData.userName;
+            }
+
+            if (loginData.userRole) {
+
+                c.data.userRole =
+                    loginData.userRole;
+            }
+
+        } catch (e) {
+
+            console.error(
+                "Error reading campusLogin:",
+                e
+            );
+        }
+    }
+
+
+    // ==========================================
+    // PROFILE MENU
+    // ==========================================
+
+    c.toggleProfileMenu = function() {
+
+        c.profileMenuOpen =
+            !c.profileMenuOpen;
+    };
+
+
+    // ==========================================
+    // LOGOUT
+    // ==========================================
+
+    c.logout = function() {
+
+        console.log(
+            "========== LOGOUT STARTED =========="
+        );
+
+        var campusLogin =
+            localStorage.getItem("campusLogin");
+
+
+        // --------------------------------------
+        // NO LOGIN DATA
+        // --------------------------------------
+
+        if (!campusLogin) {
+
+            console.log(
+                "No campusLogin found"
+            );
+
+            $window.location.href =
+                "/food_services";
+
+            return;
+        }
+
+
+        // --------------------------------------
+        // READ SESSION
+        // --------------------------------------
+
+        try {
+
+            var loginData =
+                JSON.parse(campusLogin);
+
+            var sessionId =
+                loginData.sessionId;
+
+
+            console.log(
+                "Session ID:",
+                sessionId
+            );
+
+
+            // ----------------------------------
+            // SESSION ID MISSING
+            // ----------------------------------
+
+            if (!sessionId) {
+
+                console.log(
+                    "Session ID missing"
+                );
+
+                localStorage.removeItem(
+                    "campusLogin"
+                );
+
+                $window.location.href =
+                    "/food_services";
+
+                return;
+            }
+
+
+            // ----------------------------------
+            // CALL SERVER SCRIPT
+            // ----------------------------------
+
+            console.log(
+                "Sending logout request to server..."
+            );
+
+            c.server.get({
+
+                action: "logout",
+
+                sessionId: sessionId
+
+            }).then(function(response) {
+
+                console.log(
+                    "Logout server response:",
+                    response
+                );
+
+                console.log(
+                    "Logout result:",
+                    response.data.logoutSuccess
+                );
+
+
+                // --------------------------------
+                // REMOVE LOCAL SESSION
+                // --------------------------------
+
+                localStorage.removeItem(
+                    "campusLogin"
+                );
+
+                console.log(
+                    "campusLogin removed from localStorage"
+                );
+
+
+                // --------------------------------
+                // REDIRECT TO LANDING PAGE
+                // --------------------------------
+
+                console.log(
+                    "Redirecting to landing page..."
+                );
+
+                $window.location.href =
+                    "/food_services";
+
+            }).catch(function(error) {
+
+                console.error(
+                    "Logout server error:",
+                    error
+                );
+
+                // Even if server fails,
+                // remove local session
+                // and return to landing page.
+
+                localStorage.removeItem(
+                    "campusLogin"
+                );
+
+                $window.location.href =
+                    "/food_services";
+            });
+
+
+        } catch (e) {
+
+            console.error(
+                "Logout processing error:",
+                e
+            );
+
+            localStorage.removeItem(
+                "campusLogin"
+            );
+
+            $window.location.href =
+                "/food_services";
+        }
+
+    };
+
 };]]></client_script>
         <controller_as>c</controller_as>
         <css>/* Main Header */&#13;
@@ -285,6 +501,319 @@
     .profile-dropdown {&#13;
         right: 0;&#13;
     }&#13;
+}&#13;
+/* =========================&#13;
+   MAIN HEADER&#13;
+   ========================= */&#13;
+&#13;
+.campus-header {&#13;
+&#13;
+    width: 100%;&#13;
+    height: 70px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: space-between;&#13;
+&#13;
+    padding: 0 28px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    border-bottom: 1px solid #e5e7eb;&#13;
+&#13;
+    position: relative;&#13;
+    z-index: 1000;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   LEFT SIDE&#13;
+   ========================= */&#13;
+&#13;
+.brand-section {&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+.brand-logo {&#13;
+&#13;
+    width: 42px;&#13;
+    height: 42px;&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 25px;&#13;
+&#13;
+    background: #f3f4f6;&#13;
+&#13;
+    border-radius: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+.brand-name {&#13;
+&#13;
+    font-size: 21px;&#13;
+    font-weight: 700;&#13;
+&#13;
+    color: #1f2937;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   RIGHT SIDE&#13;
+   ========================= */&#13;
+&#13;
+.profile-section {&#13;
+&#13;
+    position: relative;&#13;
+}&#13;
+&#13;
+&#13;
+.profile-button {&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    background: transparent;&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 10px;&#13;
+&#13;
+    padding: 8px 12px;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    transition: background 0.2s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.profile-button:hover {&#13;
+&#13;
+    background: #f3f4f6;&#13;
+}&#13;
+&#13;
+&#13;
+.user-name {&#13;
+&#13;
+    font-size: 15px;&#13;
+    font-weight: 600;&#13;
+&#13;
+    color: #374151;&#13;
+}&#13;
+&#13;
+&#13;
+.profile-icon {&#13;
+&#13;
+    width: 36px;&#13;
+    height: 36px;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: #eef2ff;&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 18px;&#13;
+}&#13;
+&#13;
+&#13;
+.arrow {&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    color: #6b7280;&#13;
+&#13;
+    transition: transform 0.2s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.arrow.open {&#13;
+&#13;
+    transform: rotate(180deg);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   DROPDOWN&#13;
+   ========================= */&#13;
+&#13;
+.profile-dropdown {&#13;
+&#13;
+    position: absolute;&#13;
+&#13;
+    top: 55px;&#13;
+    right: 0;&#13;
+&#13;
+    width: 220px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #e5e7eb;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);&#13;
+&#13;
+    padding: 10px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   USER INFORMATION&#13;
+   ========================= */&#13;
+&#13;
+.profile-user {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 10px;&#13;
+&#13;
+    padding: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+.dropdown-user-icon {&#13;
+&#13;
+    width: 38px;&#13;
+    height: 38px;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: #eef2ff;&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 18px;&#13;
+}&#13;
+&#13;
+&#13;
+.dropdown-user-name {&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    color: #1f2937;&#13;
+}&#13;
+&#13;
+&#13;
+.dropdown-user-role {&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    color: #6b7280;&#13;
+&#13;
+    margin-top: 3px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   DIVIDER&#13;
+   ========================= */&#13;
+&#13;
+.dropdown-divider {&#13;
+&#13;
+    height: 1px;&#13;
+&#13;
+    background: #e5e7eb;&#13;
+&#13;
+    margin: 5px 0;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   LOGOUT&#13;
+   ========================= */&#13;
+&#13;
+.logout-button {&#13;
+&#13;
+    width: 100%;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    background: transparent;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 10px;&#13;
+&#13;
+    padding: 10px;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    color: #dc2626;&#13;
+&#13;
+    text-align: left;&#13;
+}&#13;
+&#13;
+&#13;
+.logout-button:hover {&#13;
+&#13;
+    background: #fef2f2;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   RESPONSIVE&#13;
+   ========================= */&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+    .campus-header {&#13;
+&#13;
+        height: 60px;&#13;
+&#13;
+        padding: 0 15px;&#13;
+    }&#13;
+&#13;
+    .brand-name {&#13;
+&#13;
+        font-size: 18px;&#13;
+    }&#13;
+&#13;
+    .brand-logo {&#13;
+&#13;
+        width: 36px;&#13;
+        height: 36px;&#13;
+&#13;
+        font-size: 21px;&#13;
+    }&#13;
+&#13;
+    .user-name {&#13;
+&#13;
+        display: none;&#13;
+    }&#13;
+&#13;
+    .profile-dropdown {&#13;
+&#13;
+        right: 0;&#13;
+    }&#13;
+&#13;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -303,39 +832,84 @@
         <roles/>
         <script><![CDATA[(function() {
 
-    // Get logged-in user's name
-    data.userName = gs.getUserDisplayName();
+    data.userName = "";
+    data.userRole = "";
+    data.logoutSuccess = false;
 
-    // Get logged-in user's ID
-    var userID = gs.getUserID();
+    // ==========================================
+    // LOGOUT
+    // ==========================================
 
-    // Default role
-    data.userRole = "USER";
+    if (input && input.action == "logout") {
 
+        var sessionId = input.sessionId;
 
-    // Get user record
-    var userGR = new GlideRecord('sys_user');
+        gs.info(
+            "CAMPUS LOGOUT REQUEST RECEIVED. SESSION ID: " +
+            sessionId
+        );
 
-    if (userGR.get(userID)) {
+        if (sessionId) {
 
-        // Display user's name
-        data.userName = userGR.getDisplayValue('name');
+            var sessionGR = new GlideRecord(
+                "x_snc_campus_foo_1_campus_login_session"
+            );
 
-        // Check roles
-        if (userGR.hasRole('admin')) {
+            sessionGR.addQuery(
+                "session_id",
+                sessionId
+            );
 
-            data.userRole = "ADMIN";
+            sessionGR.addQuery(
+                "status",
+                "active"
+            );
 
-        } else if (userGR.hasRole('itil')) {
+            sessionGR.query();
 
-            data.userRole = "STAFF";
+            if (sessionGR.next()) {
+
+                // Close the existing session
+                sessionGR.setValue(
+                    "status",
+                    "logout"
+                );
+
+                sessionGR.setValue(
+                    "end_time",
+                    new GlideDateTime()
+                );
+
+                sessionGR.update();
+
+                data.logoutSuccess = true;
+
+                gs.info(
+                    "CAMPUS SESSION CLOSED SUCCESSFULLY: " +
+                    sessionId
+                );
+
+            } else {
+
+                // Session already closed/not found
+                data.logoutSuccess = true;
+
+                gs.info(
+                    "CAMPUS SESSION NOT FOUND OR ALREADY CLOSED: " +
+                    sessionId
+                );
+            }
 
         } else {
 
-            data.userRole = "STUDENT";
+            data.logoutSuccess = false;
 
+            gs.info(
+                "CAMPUS LOGOUT FAILED: SESSION ID MISSING"
+            );
         }
 
+        return;
     }
 
 })();]]></script>
@@ -344,18 +918,19 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-27 03:44:51</sys_created_on>
         <sys_id>8ea4c28aa96703107f444d1b3bf577df</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name>Food Service Dashboard Header</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sp_widget_8ea4c28aa96703107f444d1b3bf577df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-27 03:44:51</sys_updated_on>
+        <sys_updated_on>2026-09-30 17:18:47</sys_updated_on>
         <template><![CDATA[<div class="campus-header">
 
     <!-- Left Side: Logo / Brand -->
     <div class="brand-section">
+
         <div class="brand-logo">
             ]]>🍳
 <![CDATA[        </div>
@@ -363,6 +938,7 @@
         <div class="brand-name">
             CampusFood AI
         </div>
+
     </div>
 
 
@@ -393,11 +969,13 @@
              ng-if="c.profileMenuOpen">
 
             <div class="profile-user">
+
                 <div class="dropdown-user-icon">
                     ]]>👤
 <![CDATA[                </div>
 
                 <div>
+
                     <div class="dropdown-user-name">
                         {{c.data.userName}}
                     </div>
@@ -405,11 +983,16 @@
                     <div class="dropdown-user-role">
                         {{c.data.userRole}}
                     </div>
+
                 </div>
+
             </div>
+
 
             <div class="dropdown-divider"></div>
 
+
+            <!-- Logout -->
             <button class="logout-button"
                     ng-click="c.logout()">
 

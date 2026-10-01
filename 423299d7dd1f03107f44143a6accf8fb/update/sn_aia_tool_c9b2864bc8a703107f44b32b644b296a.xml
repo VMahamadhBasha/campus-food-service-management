@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sn_aia_tool">
+    <sn_aia_tool action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description>Retrieves and analyzes Food Base Problem records from the Campus Food Services Assistant application for management reporting.
+
+Analyze available Food Base Problem data including Use Case, Problem Type, Student Count, Meal Type, Mess Hall, State, Priority, Priority Reason, Problem Type Normalized, Knowledge Insights, Recommended Action, and Related Knowledge Articles.
+
+Return only information retrieved from the application. Calculate totals, distributions, affected-student counts, and breakdowns from the available records. Do not invent missing data or unsupported conclusions.</description>
+        <input_schema>[]</input_schema>
+        <name>Food Base Problem Analytics</name>
+        <record_type>custom</record_type>
+        <script><![CDATA[(function(inputs) {
+
+    var result = {
+        total_food_base_problems: 0,
+        total_affected_students: 0,
+
+        by_use_case: {},
+        by_problem_type: {},
+        by_mess_hall: {},
+        by_meal_type: {},
+        by_priority: {},
+        by_state: {},
+
+        ai_analysis_summary: {
+            analyzed_records: 0,
+            records_with_priority: 0,
+            records_with_recommended_action: 0,
+            records_with_knowledge_insights: 0
+        }
+    };
+
+    var gr = new GlideRecord('x_snc_campus_foo_1_food_base_problem');
+    gr.query();
+
+    while (gr.next()) {
+
+        result.total_food_base_problems++;
+
+        /*
+         * Basic Food Base Problem fields
+         */
+
+        var useCase =
+            gr.getDisplayValue('use_case') || 'Not specified';
+
+        var problemType =
+            gr.getDisplayValue('problem_type') || 'Not specified';
+
+        var mealType =
+            gr.getDisplayValue('meal_type') || 'Not specified';
+
+        var messHall =
+            gr.getDisplayValue('mess_hall') || 'Not specified';
+
+        var state =
+            gr.getDisplayValue('state') || 'Not specified';
+
+        var studentCount =
+            parseInt(gr.getValue('student_count'), 10) || 0;
+
+
+        /*
+         * Priority
+         *
+         * Use Current Priority when available.
+         * If it is not populated, use Proposed Priority.
+         */
+
+        var priority = '';
+
+        if (gr.isValidField('current_priority')) {
+            priority =
+                gr.getDisplayValue('current_priority') ||
+                gr.getValue('current_priority') ||
+                '';
+        }
+
+        if (!priority && gr.isValidField('proposed_priority')) {
+            priority =
+                gr.getDisplayValue('proposed_priority') ||
+                gr.getValue('proposed_priority') ||
+                '';
+        }
+
+        if (!priority) {
+            priority = 'Not specified';
+        }
+
+
+        /*
+         * AI-generated fields
+         */
+
+        var problemTypeNormalized = '';
+
+        if (gr.isValidField('problem_type_normalized')) {
+            problemTypeNormalized =
+                gr.getValue('problem_type_normalized') || '';
+        }
+
+        var priorityReason = '';
+
+        if (gr.isValidField('priority_reason')) {
+            priorityReason =
+                gr.getValue('priority_reason') || '';
+        }
+
+        var knowledgeInsights = '';
+
+        if (gr.isValidField('knowledge_insights')) {
+            knowledgeInsights =
+                gr.getValue('knowledge_insights') || '';
+        }
+
+        var recommendedAction = '';
+
+        if (gr.isValidField('recommended_action')) {
+            recommendedAction =
+                gr.getValue('recommended_action') || '';
+        }
+
+        var relatedKnowledgeArticles = '';
+
+        if (gr.isValidField('related_knowledge_articles')) {
+            relatedKnowledgeArticles =
+                gr.getValue('related_knowledge_articles') || '';
+        }
+
+
+        /*
+         * Total affected students
+         */
+
+        result.total_affected_students += studentCount;
+
+
+        /*
+         * Use Case
+         */
+
+        if (!result.by_use_case[useCase])
+            result.by_use_case[useCase] = 0;
+
+        result.by_use_case[useCase]++;
+
+
+        /*
+         * Problem Type
+         */
+
+        if (!result.by_problem_type[problemType])
+            result.by_problem_type[problemType] = 0;
+
+        result.by_problem_type[problemType]++;
+
+
+        /*
+         * Mess Hall
+         */
+
+        if (!result.by_mess_hall[messHall])
+            result.by_mess_hall[messHall] = 0;
+
+        result.by_mess_hall[messHall]++;
+
+
+        /*
+         * Meal Type
+         */
+
+        if (!result.by_meal_type[mealType])
+            result.by_meal_type[mealType] = 0;
+
+        result.by_meal_type[mealType]++;
+
+
+        /*
+         * Priority
+         */
+
+        if (!result.by_priority[priority])
+            result.by_priority[priority] = 0;
+
+        result.by_priority[priority]++;
+
+
+        /*
+         * State
+         */
+
+        if (!result.by_state[state])
+            result.by_state[state] = 0;
+
+        result.by_state[state]++;
+
+
+        /*
+         * AI analysis statistics
+         */
+
+        if (problemTypeNormalized)
+            result.ai_analysis_summary.analyzed_records++;
+
+        if (priority && priority !== 'Not specified')
+            result.ai_analysis_summary.records_with_priority++;
+
+        if (recommendedAction)
+            result.ai_analysis_summary.records_with_recommended_action++;
+
+        if (knowledgeInsights)
+            result.ai_analysis_summary.records_with_knowledge_insights++;
+    }
+
+
+    /*
+     * Return structured application data
+     */
+
+    return {
+        food_base_problem_analytics: JSON.stringify(result)
+    };
+
+})(inputs);]]></script>
+        <sys_class_name>sn_aia_tool</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 06:04:53</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>c9b2864bc8a703107f44b32b644b296a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Food Base Problem Analytics</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sn_aia_tool_c9b2864bc8a703107f44b32b644b296a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 06:04:53</sys_updated_on>
+        <target_document/>
+        <target_document_table>sn_aia_tool</target_document_table>
+        <type>script</type>
+    </sn_aia_tool>
+</record_update>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="f0268283c8e703107f44b32b644b291b" label="Campus Login Session" max_length="40" name="x_snc_campus_foo_1_campus_login_session" type="collection">
+        <element label="End Time" max_length="40" name="end_time" type="glide_date_time"/>
+        <element choice="1" label="Status" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="ACTIVE" value="active"/>
+                <element inactive_on_update="false" label="LOGGED OUT" value="logout"/>
+            </choice>
+        </element>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element label="Session ID" mandatory="true" max_length="255" name="session_id" type="string_full_utf8"/>
+        <element label="Login Time" max_length="40" name="login_time" type="glide_date_time"/>
+        <element label="Role" mandatory="true" max_length="32" name="role" reference="sys_user_role" type="reference"/>
+        <element label="User" mandatory="true" max_length="32" name="user" reference="sys_user" type="reference"/>
+        <element label="User Name" mandatory="true" max_length="255" name="user_name" type="string_full_utf8"/>
+        <index name="index">
+            <element name="role"/>
+        </index>
+        <index name="index2">
+            <element name="user"/>
+        </index>
+    </element>
+</database>

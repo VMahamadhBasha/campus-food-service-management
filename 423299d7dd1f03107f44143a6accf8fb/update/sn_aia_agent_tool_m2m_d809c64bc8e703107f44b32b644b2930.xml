@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sn_aia_agent_tool_m2m">
+    <sn_aia_agent_tool_m2m action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <agent display_value="Food Management Intelligence Agent">96a93587c86703107f44b32b644b2981</agent>
+        <description>Retrieves and analyzes Food Complaint Task records from the Campus Food Services Assistant application for management reporting. Analyze task count, Current Priority, Student Count, State, Assignment Group, Problem Type, Approval, Use Case Number, Mess Hall, Meal Type, and Priority Reason. Return only information retrieved from the application. Do not invent missing data or unsupported conclusions.</description>
+        <display_mode>inline</display_mode>
+        <display_output>true</display_output>
+        <document_status/>
+        <entity>sn_aia_agent</entity>
+        <entity_id>96a93587c86703107f44b32b644b2981</entity_id>
+        <execution_mode>autopilot</execution_mode>
+        <inputs>[]</inputs>
+        <max_auto_executions>10</max_auto_executions>
+        <name>Food Complaint Task Analytics</name>
+        <output_transformation_strategy>none</output_transformation_strategy>
+        <post_message>Food complaint task analysis completed</post_message>
+        <post_processing_script/>
+        <pre_message>Analyzing food complaint task data</pre_message>
+        <pre_run>false</pre_run>
+        <requires_text_refined_message>false</requires_text_refined_message>
+        <requires_widget_transformation>true</requires_widget_transformation>
+        <should_display_refined_message>false</should_display_refined_message>
+        <sys_class_name>sn_aia_agent_tool_m2m</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 06:32:25</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>d809c64bc8e703107f44b32b644b2930</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Food Complaint Task Analytics</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sn_aia_agent_tool_m2m_d809c64bc8e703107f44b32b644b2930</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 06:32:25</sys_updated_on>
+        <timeout/>
+        <tool display_value="Food Complaint Task Analytics">d809c64bc8e703107f44b32b644b292a</tool>
+        <tool_attributes>{}</tool_attributes>
+        <transformation_instructions/>
+        <widgets>db0e858eff62b210f465ffffffffff2c</widgets>
+    </sn_aia_agent_tool_m2m>
+</record_update>

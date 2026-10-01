@@ -1,0 +1,714 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_topic">
+    <sys_cb_topic action="INSERT_OR_UPDATE">
+        <applicability/>
+        <applicability_mode>query</applicability_mode>
+        <autopilot_topic>false</autopilot_topic>
+        <category/>
+        <channels/>
+        <connect_queue/>
+        <context_profiles/>
+        <description>this is the test topic create din thsi </description>
+        <dialog_acts_enabled>false</dialog_acts_enabled>
+        <expose_on_palette>false</expose_on_palette>
+        <flexible_conversation_switching>false</flexible_conversation_switching>
+        <foundational>false</foundational>
+        <graph>{
+  "graph_api_version": "1.0.82",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "94eac7a2eb2447828eb7856a407cc9bd": {
+          "id": "94eac7a2eb2447828eb7856a407cc9bd",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "c180272d73c446b8bfb5cfcde4ef7505": {
+          "id": "c180272d73c446b8bfb5cfcde4ef7505",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "81d2a0b25d4d45e9852bbe7af35097f7": {
+          "id": "81d2a0b25d4d45e9852bbe7af35097f7",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "0b0ff1ae7b9840279cea961f2d0fccc4": {
+          "id": "0b0ff1ae7b9840279cea961f2d0fccc4",
+          "stepType": "ImplicitEnd"
+        },
+        "d273b5c4ffa44a689dcfd3950d9266c2": {
+          "id": "d273b5c4ffa44a689dcfd3950d9266c2",
+          "stepType": "ImplicitEnd"
+        },
+        "8b705c3cdf4f4aa3b47f39834288bb57": {
+          "id": "8b705c3cdf4f4aa3b47f39834288bb57",
+          "stepType": "ImplicitEnd"
+        },
+        "715e1a4022ef45d5856e1645e04db47f": {
+          "id": "715e1a4022ef45d5856e1645e04db47f",
+          "stepType": "StandaloneAIChoicePrompt",
+          "name": "provide the options for the student",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "c30c27d6850448b29360e3859e7ae0d1",
+              "displayName": "provide the options for the student",
+              "name": "provide_the_options_for_the_student",
+              "description": "here there are 3 options for the student ",
+              "discoverable": true,
+              "dynamicDescription": {
+                "value": "",
+                "mode": "simple"
+              },
+              "type": "choice",
+              "variableId": "c13d14a73ac54995a3b4620ff9ed417d",
+              "choices": [
+                {
+                  "label": "Raise a complaint",
+                  "value": "Raise a complaint"
+                },
+                {
+                  "label": "Get a record status",
+                  "value": "Get a record status"
+                },
+                {
+                  "label": "Give feedback",
+                  "value": "Give feedback",
+                  "checked": true,
+                  "meta": {}
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "ChoicePrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "e560e9324ca74a8eb8332f4c5ee402bc"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_715e1a4022ef45d5856e1645e04db47f_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "c13d14a73ac54995a3b4620ff9ed417d"
+          ]
+        },
+        "136d3cf7cc7a461e96f7af20ce028f80": {
+          "id": "136d3cf7cc7a461e96f7af20ce028f80",
+          "stepType": "StandaloneAIChoicePrompt",
+          "name": "provide the options to staff group",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "fbc5ae325373411a94a5d3190df0cc9c",
+              "displayName": "provide the options to staff group",
+              "name": "provide_the_options_to_staff_group",
+              "description": "here there 2 options for the staff to select an option ",
+              "discoverable": true,
+              "dynamicDescription": {
+                "value": "",
+                "mode": "simple"
+              },
+              "type": "choice",
+              "variableId": "39110aafc96546829e1e729bc06282da",
+              "choices": [
+                {
+                  "label": "Get my assigned record",
+                  "value": "Get my assigned record"
+                },
+                {
+                  "label": "history",
+                  "value": "history"
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "ChoicePrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "de24744c271e41c2b87ad95cfc556503"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_136d3cf7cc7a461e96f7af20ce028f80_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "39110aafc96546829e1e729bc06282da"
+          ]
+        },
+        "45e3e91d67e64e3388cc59a2f3c38f68": {
+          "id": "45e3e91d67e64e3388cc59a2f3c38f68",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "b991faf8c12b45bb99e430c009a91491": {
+          "id": "b991faf8c12b45bb99e430c009a91491",
+          "stepType": "ImplicitEnd"
+        },
+        "ed245ec1aed84449b8dfbdf21e6fe544": {
+          "id": "ed245ec1aed84449b8dfbdf21e6fe544",
+          "stepType": "ImplicitEnd"
+        },
+        "0630e2eee783482ea0a50c5500e8e2aa": {
+          "id": "0630e2eee783482ea0a50c5500e8e2aa",
+          "stepType": "StandaloneAIChoicePrompt",
+          "name": "jiii",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "78d410baec144794b125507503c1b8c8",
+              "displayName": "jiii",
+              "name": "jiii",
+              "description": "jeffghjkkkkkkkkkkkkk",
+              "discoverable": true,
+              "dynamicDescription": {
+                "value": "",
+                "mode": "simple"
+              },
+              "type": "choice",
+              "variableId": "fbb661d5ac2b4615b3c9c61b6738b7ca",
+              "choices": [
+                {
+                  "label": "jiiiii",
+                  "value": "jiiiii"
+                },
+                {
+                  "label": "jjjj",
+                  "value": "jjjj"
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "ChoicePrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "eae0efdf7da14105ad75f0a5db703fb0"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_0630e2eee783482ea0a50c5500e8e2aa_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "fbb661d5ac2b4615b3c9c61b6738b7ca"
+          ]
+        }
+      },
+      "edges": [
+        {
+          "id": "2fc3634c04d34ac5bb6836053a088b54",
+          "edgeType": "Branch",
+          "source": "45e3e91d67e64e3388cc59a2f3c38f68",
+          "target": "ed245ec1aed84449b8dfbdf21e6fe544",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.provide_the_options_for_the_student=Raise a complaint",
+            "mode": "query"
+          },
+          "label": "Raise a complaint"
+        },
+        {
+          "id": "9b44323073784e59bc73d131fe201c94",
+          "edgeType": "Branch",
+          "source": "81d2a0b25d4d45e9852bbe7af35097f7",
+          "target": "0b0ff1ae7b9840279cea961f2d0fccc4",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.user=eb072642a9ab03107f444d1b3bf5777f",
+            "mode": "query"
+          },
+          "label": "if the user is in manager group"
+        },
+        {
+          "id": "02460fa6d607428e989f0c6375580a40",
+          "edgeType": "Branch",
+          "source": "81d2a0b25d4d45e9852bbe7af35097f7",
+          "target": "c180272d73c446b8bfb5cfcde4ef7505",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.user=87a66a02a9ab03107f444d1b3bf5772f^ORvaInputs.user=d9e6ee02a9ab03107f444d1b3bf577f8",
+            "mode": "query"
+          },
+          "label": "if the user is in admin group"
+        },
+        {
+          "id": "483237731f5e4c4eb5d0eeaaa0f67663",
+          "edgeType": "Branch",
+          "source": "81d2a0b25d4d45e9852bbe7af35097f7",
+          "target": "715e1a4022ef45d5856e1645e04db47f",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.user=82f46a0ea96b03107f444d1b3bf577cf^ORvaInputs.user=d1a5ee4ea96b03107f444d1b3bf5774e",
+            "mode": "query"
+          },
+          "label": "if user is an student group"
+        },
+        {
+          "id": "ff83c52520a34561bca256b515997e5a",
+          "edgeType": "Branch",
+          "source": "81d2a0b25d4d45e9852bbe7af35097f7",
+          "target": "136d3cf7cc7a461e96f7af20ce028f80",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.user=5806aa8ea96b03107f444d1b3bf577b7^ORvaInputs.user=a5862602a9ab03107f444d1b3bf577ac",
+            "mode": "query"
+          },
+          "label": "if the user is in staff group"
+        },
+        {
+          "id": "f94df5d111d442489a70c292c27d8ba7",
+          "edgeType": "Edge",
+          "source": "136d3cf7cc7a461e96f7af20ce028f80",
+          "target": "8b705c3cdf4f4aa3b47f39834288bb57",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "df03a3a6270e41e3bf64c1cff6af22b2",
+          "edgeType": "Edge",
+          "source": "715e1a4022ef45d5856e1645e04db47f",
+          "target": "45e3e91d67e64e3388cc59a2f3c38f68",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "7e7486d525d643bc9417f21946421c74",
+          "edgeType": "Branch",
+          "source": "45e3e91d67e64e3388cc59a2f3c38f68",
+          "target": "d273b5c4ffa44a689dcfd3950d9266c2",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.provide_the_options_for_the_student=Get a record status",
+            "mode": "query"
+          },
+          "label": "Get a record status"
+        },
+        {
+          "id": "1947f5afafd34468989283aed51afaff",
+          "edgeType": "Branch",
+          "source": "45e3e91d67e64e3388cc59a2f3c38f68",
+          "target": "b991faf8c12b45bb99e430c009a91491",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.provide_the_options_for_the_student=Give feedback",
+            "mode": "query"
+          },
+          "label": "give feedback"
+        },
+        {
+          "id": "b43995138b4544579f9f73ad1df0f992",
+          "edgeType": "Edge",
+          "source": "94eac7a2eb2447828eb7856a407cc9bd",
+          "target": "0630e2eee783482ea0a50c5500e8e2aa",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "7f06d2c1cf264cce86b86d58c904c03b",
+          "edgeType": "Edge",
+          "source": "0630e2eee783482ea0a50c5500e8e2aa",
+          "target": "81d2a0b25d4d45e9852bbe7af35097f7",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "cc814758192647a18d00bde5027ada4b": {
+      "id": "cc814758192647a18d00bde5027ada4b",
+      "name": "ai_data_collector_e05953d900e54252af689f97a6a33b29_output",
+      "label": "Ai_data_collector_e05953d900e54252af689f97a6a33b29_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "778cb05c1cd3475486fbef8312c11582": {
+      "id": "778cb05c1cd3475486fbef8312c11582",
+      "name": "ai_data_collector_06e3aafe16e5440f873bb71a3b52117a_output",
+      "label": "Ai_data_collector_06e3aafe16e5440f873bb71a3b52117a_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "e560e9324ca74a8eb8332f4c5ee402bc": {
+      "id": "e560e9324ca74a8eb8332f4c5ee402bc",
+      "name": "ai_data_collector_715e1a4022ef45d5856e1645e04db47f_output",
+      "label": "Ai_data_collector_715e1a4022ef45d5856e1645e04db47f_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "c13d14a73ac54995a3b4620ff9ed417d": {
+      "id": "c13d14a73ac54995a3b4620ff9ed417d",
+      "varType": "choice",
+      "category": "vaInputs",
+      "label": "Provide The Options For The Student",
+      "name": "provide_the_options_for_the_student",
+      "choices": [
+        {
+          "label": "Raise a complaint",
+          "value": "Raise a complaint"
+        },
+        {
+          "label": "Get a record status",
+          "value": "Get a record status"
+        },
+        {
+          "label": "Give feedback",
+          "value": "Give feedback",
+          "checked": true,
+          "meta": {}
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "715e1a4022ef45d5856e1645e04db47f",
+      "isHidden": false
+    },
+    "de24744c271e41c2b87ad95cfc556503": {
+      "id": "de24744c271e41c2b87ad95cfc556503",
+      "name": "ai_data_collector_136d3cf7cc7a461e96f7af20ce028f80_output",
+      "label": "Ai_data_collector_136d3cf7cc7a461e96f7af20ce028f80_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "39110aafc96546829e1e729bc06282da": {
+      "id": "39110aafc96546829e1e729bc06282da",
+      "varType": "choice",
+      "category": "vaInputs",
+      "label": "Provide The Options To Staff Group",
+      "name": "provide_the_options_to_staff_group",
+      "choices": [
+        {
+          "label": "Get my assigned record",
+          "value": "Get my assigned record"
+        },
+        {
+          "label": "history",
+          "value": "history"
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "136d3cf7cc7a461e96f7af20ce028f80",
+      "isHidden": false
+    },
+    "cba3bec52d484f1b8a4889cd0920fc52": {
+      "id": "cba3bec52d484f1b8a4889cd0920fc52",
+      "name": "ai_data_collector_cc3915fec4ff415f8e55b0e0262e8923_output",
+      "label": "Ai_data_collector_cc3915fec4ff415f8e55b0e0262e8923_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "7cf515c1fec24774b8fddeef952a6f6a": {
+      "id": "7cf515c1fec24774b8fddeef952a6f6a",
+      "name": "ai_data_collector_e089409222ea4142bcd6d1ad44f8ba25_output",
+      "label": "Ai_data_collector_e089409222ea4142bcd6d1ad44f8ba25_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "8c04b2ff7a7940f9a26dfede8b9af6c0": {
+      "id": "8c04b2ff7a7940f9a26dfede8b9af6c0",
+      "name": "ai_data_collector_515d08a980934c049f0d101c0058026f_output",
+      "label": "Ai_data_collector_515d08a980934c049f0d101c0058026f_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "eae0efdf7da14105ad75f0a5db703fb0": {
+      "id": "eae0efdf7da14105ad75f0a5db703fb0",
+      "name": "ai_data_collector_0630e2eee783482ea0a50c5500e8e2aa_output",
+      "label": "Ai_data_collector_0630e2eee783482ea0a50c5500e8e2aa_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "fbb661d5ac2b4615b3c9c61b6738b7ca": {
+      "id": "fbb661d5ac2b4615b3c9c61b6738b7ca",
+      "varType": "choice",
+      "category": "vaInputs",
+      "label": "Jiii",
+      "name": "jiii",
+      "choices": [
+        {
+          "label": "jiiiii",
+          "value": "jiiiii"
+        },
+        {
+          "label": "jjjj",
+          "value": "jjjj"
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "0630e2eee783482ea0a50c5500e8e2aa",
+      "isHidden": false
+    }
+  }
+}</graph>
+        <key_phrases/>
+        <library>false</library>
+        <live_agent>false</live_agent>
+        <model_type>llm</model_type>
+        <modify_confirmation_enabled>false</modify_confirmation_enabled>
+        <name>test</name>
+        <nlu_intent/>
+        <nlu_intent_label/>
+        <nlu_model/>
+        <nlu_model_label/>
+        <nlu_provider/>
+        <palette_label/>
+        <roles/>
+        <root_topic_id/>
+        <secure_custom_input_control>false</secure_custom_input_control>
+        <source_topic_id/>
+        <sys_class_name>sys_cb_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 16:56:07</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>c32e47b604ab43107f44b8d89e324cc1</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>test</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_cb_topic_c32e47b604ab43107f44b8d89e324cc1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 06:09:56</sys_updated_on>
+        <title>test</title>
+        <triggerable_by_notification>false</triggerable_by_notification>
+        <type>STANDARD</type>
+    </sys_cb_topic>
+    <sys_translated_text action="delete_multiple" query="documentkey=c32e47b604ab43107f44b8d89e324cc1"/>
+</record_update>

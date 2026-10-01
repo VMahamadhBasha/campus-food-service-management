@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sn_aia_version">
+    <sn_aia_version action="INSERT_OR_UPDATE">
+        <condition/>
+        <instructions>1. Receive the manager's request to generate a Food Management Intelligence report.
+
+2. Collect the required campus food-service data from the application using the available tools.
+
+3. Analyze all relevant food complaints and summarize them by Mess Hall.
+
+4. Analyze complaints by Food Item and identify frequently reported food items.
+
+5. Analyze complaints by Meal Type, including Breakfast, Lunch, and Dinner.
+
+6. Analyze complaints by Use Case, including Food Quality Complaint, Food Hygiene Issue, Allergy Management Request, Meal Not Available, Food Wastage Reporting, and other configured use cases.
+
+7. Analyze complaints by Problem Type and Priority.
+
+8. Analyze the number of students affected by the reported food-service problems.
+
+9. Analyze Food Incidents and identify relevant high-risk or critical incidents.
+
+10. Analyze Corrective Actions and CAPA records, including their status and unresolved actions.
+
+11. Analyze available historical data to identify recurring problems and important trends.
+
+12. Combine the retrieved analysis from all relevant data sources.
+
+13. Identify significant patterns, recurring issues, high-risk areas, and areas requiring management attention.
+
+14. Generate clear management-level insights based only on the retrieved application data.
+
+15. Generate practical recommended management actions based only on the available evidence.
+
+16. Prepare a comprehensive Food Management Intelligence report containing an overall summary, detailed analysis, key insights, trends, and recommended actions.
+
+17. Do not invent data, counts, trends, incidents, or recommendations that are not supported by the retrieved application data.</instructions>
+        <state>published</state>
+        <sys_class_name>sn_aia_version</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 05:50:58</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>898fb583c8a703107f44b32b644b2991</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>V1</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sn_aia_version_898fb583c8a703107f44b32b644b2991</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 05:50:58</sys_updated_on>
+        <target_id>78273543c86703107f44b32b644b2931</target_id>
+        <target_table>sn_aia_usecase</target_table>
+        <version_name>V1</version_name>
+        <version_number>1</version_number>
+    </sn_aia_version>
+</record_update>

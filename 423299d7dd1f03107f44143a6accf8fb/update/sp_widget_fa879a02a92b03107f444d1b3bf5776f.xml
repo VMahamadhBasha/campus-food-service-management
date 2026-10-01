@@ -7,6 +7,74 @@
 
 
     // ==========================================
+    // GET LOGIN DATA FROM LOCAL STORAGE
+    // ==========================================
+
+    var campusLogin =
+        localStorage.getItem("campusLogin");
+
+    var loginData = null;
+
+    if (campusLogin) {
+
+        try {
+
+            loginData =
+                JSON.parse(campusLogin);
+
+        } catch (e) {
+
+            console.error(
+                "Error reading campusLogin:",
+                e
+            );
+
+        }
+
+    }
+
+
+    // ==========================================
+    // GET USER SYS ID
+    // ==========================================
+
+    var userId = "";
+
+    if (
+        loginData &&
+        loginData.user
+    ) {
+
+        userId =
+            loginData.user;
+
+    }
+
+    console.log(
+        "Student User Sys ID:",
+        userId
+    );
+	// LOAD DASHBOARD DATA
+if (userId) {
+
+    c.server.get({
+        action: 'loadDashboard',
+        userId: userId
+    }).then(function(response) {
+
+        angular.extend(c.data, response.data);
+
+        console.log("Dashboard data loaded:", response.data);
+
+    }, function(error) {
+
+        console.error("Dashboard loading failed:", error);
+
+    });
+}
+
+
+    // ==========================================
     // ACTIVE SECTION
     // ==========================================
 
@@ -87,9 +155,28 @@
         c.complaintSubmitting = true;
 
 
+        // ======================================
+        // CHECK USER ID
+        // ======================================
+
+        if (!userId) {
+
+            c.complaintSubmitting = false;
+
+            c.complaintError =
+                'Student user ID not found. Please login again.';
+
+            return;
+
+        }
+
+
         c.server.get({
 
             action: 'createComplaint',
+
+            // SEND LOGGED-IN USER ID
+            userId: userId,
 
             use_case:
                 c.complaintForm.use_case,
@@ -186,6 +273,10 @@
 
                 }
 
+
+                // ==================================
+                // REFRESH DASHBOARD
+                // ==================================
 
                 c.server.update();
 
@@ -355,12 +446,30 @@
 
 
         // ======================================
+        // CHECK USER ID
+        // ======================================
+
+        if (!userId) {
+
+            alert(
+                'Student user ID not found. Please login again.'
+            );
+
+            return;
+
+        }
+
+
+        // ======================================
         // SEND TO SERVER
         // ======================================
 
         c.server.get({
 
             action: 'submitFeedback',
+
+            // SEND LOGGED-IN USER ID
+            userId: userId,
 
             feedbackSysId:
                 c.data.selectedFeedbackSysId,
@@ -473,7 +582,8 @@
 
     };
 
-};]]></client_script>
+};
+]]></client_script>
         <controller_as>c</controller_as>
         <css>/* =========================================================&#13;
    STUDENT DASHBOARD&#13;
@@ -1288,29 +1398,42 @@
         <roles/>
         <script><![CDATA[(function() {
 
+
     // ==========================================
-    // TEST USER
+    // GET USER ID FROM CLIENT
     // ==========================================
 
-    var USER_ID =
-        '82f46a0ea96b03107f444d1b3bf577cf';
+    var USER_ID = '';
 
-    // Later:
-    // var USER_ID = gs.getUserID();
+    if (
+        input &&
+        input.userId
+    ) {
+
+        USER_ID =
+            input.userId;
+
+    }
 
 
     // ==========================================
     // INITIAL DATA
     // ==========================================
 
-    data.userId = USER_ID;
+    data.userId =
+        USER_ID;
 
-    data.userName = '';
+    data.userName =
+        '';
 
     data.kpi = {
+
         total: 0,
+
         pending: 0,
+
         resolved: 0
+
     };
 
     data.recentRequests = [];
@@ -1319,23 +1442,31 @@
 
     data.feedbacks = {};
 
-    data.feedbackCount = 0;
+    data.feedbackCount =
+        0;
 
-    data.selectedFeedback = null;
+    data.selectedFeedback =
+        null;
 
     data.messHalls = [];
 
-    data.success = false;
+    data.success =
+        false;
 
-    data.message = '';
+    data.message =
+        '';
 
-    data.complaintNumber = '';
+    data.complaintNumber =
+        '';
 
-    data.complaintSysId = '';
+    data.complaintSysId =
+        '';
 
-    data.feedbackSuccess = false;
+    data.feedbackSuccess =
+        false;
 
-    data.feedbackMessage = '';
+    data.feedbackMessage =
+        '';
 
 
     // ==========================================
@@ -1343,12 +1474,20 @@
     // ==========================================
 
     var userGR =
-        new GlideRecord('sys_user');
+        new GlideRecord(
+            'sys_user'
+        );
 
-    if (userGR.get(USER_ID)) {
+
+    if (
+        USER_ID &&
+        userGR.get(USER_ID)
+    ) {
 
         data.userName =
-            userGR.getDisplayValue('name');
+            userGR.getDisplayValue(
+                'name'
+            );
 
     }
 
@@ -1362,11 +1501,16 @@
             'x_snc_campus_foo_1_mess_hall'
         );
 
-    messHallGR.orderBy('name');
+    messHallGR.orderBy(
+        'name'
+    );
 
     messHallGR.query();
 
-    while (messHallGR.next()) {
+
+    while (
+        messHallGR.next()
+    ) {
 
         data.messHalls.push({
 
@@ -1374,7 +1518,9 @@
                 messHallGR.getUniqueValue(),
 
             name:
-                messHallGR.getDisplayValue('name')
+                messHallGR.getDisplayValue(
+                    'name'
+                )
 
         });
 
@@ -1387,20 +1533,46 @@
 
     if (
         input &&
-        input.action == 'createComplaint'
+        input.action ==
+        'createComplaint'
     ) {
+
+
+        // ======================================
+        // CHECK USER ID
+        // ======================================
+
+        if (!USER_ID) {
+
+            data.success =
+                false;
+
+            data.message =
+                'Student user ID not found. Please login again.';
+
+            return;
+
+        }
+
 
         var complaintGR =
             new GlideRecord(
                 'x_snc_campus_foo_1_food_complaint'
             );
 
+
         complaintGR.initialize();
+
+
+        // ======================================
+        // SET STUDENT USER
+        // ======================================
 
         complaintGR.setValue(
             'student',
             USER_ID
         );
+
 
         complaintGR.setValue(
             'use_case',
@@ -1427,26 +1599,34 @@
             input.description
         );
 
+
         var complaintSysId =
             complaintGR.insert();
 
 
-        if (complaintSysId) {
+        if (
+            complaintSysId
+        ) {
 
-            data.success = true;
+            data.success =
+                true;
 
             data.complaintSysId =
                 complaintSysId;
 
             data.complaintNumber =
-                complaintGR.getValue('number');
+                complaintGR.getValue(
+                    'number'
+                );
 
             data.message =
                 'Food complaint submitted successfully.';
 
+
         } else {
 
-            data.success = false;
+            data.success =
+                false;
 
             data.message =
                 'Unable to create food complaint.';
@@ -1460,107 +1640,117 @@
     // LOAD FOOD COMPLAINTS
     // ==========================================
 
-    var complaintListGR =
-        new GlideRecord(
-            'x_snc_campus_foo_1_food_complaint'
-        );
+    if (USER_ID) {
 
-    complaintListGR.addQuery(
-        'student',
-        USER_ID
-    );
-
-    complaintListGR.orderByDesc(
-        'sys_created_on'
-    );
-
-    complaintListGR.query();
-
-
-    while (complaintListGR.next()) {
-
-        var complaint = {
-
-            sys_id:
-                complaintListGR.getUniqueValue(),
-
-            number:
-                complaintListGR.getDisplayValue(
-                    'number'
-                ),
-
-            use_case:
-                complaintListGR.getDisplayValue(
-                    'use_case'
-                ),
-
-            mess_hall:
-                complaintListGR.getDisplayValue(
-                    'mess_hall'
-                ),
-
-            meal_type:
-                complaintListGR.getDisplayValue(
-                    'meal_type'
-                ),
-
-            problem_type:
-                complaintListGR.getDisplayValue(
-                    'problem_type'
-                ),
-
-            description:
-                complaintListGR.getDisplayValue(
-                    'description'
-                ),
-
-            state:
-                complaintListGR.getDisplayValue(
-                    'state'
-                ),
-
-            created:
-                complaintListGR.getDisplayValue(
-                    'sys_created_on'
-                )
-
-        };
-
-
-        data.myRequests.push(
-            complaint
-        );
-
-
-        // ======================================
-        // KPI
-        // ======================================
-
-        data.kpi.total++;
-
-
-        var state =
-            complaintListGR.getValue(
-                'state'
+        var complaintListGR =
+            new GlideRecord(
+                'x_snc_campus_foo_1_food_complaint'
             );
 
 
-        if (
-            state == '1' ||
-            state == '2'
+        complaintListGR.addQuery(
+            'student',
+            USER_ID
+        );
+
+
+        complaintListGR.orderByDesc(
+            'sys_created_on'
+        );
+
+
+        complaintListGR.query();
+
+
+        while (
+            complaintListGR.next()
         ) {
 
-            data.kpi.pending++;
 
-        }
+            var complaint = {
+
+                sys_id:
+                    complaintListGR.getUniqueValue(),
+
+                number:
+                    complaintListGR.getDisplayValue(
+                        'number'
+                    ),
+
+                use_case:
+                    complaintListGR.getDisplayValue(
+                        'use_case'
+                    ),
+
+                mess_hall:
+                    complaintListGR.getDisplayValue(
+                        'mess_hall'
+                    ),
+
+                meal_type:
+                    complaintListGR.getDisplayValue(
+                        'meal_type'
+                    ),
+
+                problem_type:
+                    complaintListGR.getDisplayValue(
+                        'problem_type'
+                    ),
+
+                description:
+                    complaintListGR.getDisplayValue(
+                        'description'
+                    ),
+
+                state:
+                    complaintListGR.getDisplayValue(
+                        'state'
+                    ),
+
+                created:
+                    complaintListGR.getDisplayValue(
+                        'sys_created_on'
+                    )
+
+            };
 
 
-        if (
-            state == '6' ||
-            state == '7'
-        ) {
+            data.myRequests.push(
+                complaint
+            );
 
-            data.kpi.resolved++;
+
+            // ==================================
+            // KPI
+            // ==================================
+
+            data.kpi.total++;
+
+
+            var state =
+                complaintListGR.getValue(
+                    'state'
+                );
+
+
+            if (
+                state == '1' ||
+                state == '2'
+            ) {
+
+                data.kpi.pending++;
+
+            }
+
+
+            if (
+                state == '6' ||
+                state == '7'
+            ) {
+
+                data.kpi.resolved++;
+
+            }
 
         }
 
@@ -1591,8 +1781,27 @@
 
     if (
         input &&
-        input.action == 'submitFeedback'
+        input.action ==
+        'submitFeedback'
     ) {
+
+
+        // ======================================
+        // CHECK USER ID
+        // ======================================
+
+        if (!USER_ID) {
+
+            data.feedbackSuccess =
+                false;
+
+            data.feedbackMessage =
+                'Student user ID not found. Please login again.';
+
+            return;
+
+        }
+
 
         var feedbackSysId =
             input.feedbackSysId;
@@ -1617,13 +1826,13 @@
 
             // ==================================
             // SECURITY CHECK
-            // MAKE SURE RECORD BELONGS TO USER
             // ==================================
 
             if (
                 feedbackUpdateGR.getValue(
                     'student'
-                ) == USER_ID
+                ) ==
+                USER_ID
             ) {
 
 
@@ -1711,125 +1920,133 @@
     // LOAD FEEDBACK RECORDS
     // ==========================================
 
-    var feedbackGR =
-        new GlideRecord(
-            'x_snc_campus_foo_1_food_complaint_feedbacks'
+    if (USER_ID) {
+
+        var feedbackGR =
+            new GlideRecord(
+                'x_snc_campus_foo_1_food_complaint_feedbacks'
+            );
+
+
+        feedbackGR.addQuery(
+            'student',
+            USER_ID
         );
 
 
-    feedbackGR.addQuery(
-        'student',
-        USER_ID
-    );
+        feedbackGR.addQuery(
+            'feedback_submitted',
+            false
+        );
 
 
-    feedbackGR.addQuery(
-        'feedback_submitted',
-        false
-    );
+        feedbackGR.orderByDesc(
+            'sys_created_on'
+        );
 
 
-    feedbackGR.orderByDesc(
-        'sys_created_on'
-    );
+        feedbackGR.query();
 
 
-    feedbackGR.query();
+        while (
+            feedbackGR.next()
+        ) {
 
 
-    while (feedbackGR.next()) {
+            // ==================================
+            // GET SYS ID
+            // ==================================
+
+            var feedbackSysId =
+                feedbackGR.getUniqueValue();
 
 
-        // ======================================
-        // GET SYS ID
-        // ======================================
+            // ==================================
+            // CREATE FEEDBACK OBJECT
+            // ==================================
 
-        var feedbackSysId =
-            feedbackGR.getUniqueValue();
+            var feedback = {
 
+                number:
+                    feedbackGR.getDisplayValue(
+                        'number'
+                    ),
 
-        // ======================================
-        // CREATE FEEDBACK OBJECT
-        // ======================================
+                base_problem:
+                    feedbackGR.getDisplayValue(
+                        'base_problem'
+                    ),
 
-        var feedback = {
+                meal_type:
+                    feedbackGR.getDisplayValue(
+                        'meal_type'
+                    ),
 
-            number:
-                feedbackGR.getDisplayValue(
-                    'number'
-                ),
+                mess_hall:
+                    feedbackGR.getDisplayValue(
+                        'mess_hall'
+                    ),
 
-            base_problem:
-                feedbackGR.getDisplayValue(
-                    'base_problem'
-                ),
+                problem_type:
+                    feedbackGR.getDisplayValue(
+                        'problem_type'
+                    ),
 
-            meal_type:
-                feedbackGR.getDisplayValue(
-                    'meal_type'
-                ),
+                use_case:
+                    feedbackGR.getDisplayValue(
+                        'use_case'
+                    ),
 
-            mess_hall:
-                feedbackGR.getDisplayValue(
-                    'mess_hall'
-                ),
+                student:
+                    feedbackGR.getDisplayValue(
+                        'student'
+                    ),
 
-            problem_type:
-                feedbackGR.getDisplayValue(
-                    'problem_type'
-                ),
+                overall_rating:
+                    feedbackGR.getValue(
+                        'overall_rating'
+                    ),
 
-            use_case:
-                feedbackGR.getDisplayValue(
-                    'use_case'
-                ),
+                resolution_satisfaction:
+                    feedbackGR.getValue(
+                        'resolution_satisfaction'
+                    ),
 
-            student:
-                feedbackGR.getDisplayValue(
-                    'student'
-                ),
+                feedback_comments:
+                    feedbackGR.getValue(
+                        'feedback_comments'
+                    ),
 
-            overall_rating:
-                feedbackGR.getValue(
-                    'overall_rating'
-                ),
+                state:
+                    feedbackGR.getDisplayValue(
+                        'status'
+                    ),
 
-            resolution_satisfaction:
-                feedbackGR.getValue(
-                    'resolution_satisfaction'
-                ),
+                created:
+                    feedbackGR.getDisplayValue(
+                        'sys_created_on'
+                    )
 
-            feedback_comments:
-                feedbackGR.getValue(
-                    'feedback_comments'
-                ),
-
-            state:
-                feedbackGR.getDisplayValue(
-                    'status'
-                ),
-
-            created:
-                feedbackGR.getDisplayValue(
-                    'sys_created_on'
-                )
-
-        };
+            };
 
 
-        // ======================================
-        // SYS_ID AS KEY
-        // ======================================
+            // ==================================
+            // SYS ID AS KEY
+            // ==================================
 
-        data.feedbacks[feedbackSysId] =
-            feedback;
+            data.feedbacks[
+                feedbackSysId
+            ] =
+                feedback;
 
 
-        // ======================================
-        // COUNT
-        // ======================================
+            // ==================================
+            // COUNT
+            // ==================================
 
-        data.feedbackCount++;
+            data.feedbackCount++;
+
+        }
 
     }
 
@@ -1839,14 +2056,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-27 05:02:27</sys_created_on>
         <sys_id>fa879a02a92b03107f444d1b3bf5776f</sys_id>
-        <sys_mod_count>27</sys_mod_count>
+        <sys_mod_count>31</sys_mod_count>
         <sys_name>Food Service Student Dashboard Widget</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sp_widget_fa879a02a92b03107f444d1b3bf5776f</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-29 06:01:17</sys_updated_on>
+        <sys_updated_on>2026-10-01 07:22:42</sys_updated_on>
         <template><![CDATA[<div class="student-dashboard">
 
     <!-- ========================================== -->

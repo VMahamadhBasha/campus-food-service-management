@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sn_aia_version">
+    <sn_aia_version action="INSERT_OR_UPDATE">
+        <condition/>
+        <instructions>1. Receive the manager's request to generate a Food Management Intelligence report.
+
+2. Use Get Food Management Analytics to retrieve all available Food Complaint analytics.
+
+3. Use Food Base Problem Analytics to retrieve all available Food Base Problem analytics.
+
+4. Use Food Complaint Task Analytics to retrieve all available Food Complaint Task analytics.
+
+5. Treat all three tool outputs as application source data.
+
+6. Analyze Food Complaint data by Mess Hall, Meal Type, Use Case, Problem Type, and total complaint count.
+
+7. Analyze Food Base Problem data by Use Case, Problem Type, Mess Hall, Meal Type, Priority, State, total problems, affected students, and AI analysis completion.
+
+8. Analyze Food Complaint Task data by Current Priority, State, Assignment Group, Use Case, Problem Type, Mess Hall, Meal Type, Approval, total tasks, and affected students.
+
+9. Combine the results from all three analytics tools.
+
+10. Compare the three data sources only where the retrieved data supports a valid comparison.
+
+11. Identify significant patterns and areas requiring management attention based only on the retrieved data.
+
+12. Identify recurring issues only when multiple retrieved records support recurrence.
+
+13. Analyze student impact and priority distribution using the retrieved data.
+
+14. Identify pending or unresolved operational work only when the retrieved State values support that conclusion.
+
+15. Generate management insights based only on retrieved application data.
+
+16. Generate practical management recommendations based only on the retrieved evidence.
+
+17. Clearly distinguish application facts from AI-generated insights and recommendations.
+
+18. Do not invent records, counts, trends, priorities, student impact, incidents, task states, causes, or recommendations.
+
+19. Do not infer causes or root causes unless directly supported by the retrieved data.
+
+20. Do not describe a process as effective, successful, improved, or ineffective unless the retrieved data directly supports that conclusion.
+
+21. When the dataset is small, state that findings are based only on the available records and do not generalize beyond them.
+
+22. When data is missing or Not specified, report it as unavailable or Not specified rather than assuming a value.
+
+23. Generate one comprehensive management report containing:
+   - Overall Summary
+   - Food Complaint Analysis
+   - Food Base Problem Analysis
+   - Food Complaint Task Analysis
+   - Mess Hall Analysis
+   - Meal Type Analysis
+   - Use Case Analysis
+   - Problem Type Analysis
+   - Priority Analysis
+   - Student Impact
+   - Operational Task Analysis
+   - Key Patterns and Recurring Issues
+   - Management Insights
+   - Recommended Management Actions
+
+24. Complete all analysis and reasoning before creating the report record.
+
+25. After the complete management report has been generated, use the Create Food Management Report tool.
+
+26. Set the report_title input to exactly:
+Food Management Intelligence Report
+
+27. Set the report_content input to the complete final management report.
+
+28. Pass report_title and report_content dynamically to the Create Food Management Report tool.
+
+29. Do not pass empty values to report_title or report_content.
+
+30. Do not use hard-coded complaint counts, problem counts, task counts, student counts, priorities, trends, or management findings.
+
+31. Do not call Create Food Management Report before the complete management report has been generated.
+
+32. Create only one Food Management Reports record for each manager report-generation request.
+
+33. Do not create a report record if the complete management report could not be generated.
+
+34. Do not return raw analytics tool outputs.
+
+35. Do not return the raw output of the Create Food Management Report tool.
+
+36. After the Create Food Management Report tool succeeds, return the complete final management report to the manager.
+
+37. Always use the latest data retrieved during the current execution.
+
+38. Never rely on previous execution results, previous reports, cached counts, or hard-coded records.</instructions>
+        <state>published</state>
+        <sys_class_name>sn_aia_version</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 05:30:24</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>fbca7d0bc86703107f44b32b644b2930</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>V1</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sn_aia_version_fbca7d0bc86703107f44b32b644b2930</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-01 06:45:19</sys_updated_on>
+        <target_id>96a93587c86703107f44b32b644b2981</target_id>
+        <target_table>sn_aia_agent</target_table>
+        <version_name>V1</version_name>
+        <version_number>1</version_number>
+    </sn_aia_version>
+</record_update>

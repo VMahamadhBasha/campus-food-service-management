@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sn_aia_tool">
+    <sn_aia_tool action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description>Retrieves and analyzes Food Complaint Task records from the Campus Food Services Assistant application for management reporting. Analyze task count, Current Priority, Student Count, State, Assignment Group, Problem Type, Approval, Use Case Number, Mess Hall, Meal Type, and Priority Reason. Return only information retrieved from the application. Do not invent missing data or unsupported conclusions.</description>
+        <input_schema>[]</input_schema>
+        <name>Food Complaint Task Analytics</name>
+        <record_type>custom</record_type>
+        <script><![CDATA[(function(inputs) {
+
+    var result = {
+        total_tasks: 0,
+        by_priority: {},
+        by_state: {},
+        by_assignment_group: {},
+        by_use_case: {},
+        by_problem_type: {},
+        by_mess_hall: {},
+        by_meal_type: {},
+        by_approval: {},
+        total_affected_students: 0
+    };
+
+    var gr = new GlideRecord('x_snc_campus_foo_1_complain_tasks');
+    gr.query();
+
+    while (gr.next()) {
+
+        result.total_tasks++;
+
+        var priority =
+            gr.getDisplayValue('current_priority') ||
+            'Not specified';
+
+        var state =
+            gr.getDisplayValue('state') ||
+            'Not specified';
+
+        var assignmentGroup =
+            gr.getDisplayValue('assignment_group') ||
+            'Not specified';
+
+        var useCase =
+            gr.getDisplayValue('use_case') ||
+            'Not specified';
+
+        var problemType =
+            gr.getValue('problem_type') ||
+            'Not specified';
+
+        var messHall =
+            gr.getDisplayValue('mess_hall') ||
+            'Not specified';
+
+        var mealType =
+            gr.getDisplayValue('meal_type') ||
+            'Not specified';
+
+        var approval =
+            gr.getDisplayValue('approval') ||
+            'Not specified';
+
+        var studentCount =
+            parseInt(gr.getValue('student_count'), 10) || 0;
+
+        result.total_affected_students += studentCount;
+
+
+        if (!result.by_priority[priority])
+            result.by_priority[priority] = 0;
+        result.by_priority[priority]++;
+
+
+        if (!result.by_state[state])
+            result.by_state[state] = 0;
+        result.by_state[state]++;
+
+
+        if (!result.by_assignment_group[assignmentGroup])
+            result.by_assignment_group[assignmentGroup] = 0;
+        result.by_assignment_group[assignmentGroup]++;
+
+
+        if (!result.by_use_case[useCase])
+            result.by_use_case[useCase] = 0;
+        result.by_use_case[useCase]++;
+
+
+        if (!result.by_problem_type[problemType])
+            result.by_problem_type[problemType] = 0;
+        result.by_problem_type[problemType]++;
+
+
+        if (!result.by_mess_hall[messHall])
+            result.by_mess_hall[messHall] = 0;
+        result.by_mess_hall[messHall]++;
+
+
+        if (!result.by_meal_type[mealType])
+            result.by_meal_type[mealType] = 0;
+        result.by_meal_type[mealType]++;
+
+
+        if (!result.by_approval[approval])
+            result.by_approval[approval] = 0;
+        result.by_approval[approval]++;
+    }
+
+
+    return {
+        food_complaint_task_analytics: JSON.stringify(result)
+    };
+
+})(inputs);]]></script>
+        <sys_class_name>sn_aia_tool</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 06:32:25</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>d809c64bc8e703107f44b32b644b292a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Food Complaint Task Analytics</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sn_aia_tool_d809c64bc8e703107f44b32b644b292a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 06:32:25</sys_updated_on>
+        <target_document/>
+        <target_document_table>sn_aia_tool</target_document_table>
+        <type>script</type>
+    </sn_aia_tool>
+</record_update>

@@ -544,10 +544,10 @@
         <script><![CDATA[(function() {
 
     // Native Service Portal login URL
-    data.loginUrl = '/sp?id=login';
+    data.loginUrl = '/sp?id=food_service_login_page';
 
     // Current year for footer
-    data.year = new GlideDateTime().getYear();
+    data.year = new GlideDateTime().getYearLocalTime();
 
 })();]]></script>
         <servicenow>false</servicenow>
@@ -555,14 +555,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 13:31:26</sys_created_on>
         <sys_id>c361873580a743107f4447e44ab1d5cc</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>food_services_landing_four_sections</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sp_widget_c361873580a743107f4447e44ab1d5cc</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-26 13:53:36</sys_updated_on>
+        <sys_updated_on>2026-10-01 06:53:25</sys_updated_on>
         <template><![CDATA[<section id="home" class="cfa-hero">
   <div class="cfa-hero-inner">
     <h1>Campus Food Services Assistant</h1>

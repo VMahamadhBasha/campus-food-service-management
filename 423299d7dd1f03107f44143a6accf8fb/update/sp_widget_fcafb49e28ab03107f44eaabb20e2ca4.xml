@@ -1,172 +1,847 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[api.controller=function($scope, $window) {
+        <client_script><![CDATA[api.controller = function($scope, $window) {
 
     var c = this;
 
-    c.username = '';
-    c.password = '';
+
+    // ==========================================================
+    // VARIABLES
+    // ==========================================================
+
+    c.username = "";
+
+    c.password = "";
+
     c.loading = false;
-    c.error = '';
+
+    c.errorMessage = "";
+
+
+    // ==========================================================
+    // LOGIN
+    // ==========================================================
 
     c.login = function() {
 
-        c.error = '';
+        console.log("==========================================");
+        console.log("CAMPUS LOGIN BUTTON CLICKED");
+        console.log("==========================================");
 
-        if (!c.username || !c.password) {
 
-            c.error = 'Please enter username and password.';
+        // ======================================================
+        // CLEAR OLD ERROR
+        // ======================================================
+
+        c.errorMessage = "";
+
+
+        // ======================================================
+        // CHECK USERNAME
+        // ======================================================
+
+        if (!c.username) {
+
+            console.log("LOGIN STOPPED: USERNAME IS EMPTY");
+
+            c.errorMessage =
+                "Please enter your username.";
+
             return;
         }
 
+
+        // ======================================================
+        // CHECK PASSWORD
+        // ======================================================
+
+        if (!c.password) {
+
+            console.log("LOGIN STOPPED: PASSWORD IS EMPTY");
+
+            c.errorMessage =
+                "Please enter your password.";
+
+            return;
+        }
+
+
+        // ======================================================
+        // PRINT LOGIN DATA
+        // ======================================================
+
+        console.log("========== LOGIN DATA ==========");
+        console.log("Username:", c.username);
+        console.log("Password:", c.password);
+        console.log("================================");
+
+
+        // ======================================================
+        // SHOW LOADING
+        // ======================================================
+
         c.loading = true;
 
-        c.data.action = 'login';
-        c.data.username = c.username;
-        c.data.password = c.password;
+        console.log("LOGIN LOADING STARTED");
 
-        c.server.update().then(function(response) {
+
+        // ======================================================
+        // CREATE GLIDE AJAX
+        // ======================================================
+
+        console.log("Creating GlideAjax object...");
+
+        var ga =
+            new GlideAjax("x_snc_campus_foo_1.CampusLoginSessionUtils");
+
+        console.log("GlideAjax object created successfully");
+
+
+        // ======================================================
+        // SCRIPT INCLUDE FUNCTION
+        // ======================================================
+
+        console.log("Sending sysparm_name = login");
+
+        ga.addParam(
+            "sysparm_name",
+            "login"
+        );
+
+
+        // ======================================================
+        // USERNAME
+        // ======================================================
+
+        console.log(
+            "Sending username:",
+            c.username
+        );
+
+        ga.addParam(
+            "sysparm_username",
+            c.username
+        );
+
+
+        // ======================================================
+        // PASSWORD
+        // ======================================================
+
+        console.log(
+            "Sending password:",
+            c.password
+        );
+
+        ga.addParam(
+            "sysparm_password",
+            c.password
+        );
+
+
+        // ======================================================
+        // CALL SCRIPT INCLUDE
+        // ======================================================
+
+        console.log("==========================================");
+        console.log("CALLING SCRIPT INCLUDE...");
+        console.log("Script Include: x_snc_campus_foo_1.CampusLoginSessionUtils");
+        console.log("Function: login");
+        console.log("Waiting for response...");
+        console.log("==========================================");
+
+
+        ga.getXMLAnswer(function(response) {
+
+            console.log("==========================================");
+            console.log("RESPONSE RECEIVED FROM SCRIPT INCLUDE");
+            console.log("==========================================");
+
+            console.log(
+                "Raw Response:",
+                response
+            );
+
+
+            // ==================================================
+            // STOP LOADING
+            // ==================================================
 
             c.loading = false;
 
-            console.log('FULL RESPONSE:', response);
 
-            if (!response || !response.data) {
+            // ==================================================
+            // NO RESPONSE
+            // ==================================================
 
-                c.error = 'No response received from server.';
+            if (!response) {
+
+                console.log(
+                    "ERROR: SCRIPT INCLUDE RETURNED NO RESPONSE"
+                );
+
+                c.errorMessage =
+                    "Unable to connect to the login service.";
+
+                $scope.$applyAsync();
+
                 return;
             }
 
-            var data = response.data;
 
-            console.log('LOGIN DATA:', data);
-            console.log('SUCCESS:', data.success);
-            console.log('ROLE:', data.role);
-            console.log('DASHBOARD:', data.dashboard);
+            // ==================================================
+            // RESPONSE RECEIVED
+            // ==================================================
 
-            if (data.success && data.dashboard) {
+            console.log(
+                "Response is NOT empty."
+            );
 
-                $window.location.href =
-                    $window.location.origin + data.dashboard;
 
-            } else {
+            // ==================================================
+            // CONVERT RESPONSE TO OBJECT
+            // ==================================================
 
-                c.error =
-                    data.message || 'Login failed.';
+            var result;
+
+
+            try {
+
+                console.log(
+                    "Trying to parse JSON response..."
+                );
+
+                result =
+                    JSON.parse(response);
+
+
+                console.log(
+                    "JSON PARSED SUCCESSFULLY"
+                );
+
+                console.log(
+                    "Login Result Object:",
+                    result
+                );
 
             }
 
-        }, function(error) {
+            catch (error) {
 
-            c.loading = false;
+                console.log(
+                    "JSON PARSE ERROR:",
+                    error
+                );
 
-            console.log('SERVER ERROR:', error);
+                c.errorMessage =
+                    "Invalid response from login service.";
 
-            c.error = 'Server error while logging in.';
+                $scope.$applyAsync();
+
+                return;
+            }
+
+
+            // ==================================================
+            // PRINT RECEIVED LOGIN DATA
+            // ==================================================
+
+            console.log("========== RECEIVED LOGIN DATA ==========");
+
+            console.log(
+                "Authentication:",
+                result.authentication
+            );
+
+            console.log(
+                "Session Number:",
+                result.sessionNumber
+            );
+
+            console.log(
+                "Session ID:",
+                result.sessionId
+            );
+
+            console.log(
+                "User Role:",
+                result.userRole
+            );
+
+            console.log(
+                "User Name:",
+                result.userName
+            );
+
+            console.log(
+                "User Sys ID:",
+                result.user
+            );
+
+            console.log("=========================================");
+
+
+            // ==================================================
+            // CHECK AUTHENTICATION
+            // ==================================================
+
+            if (
+                result.authentication === true
+            ) {
+
+                console.log(
+                    "AUTHENTICATION SUCCESSFUL"
+                );
+
+
+                // ==============================================
+                // CREATE LOGIN OBJECT
+                // ==============================================
+
+                var campusLogin = {
+
+                    authentication:
+                        result.authentication,
+
+                    sessionNumber:
+                        result.sessionNumber,
+
+                    sessionId:
+                        result.sessionId,
+
+                    userRole:
+                        result.userRole,
+
+                    userName:
+                        result.userName,
+
+                    user:
+                        result.user
+
+                };
+
+
+                console.log(
+                    "Campus Login Object:",
+                    campusLogin
+                );
+
+
+                // ==============================================
+                // STORE IN LOCAL STORAGE
+                // ==============================================
+
+                localStorage.setItem(
+                    "campusLogin",
+                    JSON.stringify(campusLogin)
+                );
+
+                console.log(
+                    "Campus Login Object stored in localStorage"
+                );
+
+
+                // ==============================================
+                // ROLE BASED REDIRECTION
+                // ==============================================
+
+                if (
+                    result.userRole === "Student"
+                ) {
+
+                    console.log(
+                        "Redirecting to Student Dashboard"
+                    );
+
+                    $window.location.href ="https://ltm-hck-2876-0046.lab.service-now.com/food_services?id=food_service_student_dashbaord_page";
+
+                    return;
+                }
+
+
+                if (
+                    result.userRole === "Staff"
+                ) {
+
+                    console.log(
+                        "Redirecting to Staff Dashboard"
+                    );
+
+                    $window.location.href =
+                        "https://ltm-hck-2876-0046.lab.service-now.com/food_services?id=food_services_staff_dashboard_page";
+
+                    return;
+                }
+
+
+                if (
+                    result.userRole === "Admin"
+                ) {
+
+                    console.log(
+                        "Redirecting to Admin Dashboard"
+                    );
+
+                    $window.location.href =
+                        "https://ltm-hck-2876-0046.lab.service-now.com/food_services?id=food_service_admin_dashboard_page";
+
+                    return;
+                }
+
+
+                if (
+                    result.userRole === "Manager"
+                ) {
+
+                    console.log(
+                        "Redirecting to Manager Dashboard"
+                    );
+
+                    $window.location.href =
+                        "https://ltm-hck-2876-0046.lab.service-now.com/food_services?id=food_service_manager_dashboard_page";
+
+                    return;
+                }
+
+
+                // ==============================================
+                // UNKNOWN ROLE
+                // ==============================================
+
+                console.log(
+                    "ERROR: UNKNOWN USER ROLE:",
+                    result.userRole
+                );
+
+                c.errorMessage =
+                    "No dashboard is configured for this role.";
+
+                $scope.$applyAsync();
+
+            }
+
+            else {
+
+                console.log(
+                    "AUTHENTICATION FAILED"
+                );
+
+                console.log(
+                    "Authentication value:",
+                    result.authentication
+                );
+
+
+                // ==============================================
+                // AUTHENTICATION FAILED
+                // ==============================================
+
+                c.errorMessage =
+                    "Invalid username or user access.";
+
+                $scope.$applyAsync();
+
+            }
 
         });
 
+
+        // ======================================================
+        // IMPORTANT
+        // ======================================================
+
+        console.log(
+            "GlideAjax request has been sent."
+        );
+
+        console.log(
+            "NOW WAITING FOR SCRIPT INCLUDE RESPONSE..."
+        );
+
     };
 
-}]]></client_script>
+
+    // ==========================================================
+    // ENTER KEY
+    // ==========================================================
+
+    c.checkEnter = function(event) {
+
+        if (
+            event.keyCode === 13
+        ) {
+
+            console.log(
+                "ENTER KEY PRESSED - STARTING LOGIN"
+            );
+
+            c.login();
+
+        }
+
+    };
+
+};]]></client_script>
         <controller_as>c</controller_as>
-        <css>.login-page {&#13;
-    min-height: 100vh;&#13;
-    display: flex;&#13;
-    justify-content: center;&#13;
-    align-items: center;&#13;
-    background: #f4f7fb;&#13;
-    padding: 20px;&#13;
+        <css>.cfa-login-page {&#13;
+min-height: 100vh;&#13;
+background: #f1f5f9;&#13;
+&#13;
+display: flex;&#13;
+align-items: center;&#13;
+justify-content: center;&#13;
+&#13;
+padding: 30px;&#13;
 }&#13;
 &#13;
-.login-card {&#13;
-    width: 100%;&#13;
-    max-width: 420px;&#13;
-    background: white;&#13;
-    padding: 40px;&#13;
-    border-radius: 18px;&#13;
-    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);&#13;
-    text-align: center;&#13;
+.cfa-login-card {&#13;
+width: 100%;&#13;
+max-width: 1000px;&#13;
+&#13;
+min-height: 580px;&#13;
+&#13;
+background: #ffffff;&#13;
+&#13;
+border-radius: 18px;&#13;
+&#13;
+overflow: hidden;&#13;
+&#13;
+display: flex;&#13;
+&#13;
+box-shadow:&#13;
+0 20px 50px rgba(15, 23, 42, 0.12);&#13;
 }&#13;
 &#13;
-.logo {&#13;
-    width: 70px;&#13;
-    height: 70px;&#13;
-    margin: 0 auto 15px;&#13;
-    display: flex;&#13;
-    align-items: center;&#13;
-    justify-content: center;&#13;
-    background: #fff3e0;&#13;
-    border-radius: 50%;&#13;
-    font-size: 35px;&#13;
+/* ========================================================= */&#13;
+/* LEFT LOGIN SECTION */&#13;
+/* ========================================================= */&#13;
+&#13;
+.cfa-login-form-section {&#13;
+width: 55%;&#13;
+&#13;
+padding: 55px 60px;&#13;
+&#13;
+display: flex;&#13;
+flex-direction: column;&#13;
+&#13;
+justify-content: center;&#13;
 }&#13;
 &#13;
-.login-card h1 {&#13;
-    margin: 0;&#13;
-    font-size: 28px;&#13;
-    color: #222;&#13;
+/* BRAND */&#13;
+&#13;
+.cfa-login-brand {&#13;
+display: flex;&#13;
+align-items: center;&#13;
+&#13;
+gap: 9px;&#13;
+&#13;
+font-size: 20px;&#13;
+font-weight: 800;&#13;
+&#13;
+color: #0f172a;&#13;
+&#13;
+margin-bottom: 55px;&#13;
 }&#13;
 &#13;
-.subtitle {&#13;
-    margin: 8px 0 30px;&#13;
-    color: #777;&#13;
+.cfa-login-brand b {&#13;
+color: #0d9488;&#13;
 }&#13;
 &#13;
-.form-group {&#13;
-    text-align: left;&#13;
-    margin-bottom: 20px;&#13;
+.cfa-login-logo {&#13;
+font-size: 25px;&#13;
 }&#13;
 &#13;
-.form-group label {&#13;
-    display: block;&#13;
-    margin-bottom: 7px;&#13;
-    font-weight: 600;&#13;
-    color: #333;&#13;
+/* HEADING */&#13;
+&#13;
+.cfa-login-heading h1 {&#13;
+margin: 0 0 10px 0;&#13;
+&#13;
+font-size: 32px;&#13;
+&#13;
+font-weight: 800;&#13;
+&#13;
+color: #0f172a;&#13;
 }&#13;
 &#13;
-.form-group input {&#13;
-    width: 100%;&#13;
-    box-sizing: border-box;&#13;
-    padding: 13px 14px;&#13;
-    border: 1px solid #d5dbe3;&#13;
-    border-radius: 8px;&#13;
-    font-size: 15px;&#13;
-    outline: none;&#13;
+.cfa-login-heading p {&#13;
+margin: 0 0 35px 0;&#13;
+&#13;
+color: #64748b;&#13;
+&#13;
+font-size: 14px;&#13;
+&#13;
+line-height: 1.6;&#13;
 }&#13;
 &#13;
-.form-group input:focus {&#13;
-    border-color: #ff9800;&#13;
+/* FORM */&#13;
+&#13;
+.cfa-login-form {&#13;
+width: 100%;&#13;
 }&#13;
 &#13;
-.login-button {&#13;
-    width: 100%;&#13;
-    padding: 14px;&#13;
-    border: none;&#13;
-    border-radius: 8px;&#13;
-    background: #ff9800;&#13;
-    color: white;&#13;
-    font-size: 16px;&#13;
-    font-weight: 600;&#13;
-    cursor: pointer;&#13;
+.cfa-form-group {&#13;
+margin-bottom: 22px;&#13;
 }&#13;
 &#13;
-.login-button:hover {&#13;
-    background: #f57c00;&#13;
+.cfa-form-group label {&#13;
+display: block;&#13;
+&#13;
+margin-bottom: 8px;&#13;
+&#13;
+color: #334155;&#13;
+&#13;
+font-size: 13px;&#13;
+&#13;
+font-weight: 700;&#13;
 }&#13;
 &#13;
-.login-button:disabled {&#13;
-    opacity: 0.7;&#13;
+/* INPUT */&#13;
+&#13;
+.cfa-input-wrapper {&#13;
+position: relative;&#13;
 }&#13;
 &#13;
-.error-message {&#13;
-    margin-bottom: 15px;&#13;
-    padding: 10px;&#13;
-    border-radius: 6px;&#13;
-    background: #ffebee;&#13;
-    color: #c62828;&#13;
-    text-align: left;&#13;
-}</css>
+.cfa-input-icon {&#13;
+position: absolute;&#13;
+&#13;
+left: 14px;&#13;
+&#13;
+top: 50%;&#13;
+&#13;
+transform: translateY(-50%);&#13;
+&#13;
+font-size: 16px;&#13;
+}&#13;
+&#13;
+.cfa-input-wrapper input {&#13;
+width: 100%;&#13;
+&#13;
+height: 48px;&#13;
+&#13;
+border: 1px solid #cbd5e1;&#13;
+&#13;
+border-radius: 9px;&#13;
+&#13;
+padding: 0 15px 0 45px;&#13;
+&#13;
+font-size: 14px;&#13;
+&#13;
+color: #0f172a;&#13;
+&#13;
+outline: none;&#13;
+&#13;
+box-sizing: border-box;&#13;
+&#13;
+transition: 0.2s;&#13;
+}&#13;
+&#13;
+.cfa-input-wrapper input:focus {&#13;
+border-color: #0d9488;&#13;
+&#13;
+box-shadow:&#13;
+0 0 0 3px rgba(13, 148, 136, 0.10);&#13;
+}&#13;
+&#13;
+.cfa-input-wrapper input::placeholder {&#13;
+color: #94a3b8;&#13;
+}&#13;
+&#13;
+/* ERROR */&#13;
+&#13;
+.cfa-login-error {&#13;
+background: #fef2f2;&#13;
+&#13;
+border: 1px solid #fecaca;&#13;
+&#13;
+color: #dc2626;&#13;
+&#13;
+padding: 11px 13px;&#13;
+&#13;
+border-radius: 8px;&#13;
+&#13;
+font-size: 13px;&#13;
+&#13;
+margin-bottom: 18px;&#13;
+}&#13;
+&#13;
+/* LOGIN BUTTON */&#13;
+&#13;
+.cfa-login-button {&#13;
+width: 100%;&#13;
+&#13;
+height: 48px;&#13;
+&#13;
+border: none;&#13;
+&#13;
+border-radius: 9px;&#13;
+&#13;
+background: #0d9488;&#13;
+&#13;
+color: #ffffff;&#13;
+&#13;
+font-size: 14px;&#13;
+&#13;
+font-weight: 700;&#13;
+&#13;
+cursor: pointer;&#13;
+&#13;
+transition: 0.2s;&#13;
+}&#13;
+&#13;
+.cfa-login-button:hover {&#13;
+background: #0f766e;&#13;
+}&#13;
+&#13;
+.cfa-login-button:disabled {&#13;
+opacity: 0.65;&#13;
+&#13;
+cursor: not-allowed;&#13;
+}&#13;
+&#13;
+/* BACK HOME */&#13;
+&#13;
+.cfa-back-home {&#13;
+margin-top: 28px;&#13;
+&#13;
+text-align: center;&#13;
+}&#13;
+&#13;
+.cfa-back-home a {&#13;
+color: #0d9488;&#13;
+&#13;
+text-decoration: none;&#13;
+&#13;
+font-size: 13px;&#13;
+&#13;
+font-weight: 600;&#13;
+}&#13;
+&#13;
+.cfa-back-home a:hover {&#13;
+text-decoration: underline;&#13;
+}&#13;
+&#13;
+/* ========================================================= */&#13;
+/* RIGHT INFORMATION SECTION */&#13;
+/* ========================================================= */&#13;
+&#13;
+.cfa-login-info {&#13;
+width: 45%;&#13;
+&#13;
+background: #0f172a;&#13;
+&#13;
+color: #ffffff;&#13;
+&#13;
+display: flex;&#13;
+&#13;
+align-items: center;&#13;
+&#13;
+justify-content: center;&#13;
+&#13;
+padding: 50px;&#13;
+}&#13;
+&#13;
+.cfa-login-info-content {&#13;
+max-width: 330px;&#13;
+&#13;
+text-align: center;&#13;
+}&#13;
+&#13;
+.cfa-food-icon {&#13;
+font-size: 55px;&#13;
+&#13;
+margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+.cfa-login-info h2 {&#13;
+margin: 0 0 15px 0;&#13;
+&#13;
+font-size: 27px;&#13;
+&#13;
+font-weight: 800;&#13;
+}&#13;
+&#13;
+.cfa-login-info p {&#13;
+margin: 0;&#13;
+&#13;
+color: #cbd5e1;&#13;
+&#13;
+font-size: 14px;&#13;
+&#13;
+line-height: 1.7;&#13;
+}&#13;
+&#13;
+/* FEATURES */&#13;
+&#13;
+.cfa-login-features {&#13;
+margin-top: 35px;&#13;
+&#13;
+text-align: left;&#13;
+}&#13;
+&#13;
+.cfa-feature {&#13;
+display: flex;&#13;
+&#13;
+align-items: center;&#13;
+&#13;
+gap: 10px;&#13;
+&#13;
+margin-bottom: 15px;&#13;
+&#13;
+color: #cbd5e1;&#13;
+&#13;
+font-size: 13px;&#13;
+}&#13;
+&#13;
+.cfa-feature span:first-child {&#13;
+color: #2dd4bf;&#13;
+&#13;
+font-weight: 800;&#13;
+&#13;
+font-size: 16px;&#13;
+}&#13;
+&#13;
+/* ========================================================= */&#13;
+/* RESPONSIVE */&#13;
+/* ========================================================= */&#13;
+&#13;
+@media (max-width: 800px) {&#13;
+&#13;
+.cfa-login-card {&#13;
+max-width: 500px;&#13;
+}&#13;
+&#13;
+.cfa-login-form-section {&#13;
+width: 100%;&#13;
+&#13;
+&#13;
+padding: 45px 35px;&#13;
+&#13;
+&#13;
+}&#13;
+&#13;
+.cfa-login-info {&#13;
+display: none;&#13;
+}&#13;
+&#13;
+}&#13;
+&#13;
+@media (max-width: 480px) {&#13;
+&#13;
+.cfa-login-page {&#13;
+padding: 15px;&#13;
+}&#13;
+&#13;
+.cfa-login-form-section {&#13;
+padding: 35px 25px;&#13;
+}&#13;
+&#13;
+.cfa-login-heading h1 {&#13;
+font-size: 27px;&#13;
+}&#13;
+&#13;
+}&#13;
+</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
@@ -184,98 +859,204 @@
         <roles/>
         <script><![CDATA[(function() {
 
-    data.success = false;
-    data.message = '';
-    data.dashboard = '';
-
-    if (input && input.action == 'login') {
-
-        var login = new CampusFoodLogin();
-
-        var result = login.validateLogin(
-            input.username,
-            input.password
-        );
-
-        data.success = result.success;
-        data.message = result.message;
-        data.userId = result.userId;
-        data.userName = result.userName;
-        data.role = result.role;
-        data.dashboard = result.dashboard;
-    }
-
 })();]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-27 17:21:51</sys_created_on>
         <sys_id>fcafb49e28ab03107f44eaabb20e2ca4</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>13</sys_mod_count>
         <sys_name>Food Service Login Widget</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sp_widget_fcafb49e28ab03107f44eaabb20e2ca4</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-27 17:46:38</sys_updated_on>
-        <template><![CDATA[<div class="login-page">
+        <sys_updated_on>2026-09-30 10:51:16</sys_updated_on>
+        <template><![CDATA[<div class="cfa-login-page">
 
-    <div class="login-card">
+  <div class="cfa-login-card">
 
-        <div class="logo">
-            ]]>🍳
-<![CDATA[        </div>
+```
+<!-- ========================================= -->
+<!-- LEFT SIDE - LOGIN FORM -->
+<!-- ========================================= -->
 
-        <h1>CampusFood AI</h1>
+<div class="cfa-login-form-section">
 
-        <p class="subtitle">
-            Campus Food Services
-        </p>
+  <!-- BRAND -->
+  <div class="cfa-login-brand">
+    <span class="cfa-login-logo">]]>🍳<![CDATA[</span>
 
-        <form ng-submit="c.login()">
+    <span>
+      Campus<b>Food AI</b>
+    </span>
+  </div>
 
-            <div class="form-group">
 
-                <label>Username</label>
+  <!-- HEADING -->
+  <div class="cfa-login-heading">
 
-                <input type="text"
-                       ng-model="c.username"
-                       placeholder="Enter username"
-                       required>
+    <h1>Welcome Back</h1>
 
-            </div>
+    <p>
+      Login to access your Campus Food Services dashboard.
+    </p>
 
-            <div class="form-group">
+  </div>
 
-                <label>Password</label>
 
-                <input type="password"
-                       ng-model="c.password"
-                       placeholder="Enter password"
-                       required>
+  <!-- LOGIN FORM -->
+  <div class="cfa-login-form">
 
-            </div>
 
-            <div class="error-message"
-                 ng-if="c.error">
+    <!-- USERNAME -->
+    <div class="cfa-form-group">
 
-                {{c.error}}
+      <label>
+        Username
+      </label>
 
-            </div>
+      <div class="cfa-input-wrapper">
 
-            <button type="submit"
-                    class="login-button"
-                    ng-disabled="c.loading">
+        <span class="cfa-input-icon">
+          ]]>👤
+<![CDATA[        </span>
 
-                {{c.loading ? 'Checking...' : 'Login'}}
+        <input
+          type="text"
+          ng-model="c.username"
+          placeholder="Enter your username"
+          autocomplete="username"
+          ng-keypress="c.checkEnter($event)"
+        />
 
-            </button>
-
-        </form>
+      </div>
 
     </div>
 
-</div>]]></template>
+
+    <!-- PASSWORD -->
+    <div class="cfa-form-group">
+
+      <label>
+        Password
+      </label>
+
+      <div class="cfa-input-wrapper">
+
+        <span class="cfa-input-icon">
+          ]]>🔒
+<![CDATA[        </span>
+
+        <input
+          type="password"
+          ng-model="c.password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+          ng-keypress="c.checkEnter($event)"
+        />
+
+      </div>
+
+    </div>
+
+
+    <!-- ERROR MESSAGE -->
+    <div
+      class="cfa-login-error"
+      ng-if="c.errorMessage"
+    >
+
+      {{c.errorMessage}}
+
+    </div>
+
+
+    <!-- LOGIN BUTTON -->
+    <button
+      type="button"
+      class="cfa-login-button"
+      ng-click="c.login()"
+      ng-disabled="c.loading"
+    >
+
+      <span ng-if="!c.loading">
+        Login
+      </span>
+
+      <span ng-if="c.loading">
+        Logging in...
+      </span>
+
+    </button>
+
+
+  </div>
+
+
+  <!-- BACK TO HOME -->
+  <div class="cfa-back-home">
+
+    <a href="#home">
+      ← Back to Home
+    </a>
+
+  </div>
+
+</div>
+
+
+<!-- ========================================= -->
+<!-- RIGHT SIDE - INFORMATION -->
+<!-- ========================================= -->
+
+<div class="cfa-login-info">
+
+  <div class="cfa-login-info-content">
+
+    <div class="cfa-food-icon">
+      ]]>🍽<![CDATA[️
+    </div>
+
+    <h2>
+      Smart Food Services
+    </h2>
+
+    <p>
+      Manage campus food services,
+      complaints and requests from
+      one simple platform.
+    </p>
+
+
+    <!-- FEATURES -->
+    <div class="cfa-login-features">
+
+      <div class="cfa-feature">
+        <span>✓</span>
+        <span>Food Complaint Management</span>
+      </div>
+
+      <div class="cfa-feature">
+        <span>✓</span>
+        <span>Smart Food Assistance</span>
+      </div>
+
+      <div class="cfa-feature">
+        <span>✓</span>
+        <span>Role Based Dashboards</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+  </div>
+
+</div>
+]]></template>
     </sp_widget>
 </record_update>
