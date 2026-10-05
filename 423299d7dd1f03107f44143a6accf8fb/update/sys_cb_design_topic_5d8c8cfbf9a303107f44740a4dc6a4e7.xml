@@ -1,0 +1,2082 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_design_topic">
+    <sys_cb_design_topic action="INSERT_OR_UPDATE">
+        <compiled_topic display_value="cfms_student_assistant">118c8cfbf9a303107f44740a4dc6a4a7</compiled_topic>
+        <design_definition>{"type":"FlowTopic","triggers":[{"type":"Trigger","name":"89eadeb9d6b1499ca376df7bf722ee1c","triggerType":"request","applicability":{"type":"Applicability","mode":"script","value":"true"},"id":"89eadeb9d6b1499ca376df7bf722ee1c"}],"goals":[{"name":"primary","trigger_id":"89eadeb9d6b1499ca376df7bf722ee1c","nodes":[{"type":"StartGoal","goal_id":"primary","greeting_msg":{"type":"String","mode":"string","value":""},"id":"0239987a0e464332b8c9fb227f5e01f8","name":"Start","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","confirmation_msg":{"type":"String","mode":"string","value":""},"id":"44cba364fb294056be16ffe6f21bd3ef","name":"End","expert_mode":false},{"type":"TextOutputPrompt","value":[{"type":"String","mode":"string","value":"gs.getMessageLang(\"va:topic:e41ace8bc8e703107f44b32b644b29b0:node:c40a2b84c1e14d2dada03c1eae874f5c:field:0\", vaContext.getRequesterLang())"}],"request_feedback":true,"isCollapsible":true,"id":"c40a2b84c1e14d2dada03c1eae874f5c","name":"Welcome_Student","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"secure":false},{"type":"LibraryCall","library_topic_name":"Data Collector","library_topic_id":"4c19933e4322211006650464dbb8f22d","library_topic_is_template":false,"parameter-mappings":[{"parameter-name":"definition","value":{"type":"String","mode":"script","value":"(function execute() {\n        var config = {\n            configuration: {\"purpose\":\"{{0}}\",\"inputs\":[{\"name\":\"student_menu\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{4}}\",\"skipMode\":\"'simple'\",\"skipCondition\":\"\\\"\\\"\",\"helpText\":\"false\",\"choices\":[{\"value\":\"raise_food_complaint\",\"label\":\"Raise a Food Complaint\"},{\"value\":\"my_requests\",\"label\":\"My Requests\"},{\"value\":\"track_complaint\",\"label\":\"My Complaint\"},{\"value\":\"give_feedback\",\"label\":\"Give Feedback\"}],\"applicability\":\"\",\"validation\":\"\"}],\"instructions\":\"{{1}}\",\"advanced_parameters\":\"{{2}}\",\"callingTask\":\"{{3}}\",\"confirm_summary\":false,\"slots\":[{\"name\":\"complaint_type\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{5}}\",\"validation\":\"\",\"choices\":[{\"value\":\"food_quality\",\"label\":\"Food Quality Complaint\"},{\"value\":\"meal_not_available\",\"label\":\"Meal Not Available\"},{\"value\":\"food_hygiene\",\"label\":\"Food Hygiene Issue\"},{\"value\":\"special_diet\",\"label\":\"Special Diet Request\"},{\"value\":\"allergy_management\",\"label\":\"Allergy Management Request\"},{\"value\":\"menu_feedback\",\"label\":\"Food Menu Feedback\"},{\"value\":\"meal_reservation\",\"label\":\"Meal Reservation / Pre-Booking\"},{\"value\":\"missed_meal\",\"label\":\"Missed Meal Request\"},{\"value\":\"food_wastage\",\"label\":\"Food Wastage Reporting\"},{\"value\":\"emergency_food\",\"label\":\"Emergency Food Assistance\"},{\"value\":\"mess_billing\",\"label\":\"Hostel Mess Billing Issue\"},{\"value\":\"menu_recommendation\",\"label\":\"Smart Menu Recommendation\"}]},{\"name\":\"meal_type\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{6}}\",\"validation\":\"\",\"choices\":[{\"value\":\"breakfast\",\"label\":\"Breakfast\"},{\"value\":\"lunch\",\"label\":\"Lunch\"},{\"value\":\"dinner\",\"label\":\"Dinner\"}]},{\"name\":\"complaint_description\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{7}}\",\"validation\":\"\"},{\"name\":\"request_submitted\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{8}}\",\"validation\":\"\"},{\"name\":\"feedback_text\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{9}}\",\"validation\":\"\"},{\"name\":\"mess_hall_dynamic\",\"type\":\"reference\",\"discoverable\":false,\"description\":\"{{10}}\",\"validation\":\"\",\"choiceMode\":\"'simple'\",\"table\":\"'x_snc_campus_foo_1_mess_hall'\",\"multipleSelect\":\"false\",\"autoSelect\":\"true\",\"conditionMode\":\"'simple'\",\"condition\":\"\\\"active=true\\\"\"},{\"name\":\"after_request\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{11}}\",\"validation\":\"\",\"choices\":[{\"value\":\"Student_Menu\",\"label\":\"Yes\"},{\"value\":\"End\",\"label\":\"No\"}]}],\"applicability\":\"\",\"classificationOverrides\":[]}\n        };\n        return JSON.stringify(config);\n    })()"},"metadata":{"type":"String","list":false,"items":[],"use_items":false}},{"parameter-name":"inputs","metadata":{"type":"String","list":true,"items":[{"type":"String","mode":"string","value":"Collect user input"},{"type":"String","mode":"string","value":""},{"type":"String","mode":"string","value":""},{"type":"String","mode":"script","value":"(function() { return vaSystem.getConversationTaskId()})()"},{"type":"String","mode":"string","value":"\"Select an option to manage your campus food services.\""},{"type":"String","mode":"string","value":"\"Select the type of food service request or complaint you want to raise.\""},{"type":"String","mode":"string","value":"\"Select the meal related to your food service request.\""},{"type":"String","mode":"string","value":"\"Describe the food service problem in detail, including what happened and where it occurred.\""},{"type":"String","mode":"string","value":"\"✅ Your food service request has been submitted successfully!\\n\\nYour request has been created and sent to the Campus Food Services team.\\n\\nYou can track your request from My Requests.\""},{"type":"String","mode":"string","value":"\"Please enter your feedback about the campus food service.\""},{"type":"String","mode":"string","value":"\"Select the mess hall where the food service issue occurred.\""},{"type":"String","mode":"string","value":"\"✅ Your food service request has been submitted successfully.\\n\\nWould you like to do anything else?\""}],"use_items":true}}],"return-value-mappings":[{"main_topic_variable_namespace":"vaInputs","library_topic_return_parameter_name":"outputs","main_topic_mapped_variable_name":"ai_data_collector_7361b101735c4621a656f02384ff47d7_output"}],"header_card_fields":[],"input_parameters_mode":"dynamic","output_parameters_mode":"dynamic","id":"7361b101735c4621a656f02384ff47d7","name":"Student_Menu","goal_id":"primary","expert_mode":false,"variableIds":["8ee6d004526249b48537ee9a18fc017b"]},{"type":"Decision","name":"Student_Decision","branches":[{"type":"Branch","label":"Raise_Food_Complaint","expression":{"type":"Applicability","mode":"query","value":"student_menu=raise_food_complaint"},"id":"b66173649010481e9fe0183696113bc7","name":"Raise_Food_Complaint","expert_mode":false},{"type":"Branch","label":"My_Requests","expression":{"type":"Applicability","mode":"query","value":"student_menu=my_requests"},"id":"949862a6108b4e1a80a4f3962fc76143","name":"My_Requests","expert_mode":false},{"type":"Branch","label":"Track_Complaint","expression":{"type":"Applicability","mode":"query","value":"student_menu=track_complaint"},"id":"efb04af0573a45ab9fd439fc93a868c1","name":"Track_Complaint","expert_mode":false},{"type":"Branch","label":"Give_Feedback","expression":{"type":"Applicability","mode":"query","value":"student_menu=give_feedback"},"id":"5b4f4e06c31d4171935a33d4e98625c7","name":"Give_Feedback","expert_mode":false}],"id":"eb1eb7d7f69442a0b62f8d5142c50001","goal_id":"primary","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","id":"fb758c83fa264113bbc881d0ec5fb65c","name":"ImplicitEnd__f255c1ae16c74dc1a35b79c279b98e65","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","id":"2726a74909ff4bf9982818d62d0a0358","name":"ImplicitEnd__2fa3537b4ea04431b24635b67e018678","expert_mode":false},{"type":"LibraryCall","library_topic_name":"Data Collector","library_topic_id":"4c19933e4322211006650464dbb8f22d","library_topic_is_template":false,"parameter-mappings":[{"parameter-name":"definition","value":{"type":"String","mode":"script","value":"(function execute() {\n        var config = {\n            configuration: {\"purpose\":\"{{0}}\",\"inputs\":[{\"name\":\"complaint_type\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{4}}\",\"skipMode\":\"'simple'\",\"skipCondition\":\"\\\"\\\"\",\"helpText\":\"false\",\"choices\":[{\"value\":\"food_quality\",\"label\":\"Food Quality Complaint\"},{\"value\":\"meal_not_available\",\"label\":\"Meal Not Available\"},{\"value\":\"food_hygiene\",\"label\":\"Food Hygiene Issue\"},{\"value\":\"special_diet\",\"label\":\"Special Diet Request\"},{\"value\":\"allergy_management\",\"label\":\"Allergy Management Request\"},{\"value\":\"menu_feedback\",\"label\":\"Food Menu Feedback\"},{\"value\":\"meal_reservation\",\"label\":\"Meal Reservation / Pre-Booking\"},{\"value\":\"missed_meal\",\"label\":\"Missed Meal Request\"},{\"value\":\"food_wastage\",\"label\":\"Food Wastage Reporting\"},{\"value\":\"emergency_food\",\"label\":\"Emergency Food Assistance\"},{\"value\":\"mess_billing\",\"label\":\"Hostel Mess Billing Issue\"},{\"value\":\"menu_recommendation\",\"label\":\"Smart Menu Recommendation\"}],\"applicability\":\"\",\"validation\":\"\"},{\"name\":\"meal_type\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{5}}\",\"skipMode\":\"'simple'\",\"skipCondition\":\"\\\"\\\"\",\"helpText\":\"false\",\"choices\":[{\"value\":\"breakfast\",\"label\":\"Breakfast\"},{\"value\":\"lunch\",\"label\":\"Lunch\"},{\"value\":\"dinner\",\"label\":\"Dinner\"}],\"applicability\":\"\",\"validation\":\"\"},{\"name\":\"mess_hall_dynamic\",\"type\":\"reference\",\"discoverable\":false,\"description\":\"{{6}}\",\"skipMode\":\"'simple'\",\"skipCondition\":\"\\\"\\\"\",\"helpText\":\"false\",\"choiceMode\":\"'simple'\",\"table\":\"'x_snc_campus_foo_1_mess_hall'\",\"multipleSelect\":\"false\",\"autoSelect\":\"true\",\"conditionMode\":\"'simple'\",\"condition\":\"\\\"active=true\\\"\",\"applicability\":\"\",\"validation\":\"\"},{\"name\":\"complaint_description\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{7}}\",\"skipMode\":\"'simple'\",\"skipCondition\":\"\\\"\\\"\",\"helpText\":\"false\",\"applicability\":\"\",\"validation\":\"\"}],\"instructions\":\"{{1}}\",\"advanced_parameters\":\"{{2}}\",\"callingTask\":\"{{3}}\",\"confirm_summary\":false,\"slots\":[{\"name\":\"student_menu\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{8}}\",\"validation\":\"\",\"choices\":[{\"value\":\"raise_food_complaint\",\"label\":\"Raise a Food Complaint\"},{\"value\":\"my_requests\",\"label\":\"My Requests\"},{\"value\":\"track_complaint\",\"label\":\"My Complaint\"},{\"value\":\"give_feedback\",\"label\":\"Give Feedback\"}]},{\"name\":\"request_submitted\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{9}}\",\"validation\":\"\"},{\"name\":\"feedback_text\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{10}}\",\"validation\":\"\"},{\"name\":\"after_request\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{11}}\",\"validation\":\"\",\"choices\":[{\"value\":\"Student_Menu\",\"label\":\"Yes\"},{\"value\":\"End\",\"label\":\"No\"}]}],\"applicability\":\"\",\"classificationOverrides\":[]}\n        };\n        return JSON.stringify(config);\n    })()"},"metadata":{"type":"String","list":false,"items":[],"use_items":false}},{"parameter-name":"inputs","metadata":{"type":"String","list":true,"items":[{"type":"String","mode":"string","value":""},{"type":"String","mode":"string","value":""},{"type":"String","mode":"string","value":""},{"type":"String","mode":"script","value":"(function() { return vaSystem.getConversationTaskId()})()"},{"type":"String","mode":"string","value":"\"Select the type of food service request or complaint you want to raise.\""},{"type":"String","mode":"string","value":"\"Select the meal related to your food service request.\""},{"type":"String","mode":"string","value":"\"Select the mess hall where the food service issue occurred.\""},{"type":"String","mode":"string","value":"\"Describe the food service problem in detail, including what happened and where it occurred.\""},{"type":"String","mode":"string","value":"\"Select an option to manage your campus food services.\""},{"type":"String","mode":"string","value":"\"✅ Your food service request has been submitted successfully!\\n\\nYour request has been created and sent to the Campus Food Services team.\\n\\nYou can track your request from My Requests.\""},{"type":"String","mode":"string","value":"\"Please enter your feedback about the campus food service.\""},{"type":"String","mode":"string","value":"\"✅ Your food service request has been submitted successfully.\\n\\nWould you like to do anything else?\""}],"use_items":true}}],"return-value-mappings":[{"main_topic_variable_namespace":"vaInputs","library_topic_return_parameter_name":"outputs","main_topic_mapped_variable_name":"ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output"}],"header_card_fields":[],"input_parameters_mode":"dynamic","output_parameters_mode":"dynamic","id":"63de8c2ca550404db1402d035b3d1c6c","name":"Complaint_Type","goal_id":"primary","expert_mode":false,"variableIds":["66d728d53f2c44a39e43fd4e8f889cd6","c9eb691ed9c44e729401365aac52fdb2","8de8d30d6ea74ffdbc58bfaf795962a2","4a4c593bcbef4cc9b67f448f5206b032"]},{"type":"CRUDAction","mode":"create","query":"student={{vaInputs.user}}^use_case=food_quality_complaint^mess_hall={{vaInputs.mess_hall_dynamic}}^meal_type={{vaInputs.meal_type}}^problem_type={{vaInputs.complaint_type}}^description={{vaInputs.complaint_description}}","variable_id":"f97809569e1c4835b8b73063b974352d","id":"bd687da8cea147de8c6abc783a5100b2","name":"Create_CFMS_Incident","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"attachments":[{"type":"String","mode":"string","value":""}]},{"type":"LibraryCall","library_topic_name":"Data Collector","library_topic_id":"4c19933e4322211006650464dbb8f22d","library_topic_is_template":false,"parameter-mappings":[{"parameter-name":"definition","value":{"type":"String","mode":"script","value":"(function execute() {\n        var config = {\n            configuration: {\"purpose\":\"{{0}}\",\"inputs\":[{\"name\":\"request_submitted\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{4}}\",\"skipMode\":\"'simple'\",\"skipCondition\":\"\\\"\\\"\",\"helpText\":\"false\",\"applicability\":\"\",\"validation\":\"\"},{\"name\":\"after_request\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{5}}\",\"skipMode\":\"'simple'\",\"skipCondition\":\"\\\"\\\"\",\"helpText\":\"false\",\"choices\":[{\"value\":\"Student_Menu\",\"label\":\"Yes\"},{\"value\":\"End\",\"label\":\"No\"}],\"applicability\":\"\",\"validation\":\"\"}],\"instructions\":\"{{1}}\",\"advanced_parameters\":\"{{2}}\",\"callingTask\":\"{{3}}\",\"confirm_summary\":false,\"slots\":[{\"name\":\"student_menu\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{6}}\",\"validation\":\"\",\"choices\":[{\"value\":\"raise_food_complaint\",\"label\":\"Raise a Food Complaint\"},{\"value\":\"my_requests\",\"label\":\"My Requests\"},{\"value\":\"track_complaint\",\"label\":\"My Complaint\"},{\"value\":\"give_feedback\",\"label\":\"Give Feedback\"}]},{\"name\":\"complaint_type\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{7}}\",\"validation\":\"\",\"choices\":[{\"value\":\"food_quality\",\"label\":\"Food Quality Complaint\"},{\"value\":\"meal_not_available\",\"label\":\"Meal Not Available\"},{\"value\":\"food_hygiene\",\"label\":\"Food Hygiene Issue\"},{\"value\":\"special_diet\",\"label\":\"Special Diet Request\"},{\"value\":\"allergy_management\",\"label\":\"Allergy Management Request\"},{\"value\":\"menu_feedback\",\"label\":\"Food Menu Feedback\"},{\"value\":\"meal_reservation\",\"label\":\"Meal Reservation / Pre-Booking\"},{\"value\":\"missed_meal\",\"label\":\"Missed Meal Request\"},{\"value\":\"food_wastage\",\"label\":\"Food Wastage Reporting\"},{\"value\":\"emergency_food\",\"label\":\"Emergency Food Assistance\"},{\"value\":\"mess_billing\",\"label\":\"Hostel Mess Billing Issue\"},{\"value\":\"menu_recommendation\",\"label\":\"Smart Menu Recommendation\"}]},{\"name\":\"meal_type\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{8}}\",\"validation\":\"\",\"choices\":[{\"value\":\"breakfast\",\"label\":\"Breakfast\"},{\"value\":\"lunch\",\"label\":\"Lunch\"},{\"value\":\"dinner\",\"label\":\"Dinner\"}]},{\"name\":\"complaint_description\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{9}}\",\"validation\":\"\"},{\"name\":\"feedback_text\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{10}}\",\"validation\":\"\"},{\"name\":\"mess_hall_dynamic\",\"type\":\"reference\",\"discoverable\":false,\"description\":\"{{11}}\",\"validation\":\"\",\"choiceMode\":\"'simple'\",\"table\":\"'x_snc_campus_foo_1_mess_hall'\",\"multipleSelect\":\"false\",\"autoSelect\":\"true\",\"conditionMode\":\"'simple'\",\"condition\":\"\\\"active=true\\\"\"}],\"applicability\":\"\",\"classificationOverrides\":[]}\n        };\n        return JSON.stringify(config);\n    })()"},"metadata":{"type":"String","list":false,"items":[],"use_items":false}},{"parameter-name":"inputs","metadata":{"type":"String","list":true,"items":[{"type":"String","mode":"string","value":""},{"type":"String","mode":"string","value":""},{"type":"String","mode":"string","value":""},{"type":"String","mode":"script","value":"(function() { return vaSystem.getConversationTaskId()})()"},{"type":"String","mode":"string","value":"\"✅ Your food service request has been submitted successfully!\\n\\nYour request has been created and sent to the Campus Food Services team.\\n\\nYou can track your request from My Requests.\""},{"type":"String","mode":"string","value":"\"✅ Your food service request has been submitted successfully.\\n\\nWould you like to do anything else?\""},{"type":"String","mode":"string","value":"\"Select an option to manage your campus food services.\""},{"type":"String","mode":"string","value":"\"Select the type of food service request or complaint you want to raise.\""},{"type":"String","mode":"string","value":"\"Select the meal related to your food service request.\""},{"type":"String","mode":"string","value":"\"Describe the food service problem in detail, including what happened and where it occurred.\""},{"type":"String","mode":"string","value":"\"Please enter your feedback about the campus food service.\""},{"type":"String","mode":"string","value":"\"Select the mess hall where the food service issue occurred.\""}],"use_items":true}}],"return-value-mappings":[{"main_topic_variable_namespace":"vaInputs","library_topic_return_parameter_name":"outputs","main_topic_mapped_variable_name":"ai_data_collector_099a6bc397cc450581c21057883f645e_output"}],"header_card_fields":[],"input_parameters_mode":"dynamic","output_parameters_mode":"dynamic","id":"099a6bc397cc450581c21057883f645e","name":"Request_Submitted","goal_id":"primary","expert_mode":false,"variableIds":["2c24e814a54c4381b0df3a1501fce626","feee6d30d0e549a4945200950a1cfda8"]},{"type":"CRUDAction","mode":"read","read_mode":"variable","query":"caller_id=7b9046eb081f03107f447d6c83c82211","variable_id":"595c4e95b8724a3698bf6bddbb9b749f","id":"ef4559ef86e94b8a932ae460a4972ae9","name":"My_Requests_Lookup","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"condition":{"type":"Condition","mode":"glide_query","value":"caller_id=7b9046eb081f03107f447d6c83c82211"}},{"type":"TableOutput","mode":"glide_record","conditionType":"simple","query":"caller_id=a79046eb081f03107f447d6c83c8220b","sortBy":"^ORDERBYnumber","table":"incident","title":{"type":"String","mode":"string","value":""},"columns":[{"name":"number","label":"Request Number"},{"name":"short_description","label":"Request"},{"name":"state","label":"Status"},{"name":"priority","label":"Priority"}],"showColumnHeaders":true,"noResultsMessage":{"type":"String","mode":"string","value":"You don't have any food service requests yet."},"showLink":false,"id":"119eb08d983d462ca4a05fbf00cf4c1f","name":"Display_My_Requests","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false},{"type":"CRUDAction","mode":"read","read_mode":"variable","query":"student={{vaInputs.user.user_name}}","variable_id":"d60014e0cc6540ef8034b32c3a8df87a","id":"2ecf76d5fd2a4c7c95b3d60fef3cc581","name":"Track_Complaint_Lookup","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"condition":{"type":"Condition","mode":"glide_query","value":"student={{vaInputs.user.user_name}}"}},{"type":"TableOutput","mode":"glide_record","conditionType":"simple","query":"student={{vaInputs.user}}","sortBy":"","table":"x_snc_campus_foo_1_food_complaint","title":{"type":"String","mode":"string","value":""},"columns":[{"name":"number","label":"Complaint Number"},{"name":"use_case","label":"Complaint Type"},{"name":"state","label":"Status"},{"name":"meal_type","label":"Meal Type"}],"showColumnHeaders":true,"noResultsMessage":{"type":"String","mode":"string","value":"I couldn't find any complaints for you."},"showLink":false,"id":"2ec8ae1bd87349058d3fd908c820424c","name":"Display_Complaint_Status","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false},{"type":"LibraryCall","library_topic_name":"Data Collector","library_topic_id":"4c19933e4322211006650464dbb8f22d","library_topic_is_template":false,"parameter-mappings":[{"parameter-name":"definition","value":{"type":"String","mode":"script","value":"(function execute() {\n        var config = {\n            configuration: {\"purpose\":\"{{0}}\",\"inputs\":[{\"name\":\"feedback_text\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{4}}\",\"skipMode\":\"'simple'\",\"skipCondition\":\"\\\"\\\"\",\"helpText\":\"false\",\"applicability\":\"\",\"validation\":\"\"}],\"instructions\":\"{{1}}\",\"advanced_parameters\":\"{{2}}\",\"callingTask\":\"{{3}}\",\"confirm_summary\":false,\"slots\":[{\"name\":\"student_menu\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{5}}\",\"validation\":\"\",\"choices\":[{\"value\":\"raise_food_complaint\",\"label\":\"Raise a Food Complaint\"},{\"value\":\"my_requests\",\"label\":\"My Requests\"},{\"value\":\"track_complaint\",\"label\":\"My Complaint\"},{\"value\":\"give_feedback\",\"label\":\"Give Feedback\"}]},{\"name\":\"complaint_type\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{6}}\",\"validation\":\"\",\"choices\":[{\"value\":\"food_quality\",\"label\":\"Food Quality Complaint\"},{\"value\":\"meal_not_available\",\"label\":\"Meal Not Available\"},{\"value\":\"food_hygiene\",\"label\":\"Food Hygiene Issue\"},{\"value\":\"special_diet\",\"label\":\"Special Diet Request\"},{\"value\":\"allergy_management\",\"label\":\"Allergy Management Request\"},{\"value\":\"menu_feedback\",\"label\":\"Food Menu Feedback\"},{\"value\":\"meal_reservation\",\"label\":\"Meal Reservation / Pre-Booking\"},{\"value\":\"missed_meal\",\"label\":\"Missed Meal Request\"},{\"value\":\"food_wastage\",\"label\":\"Food Wastage Reporting\"},{\"value\":\"emergency_food\",\"label\":\"Emergency Food Assistance\"},{\"value\":\"mess_billing\",\"label\":\"Hostel Mess Billing Issue\"},{\"value\":\"menu_recommendation\",\"label\":\"Smart Menu Recommendation\"}]},{\"name\":\"meal_type\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{7}}\",\"validation\":\"\",\"choices\":[{\"value\":\"breakfast\",\"label\":\"Breakfast\"},{\"value\":\"lunch\",\"label\":\"Lunch\"},{\"value\":\"dinner\",\"label\":\"Dinner\"}]},{\"name\":\"complaint_description\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{8}}\",\"validation\":\"\"},{\"name\":\"request_submitted\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{9}}\",\"validation\":\"\"},{\"name\":\"mess_hall_dynamic\",\"type\":\"reference\",\"discoverable\":false,\"description\":\"{{10}}\",\"validation\":\"\",\"choiceMode\":\"'simple'\",\"table\":\"'x_snc_campus_foo_1_mess_hall'\",\"multipleSelect\":\"false\",\"autoSelect\":\"true\",\"conditionMode\":\"'simple'\",\"condition\":\"\\\"active=true\\\"\"},{\"name\":\"after_request\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{11}}\",\"validation\":\"\",\"choices\":[{\"value\":\"Student_Menu\",\"label\":\"Yes\"},{\"value\":\"End\",\"label\":\"No\"}]}],\"applicability\":\"\",\"classificationOverrides\":[]}\n        };\n        return JSON.stringify(config);\n    })()"},"metadata":{"type":"String","list":false,"items":[],"use_items":false}},{"parameter-name":"inputs","metadata":{"type":"String","list":true,"items":[{"type":"String","mode":"string","value":"Collect user input"},{"type":"String","mode":"string","value":""},{"type":"String","mode":"string","value":""},{"type":"String","mode":"script","value":"(function() { return vaSystem.getConversationTaskId()})()"},{"type":"String","mode":"string","value":"\"Please enter your feedback about the campus food service.\""},{"type":"String","mode":"string","value":"\"Select an option to manage your campus food services.\""},{"type":"String","mode":"string","value":"\"Select the type of food service request or complaint you want to raise.\""},{"type":"String","mode":"string","value":"\"Select the meal related to your food service request.\""},{"type":"String","mode":"string","value":"\"Describe the food service problem in detail, including what happened and where it occurred.\""},{"type":"String","mode":"string","value":"\"✅ Your food service request has been submitted successfully!\\n\\nYour request has been created and sent to the Campus Food Services team.\\n\\nYou can track your request from My Requests.\""},{"type":"String","mode":"string","value":"\"Select the mess hall where the food service issue occurred.\""},{"type":"String","mode":"string","value":"\"✅ Your food service request has been submitted successfully.\\n\\nWould you like to do anything else?\""}],"use_items":true}}],"return-value-mappings":[{"main_topic_variable_namespace":"vaInputs","library_topic_return_parameter_name":"outputs","main_topic_mapped_variable_name":"ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output"}],"header_card_fields":[],"input_parameters_mode":"dynamic","output_parameters_mode":"dynamic","id":"d6bbd910243a44c09c2a01f6c79c2483","name":"Feedback_Text","goal_id":"primary","expert_mode":false,"variableIds":["eadc77206122475e9b47c16caaec5c0d"]},{"type":"CRUDAction","mode":"create","query":"caller_id=a79046eb081f03107f447d6c83c8220b^short_description=CFMS - Student Feedback^description=Feedback_Text","variable_id":"0152d00ac1c14cc09c4a55dbff3386f5","id":"e9766c58a2ec40958516dc32177858db","name":"Create_CFMS_Feedback","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"attachments":[{"type":"String","mode":"string","value":""}]},{"type":"TextOutputPrompt","value":[{"type":"String","mode":"string","value":"gs.getMessageLang(\"Thank you for your feedback! Your feedback has been submitted successfully.\", vaContext.getRequesterLang())"}],"request_feedback":true,"isCollapsible":true,"id":"b7050b2e9eb4496dabfcf90c5a4f1d20","name":"Text","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"secure":false},{"type":"TerminateGoal","goal_id":"primary","id":"659a557cef1143b98b8c724f123f0da2","name":"ImplicitEnd__d033c89a892d463e83831ba57821cdd0","expert_mode":false},{"type":"ScriptedAction","script":"(function execute() {\n                    var mappings = {\"student_menu\":\"student_menu\",\"ai_data_collector_7361b101735c4621a656f02384ff47d7_output\":\"ai_data_collector_7361b101735c4621a656f02384ff47d7_output\"};\n                    var output = JSON.parse(vaInputs['ai_data_collector_7361b101735c4621a656f02384ff47d7_output']);\n                    var variables = {\"user\":{\"category\":\"vaInputs\",\"id\":\"current-user\",\"label\":\"User\",\"name\":\"user\",\"table\":\"sys_user\",\"varType\":\"reference\"},\"ai_data_collector_7361b101735c4621a656f02384ff47d7_output\":{\"id\":\"8385b04ee4c04263892c6316a5b530d9\",\"name\":\"ai_data_collector_7361b101735c4621a656f02384ff47d7_output\",\"label\":\"Ai_data_collector_7361b101735c4621a656f02384ff47d7_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"student_menu\":{\"id\":\"8ee6d004526249b48537ee9a18fc017b\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Student_Menu\",\"name\":\"student_menu\",\"choices\":[{\"label\":\"Raise a Food Complaint\",\"value\":\"raise_food_complaint\"},{\"label\":\"My Requests\",\"value\":\"my_requests\"},{\"label\":\"My Complaint\",\"value\":\"track_complaint\",\"checked\":true,\"meta\":{}},{\"label\":\"Give Feedback\",\"value\":\"give_feedback\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"7361b101735c4621a656f02384ff47d7\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output\":{\"id\":\"6218a867918f41779e48f2bfced4910c\",\"name\":\"ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output\",\"label\":\"Ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_type\":{\"id\":\"66d728d53f2c44a39e43fd4e8f889cd6\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Complaint_Type\",\"name\":\"complaint_type\",\"choices\":[{\"label\":\"Food Quality Complaint\",\"value\":\"food_quality\"},{\"label\":\"Meal Not Available\",\"value\":\"meal_not_available\"},{\"label\":\"Food Hygiene Issue\",\"value\":\"food_hygiene\",\"checked\":true,\"meta\":{}},{\"label\":\"Special Diet Request\",\"value\":\"special_diet\",\"checked\":true,\"meta\":{}},{\"label\":\"Allergy Management Request\",\"value\":\"allergy_management\",\"checked\":true,\"meta\":{}},{\"label\":\"Food Menu Feedback\",\"value\":\"menu_feedback\",\"checked\":true,\"meta\":{}},{\"label\":\"Meal Reservation / Pre-Booking\",\"value\":\"meal_reservation\",\"checked\":true,\"meta\":{}},{\"label\":\"Missed Meal Request\",\"value\":\"missed_meal\",\"checked\":true,\"meta\":{}},{\"label\":\"Food Wastage Reporting\",\"value\":\"food_wastage\",\"checked\":true,\"meta\":{}},{\"label\":\"Emergency Food Assistance\",\"value\":\"emergency_food\",\"checked\":true,\"meta\":{}},{\"label\":\"Hostel Mess Billing Issue\",\"value\":\"mess_billing\",\"checked\":true,\"meta\":{}},{\"label\":\"Smart Menu Recommendation\",\"value\":\"menu_recommendation\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"63de8c2ca550404db1402d035b3d1c6c\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_204a7628398442818527910405f3a949_output\":{\"id\":\"c19fe70afa644629865a8416a070e363\",\"name\":\"ai_data_collector_204a7628398442818527910405f3a949_output\",\"label\":\"Ai_data_collector_204a7628398442818527910405f3a949_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"meal_type\":{\"id\":\"c9eb691ed9c44e729401365aac52fdb2\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Meal_Type\",\"name\":\"meal_type\",\"choices\":[{\"label\":\"Breakfast\",\"value\":\"breakfast\"},{\"label\":\"Lunch\",\"value\":\"lunch\"},{\"label\":\"Dinner\",\"value\":\"dinner\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"204a7628398442818527910405f3a949\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_cc48769b922b425fb9d4e61cdb0f5153_output\":{\"id\":\"c066a302e1d84938b86ee00d17dcaaf6\",\"name\":\"ai_data_collector_cc48769b922b425fb9d4e61cdb0f5153_output\",\"label\":\"Ai_data_collector_cc48769b922b425fb9d4e61cdb0f5153_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"ai_data_collector_9b20ab723ace47bdb5b81b44c52c2618_output\":{\"id\":\"3dcae291ef1a49f4bb5882ff3b9cb977\",\"name\":\"ai_data_collector_9b20ab723ace47bdb5b81b44c52c2618_output\",\"label\":\"Ai_data_collector_9b20ab723ace47bdb5b81b44c52c2618_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_description\":{\"id\":\"4a4c593bcbef4cc9b67f448f5206b032\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Complaint_Description\",\"name\":\"complaint_description\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"9b20ab723ace47bdb5b81b44c52c2618\",\"isHidden\":false,\"description\":\"\"},\"create_cfms_incident\":{\"id\":\"f97809569e1c4835b8b73063b974352d\",\"name\":\"create_cfms_incident\",\"label\":\"Create_CFMS_Incident\",\"varType\":\"reference\",\"table\":\"x_snc_campus_foo_1_food_complaint\",\"inactive\":false,\"category\":\"vaInputs\",\"nodeId\":\"bd687da8cea147de8c6abc783a5100b2\",\"isHidden\":false},\"ai_data_collector_099a6bc397cc450581c21057883f645e_output\":{\"id\":\"cc59ebfdad22420e9d0ae40c1d0209ca\",\"name\":\"ai_data_collector_099a6bc397cc450581c21057883f645e_output\",\"label\":\"Ai_data_collector_099a6bc397cc450581c21057883f645e_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"request_submitted\":{\"id\":\"2c24e814a54c4381b0df3a1501fce626\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Request_Submitted\",\"name\":\"request_submitted\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"099a6bc397cc450581c21057883f645e\",\"isHidden\":false,\"description\":\"\"},\"my_requests_lookup\":{\"id\":\"595c4e95b8724a3698bf6bddbb9b749f\",\"name\":\"my_requests_lookup\",\"label\":\"My_Requests_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"ef4559ef86e94b8a932ae460a4972ae9\",\"isHidden\":false},\"track_complaint_lookup\":{\"id\":\"d60014e0cc6540ef8034b32c3a8df87a\",\"name\":\"track_complaint_lookup\",\"label\":\"Track_Complaint_Lookup\",\"varType\":\"reference\",\"table\":\"x_snc_campus_foo_1_food_complaint\",\"category\":\"vaInputs\",\"nodeId\":\"2ecf76d5fd2a4c7c95b3d60fef3cc581\",\"isHidden\":false},\"ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output\":{\"id\":\"363b9c802df34a1abda96148930029b3\",\"name\":\"ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output\",\"label\":\"Ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"feedback_text\":{\"id\":\"eadc77206122475e9b47c16caaec5c0d\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Feedback_Text\",\"name\":\"feedback_text\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"d6bbd910243a44c09c2a01f6c79c2483\",\"isHidden\":false,\"description\":\"\"},\"create_cfms_feedback\":{\"id\":\"0152d00ac1c14cc09c4a55dbff3386f5\",\"name\":\"create_cfms_feedback\",\"label\":\"Create_CFMS_Feedback\",\"varType\":\"reference\",\"table\":\"incident\",\"inactive\":false,\"category\":\"vaInputs\",\"nodeId\":\"e9766c58a2ec40958516dc32177858db\",\"isHidden\":false},\"ai_data_collector_43f0a26d88ab4b979fb15e7ca92ae842_output\":{\"id\":\"4bb873eab8794f67b74527a86a09cfee\",\"name\":\"ai_data_collector_43f0a26d88ab4b979fb15e7ca92ae842_output\",\"label\":\"Ai_data_collector_43f0a26d88ab4b979fb15e7ca92ae842_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"mess_hall_dynamic\":{\"id\":\"8de8d30d6ea74ffdbc58bfaf795962a2\",\"varType\":\"reference\",\"category\":\"vaInputs\",\"label\":\"Mess_Hall_Dynamic\",\"name\":\"mess_hall_dynamic\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"glide_record\",\"table\":\"x_snc_campus_foo_1_mess_hall\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"43f0a26d88ab4b979fb15e7ca92ae842\",\"isHidden\":false,\"description\":\"\"},\"ai_data_collector_a78c32ba6875442b9d201680cf254a5d_output\":{\"id\":\"7cd22655fd7e42ee8822396414d00b67\",\"name\":\"ai_data_collector_a78c32ba6875442b9d201680cf254a5d_output\",\"label\":\"Ai_data_collector_a78c32ba6875442b9d201680cf254a5d_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"after_request\":{\"id\":\"feee6d30d0e549a4945200950a1cfda8\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"After_Request\",\"name\":\"after_request\",\"choices\":[{\"label\":\"Yes\",\"value\":\"Student_Menu\"},{\"label\":\"No\",\"value\":\"End\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"a78c32ba6875442b9d201680cf254a5d\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_4dc53f51ec9849bcbabd18fbeabcac38_output\":{\"id\":\"7fb824a9d7ce4e9e9a7b4399197b79ca\",\"name\":\"ai_data_collector_4dc53f51ec9849bcbabd18fbeabcac38_output\",\"label\":\"Ai_data_collector_4dc53f51ec9849bcbabd18fbeabcac38_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}}}\n                    Object.keys(output).forEach(function(key) {\n                        var mappedKey = mappings[key];\n                        if (!vaInputs[mappedKey]) {vaInputs.initialize(mappedKey);}\n                        var isMultiSelect = variables[mappedKey] &amp;&amp; variables[mappedKey].varType === 'array.reference';\n                        if (isMultiSelect) {vaInputs[mappedKey] = output[key] ? JSON.parse(output[key]) : '';}\n                        else {vaInputs[mappedKey] = output[key];}\n                    });\n                })()","id":"16d1ac2312df4fed9077876707fe6b46","name":"7361b101735c4621a656f02384ff47d7_ai_data_collector_output_handler","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false},{"type":"ScriptedAction","script":"(function execute() {\n                    var mappings = {\"complaint_type\":\"complaint_type\",\"meal_type\":\"meal_type\",\"mess_hall_dynamic\":\"mess_hall_dynamic\",\"complaint_description\":\"complaint_description\",\"ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output\":\"ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output\"};\n                    var output = JSON.parse(vaInputs['ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output']);\n                    var variables = {\"user\":{\"category\":\"vaInputs\",\"id\":\"current-user\",\"label\":\"User\",\"name\":\"user\",\"table\":\"sys_user\",\"varType\":\"reference\"},\"ai_data_collector_7361b101735c4621a656f02384ff47d7_output\":{\"id\":\"8385b04ee4c04263892c6316a5b530d9\",\"name\":\"ai_data_collector_7361b101735c4621a656f02384ff47d7_output\",\"label\":\"Ai_data_collector_7361b101735c4621a656f02384ff47d7_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"student_menu\":{\"id\":\"8ee6d004526249b48537ee9a18fc017b\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Student_Menu\",\"name\":\"student_menu\",\"choices\":[{\"label\":\"Raise a Food Complaint\",\"value\":\"raise_food_complaint\"},{\"label\":\"My Requests\",\"value\":\"my_requests\"},{\"label\":\"My Complaint\",\"value\":\"track_complaint\",\"checked\":true,\"meta\":{}},{\"label\":\"Give Feedback\",\"value\":\"give_feedback\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"7361b101735c4621a656f02384ff47d7\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output\":{\"id\":\"6218a867918f41779e48f2bfced4910c\",\"name\":\"ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output\",\"label\":\"Ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_type\":{\"id\":\"66d728d53f2c44a39e43fd4e8f889cd6\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Complaint_Type\",\"name\":\"complaint_type\",\"choices\":[{\"label\":\"Food Quality Complaint\",\"value\":\"food_quality\"},{\"label\":\"Meal Not Available\",\"value\":\"meal_not_available\"},{\"label\":\"Food Hygiene Issue\",\"value\":\"food_hygiene\",\"checked\":true,\"meta\":{}},{\"label\":\"Special Diet Request\",\"value\":\"special_diet\",\"checked\":true,\"meta\":{}},{\"label\":\"Allergy Management Request\",\"value\":\"allergy_management\",\"checked\":true,\"meta\":{}},{\"label\":\"Food Menu Feedback\",\"value\":\"menu_feedback\",\"checked\":true,\"meta\":{}},{\"label\":\"Meal Reservation / Pre-Booking\",\"value\":\"meal_reservation\",\"checked\":true,\"meta\":{}},{\"label\":\"Missed Meal Request\",\"value\":\"missed_meal\",\"checked\":true,\"meta\":{}},{\"label\":\"Food Wastage Reporting\",\"value\":\"food_wastage\",\"checked\":true,\"meta\":{}},{\"label\":\"Emergency Food Assistance\",\"value\":\"emergency_food\",\"checked\":true,\"meta\":{}},{\"label\":\"Hostel Mess Billing Issue\",\"value\":\"mess_billing\",\"checked\":true,\"meta\":{}},{\"label\":\"Smart Menu Recommendation\",\"value\":\"menu_recommendation\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"63de8c2ca550404db1402d035b3d1c6c\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_204a7628398442818527910405f3a949_output\":{\"id\":\"c19fe70afa644629865a8416a070e363\",\"name\":\"ai_data_collector_204a7628398442818527910405f3a949_output\",\"label\":\"Ai_data_collector_204a7628398442818527910405f3a949_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"meal_type\":{\"id\":\"c9eb691ed9c44e729401365aac52fdb2\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Meal_Type\",\"name\":\"meal_type\",\"choices\":[{\"label\":\"Breakfast\",\"value\":\"breakfast\"},{\"label\":\"Lunch\",\"value\":\"lunch\"},{\"label\":\"Dinner\",\"value\":\"dinner\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"204a7628398442818527910405f3a949\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_cc48769b922b425fb9d4e61cdb0f5153_output\":{\"id\":\"c066a302e1d84938b86ee00d17dcaaf6\",\"name\":\"ai_data_collector_cc48769b922b425fb9d4e61cdb0f5153_output\",\"label\":\"Ai_data_collector_cc48769b922b425fb9d4e61cdb0f5153_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"ai_data_collector_9b20ab723ace47bdb5b81b44c52c2618_output\":{\"id\":\"3dcae291ef1a49f4bb5882ff3b9cb977\",\"name\":\"ai_data_collector_9b20ab723ace47bdb5b81b44c52c2618_output\",\"label\":\"Ai_data_collector_9b20ab723ace47bdb5b81b44c52c2618_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_description\":{\"id\":\"4a4c593bcbef4cc9b67f448f5206b032\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Complaint_Description\",\"name\":\"complaint_description\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"9b20ab723ace47bdb5b81b44c52c2618\",\"isHidden\":false,\"description\":\"\"},\"create_cfms_incident\":{\"id\":\"f97809569e1c4835b8b73063b974352d\",\"name\":\"create_cfms_incident\",\"label\":\"Create_CFMS_Incident\",\"varType\":\"reference\",\"table\":\"x_snc_campus_foo_1_food_complaint\",\"inactive\":false,\"category\":\"vaInputs\",\"nodeId\":\"bd687da8cea147de8c6abc783a5100b2\",\"isHidden\":false},\"ai_data_collector_099a6bc397cc450581c21057883f645e_output\":{\"id\":\"cc59ebfdad22420e9d0ae40c1d0209ca\",\"name\":\"ai_data_collector_099a6bc397cc450581c21057883f645e_output\",\"label\":\"Ai_data_collector_099a6bc397cc450581c21057883f645e_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"request_submitted\":{\"id\":\"2c24e814a54c4381b0df3a1501fce626\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Request_Submitted\",\"name\":\"request_submitted\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"099a6bc397cc450581c21057883f645e\",\"isHidden\":false,\"description\":\"\"},\"my_requests_lookup\":{\"id\":\"595c4e95b8724a3698bf6bddbb9b749f\",\"name\":\"my_requests_lookup\",\"label\":\"My_Requests_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"ef4559ef86e94b8a932ae460a4972ae9\",\"isHidden\":false},\"track_complaint_lookup\":{\"id\":\"d60014e0cc6540ef8034b32c3a8df87a\",\"name\":\"track_complaint_lookup\",\"label\":\"Track_Complaint_Lookup\",\"varType\":\"reference\",\"table\":\"x_snc_campus_foo_1_food_complaint\",\"category\":\"vaInputs\",\"nodeId\":\"2ecf76d5fd2a4c7c95b3d60fef3cc581\",\"isHidden\":false},\"ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output\":{\"id\":\"363b9c802df34a1abda96148930029b3\",\"name\":\"ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output\",\"label\":\"Ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"feedback_text\":{\"id\":\"eadc77206122475e9b47c16caaec5c0d\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Feedback_Text\",\"name\":\"feedback_text\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"d6bbd910243a44c09c2a01f6c79c2483\",\"isHidden\":false,\"description\":\"\"},\"create_cfms_feedback\":{\"id\":\"0152d00ac1c14cc09c4a55dbff3386f5\",\"name\":\"create_cfms_feedback\",\"label\":\"Create_CFMS_Feedback\",\"varType\":\"reference\",\"table\":\"incident\",\"inactive\":false,\"category\":\"vaInputs\",\"nodeId\":\"e9766c58a2ec40958516dc32177858db\",\"isHidden\":false},\"ai_data_collector_43f0a26d88ab4b979fb15e7ca92ae842_output\":{\"id\":\"4bb873eab8794f67b74527a86a09cfee\",\"name\":\"ai_data_collector_43f0a26d88ab4b979fb15e7ca92ae842_output\",\"label\":\"Ai_data_collector_43f0a26d88ab4b979fb15e7ca92ae842_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"mess_hall_dynamic\":{\"id\":\"8de8d30d6ea74ffdbc58bfaf795962a2\",\"varType\":\"reference\",\"category\":\"vaInputs\",\"label\":\"Mess_Hall_Dynamic\",\"name\":\"mess_hall_dynamic\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"glide_record\",\"table\":\"x_snc_campus_foo_1_mess_hall\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"43f0a26d88ab4b979fb15e7ca92ae842\",\"isHidden\":false,\"description\":\"\"},\"ai_data_collector_a78c32ba6875442b9d201680cf254a5d_output\":{\"id\":\"7cd22655fd7e42ee8822396414d00b67\",\"name\":\"ai_data_collector_a78c32ba6875442b9d201680cf254a5d_output\",\"label\":\"Ai_data_collector_a78c32ba6875442b9d201680cf254a5d_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"after_request\":{\"id\":\"feee6d30d0e549a4945200950a1cfda8\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"After_Request\",\"name\":\"after_request\",\"choices\":[{\"label\":\"Yes\",\"value\":\"Student_Menu\"},{\"label\":\"No\",\"value\":\"End\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"a78c32ba6875442b9d201680cf254a5d\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_4dc53f51ec9849bcbabd18fbeabcac38_output\":{\"id\":\"7fb824a9d7ce4e9e9a7b4399197b79ca\",\"name\":\"ai_data_collector_4dc53f51ec9849bcbabd18fbeabcac38_output\",\"label\":\"Ai_data_collector_4dc53f51ec9849bcbabd18fbeabcac38_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}}}\n                    Object.keys(output).forEach(function(key) {\n                        var mappedKey = mappings[key];\n                        if (!vaInputs[mappedKey]) {vaInputs.initialize(mappedKey);}\n                        var isMultiSelect = variables[mappedKey] &amp;&amp; variables[mappedKey].varType === 'array.reference';\n                        if (isMultiSelect) {vaInputs[mappedKey] = output[key] ? JSON.parse(output[key]) : '';}\n                        else {vaInputs[mappedKey] = output[key];}\n                    });\n                })()","id":"eac76a892cd542e3ac9c625c24663d2c","name":"63de8c2ca550404db1402d035b3d1c6c_ai_data_collector_output_handler","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false},{"type":"ScriptedAction","script":"(function execute() {\n                    var mappings = {\"request_submitted\":\"request_submitted\",\"after_request\":\"after_request\",\"ai_data_collector_099a6bc397cc450581c21057883f645e_output\":\"ai_data_collector_099a6bc397cc450581c21057883f645e_output\"};\n                    var output = JSON.parse(vaInputs['ai_data_collector_099a6bc397cc450581c21057883f645e_output']);\n                    var variables = {\"user\":{\"category\":\"vaInputs\",\"id\":\"current-user\",\"label\":\"User\",\"name\":\"user\",\"table\":\"sys_user\",\"varType\":\"reference\"},\"ai_data_collector_7361b101735c4621a656f02384ff47d7_output\":{\"id\":\"8385b04ee4c04263892c6316a5b530d9\",\"name\":\"ai_data_collector_7361b101735c4621a656f02384ff47d7_output\",\"label\":\"Ai_data_collector_7361b101735c4621a656f02384ff47d7_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"student_menu\":{\"id\":\"8ee6d004526249b48537ee9a18fc017b\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Student_Menu\",\"name\":\"student_menu\",\"choices\":[{\"label\":\"Raise a Food Complaint\",\"value\":\"raise_food_complaint\"},{\"label\":\"My Requests\",\"value\":\"my_requests\"},{\"label\":\"My Complaint\",\"value\":\"track_complaint\",\"checked\":true,\"meta\":{}},{\"label\":\"Give Feedback\",\"value\":\"give_feedback\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"7361b101735c4621a656f02384ff47d7\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output\":{\"id\":\"6218a867918f41779e48f2bfced4910c\",\"name\":\"ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output\",\"label\":\"Ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_type\":{\"id\":\"66d728d53f2c44a39e43fd4e8f889cd6\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Complaint_Type\",\"name\":\"complaint_type\",\"choices\":[{\"label\":\"Food Quality Complaint\",\"value\":\"food_quality\"},{\"label\":\"Meal Not Available\",\"value\":\"meal_not_available\"},{\"label\":\"Food Hygiene Issue\",\"value\":\"food_hygiene\",\"checked\":true,\"meta\":{}},{\"label\":\"Special Diet Request\",\"value\":\"special_diet\",\"checked\":true,\"meta\":{}},{\"label\":\"Allergy Management Request\",\"value\":\"allergy_management\",\"checked\":true,\"meta\":{}},{\"label\":\"Food Menu Feedback\",\"value\":\"menu_feedback\",\"checked\":true,\"meta\":{}},{\"label\":\"Meal Reservation / Pre-Booking\",\"value\":\"meal_reservation\",\"checked\":true,\"meta\":{}},{\"label\":\"Missed Meal Request\",\"value\":\"missed_meal\",\"checked\":true,\"meta\":{}},{\"label\":\"Food Wastage Reporting\",\"value\":\"food_wastage\",\"checked\":true,\"meta\":{}},{\"label\":\"Emergency Food Assistance\",\"value\":\"emergency_food\",\"checked\":true,\"meta\":{}},{\"label\":\"Hostel Mess Billing Issue\",\"value\":\"mess_billing\",\"checked\":true,\"meta\":{}},{\"label\":\"Smart Menu Recommendation\",\"value\":\"menu_recommendation\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"63de8c2ca550404db1402d035b3d1c6c\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_204a7628398442818527910405f3a949_output\":{\"id\":\"c19fe70afa644629865a8416a070e363\",\"name\":\"ai_data_collector_204a7628398442818527910405f3a949_output\",\"label\":\"Ai_data_collector_204a7628398442818527910405f3a949_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"meal_type\":{\"id\":\"c9eb691ed9c44e729401365aac52fdb2\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Meal_Type\",\"name\":\"meal_type\",\"choices\":[{\"label\":\"Breakfast\",\"value\":\"breakfast\"},{\"label\":\"Lunch\",\"value\":\"lunch\"},{\"label\":\"Dinner\",\"value\":\"dinner\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"204a7628398442818527910405f3a949\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_cc48769b922b425fb9d4e61cdb0f5153_output\":{\"id\":\"c066a302e1d84938b86ee00d17dcaaf6\",\"name\":\"ai_data_collector_cc48769b922b425fb9d4e61cdb0f5153_output\",\"label\":\"Ai_data_collector_cc48769b922b425fb9d4e61cdb0f5153_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"ai_data_collector_9b20ab723ace47bdb5b81b44c52c2618_output\":{\"id\":\"3dcae291ef1a49f4bb5882ff3b9cb977\",\"name\":\"ai_data_collector_9b20ab723ace47bdb5b81b44c52c2618_output\",\"label\":\"Ai_data_collector_9b20ab723ace47bdb5b81b44c52c2618_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_description\":{\"id\":\"4a4c593bcbef4cc9b67f448f5206b032\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Complaint_Description\",\"name\":\"complaint_description\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"9b20ab723ace47bdb5b81b44c52c2618\",\"isHidden\":false,\"description\":\"\"},\"create_cfms_incident\":{\"id\":\"f97809569e1c4835b8b73063b974352d\",\"name\":\"create_cfms_incident\",\"label\":\"Create_CFMS_Incident\",\"varType\":\"reference\",\"table\":\"x_snc_campus_foo_1_food_complaint\",\"inactive\":false,\"category\":\"vaInputs\",\"nodeId\":\"bd687da8cea147de8c6abc783a5100b2\",\"isHidden\":false},\"ai_data_collector_099a6bc397cc450581c21057883f645e_output\":{\"id\":\"cc59ebfdad22420e9d0ae40c1d0209ca\",\"name\":\"ai_data_collector_099a6bc397cc450581c21057883f645e_output\",\"label\":\"Ai_data_collector_099a6bc397cc450581c21057883f645e_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"request_submitted\":{\"id\":\"2c24e814a54c4381b0df3a1501fce626\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Request_Submitted\",\"name\":\"request_submitted\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"099a6bc397cc450581c21057883f645e\",\"isHidden\":false,\"description\":\"\"},\"my_requests_lookup\":{\"id\":\"595c4e95b8724a3698bf6bddbb9b749f\",\"name\":\"my_requests_lookup\",\"label\":\"My_Requests_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"ef4559ef86e94b8a932ae460a4972ae9\",\"isHidden\":false},\"track_complaint_lookup\":{\"id\":\"d60014e0cc6540ef8034b32c3a8df87a\",\"name\":\"track_complaint_lookup\",\"label\":\"Track_Complaint_Lookup\",\"varType\":\"reference\",\"table\":\"x_snc_campus_foo_1_food_complaint\",\"category\":\"vaInputs\",\"nodeId\":\"2ecf76d5fd2a4c7c95b3d60fef3cc581\",\"isHidden\":false},\"ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output\":{\"id\":\"363b9c802df34a1abda96148930029b3\",\"name\":\"ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output\",\"label\":\"Ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"feedback_text\":{\"id\":\"eadc77206122475e9b47c16caaec5c0d\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Feedback_Text\",\"name\":\"feedback_text\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"d6bbd910243a44c09c2a01f6c79c2483\",\"isHidden\":false,\"description\":\"\"},\"create_cfms_feedback\":{\"id\":\"0152d00ac1c14cc09c4a55dbff3386f5\",\"name\":\"create_cfms_feedback\",\"label\":\"Create_CFMS_Feedback\",\"varType\":\"reference\",\"table\":\"incident\",\"inactive\":false,\"category\":\"vaInputs\",\"nodeId\":\"e9766c58a2ec40958516dc32177858db\",\"isHidden\":false},\"ai_data_collector_43f0a26d88ab4b979fb15e7ca92ae842_output\":{\"id\":\"4bb873eab8794f67b74527a86a09cfee\",\"name\":\"ai_data_collector_43f0a26d88ab4b979fb15e7ca92ae842_output\",\"label\":\"Ai_data_collector_43f0a26d88ab4b979fb15e7ca92ae842_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"mess_hall_dynamic\":{\"id\":\"8de8d30d6ea74ffdbc58bfaf795962a2\",\"varType\":\"reference\",\"category\":\"vaInputs\",\"label\":\"Mess_Hall_Dynamic\",\"name\":\"mess_hall_dynamic\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"glide_record\",\"table\":\"x_snc_campus_foo_1_mess_hall\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"43f0a26d88ab4b979fb15e7ca92ae842\",\"isHidden\":false,\"description\":\"\"},\"ai_data_collector_a78c32ba6875442b9d201680cf254a5d_output\":{\"id\":\"7cd22655fd7e42ee8822396414d00b67\",\"name\":\"ai_data_collector_a78c32ba6875442b9d201680cf254a5d_output\",\"label\":\"Ai_data_collector_a78c32ba6875442b9d201680cf254a5d_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"after_request\":{\"id\":\"feee6d30d0e549a4945200950a1cfda8\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"After_Request\",\"name\":\"after_request\",\"choices\":[{\"label\":\"Yes\",\"value\":\"Student_Menu\"},{\"label\":\"No\",\"value\":\"End\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"a78c32ba6875442b9d201680cf254a5d\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_4dc53f51ec9849bcbabd18fbeabcac38_output\":{\"id\":\"7fb824a9d7ce4e9e9a7b4399197b79ca\",\"name\":\"ai_data_collector_4dc53f51ec9849bcbabd18fbeabcac38_output\",\"label\":\"Ai_data_collector_4dc53f51ec9849bcbabd18fbeabcac38_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}}}\n                    Object.keys(output).forEach(function(key) {\n                        var mappedKey = mappings[key];\n                        if (!vaInputs[mappedKey]) {vaInputs.initialize(mappedKey);}\n                        var isMultiSelect = variables[mappedKey] &amp;&amp; variables[mappedKey].varType === 'array.reference';\n                        if (isMultiSelect) {vaInputs[mappedKey] = output[key] ? JSON.parse(output[key]) : '';}\n                        else {vaInputs[mappedKey] = output[key];}\n                    });\n                })()","id":"48f4bfea7a7f4a7da3ea1bf834d6d44f","name":"099a6bc397cc450581c21057883f645e_ai_data_collector_output_handler","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false},{"type":"ScriptedAction","script":"(function execute() {\n                    var mappings = {\"feedback_text\":\"feedback_text\",\"ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output\":\"ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output\"};\n                    var output = JSON.parse(vaInputs['ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output']);\n                    var variables = {\"user\":{\"category\":\"vaInputs\",\"id\":\"current-user\",\"label\":\"User\",\"name\":\"user\",\"table\":\"sys_user\",\"varType\":\"reference\"},\"ai_data_collector_7361b101735c4621a656f02384ff47d7_output\":{\"id\":\"8385b04ee4c04263892c6316a5b530d9\",\"name\":\"ai_data_collector_7361b101735c4621a656f02384ff47d7_output\",\"label\":\"Ai_data_collector_7361b101735c4621a656f02384ff47d7_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"student_menu\":{\"id\":\"8ee6d004526249b48537ee9a18fc017b\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Student_Menu\",\"name\":\"student_menu\",\"choices\":[{\"label\":\"Raise a Food Complaint\",\"value\":\"raise_food_complaint\"},{\"label\":\"My Requests\",\"value\":\"my_requests\"},{\"label\":\"My Complaint\",\"value\":\"track_complaint\",\"checked\":true,\"meta\":{}},{\"label\":\"Give Feedback\",\"value\":\"give_feedback\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"7361b101735c4621a656f02384ff47d7\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output\":{\"id\":\"6218a867918f41779e48f2bfced4910c\",\"name\":\"ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output\",\"label\":\"Ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_type\":{\"id\":\"66d728d53f2c44a39e43fd4e8f889cd6\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Complaint_Type\",\"name\":\"complaint_type\",\"choices\":[{\"label\":\"Food Quality Complaint\",\"value\":\"food_quality\"},{\"label\":\"Meal Not Available\",\"value\":\"meal_not_available\"},{\"label\":\"Food Hygiene Issue\",\"value\":\"food_hygiene\",\"checked\":true,\"meta\":{}},{\"label\":\"Special Diet Request\",\"value\":\"special_diet\",\"checked\":true,\"meta\":{}},{\"label\":\"Allergy Management Request\",\"value\":\"allergy_management\",\"checked\":true,\"meta\":{}},{\"label\":\"Food Menu Feedback\",\"value\":\"menu_feedback\",\"checked\":true,\"meta\":{}},{\"label\":\"Meal Reservation / Pre-Booking\",\"value\":\"meal_reservation\",\"checked\":true,\"meta\":{}},{\"label\":\"Missed Meal Request\",\"value\":\"missed_meal\",\"checked\":true,\"meta\":{}},{\"label\":\"Food Wastage Reporting\",\"value\":\"food_wastage\",\"checked\":true,\"meta\":{}},{\"label\":\"Emergency Food Assistance\",\"value\":\"emergency_food\",\"checked\":true,\"meta\":{}},{\"label\":\"Hostel Mess Billing Issue\",\"value\":\"mess_billing\",\"checked\":true,\"meta\":{}},{\"label\":\"Smart Menu Recommendation\",\"value\":\"menu_recommendation\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"63de8c2ca550404db1402d035b3d1c6c\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_204a7628398442818527910405f3a949_output\":{\"id\":\"c19fe70afa644629865a8416a070e363\",\"name\":\"ai_data_collector_204a7628398442818527910405f3a949_output\",\"label\":\"Ai_data_collector_204a7628398442818527910405f3a949_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"meal_type\":{\"id\":\"c9eb691ed9c44e729401365aac52fdb2\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Meal_Type\",\"name\":\"meal_type\",\"choices\":[{\"label\":\"Breakfast\",\"value\":\"breakfast\"},{\"label\":\"Lunch\",\"value\":\"lunch\"},{\"label\":\"Dinner\",\"value\":\"dinner\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"204a7628398442818527910405f3a949\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_cc48769b922b425fb9d4e61cdb0f5153_output\":{\"id\":\"c066a302e1d84938b86ee00d17dcaaf6\",\"name\":\"ai_data_collector_cc48769b922b425fb9d4e61cdb0f5153_output\",\"label\":\"Ai_data_collector_cc48769b922b425fb9d4e61cdb0f5153_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"ai_data_collector_9b20ab723ace47bdb5b81b44c52c2618_output\":{\"id\":\"3dcae291ef1a49f4bb5882ff3b9cb977\",\"name\":\"ai_data_collector_9b20ab723ace47bdb5b81b44c52c2618_output\",\"label\":\"Ai_data_collector_9b20ab723ace47bdb5b81b44c52c2618_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_description\":{\"id\":\"4a4c593bcbef4cc9b67f448f5206b032\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Complaint_Description\",\"name\":\"complaint_description\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"9b20ab723ace47bdb5b81b44c52c2618\",\"isHidden\":false,\"description\":\"\"},\"create_cfms_incident\":{\"id\":\"f97809569e1c4835b8b73063b974352d\",\"name\":\"create_cfms_incident\",\"label\":\"Create_CFMS_Incident\",\"varType\":\"reference\",\"table\":\"x_snc_campus_foo_1_food_complaint\",\"inactive\":false,\"category\":\"vaInputs\",\"nodeId\":\"bd687da8cea147de8c6abc783a5100b2\",\"isHidden\":false},\"ai_data_collector_099a6bc397cc450581c21057883f645e_output\":{\"id\":\"cc59ebfdad22420e9d0ae40c1d0209ca\",\"name\":\"ai_data_collector_099a6bc397cc450581c21057883f645e_output\",\"label\":\"Ai_data_collector_099a6bc397cc450581c21057883f645e_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"request_submitted\":{\"id\":\"2c24e814a54c4381b0df3a1501fce626\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Request_Submitted\",\"name\":\"request_submitted\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"099a6bc397cc450581c21057883f645e\",\"isHidden\":false,\"description\":\"\"},\"my_requests_lookup\":{\"id\":\"595c4e95b8724a3698bf6bddbb9b749f\",\"name\":\"my_requests_lookup\",\"label\":\"My_Requests_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"ef4559ef86e94b8a932ae460a4972ae9\",\"isHidden\":false},\"track_complaint_lookup\":{\"id\":\"d60014e0cc6540ef8034b32c3a8df87a\",\"name\":\"track_complaint_lookup\",\"label\":\"Track_Complaint_Lookup\",\"varType\":\"reference\",\"table\":\"x_snc_campus_foo_1_food_complaint\",\"category\":\"vaInputs\",\"nodeId\":\"2ecf76d5fd2a4c7c95b3d60fef3cc581\",\"isHidden\":false},\"ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output\":{\"id\":\"363b9c802df34a1abda96148930029b3\",\"name\":\"ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output\",\"label\":\"Ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"feedback_text\":{\"id\":\"eadc77206122475e9b47c16caaec5c0d\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Feedback_Text\",\"name\":\"feedback_text\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"d6bbd910243a44c09c2a01f6c79c2483\",\"isHidden\":false,\"description\":\"\"},\"create_cfms_feedback\":{\"id\":\"0152d00ac1c14cc09c4a55dbff3386f5\",\"name\":\"create_cfms_feedback\",\"label\":\"Create_CFMS_Feedback\",\"varType\":\"reference\",\"table\":\"incident\",\"inactive\":false,\"category\":\"vaInputs\",\"nodeId\":\"e9766c58a2ec40958516dc32177858db\",\"isHidden\":false},\"ai_data_collector_43f0a26d88ab4b979fb15e7ca92ae842_output\":{\"id\":\"4bb873eab8794f67b74527a86a09cfee\",\"name\":\"ai_data_collector_43f0a26d88ab4b979fb15e7ca92ae842_output\",\"label\":\"Ai_data_collector_43f0a26d88ab4b979fb15e7ca92ae842_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"mess_hall_dynamic\":{\"id\":\"8de8d30d6ea74ffdbc58bfaf795962a2\",\"varType\":\"reference\",\"category\":\"vaInputs\",\"label\":\"Mess_Hall_Dynamic\",\"name\":\"mess_hall_dynamic\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"glide_record\",\"table\":\"x_snc_campus_foo_1_mess_hall\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"43f0a26d88ab4b979fb15e7ca92ae842\",\"isHidden\":false,\"description\":\"\"},\"ai_data_collector_a78c32ba6875442b9d201680cf254a5d_output\":{\"id\":\"7cd22655fd7e42ee8822396414d00b67\",\"name\":\"ai_data_collector_a78c32ba6875442b9d201680cf254a5d_output\",\"label\":\"Ai_data_collector_a78c32ba6875442b9d201680cf254a5d_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"after_request\":{\"id\":\"feee6d30d0e549a4945200950a1cfda8\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"After_Request\",\"name\":\"after_request\",\"choices\":[{\"label\":\"Yes\",\"value\":\"Student_Menu\"},{\"label\":\"No\",\"value\":\"End\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"a78c32ba6875442b9d201680cf254a5d\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_4dc53f51ec9849bcbabd18fbeabcac38_output\":{\"id\":\"7fb824a9d7ce4e9e9a7b4399197b79ca\",\"name\":\"ai_data_collector_4dc53f51ec9849bcbabd18fbeabcac38_output\",\"label\":\"Ai_data_collector_4dc53f51ec9849bcbabd18fbeabcac38_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}}}\n                    Object.keys(output).forEach(function(key) {\n                        var mappedKey = mappings[key];\n                        if (!vaInputs[mappedKey]) {vaInputs.initialize(mappedKey);}\n                        var isMultiSelect = variables[mappedKey] &amp;&amp; variables[mappedKey].varType === 'array.reference';\n                        if (isMultiSelect) {vaInputs[mappedKey] = output[key] ? JSON.parse(output[key]) : '';}\n                        else {vaInputs[mappedKey] = output[key];}\n                    });\n                })()","id":"902f67fc3e624c37956304fec1c41950","name":"d6bbd910243a44c09c2a01f6c79c2483_ai_data_collector_output_handler","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false}],"edges":[{"type":"Edge","source_node_id":"099a6bc397cc450581c21057883f645e","target_node_id":"48f4bfea7a7f4a7da3ea1bf834d6d44f","id":"ba7410b839254d8286c900021caf4c28"},{"type":"Edge","source_node_id":"48f4bfea7a7f4a7da3ea1bf834d6d44f","target_node_id":"659a557cef1143b98b8c724f123f0da2","id":"4f19232054c5480783c6304de7c659d7"},{"type":"Edge","source_node_id":"63de8c2ca550404db1402d035b3d1c6c","target_node_id":"eac76a892cd542e3ac9c625c24663d2c","id":"8256fa1e3c30454598313ac753dfb7eb"},{"type":"Edge","source_node_id":"eac76a892cd542e3ac9c625c24663d2c","target_node_id":"bd687da8cea147de8c6abc783a5100b2","id":"e8938d6d6fd943c990ef6d27573c9c9a"},{"type":"Edge","source_node_id":"0239987a0e464332b8c9fb227f5e01f8","target_node_id":"c40a2b84c1e14d2dada03c1eae874f5c","id":"56105e0214754f2ea27c0c98d674cf8d"},{"type":"Edge","source_node_id":"7361b101735c4621a656f02384ff47d7","target_node_id":"16d1ac2312df4fed9077876707fe6b46","id":"b745695fe6c14b87b7ecb0fca2f31ade"},{"type":"Edge","source_node_id":"16d1ac2312df4fed9077876707fe6b46","target_node_id":"eb1eb7d7f69442a0b62f8d5142c50001","id":"79d810280e5747a3806c705a73e8006b"},{"type":"Edge","source_node_id":"2ec8ae1bd87349058d3fd908c820424c","target_node_id":"44cba364fb294056be16ffe6f21bd3ef","id":"b4265ac36b4944049a22a473d81784c5"},{"type":"Edge","source_node_id":"c40a2b84c1e14d2dada03c1eae874f5c","target_node_id":"7361b101735c4621a656f02384ff47d7","id":"42b0daef933c42ddadefb133be406713"},{"type":"Edge","source_node_id":"eb1eb7d7f69442a0b62f8d5142c50001","target_node_id":"63de8c2ca550404db1402d035b3d1c6c","branch_id":"b66173649010481e9fe0183696113bc7","id":"eedcc657b4434d96ac5ffe35fe41a7b6","name":"b66173649010481e9fe0183696113bc7"},{"type":"Edge","source_node_id":"bd687da8cea147de8c6abc783a5100b2","target_node_id":"099a6bc397cc450581c21057883f645e","id":"9dd6eda9491f4529aaf4fd4fc89343a3"},{"type":"Edge","source_node_id":"eb1eb7d7f69442a0b62f8d5142c50001","target_node_id":"ef4559ef86e94b8a932ae460a4972ae9","branch_id":"949862a6108b4e1a80a4f3962fc76143","id":"b51460d510c44d93a6f2c30372ae55b5","name":"949862a6108b4e1a80a4f3962fc76143"},{"type":"Edge","source_node_id":"ef4559ef86e94b8a932ae460a4972ae9","target_node_id":"119eb08d983d462ca4a05fbf00cf4c1f","id":"0dce5e7cdd384a718cee5d7df1b419b8"},{"type":"Edge","source_node_id":"119eb08d983d462ca4a05fbf00cf4c1f","target_node_id":"2726a74909ff4bf9982818d62d0a0358","id":"675296314b97493c9e684ab7570bd0e5"},{"type":"Edge","source_node_id":"eb1eb7d7f69442a0b62f8d5142c50001","target_node_id":"2ecf76d5fd2a4c7c95b3d60fef3cc581","branch_id":"efb04af0573a45ab9fd439fc93a868c1","id":"6254d53548254dcd9bc61742400e7fe0","name":"efb04af0573a45ab9fd439fc93a868c1"},{"type":"Edge","source_node_id":"2ecf76d5fd2a4c7c95b3d60fef3cc581","target_node_id":"2ec8ae1bd87349058d3fd908c820424c","id":"c6c6aaae14c5450daf7d1aaf4a5d1c14"},{"type":"Edge","source_node_id":"eb1eb7d7f69442a0b62f8d5142c50001","target_node_id":"d6bbd910243a44c09c2a01f6c79c2483","branch_id":"5b4f4e06c31d4171935a33d4e98625c7","id":"04f3e85c6aa44d61a7b45eddfddb96f4","name":"5b4f4e06c31d4171935a33d4e98625c7"},{"type":"Edge","source_node_id":"d6bbd910243a44c09c2a01f6c79c2483","target_node_id":"902f67fc3e624c37956304fec1c41950","id":"190a1c5568a74bbbafb29208e59d16dc"},{"type":"Edge","source_node_id":"902f67fc3e624c37956304fec1c41950","target_node_id":"e9766c58a2ec40958516dc32177858db","id":"cdc5baee8dcf4e7db2527cb6d8096945"},{"type":"Edge","source_node_id":"e9766c58a2ec40958516dc32177858db","target_node_id":"b7050b2e9eb4496dabfcf90c5a4f1d20","id":"52ff223023ca4403850447669ae7f9f3"},{"type":"Edge","source_node_id":"b7050b2e9eb4496dabfcf90c5a4f1d20","target_node_id":"fb758c83fa264113bbc881d0ec5fb65c","id":"2028d9d94c8546bc8ba82aa6b2ba8091"}],"id":"primary"}],"script_variables":[],"glide_variables":[{"type":"Reference","table":"sys_user","auto_select":false,"id":"current-user","name":"user","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false},{"type":"String","name":"ai_data_collector_7361b101735c4621a656f02384ff47d7_output","list":false,"id":"8385b04ee4c04263892c6316a5b530d9","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"Choice","choices":[{"name":"Raise a Food Complaint","element":"raise_food_complaint"},{"name":"My Requests","element":"my_requests"},{"name":"My Complaint","element":"track_complaint"},{"name":"Give Feedback","element":"give_feedback"}],"id":"8ee6d004526249b48537ee9a18fc017b","name":"student_menu","description":"","formatType":"text","secure":false,"sensitive":false,"aiInput":true,"list":false,"translation":true,"label":"Student_Menu"},{"type":"String","name":"ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output","list":false,"id":"6218a867918f41779e48f2bfced4910c","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"Choice","choices":[{"name":"Food Quality Complaint","element":"food_quality"},{"name":"Meal Not Available","element":"meal_not_available"},{"name":"Food Hygiene Issue","element":"food_hygiene"},{"name":"Special Diet Request","element":"special_diet"},{"name":"Allergy Management Request","element":"allergy_management"},{"name":"Food Menu Feedback","element":"menu_feedback"},{"name":"Meal Reservation / Pre-Booking","element":"meal_reservation"},{"name":"Missed Meal Request","element":"missed_meal"},{"name":"Food Wastage Reporting","element":"food_wastage"},{"name":"Emergency Food Assistance","element":"emergency_food"},{"name":"Hostel Mess Billing Issue","element":"mess_billing"},{"name":"Smart Menu Recommendation","element":"menu_recommendation"}],"id":"66d728d53f2c44a39e43fd4e8f889cd6","name":"complaint_type","description":"","formatType":"text","secure":false,"sensitive":false,"aiInput":true,"list":false,"translation":true,"label":"Complaint_Type"},{"type":"String","name":"ai_data_collector_204a7628398442818527910405f3a949_output","list":false,"id":"c19fe70afa644629865a8416a070e363","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"Choice","choices":[{"name":"Breakfast","element":"breakfast"},{"name":"Lunch","element":"lunch"},{"name":"Dinner","element":"dinner"}],"id":"c9eb691ed9c44e729401365aac52fdb2","name":"meal_type","description":"","formatType":"text","secure":false,"sensitive":false,"aiInput":true,"list":false,"translation":true,"label":"Meal_Type"},{"type":"String","name":"ai_data_collector_cc48769b922b425fb9d4e61cdb0f5153_output","list":false,"id":"c066a302e1d84938b86ee00d17dcaaf6","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"String","name":"ai_data_collector_9b20ab723ace47bdb5b81b44c52c2618_output","list":false,"id":"3dcae291ef1a49f4bb5882ff3b9cb977","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"String","name":"complaint_description","description":"","list":false,"id":"4a4c593bcbef4cc9b67f448f5206b032","formatType":"text","secure":false,"sensitive":false,"aiInput":true},{"type":"Reference","table":"x_snc_campus_foo_1_food_complaint","auto_select":false,"id":"f97809569e1c4835b8b73063b974352d","name":"create_cfms_incident","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false},{"type":"String","name":"ai_data_collector_099a6bc397cc450581c21057883f645e_output","list":false,"id":"cc59ebfdad22420e9d0ae40c1d0209ca","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"String","name":"request_submitted","description":"","list":false,"id":"2c24e814a54c4381b0df3a1501fce626","formatType":"text","secure":false,"sensitive":false,"aiInput":true},{"type":"Reference","table":"incident","auto_select":false,"id":"595c4e95b8724a3698bf6bddbb9b749f","name":"my_requests_lookup","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false},{"type":"Reference","table":"x_snc_campus_foo_1_food_complaint","auto_select":false,"id":"d60014e0cc6540ef8034b32c3a8df87a","name":"track_complaint_lookup","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false},{"type":"String","name":"ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output","list":false,"id":"363b9c802df34a1abda96148930029b3","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"String","name":"feedback_text","description":"","list":false,"id":"eadc77206122475e9b47c16caaec5c0d","formatType":"text","secure":false,"sensitive":false,"aiInput":true},{"type":"Reference","table":"incident","auto_select":false,"id":"0152d00ac1c14cc09c4a55dbff3386f5","name":"create_cfms_feedback","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false},{"type":"String","name":"ai_data_collector_43f0a26d88ab4b979fb15e7ca92ae842_output","list":false,"id":"4bb873eab8794f67b74527a86a09cfee","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"Reference","table":"x_snc_campus_foo_1_mess_hall","auto_select":false,"id":"8de8d30d6ea74ffdbc58bfaf795962a2","name":"mess_hall_dynamic","description":"","formatType":"text","secure":false,"sensitive":false,"aiInput":true,"list":false},{"type":"String","name":"ai_data_collector_a78c32ba6875442b9d201680cf254a5d_output","list":false,"id":"7cd22655fd7e42ee8822396414d00b67","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"Choice","choices":[{"name":"Yes","element":"Student_Menu"},{"name":"No","element":"End"}],"id":"feee6d30d0e549a4945200950a1cfda8","name":"after_request","description":"","formatType":"text","secure":false,"sensitive":false,"aiInput":true,"list":false,"translation":true,"label":"After_Request"},{"type":"String","name":"ai_data_collector_4dc53f51ec9849bcbabd18fbeabcac38_output","list":false,"id":"7fb824a9d7ce4e9e9a7b4399197b79ca","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false}],"applicability":{"type":"Applicability","mode":"script","value":"true"},"roles":["x_snc_campus_foo_1.x_cfsa_student"],"scope":"423299d7dd1f03107f44143a6accf8fb","domain":"global","topic_type":"STANDARD","channels":[],"dialog_acts_enabled":false,"id":"e41ace8bc8e703107f44b32b644b29b0","name":"cfms_student_assistant","key_phrases":[],"nlu_provider":"","nlu_model":"","nlu_model_label":"","nlu_intent":"","nlu_intent_label":"","flexible_conversation_switching":false,"autopilot_topic":false,"design_categories":[],"triggerable_by_notification":false,"description":"Helps CFMS students manage campus food services. Students can raise food complaints, check their requests, track complaint status, provide feedback, and view mess menu information.","model_type":"llm","foundational":false,"modify_confirmation_enabled":false,"context_profiles":["b51fa936046f03107f44b8d89e324c99"],"title":"CFMS - Student Assistant","library":false,"csTopicId":"118c8cfbf9a303107f44740a4dc6a4a7","readOnly":false,"nluMapping":"[]"}</design_definition>
+        <design_topic_id>e41ace8bc8e703107f44b32b644b29b0</design_topic_id>
+        <graph>{
+  "graph_api_version": "1.0.82",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "0239987a0e464332b8c9fb227f5e01f8": {
+          "id": "0239987a0e464332b8c9fb227f5e01f8",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "44cba364fb294056be16ffe6f21bd3ef": {
+          "id": "44cba364fb294056be16ffe6f21bd3ef",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "c40a2b84c1e14d2dada03c1eae874f5c": {
+          "id": "c40a2b84c1e14d2dada03c1eae874f5c",
+          "stepType": "TextOutput",
+          "name": "Welcome_Student",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "Hello! 👋 Welcome to the Campus Food Management System."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "I'm your Student Assistant. I can help you raise food complaints, check your requests, track complaints, and provide feedback."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "How can I help you today?"
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "_key": "9298b395eb4c439dbe8c4bfdad0e10ca"
+            }
+          ],
+          "isCollapsible": true,
+          "requestFeedback": true,
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "7361b101735c4621a656f02384ff47d7": {
+          "id": "7361b101735c4621a656f02384ff47d7",
+          "stepType": "StandaloneAIChoicePrompt",
+          "name": "Student_Menu",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "f476c432d019488299b44766e83af14d",
+              "displayName": "Student_Menu",
+              "name": "student_menu",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": "Select an option to manage your campus food services.",
+                "mode": "simple"
+              },
+              "type": "choice",
+              "variableId": "8ee6d004526249b48537ee9a18fc017b",
+              "choices": [
+                {
+                  "label": "Raise a Food Complaint",
+                  "value": "raise_food_complaint"
+                },
+                {
+                  "label": "My Requests",
+                  "value": "my_requests"
+                },
+                {
+                  "label": "My Complaint",
+                  "value": "track_complaint",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Give Feedback",
+                  "value": "give_feedback",
+                  "checked": true,
+                  "meta": {}
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "ChoicePrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "8385b04ee4c04263892c6316a5b530d9"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_7361b101735c4621a656f02384ff47d7_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "8ee6d004526249b48537ee9a18fc017b"
+          ]
+        },
+        "eb1eb7d7f69442a0b62f8d5142c50001": {
+          "id": "eb1eb7d7f69442a0b62f8d5142c50001",
+          "stepType": "Decision",
+          "name": "Student_Decision"
+        },
+        "fb758c83fa264113bbc881d0ec5fb65c": {
+          "id": "fb758c83fa264113bbc881d0ec5fb65c",
+          "stepType": "ImplicitEnd"
+        },
+        "2726a74909ff4bf9982818d62d0a0358": {
+          "id": "2726a74909ff4bf9982818d62d0a0358",
+          "stepType": "ImplicitEnd"
+        },
+        "63de8c2ca550404db1402d035b3d1c6c": {
+          "id": "63de8c2ca550404db1402d035b3d1c6c",
+          "stepType": "StandaloneAIChoicePrompt",
+          "name": "Complaint_Type",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "d8182bc3201a46e988a3ea12de87765a",
+              "displayName": "Complaint_Type",
+              "name": "complaint_type",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": "Select the type of food service request or complaint you want to raise.",
+                "mode": "simple"
+              },
+              "type": "choice",
+              "variableId": "66d728d53f2c44a39e43fd4e8f889cd6",
+              "choices": [
+                {
+                  "label": "Food Quality Complaint",
+                  "value": "food_quality"
+                },
+                {
+                  "label": "Meal Not Available",
+                  "value": "meal_not_available"
+                },
+                {
+                  "label": "Food Hygiene Issue",
+                  "value": "food_hygiene",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Special Diet Request",
+                  "value": "special_diet",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Allergy Management Request",
+                  "value": "allergy_management",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Food Menu Feedback",
+                  "value": "menu_feedback",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Meal Reservation / Pre-Booking",
+                  "value": "meal_reservation",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Missed Meal Request",
+                  "value": "missed_meal",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Food Wastage Reporting",
+                  "value": "food_wastage",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Emergency Food Assistance",
+                  "value": "emergency_food",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Hostel Mess Billing Issue",
+                  "value": "mess_billing",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Smart Menu Recommendation",
+                  "value": "menu_recommendation",
+                  "checked": true,
+                  "meta": {}
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "ChoicePrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "6218a867918f41779e48f2bfced4910c"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "66d728d53f2c44a39e43fd4e8f889cd6"
+          ]
+        },
+        "204a7628398442818527910405f3a949": {
+          "id": "204a7628398442818527910405f3a949",
+          "stepType": "StandaloneAIChoicePrompt",
+          "name": "Meal_Type",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "12d71dcd2657444889178ff3defaac65",
+              "displayName": "Meal_Type",
+              "name": "meal_type",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": "Select the meal related to your food service request.",
+                "mode": "simple"
+              },
+              "type": "choice",
+              "variableId": "c9eb691ed9c44e729401365aac52fdb2",
+              "choices": [
+                {
+                  "label": "Breakfast",
+                  "value": "breakfast"
+                },
+                {
+                  "label": "Lunch",
+                  "value": "lunch"
+                },
+                {
+                  "label": "Dinner",
+                  "value": "dinner",
+                  "checked": true,
+                  "meta": {}
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "ChoicePrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "c19fe70afa644629865a8416a070e363"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_204a7628398442818527910405f3a949_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "c9eb691ed9c44e729401365aac52fdb2"
+          ]
+        },
+        "9b20ab723ace47bdb5b81b44c52c2618": {
+          "id": "9b20ab723ace47bdb5b81b44c52c2618",
+          "stepType": "StandaloneAITextPrompt",
+          "name": "Complaint_Description",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "a0e943f0f496482ab51b9fd10cd241e1",
+              "displayName": "Complaint_Description",
+              "name": "complaint_description",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Describe the food service problem in detail, including what happened and where it occurred."
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "string",
+              "variableId": "4a4c593bcbef4cc9b67f448f5206b032",
+              "choices": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "TextPrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "3dcae291ef1a49f4bb5882ff3b9cb977"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_9b20ab723ace47bdb5b81b44c52c2618_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "4a4c593bcbef4cc9b67f448f5206b032"
+          ]
+        },
+        "bd687da8cea147de8c6abc783a5100b2": {
+          "id": "bd687da8cea147de8c6abc783a5100b2",
+          "stepType": "CrudAction",
+          "name": "Create_CFMS_Incident",
+          "template": {
+            "query": {
+              "terms": [
+                {
+                  "prefix": "",
+                  "operator": "=",
+                  "operand": "student",
+                  "expression": "{{vaInputs.user}}",
+                  "id": "430584f1807c47f6b6f5ed18aa973686"
+                },
+                {
+                  "prefix": "",
+                  "operator": "=",
+                  "operand": "use_case",
+                  "expression": "food_quality_complaint",
+                  "id": "142583efd0a546149cab0aa38079aa7c"
+                },
+                {
+                  "prefix": "",
+                  "operator": "=",
+                  "operand": "mess_hall",
+                  "expression": "{{vaInputs.mess_hall_dynamic}}",
+                  "id": "c09b07dd7ac44cd1b3d870f89e681818"
+                },
+                {
+                  "prefix": "",
+                  "operator": "=",
+                  "operand": "meal_type",
+                  "expression": "{{vaInputs.meal_type}}",
+                  "id": "b9c951781096492f918deba33066b104"
+                },
+                {
+                  "prefix": "",
+                  "operator": "=",
+                  "operand": "problem_type",
+                  "expression": "{{vaInputs.complaint_type}}",
+                  "deserializedExpression": [
+                    {
+                      "type": "paragraph",
+                      "children": [
+                        {
+                          "text": ""
+                        },
+                        {
+                          "type": "datapill",
+                          "dataPill": {
+                            "value": "{{vaInputs.complaint_type}}",
+                            "displayValue": "Input Variables➛Complaint_Type"
+                          },
+                          "children": [
+                            {
+                              "text": ""
+                            }
+                          ]
+                        },
+                        {
+                          "text": ""
+                        }
+                      ]
+                    }
+                  ],
+                  "id": "48ca0fa7d2b143f686e0b727d9e0e265"
+                },
+                {
+                  "prefix": "",
+                  "operator": "=",
+                  "operand": "description",
+                  "expression": "{{vaInputs.complaint_description}}",
+                  "deserializedExpression": [
+                    {
+                      "type": "paragraph",
+                      "children": [
+                        {
+                          "text": ""
+                        },
+                        {
+                          "type": "datapill",
+                          "dataPill": {
+                            "value": "{{vaInputs.complaint_description}}",
+                            "displayValue": "Input Variables➛Complaint_Description"
+                          },
+                          "children": [
+                            {
+                              "text": ""
+                            }
+                          ]
+                        },
+                        {
+                          "text": ""
+                        }
+                      ]
+                    }
+                  ],
+                  "id": "7e8642f2660e43ae810f7075172169c2"
+                }
+              ]
+            },
+            "queryString": "student={{vaInputs.user}}^use_case=food_quality_complaint^mess_hall={{vaInputs.mess_hall_dynamic}}^meal_type={{vaInputs.meal_type}}^problem_type={{vaInputs.complaint_type}}^description={{vaInputs.complaint_description}}"
+          },
+          "mode": "create",
+          "record": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "attachments": [
+            {
+              "value": "",
+              "mode": "simple"
+            }
+          ],
+          "variableId": "f97809569e1c4835b8b73063b974352d"
+        },
+        "099a6bc397cc450581c21057883f645e": {
+          "id": "099a6bc397cc450581c21057883f645e",
+          "stepType": "StandaloneAITextPrompt",
+          "name": "Request_Submitted",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "48c0ff0859ca4818b054a5f323eb9fca",
+              "displayName": "Request_Submitted",
+              "name": "request_submitted",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "✅ Your food service request has been submitted successfully!"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": ""
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Your request has been created and sent to the Campus Food Services team."
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": ""
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "You can track your request from My Requests."
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "string",
+              "variableId": "2c24e814a54c4381b0df3a1501fce626",
+              "choices": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "TextPrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "cc59ebfdad22420e9d0ae40c1d0209ca"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_099a6bc397cc450581c21057883f645e_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "2c24e814a54c4381b0df3a1501fce626"
+          ]
+        },
+        "ef4559ef86e94b8a932ae460a4972ae9": {
+          "id": "ef4559ef86e94b8a932ae460a4972ae9",
+          "stepType": "LookupRecord",
+          "name": "My_Requests_Lookup",
+          "condition": {
+            "mode": "glide_query",
+            "value": "caller_id=7b9046eb081f03107f447d6c83c82211"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "595c4e95b8724a3698bf6bddbb9b749f"
+        },
+        "119eb08d983d462ca4a05fbf00cf4c1f": {
+          "id": "119eb08d983d462ca4a05fbf00cf4c1f",
+          "stepType": "TableOutput",
+          "name": "Display_My_Requests",
+          "header": {
+            "value": "",
+            "mode": "simple"
+          },
+          "displayColumnHeaders": true,
+          "dataSourceType": "table",
+          "script": "",
+          "tableName": "incident",
+          "sortByColumns": [
+            {
+              "column": "number",
+              "sortDirection": "ASC"
+            }
+          ],
+          "tableCondition": {
+            "mode": "glide_query",
+            "value": "caller_id=a79046eb081f03107f447d6c83c8220b"
+          },
+          "columns": [
+            {
+              "key": "number",
+              "value": "Request Number",
+              "label": "Number"
+            },
+            {
+              "key": "short_description",
+              "value": "Request",
+              "label": "Short description"
+            },
+            {
+              "key": "state",
+              "value": "Status",
+              "label": "State"
+            },
+            {
+              "key": "priority",
+              "value": "Priority",
+              "label": "Priority"
+            }
+          ],
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "You don't have any food service requests yet."
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "showLink": false
+        },
+        "2ecf76d5fd2a4c7c95b3d60fef3cc581": {
+          "id": "2ecf76d5fd2a4c7c95b3d60fef3cc581",
+          "stepType": "LookupRecord",
+          "name": "Track_Complaint_Lookup",
+          "condition": {
+            "mode": "glide_query",
+            "value": "student={{vaInputs.user.user_name}}"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "d60014e0cc6540ef8034b32c3a8df87a"
+        },
+        "2ec8ae1bd87349058d3fd908c820424c": {
+          "id": "2ec8ae1bd87349058d3fd908c820424c",
+          "stepType": "TableOutput",
+          "name": "Display_Complaint_Status",
+          "header": {
+            "value": "",
+            "mode": "simple"
+          },
+          "displayColumnHeaders": true,
+          "dataSourceType": "table",
+          "script": "",
+          "tableName": "x_snc_campus_foo_1_food_complaint",
+          "sortByColumns": [],
+          "tableCondition": {
+            "mode": "glide_query",
+            "value": "student={{vaInputs.user}}"
+          },
+          "columns": [
+            {
+              "key": "number",
+              "value": "Complaint Number",
+              "label": "Number"
+            },
+            {
+              "key": "use_case",
+              "value": "Complaint Type",
+              "label": "Use Case"
+            },
+            {
+              "key": "state",
+              "value": "Status",
+              "label": "State"
+            },
+            {
+              "key": "meal_type",
+              "value": "Meal Type",
+              "label": "Meal Type"
+            }
+          ],
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "I couldn't find any complaints for you."
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "showLink": false
+        },
+        "d6bbd910243a44c09c2a01f6c79c2483": {
+          "id": "d6bbd910243a44c09c2a01f6c79c2483",
+          "stepType": "StandaloneAITextPrompt",
+          "name": "Feedback_Text",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "bf0b4c51c859451bb7cba7fdd0b0e024",
+              "displayName": "Feedback_Text",
+              "name": "feedback_text",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Please enter your feedback about the campus food service."
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "string",
+              "variableId": "eadc77206122475e9b47c16caaec5c0d",
+              "choices": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "TextPrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "363b9c802df34a1abda96148930029b3"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "eadc77206122475e9b47c16caaec5c0d"
+          ]
+        },
+        "e9766c58a2ec40958516dc32177858db": {
+          "id": "e9766c58a2ec40958516dc32177858db",
+          "stepType": "CrudAction",
+          "name": "Create_CFMS_Feedback",
+          "template": {
+            "query": {
+              "terms": [
+                {
+                  "prefix": "",
+                  "operator": "=",
+                  "operand": "caller_id",
+                  "expression": "a79046eb081f03107f447d6c83c8220b",
+                  "id": "7e8ca91d27a142ddb0881a47e80c9d9c"
+                },
+                {
+                  "prefix": "",
+                  "operator": "=",
+                  "operand": "short_description",
+                  "expression": "CFMS - Student Feedback",
+                  "deserializedExpression": [
+                    {
+                      "type": "paragraph",
+                      "children": [
+                        {
+                          "text": "CFMS - Student Feedback"
+                        }
+                      ]
+                    }
+                  ],
+                  "id": "8caaffcb16974a0dbfb7dac264358210"
+                },
+                {
+                  "prefix": "",
+                  "operator": "=",
+                  "operand": "description",
+                  "expression": "Feedback_Text",
+                  "deserializedExpression": [
+                    {
+                      "type": "paragraph",
+                      "children": [
+                        {
+                          "text": "Feedback_Text"
+                        }
+                      ]
+                    }
+                  ],
+                  "id": "1b9369ae00bd495d9082c14ce04cb864"
+                }
+              ]
+            },
+            "queryString": "caller_id=a79046eb081f03107f447d6c83c8220b^short_description=CFMS - Student Feedback^description=Feedback_Text"
+          },
+          "mode": "create",
+          "record": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "attachments": [
+            {
+              "value": "",
+              "mode": "simple"
+            }
+          ],
+          "variableId": "0152d00ac1c14cc09c4a55dbff3386f5"
+        },
+        "b7050b2e9eb4496dabfcf90c5a4f1d20": {
+          "id": "b7050b2e9eb4496dabfcf90c5a4f1d20",
+          "stepType": "TextOutput",
+          "name": "Text",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "Thank you for your feedback! Your feedback has been submitted successfully."
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "_key": "938d7b8c4e3c498f95b6366a22c89a4c"
+            }
+          ],
+          "isCollapsible": true,
+          "requestFeedback": true,
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "43f0a26d88ab4b979fb15e7ca92ae842": {
+          "id": "43f0a26d88ab4b979fb15e7ca92ae842",
+          "stepType": "StandaloneAIReferenceChoicePrompt",
+          "name": "Mess_Hall_Dynamic",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "8d34f5fa4f6b44d7ae0104dfad262b13",
+              "displayName": "Mess_Hall_Dynamic",
+              "name": "mess_hall_dynamic",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Select the mess hall where the food service issue occurred."
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "reference",
+              "variableId": "8de8d30d6ea74ffdbc58bfaf795962a2",
+              "choices": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "mode": "glide_record",
+              "script": "",
+              "condition": {
+                "mode": "glide_query",
+                "value": "active=true"
+              },
+              "stepType": "ReferenceChoicePrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "4bb873eab8794f67b74527a86a09cfee"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_43f0a26d88ab4b979fb15e7ca92ae842_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "8de8d30d6ea74ffdbc58bfaf795962a2"
+          ]
+        },
+        "a78c32ba6875442b9d201680cf254a5d": {
+          "id": "a78c32ba6875442b9d201680cf254a5d",
+          "stepType": "StandaloneAIChoicePrompt",
+          "name": "After_Request",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "651c40f54d85488dbf0424204c3a0b83",
+              "displayName": "After_Request",
+              "name": "after_request",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "✅ Your food service request has been submitted successfully."
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": ""
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Would you like to do anything else?"
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "choice",
+              "variableId": "feee6d30d0e549a4945200950a1cfda8",
+              "choices": [
+                {
+                  "label": "Yes",
+                  "value": "Student_Menu"
+                },
+                {
+                  "label": "No",
+                  "value": "End"
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "ChoicePrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "7cd22655fd7e42ee8822396414d00b67"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_a78c32ba6875442b9d201680cf254a5d_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "feee6d30d0e549a4945200950a1cfda8"
+          ]
+        },
+        "659a557cef1143b98b8c724f123f0da2": {
+          "id": "659a557cef1143b98b8c724f123f0da2",
+          "stepType": "ImplicitEnd"
+        }
+      },
+      "edges": [
+        {
+          "id": "56105e0214754f2ea27c0c98d674cf8d",
+          "edgeType": "Edge",
+          "source": "0239987a0e464332b8c9fb227f5e01f8",
+          "target": "c40a2b84c1e14d2dada03c1eae874f5c",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "e495b03ace6f4585b17cde8d24f449b7",
+          "edgeType": "Edge",
+          "source": "7361b101735c4621a656f02384ff47d7",
+          "target": "eb1eb7d7f69442a0b62f8d5142c50001",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "a16a2b06130d4c888f66aabdf199d5a7",
+          "edgeType": "Edge",
+          "source": "a78c32ba6875442b9d201680cf254a5d",
+          "target": "659a557cef1143b98b8c724f123f0da2",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "c4fd52a4a3c3405db2a5e7215da2e4bc",
+          "edgeType": "Edge",
+          "source": "43f0a26d88ab4b979fb15e7ca92ae842",
+          "target": "9b20ab723ace47bdb5b81b44c52c2618",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "b4265ac36b4944049a22a473d81784c5",
+          "edgeType": "Edge",
+          "source": "2ec8ae1bd87349058d3fd908c820424c",
+          "target": "44cba364fb294056be16ffe6f21bd3ef",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "42b0daef933c42ddadefb133be406713",
+          "edgeType": "Edge",
+          "source": "c40a2b84c1e14d2dada03c1eae874f5c",
+          "target": "7361b101735c4621a656f02384ff47d7",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "eedcc657b4434d96ac5ffe35fe41a7b6",
+          "edgeType": "Branch",
+          "source": "eb1eb7d7f69442a0b62f8d5142c50001",
+          "target": "63de8c2ca550404db1402d035b3d1c6c",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.student_menu=raise_food_complaint",
+            "mode": "query"
+          },
+          "label": "Raise_Food_Complaint"
+        },
+        {
+          "id": "da11483127894e0eb3f09e241a6d7159",
+          "edgeType": "Edge",
+          "source": "63de8c2ca550404db1402d035b3d1c6c",
+          "target": "204a7628398442818527910405f3a949",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "036d240610c441f08f5ffc5f67d8b1d9",
+          "edgeType": "Edge",
+          "source": "9b20ab723ace47bdb5b81b44c52c2618",
+          "target": "bd687da8cea147de8c6abc783a5100b2",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "9dd6eda9491f4529aaf4fd4fc89343a3",
+          "edgeType": "Edge",
+          "source": "bd687da8cea147de8c6abc783a5100b2",
+          "target": "099a6bc397cc450581c21057883f645e",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "b51460d510c44d93a6f2c30372ae55b5",
+          "edgeType": "Branch",
+          "source": "eb1eb7d7f69442a0b62f8d5142c50001",
+          "target": "ef4559ef86e94b8a932ae460a4972ae9",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.student_menu=my_requests",
+            "mode": "query"
+          },
+          "label": "My_Requests"
+        },
+        {
+          "id": "0dce5e7cdd384a718cee5d7df1b419b8",
+          "edgeType": "Edge",
+          "source": "ef4559ef86e94b8a932ae460a4972ae9",
+          "target": "119eb08d983d462ca4a05fbf00cf4c1f",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "675296314b97493c9e684ab7570bd0e5",
+          "edgeType": "Edge",
+          "source": "119eb08d983d462ca4a05fbf00cf4c1f",
+          "target": "2726a74909ff4bf9982818d62d0a0358",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "6254d53548254dcd9bc61742400e7fe0",
+          "edgeType": "Branch",
+          "source": "eb1eb7d7f69442a0b62f8d5142c50001",
+          "target": "2ecf76d5fd2a4c7c95b3d60fef3cc581",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.student_menu=track_complaint",
+            "mode": "query"
+          },
+          "label": "Track_Complaint"
+        },
+        {
+          "id": "c6c6aaae14c5450daf7d1aaf4a5d1c14",
+          "edgeType": "Edge",
+          "source": "2ecf76d5fd2a4c7c95b3d60fef3cc581",
+          "target": "2ec8ae1bd87349058d3fd908c820424c",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "04f3e85c6aa44d61a7b45eddfddb96f4",
+          "edgeType": "Branch",
+          "source": "eb1eb7d7f69442a0b62f8d5142c50001",
+          "target": "d6bbd910243a44c09c2a01f6c79c2483",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.student_menu=give_feedback",
+            "mode": "query"
+          },
+          "label": "Give_Feedback"
+        },
+        {
+          "id": "dde0431da5d34989bdae5046145f260e",
+          "edgeType": "Edge",
+          "source": "d6bbd910243a44c09c2a01f6c79c2483",
+          "target": "e9766c58a2ec40958516dc32177858db",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "52ff223023ca4403850447669ae7f9f3",
+          "edgeType": "Edge",
+          "source": "e9766c58a2ec40958516dc32177858db",
+          "target": "b7050b2e9eb4496dabfcf90c5a4f1d20",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "2028d9d94c8546bc8ba82aa6b2ba8091",
+          "edgeType": "Edge",
+          "source": "b7050b2e9eb4496dabfcf90c5a4f1d20",
+          "target": "fb758c83fa264113bbc881d0ec5fb65c",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "fe28c4f05211480da5c73adfd5d4b916",
+          "edgeType": "Edge",
+          "source": "204a7628398442818527910405f3a949",
+          "target": "43f0a26d88ab4b979fb15e7ca92ae842",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "3b915ae797594172b19d88ea593625db",
+          "edgeType": "Edge",
+          "source": "099a6bc397cc450581c21057883f645e",
+          "target": "a78c32ba6875442b9d201680cf254a5d",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "8385b04ee4c04263892c6316a5b530d9": {
+      "id": "8385b04ee4c04263892c6316a5b530d9",
+      "name": "ai_data_collector_7361b101735c4621a656f02384ff47d7_output",
+      "label": "Ai_data_collector_7361b101735c4621a656f02384ff47d7_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "8ee6d004526249b48537ee9a18fc017b": {
+      "id": "8ee6d004526249b48537ee9a18fc017b",
+      "varType": "choice",
+      "category": "vaInputs",
+      "label": "Student_Menu",
+      "name": "student_menu",
+      "choices": [
+        {
+          "label": "Raise a Food Complaint",
+          "value": "raise_food_complaint"
+        },
+        {
+          "label": "My Requests",
+          "value": "my_requests"
+        },
+        {
+          "label": "My Complaint",
+          "value": "track_complaint",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Give Feedback",
+          "value": "give_feedback",
+          "checked": true,
+          "meta": {}
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "7361b101735c4621a656f02384ff47d7",
+      "isHidden": false,
+      "description": "",
+      "translation": true
+    },
+    "6218a867918f41779e48f2bfced4910c": {
+      "id": "6218a867918f41779e48f2bfced4910c",
+      "name": "ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output",
+      "label": "Ai_data_collector_63de8c2ca550404db1402d035b3d1c6c_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "66d728d53f2c44a39e43fd4e8f889cd6": {
+      "id": "66d728d53f2c44a39e43fd4e8f889cd6",
+      "varType": "choice",
+      "category": "vaInputs",
+      "label": "Complaint_Type",
+      "name": "complaint_type",
+      "choices": [
+        {
+          "label": "Food Quality Complaint",
+          "value": "food_quality"
+        },
+        {
+          "label": "Meal Not Available",
+          "value": "meal_not_available"
+        },
+        {
+          "label": "Food Hygiene Issue",
+          "value": "food_hygiene",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Special Diet Request",
+          "value": "special_diet",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Allergy Management Request",
+          "value": "allergy_management",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Food Menu Feedback",
+          "value": "menu_feedback",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Meal Reservation / Pre-Booking",
+          "value": "meal_reservation",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Missed Meal Request",
+          "value": "missed_meal",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Food Wastage Reporting",
+          "value": "food_wastage",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Emergency Food Assistance",
+          "value": "emergency_food",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Hostel Mess Billing Issue",
+          "value": "mess_billing",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Smart Menu Recommendation",
+          "value": "menu_recommendation",
+          "checked": true,
+          "meta": {}
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "63de8c2ca550404db1402d035b3d1c6c",
+      "isHidden": false,
+      "description": "",
+      "translation": true
+    },
+    "c19fe70afa644629865a8416a070e363": {
+      "id": "c19fe70afa644629865a8416a070e363",
+      "name": "ai_data_collector_204a7628398442818527910405f3a949_output",
+      "label": "Ai_data_collector_204a7628398442818527910405f3a949_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "c9eb691ed9c44e729401365aac52fdb2": {
+      "id": "c9eb691ed9c44e729401365aac52fdb2",
+      "varType": "choice",
+      "category": "vaInputs",
+      "label": "Meal_Type",
+      "name": "meal_type",
+      "choices": [
+        {
+          "label": "Breakfast",
+          "value": "breakfast"
+        },
+        {
+          "label": "Lunch",
+          "value": "lunch"
+        },
+        {
+          "label": "Dinner",
+          "value": "dinner",
+          "checked": true,
+          "meta": {}
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "204a7628398442818527910405f3a949",
+      "isHidden": false,
+      "description": "",
+      "translation": true
+    },
+    "c066a302e1d84938b86ee00d17dcaaf6": {
+      "id": "c066a302e1d84938b86ee00d17dcaaf6",
+      "name": "ai_data_collector_cc48769b922b425fb9d4e61cdb0f5153_output",
+      "label": "Ai_data_collector_cc48769b922b425fb9d4e61cdb0f5153_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "3dcae291ef1a49f4bb5882ff3b9cb977": {
+      "id": "3dcae291ef1a49f4bb5882ff3b9cb977",
+      "name": "ai_data_collector_9b20ab723ace47bdb5b81b44c52c2618_output",
+      "label": "Ai_data_collector_9b20ab723ace47bdb5b81b44c52c2618_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "4a4c593bcbef4cc9b67f448f5206b032": {
+      "id": "4a4c593bcbef4cc9b67f448f5206b032",
+      "varType": "string",
+      "category": "vaInputs",
+      "label": "Complaint_Description",
+      "name": "complaint_description",
+      "choices": [
+        {
+          "label": "",
+          "value": ""
+        },
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "9b20ab723ace47bdb5b81b44c52c2618",
+      "isHidden": false,
+      "description": ""
+    },
+    "f97809569e1c4835b8b73063b974352d": {
+      "id": "f97809569e1c4835b8b73063b974352d",
+      "name": "create_cfms_incident",
+      "label": "Create_CFMS_Incident",
+      "varType": "reference",
+      "table": "x_snc_campus_foo_1_food_complaint",
+      "inactive": false,
+      "category": "vaInputs",
+      "nodeId": "bd687da8cea147de8c6abc783a5100b2",
+      "isHidden": false
+    },
+    "cc59ebfdad22420e9d0ae40c1d0209ca": {
+      "id": "cc59ebfdad22420e9d0ae40c1d0209ca",
+      "name": "ai_data_collector_099a6bc397cc450581c21057883f645e_output",
+      "label": "Ai_data_collector_099a6bc397cc450581c21057883f645e_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "2c24e814a54c4381b0df3a1501fce626": {
+      "id": "2c24e814a54c4381b0df3a1501fce626",
+      "varType": "string",
+      "category": "vaInputs",
+      "label": "Request_Submitted",
+      "name": "request_submitted",
+      "choices": [
+        {
+          "label": "",
+          "value": ""
+        },
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "099a6bc397cc450581c21057883f645e",
+      "isHidden": false,
+      "description": ""
+    },
+    "595c4e95b8724a3698bf6bddbb9b749f": {
+      "id": "595c4e95b8724a3698bf6bddbb9b749f",
+      "name": "my_requests_lookup",
+      "label": "My_Requests_Lookup",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "ef4559ef86e94b8a932ae460a4972ae9",
+      "isHidden": false
+    },
+    "d60014e0cc6540ef8034b32c3a8df87a": {
+      "id": "d60014e0cc6540ef8034b32c3a8df87a",
+      "name": "track_complaint_lookup",
+      "label": "Track_Complaint_Lookup",
+      "varType": "reference",
+      "table": "x_snc_campus_foo_1_food_complaint",
+      "category": "vaInputs",
+      "nodeId": "2ecf76d5fd2a4c7c95b3d60fef3cc581",
+      "isHidden": false
+    },
+    "363b9c802df34a1abda96148930029b3": {
+      "id": "363b9c802df34a1abda96148930029b3",
+      "name": "ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output",
+      "label": "Ai_data_collector_d6bbd910243a44c09c2a01f6c79c2483_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "eadc77206122475e9b47c16caaec5c0d": {
+      "id": "eadc77206122475e9b47c16caaec5c0d",
+      "varType": "string",
+      "category": "vaInputs",
+      "label": "Feedback_Text",
+      "name": "feedback_text",
+      "choices": [
+        {
+          "label": "",
+          "value": ""
+        },
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "d6bbd910243a44c09c2a01f6c79c2483",
+      "isHidden": false,
+      "description": ""
+    },
+    "0152d00ac1c14cc09c4a55dbff3386f5": {
+      "id": "0152d00ac1c14cc09c4a55dbff3386f5",
+      "name": "create_cfms_feedback",
+      "label": "Create_CFMS_Feedback",
+      "varType": "reference",
+      "table": "incident",
+      "inactive": false,
+      "category": "vaInputs",
+      "nodeId": "e9766c58a2ec40958516dc32177858db",
+      "isHidden": false
+    },
+    "4bb873eab8794f67b74527a86a09cfee": {
+      "id": "4bb873eab8794f67b74527a86a09cfee",
+      "name": "ai_data_collector_43f0a26d88ab4b979fb15e7ca92ae842_output",
+      "label": "Ai_data_collector_43f0a26d88ab4b979fb15e7ca92ae842_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "8de8d30d6ea74ffdbc58bfaf795962a2": {
+      "id": "8de8d30d6ea74ffdbc58bfaf795962a2",
+      "varType": "reference",
+      "category": "vaInputs",
+      "label": "Mess_Hall_Dynamic",
+      "name": "mess_hall_dynamic",
+      "choices": [
+        {
+          "label": "",
+          "value": ""
+        },
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "mode": "glide_record",
+      "table": "x_snc_campus_foo_1_mess_hall",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "43f0a26d88ab4b979fb15e7ca92ae842",
+      "isHidden": false,
+      "description": ""
+    },
+    "7cd22655fd7e42ee8822396414d00b67": {
+      "id": "7cd22655fd7e42ee8822396414d00b67",
+      "name": "ai_data_collector_a78c32ba6875442b9d201680cf254a5d_output",
+      "label": "Ai_data_collector_a78c32ba6875442b9d201680cf254a5d_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "feee6d30d0e549a4945200950a1cfda8": {
+      "id": "feee6d30d0e549a4945200950a1cfda8",
+      "varType": "choice",
+      "category": "vaInputs",
+      "label": "After_Request",
+      "name": "after_request",
+      "choices": [
+        {
+          "label": "Yes",
+          "value": "Student_Menu"
+        },
+        {
+          "label": "No",
+          "value": "End"
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "a78c32ba6875442b9d201680cf254a5d",
+      "isHidden": false,
+      "description": "",
+      "translation": true
+    },
+    "7fb824a9d7ce4e9e9a7b4399197b79ca": {
+      "id": "7fb824a9d7ce4e9e9a7b4399197b79ca",
+      "name": "ai_data_collector_4dc53f51ec9849bcbabd18fbeabcac38_output",
+      "label": "Ai_data_collector_4dc53f51ec9849bcbabd18fbeabcac38_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    }
+  }
+}</graph>
+        <name>cfms_student_assistant</name>
+        <sys_class_name>sys_cb_design_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-02 05:23:59</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>5d8c8cfbf9a303107f44740a4dc6a4e7</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>FlowTopic</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_cb_design_topic_5d8c8cfbf9a303107f44740a4dc6a4e7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-03 06:16:44</sys_updated_on>
+        <type>FlowTopic</type>
+    </sys_cb_design_topic>
+</record_update>

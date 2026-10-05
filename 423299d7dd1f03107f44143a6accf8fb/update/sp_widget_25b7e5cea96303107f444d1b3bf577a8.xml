@@ -13,55 +13,129 @@
     };
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>.cfa-hero{&#13;
-  background:linear-gradient(135deg,#0d9488,#0f766e);&#13;
-  color:#fff;border-radius:14px;padding:26px;margin-bottom:20px;&#13;
-}&#13;
-.cfa-hero h3{font-size:20px;margin-bottom:5px}&#13;
-.cfa-hero p{font-size:13.5px;opacity:.92}&#13;
+        <css>/* =========================================================&#13;
+   MEALCARE — STUDENT DASHBOARD SIDEBAR&#13;
+   Professional Dark Frame Theme&#13;
+   Styling only — HTML / JS unchanged&#13;
+   ========================================================= */&#13;
 &#13;
-.cfa-kpi-grid{&#13;
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));&#13;
-  gap:14px;margin-bottom:20px;&#13;
-}&#13;
-.cfa-kpi{&#13;
-  background:#fff;border:1px solid #e2e8f0;border-radius:14px;&#13;
-  padding:17px;display:flex;align-items:center;gap:12px;&#13;
-}&#13;
-.cfa-kpi-ic{font-size:24px}&#13;
-.cfa-kpi-num{font-size:24px;font-weight:800;line-height:1}&#13;
-.cfa-kpi-lbl{font-size:11.5px;color:#64748b;margin-top:3px}&#13;
+/* Main Student Sidebar */&#13;
 &#13;
-.cfa-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px}&#13;
-.cfa-card h4{font-size:15px;margin-bottom:14px}&#13;
-.cfa-tbl{width:100%;border-collapse:collapse;font-size:13px}&#13;
-.cfa-tbl th{&#13;
-  text-align:left;padding:9px 11px;background:#f8fafc;color:#64748b;&#13;
-  font-size:11px;text-transform:uppercase;border-bottom:1.5px solid #e2e8f0;&#13;
+.student-sidebar {&#13;
+  background: #1E293B !important;&#13;
+  color: #F8FAFC;&#13;
+  border-right: 1px solid #334155;&#13;
 }&#13;
-.cfa-tbl td{padding:10px 11px;border-bottom:1px solid #e2e8f0;vertical-align:top}&#13;
-.cfa-muted{color:#64748b;font-size:11px}&#13;
-.cfa-empty{text-align:center;padding:30px;color:#64748b;font-size:13px}&#13;
 &#13;
-.cfa-badge{padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}&#13;
-.cfa-b-critical{background:#ede9fe;color:#7c3aed}&#13;
-.cfa-b-high{background:#fee2e2;color:#dc2626}&#13;
-.cfa-b-medium{background:#fef3c7;color:#d97706}&#13;
-.cfa-b-low{background:#dcfce7;color:#16a34a}&#13;
-.cfa-s-active{background:#dbeafe;color:#2563eb}&#13;
-.cfa-s-monitoring{background:#fef3c7;color:#d97706}&#13;
-.cfa-s-resolved{background:#dcfce7;color:#16a34a}&#13;
-.cfa-s-closed{background:#e2e8f0;color:#475569}&#13;
 &#13;
-.cfa-actions{display:flex;gap:6px}&#13;
-.cfa-btn-sm{&#13;
-  padding:5px 11px;font-size:11.5px;border-radius:7px;border:1px solid #e2e8f0;&#13;
-  background:#fff;cursor:pointer;font-weight:700;&#13;
+/* =========================================================&#13;
+   STUDENT ROLE ICON&#13;
+   ========================================================= */&#13;
+&#13;
+.student-sidebar .sidebar-icon,&#13;
+.student-sidebar .role-icon,&#13;
+.student-sidebar .student-icon {&#13;
+  width: 42px;&#13;
+  height: 42px;&#13;
+&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+&#13;
+  background: #2563EB;&#13;
+  color: #FFFFFF;&#13;
+&#13;
+  border-radius: 50%;&#13;
+&#13;
+  font-size: 18px;&#13;
+  font-weight: 700;&#13;
+&#13;
+  border: 2px solid #60A5FA;&#13;
+&#13;
+  box-shadow:&#13;
+    0 6px 16px rgba(37, 99, 235, 0.30);&#13;
+&#13;
+  flex-shrink: 0;&#13;
 }&#13;
-.cfa-btn-sm:hover{background:#f1f5f9}&#13;
-.cfa-btn-fb{color:#0d9488;border-color:#ccfbf1}&#13;
-.cfa-detail-row td{background:#f8fafc}&#13;
-.cfa-detail-box{padding:12px 14px;font-size:12.5px;color:#334155;line-height:1.7}</css>
+&#13;
+&#13;
+/* =========================================================&#13;
+   SIDEBAR ROLE / PORTAL TEXT&#13;
+   ========================================================= */&#13;
+&#13;
+.student-sidebar .sidebar-title,&#13;
+.student-sidebar .role-name,&#13;
+.student-sidebar .portal-title {&#13;
+  color: #FFFFFF;&#13;
+}&#13;
+&#13;
+.student-sidebar .sidebar-subtitle,&#13;
+.student-sidebar .role-label,&#13;
+.student-sidebar .portal-subtitle {&#13;
+  color: #94A3B8;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SIDEBAR NAVIGATION&#13;
+   ========================================================= */&#13;
+&#13;
+.student-sidebar a,&#13;
+.student-sidebar button {&#13;
+  color: #CBD5E1;&#13;
+}&#13;
+&#13;
+.student-sidebar a:hover,&#13;
+.student-sidebar button:hover {&#13;
+  background: #334155;&#13;
+  color: #FFFFFF;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   ACTIVE SIDEBAR ITEM&#13;
+   ========================================================= */&#13;
+&#13;
+.student-sidebar .active,&#13;
+.student-sidebar .active-section,&#13;
+.student-sidebar a.active {&#13;
+  background: #2563EB;&#13;
+  color: #FFFFFF;&#13;
+&#13;
+  border-radius: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SIDEBAR ICONS&#13;
+   ========================================================= */&#13;
+&#13;
+.student-sidebar .nav-icon,&#13;
+.student-sidebar .menu-icon {&#13;
+  color: #94A3B8;&#13;
+}&#13;
+&#13;
+.student-sidebar .active .nav-icon,&#13;
+.student-sidebar .active .menu-icon {&#13;
+  color: #FFFFFF;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   MOBILE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 767px) {&#13;
+&#13;
+  .student-sidebar .sidebar-icon,&#13;
+  .student-sidebar .role-icon,&#13;
+  .student-sidebar .student-icon {&#13;
+    width: 38px;&#13;
+    height: 38px;&#13;
+    font-size: 16px;&#13;
+  }&#13;
+&#13;
+}</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
@@ -139,14 +213,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-27 01:34:09</sys_created_on>
         <sys_id>25b7e5cea96303107f444d1b3bf577a8</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>1</sys_mod_count>
         <sys_name>Food Service Student Dashboard Welcome</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sp_widget_25b7e5cea96303107f444d1b3bf577a8</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-27 01:34:09</sys_updated_on>
+        <sys_updated_on>2026-10-05 07:13:46</sys_updated_on>
         <template><![CDATA[<!-- =========================================================
      WIDGET: Food Services Student Dashboard (Welcome Page)
      Contains: Hero banner, 4 KPI cards, My Requests table

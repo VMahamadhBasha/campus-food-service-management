@@ -11,85 +11,720 @@
     };
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>.cfa-navbar{&#13;
-  background:#0f172a;&#13;
-  color:#fff;&#13;
-  position:sticky;&#13;
-  top:0;&#13;
-  z-index:20;&#13;
-  border-bottom:1px solid #1e293b;&#13;
-}&#13;
-.cfa-navbar-inner{&#13;
-  max-width:1200px;&#13;
-  margin:0 auto;&#13;
-  padding:14px 24px;&#13;
-  display:flex;&#13;
-  align-items:center;&#13;
-  justify-content:space-between;&#13;
-}&#13;
-.cfa-brand{&#13;
-  font-weight:800;&#13;
-  font-size:16px;&#13;
-  display:flex;&#13;
-  align-items:center;&#13;
-  gap:8px;&#13;
-}&#13;
-.cfa-brand b{ color:#2dd4bf; }&#13;
-.cfa-logo{ font-size:20px; }&#13;
+        <css>/* =========================================================&#13;
+   MEALCARE — PROFESSIONAL DARK FRAME NAVBAR&#13;
+   ServiceNow Compatible&#13;
+   HTML / IDs / Angular bindings unchanged&#13;
+   Styling only&#13;
+   ========================================================= */&#13;
 &#13;
-.cfa-nav-links{&#13;
-  display:flex;&#13;
-  gap:28px;&#13;
-}&#13;
-.cfa-nav-links a{&#13;
-  color:#cbd5e1;&#13;
-  text-decoration:none;&#13;
-  font-size:14px;&#13;
-  font-weight:600;&#13;
-  transition:.15s;&#13;
-}&#13;
-.cfa-nav-links a:hover{ color:#fff; }&#13;
 &#13;
-.cfa-nav-actions{&#13;
-  display:flex;&#13;
-  align-items:center;&#13;
-  gap:12px;&#13;
-}&#13;
-.cfa-login-btn{&#13;
-  background:#0d9488;&#13;
-  color:#fff;&#13;
-  padding:8px 18px;&#13;
-  border-radius:8px;&#13;
-  font-size:13.5px;&#13;
-  font-weight:700;&#13;
-  text-decoration:none;&#13;
-}&#13;
-.cfa-login-btn:hover{ background:#0f766e; }&#13;
+/* =========================================================&#13;
+   1. FULL WIDTH NAVBAR&#13;
+   ========================================================= */&#13;
 &#13;
-.cfa-menu-toggle{&#13;
-  display:none;&#13;
-  background:none;&#13;
-  border:none;&#13;
-  color:#fff;&#13;
-  font-size:20px;&#13;
-  cursor:pointer;&#13;
+.cfa-navbar {&#13;
+  position: relative;&#13;
+  z-index: 9999;&#13;
+&#13;
+  width: 100vw !important;&#13;
+  max-width: 100vw !important;&#13;
+&#13;
+  margin-left: calc(50% - 50vw) !important;&#13;
+  margin-right: 0 !important;&#13;
+&#13;
+  padding: 0 !important;&#13;
+&#13;
+  min-height: 76px;&#13;
+&#13;
+  background: #1E293B !important;&#13;
+&#13;
+  border: none !important;&#13;
+  border-bottom: 1px solid #334155 !important;&#13;
+&#13;
+  box-shadow:&#13;
+    0 6px 24px rgba(15, 23, 42, 0.18);&#13;
+&#13;
+  font-family:&#13;
+    "Segoe UI",&#13;
+    Arial,&#13;
+    sans-serif;&#13;
+&#13;
+  box-sizing: border-box;&#13;
+&#13;
+  overflow: hidden;&#13;
 }&#13;
 &#13;
-@media(max-width:768px){&#13;
-  .cfa-nav-links{&#13;
-    display:none;&#13;
-    position:absolute;&#13;
-    top:100%;&#13;
-    left:0;&#13;
-    right:0;&#13;
-    background:#0f172a;&#13;
-    flex-direction:column;&#13;
-    padding:16px 24px;&#13;
-    gap:16px;&#13;
-    border-bottom:1px solid #1e293b;&#13;
+&#13;
+/* =========================================================&#13;
+   2. BOX SIZING&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-navbar,&#13;
+.cfa-navbar * {&#13;
+  box-sizing: border-box;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   3. SUBTLE BACKGROUND GRID&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-navbar::before {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+  inset: 0;&#13;
+&#13;
+  pointer-events: none;&#13;
+&#13;
+  background-image:&#13;
+    linear-gradient(&#13;
+      rgba(96, 165, 250, 0.025) 1px,&#13;
+      transparent 1px&#13;
+    ),&#13;
+    linear-gradient(&#13;
+      90deg,&#13;
+      rgba(96, 165, 250, 0.025) 1px,&#13;
+      transparent 1px&#13;
+    );&#13;
+&#13;
+  background-size: 34px 34px;&#13;
+&#13;
+  opacity: 0.7;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   4. BOTTOM ACCENT LINE&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-navbar::after {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+&#13;
+  left: 0;&#13;
+  right: 0;&#13;
+  bottom: 0;&#13;
+&#13;
+  height: 2px;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      90deg,&#13;
+      transparent 0%,&#13;
+      #2563EB 25%,&#13;
+      #60A5FA 50%,&#13;
+      #2563EB 75%,&#13;
+      transparent 100%&#13;
+    );&#13;
+&#13;
+  opacity: 0.75;&#13;
+&#13;
+  pointer-events: none;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   5. NAVBAR INNER&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-navbar-inner {&#13;
+  position: relative;&#13;
+  z-index: 2;&#13;
+&#13;
+  width: 100% !important;&#13;
+  max-width: 1400px !important;&#13;
+&#13;
+  min-height: 76px;&#13;
+&#13;
+  margin: 0 auto !important;&#13;
+&#13;
+  padding: 0 6% !important;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: space-between;&#13;
+&#13;
+  gap: 30px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   6. BRAND&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-brand {&#13;
+  display: inline-flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  gap: 12px;&#13;
+&#13;
+  color: #FFFFFF !important;&#13;
+&#13;
+  text-decoration: none;&#13;
+&#13;
+  white-space: nowrap;&#13;
+&#13;
+  flex-shrink: 0;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   7. LOGO&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-logo {&#13;
+  width: 46px;&#13;
+  height: 46px;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+&#13;
+  border-radius: 13px;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      145deg,&#13;
+      #60A5FA,&#13;
+      #2563EB&#13;
+    );&#13;
+&#13;
+  color: #FFFFFF;&#13;
+&#13;
+  font-size: 20px;&#13;
+&#13;
+  box-shadow:&#13;
+    0 7px 20px rgba(37, 99, 235, 0.28);&#13;
+&#13;
+  transition:&#13;
+    transform 0.25s ease,&#13;
+    box-shadow 0.25s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.cfa-brand:hover .cfa-logo {&#13;
+  transform:&#13;
+    translateY(-2px)&#13;
+    scale(1.04);&#13;
+&#13;
+  box-shadow:&#13;
+    0 10px 26px rgba(37, 99, 235, 0.40);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   8. MEALCARE BRAND NAME&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-brand-name {&#13;
+  color: #FFFFFF !important;&#13;
+&#13;
+  font-size: 22px !important;&#13;
+&#13;
+  font-weight: 800 !important;&#13;
+&#13;
+  letter-spacing: -0.5px;&#13;
+&#13;
+  line-height: 1;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   9. NAVIGATION&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-nav-links {&#13;
+  position: relative;&#13;
+  z-index: 2;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: center;&#13;
+&#13;
+  gap: 8px;&#13;
+&#13;
+  margin-left: auto;&#13;
+  margin-right: auto;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   10. NAVIGATION LINKS&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-nav-links a {&#13;
+  position: relative;&#13;
+&#13;
+  display: inline-flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: center;&#13;
+&#13;
+  min-height: 42px;&#13;
+&#13;
+  padding: 0 17px;&#13;
+&#13;
+  color: #CBD5E1 !important;&#13;
+&#13;
+  background: transparent;&#13;
+&#13;
+  border-radius: 10px;&#13;
+&#13;
+  font-size: 15px !important;&#13;
+&#13;
+  font-weight: 600 !important;&#13;
+&#13;
+  line-height: 1;&#13;
+&#13;
+  text-decoration: none !important;&#13;
+&#13;
+  white-space: nowrap;&#13;
+&#13;
+  transition:&#13;
+    color 0.25s ease,&#13;
+    background 0.25s ease,&#13;
+    transform 0.25s ease;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   11. NAVIGATION HOVER&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-nav-links a:hover {&#13;
+  color: #FFFFFF !important;&#13;
+&#13;
+  background: rgba(96, 165, 250, 0.10);&#13;
+&#13;
+  transform: translateY(-1px);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   12. NAVIGATION UNDERLINE&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-nav-links a::after {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+&#13;
+  left: 50%;&#13;
+  bottom: 4px;&#13;
+&#13;
+  width: 0;&#13;
+  height: 2px;&#13;
+&#13;
+  border-radius: 10px;&#13;
+&#13;
+  background: #60A5FA;&#13;
+&#13;
+  transform: translateX(-50%);&#13;
+&#13;
+  transition:&#13;
+    width 0.25s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.cfa-nav-links a:hover::after {&#13;
+  width: 24px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   13. NAVIGATION ACTIONS&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-nav-actions {&#13;
+  position: relative;&#13;
+  z-index: 2;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  gap: 12px;&#13;
+&#13;
+  flex-shrink: 0;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   14. LOGIN BUTTON&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-login-btn {&#13;
+  position: relative;&#13;
+&#13;
+  display: inline-flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: center;&#13;
+&#13;
+  min-width: 104px;&#13;
+&#13;
+  height: 46px;&#13;
+&#13;
+  padding: 0 23px;&#13;
+&#13;
+  overflow: hidden;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      135deg,&#13;
+      #2563EB 0%,&#13;
+      #3B82F6 100%&#13;
+    );&#13;
+&#13;
+  color: #FFFFFF !important;&#13;
+&#13;
+  border:&#13;
+    1px solid rgba(255, 255, 255, 0.12);&#13;
+&#13;
+  border-radius: 10px;&#13;
+&#13;
+  font-size: 15px !important;&#13;
+&#13;
+  font-weight: 700 !important;&#13;
+&#13;
+  line-height: 1;&#13;
+&#13;
+  text-decoration: none !important;&#13;
+&#13;
+  box-shadow:&#13;
+    0 8px 22px rgba(37, 99, 235, 0.22);&#13;
+&#13;
+  transition:&#13;
+    transform 0.25s ease,&#13;
+    box-shadow 0.25s ease,&#13;
+    background 0.25s ease;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   15. LOGIN SHINE&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-login-btn::before {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+&#13;
+  top: 0;&#13;
+  bottom: 0;&#13;
+&#13;
+  left: -120%;&#13;
+&#13;
+  width: 70%;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      90deg,&#13;
+      transparent,&#13;
+      rgba(255, 255, 255, 0.30),&#13;
+      transparent&#13;
+    );&#13;
+&#13;
+  transform: skewX(-20deg);&#13;
+&#13;
+  transition:&#13;
+    left 0.6s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.cfa-login-btn:hover::before {&#13;
+  left: 140%;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   16. LOGIN HOVER&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-login-btn:hover {&#13;
+  color: #FFFFFF !important;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      135deg,&#13;
+      #1D4ED8 0%,&#13;
+      #2563EB 100%&#13;
+    );&#13;
+&#13;
+  transform: translateY(-2px);&#13;
+&#13;
+  box-shadow:&#13;
+    0 13px 30px rgba(37, 99, 235, 0.34);&#13;
+}&#13;
+&#13;
+&#13;
+.cfa-login-btn:active {&#13;
+  transform:&#13;
+    translateY(0)&#13;
+    scale(0.98);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   17. MOBILE MENU BUTTON&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-menu-toggle {&#13;
+  display: none;&#13;
+&#13;
+  width: 44px;&#13;
+  height: 44px;&#13;
+&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+&#13;
+  padding: 0;&#13;
+&#13;
+  background:&#13;
+    rgba(96, 165, 250, 0.08);&#13;
+&#13;
+  color: #60A5FA;&#13;
+&#13;
+  border:&#13;
+    1px solid rgba(96, 165, 250, 0.25);&#13;
+&#13;
+  border-radius: 10px;&#13;
+&#13;
+  font-size: 20px;&#13;
+&#13;
+  cursor: pointer;&#13;
+&#13;
+  transition:&#13;
+    background 0.25s ease,&#13;
+    color 0.25s ease,&#13;
+    transform 0.25s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.cfa-menu-toggle:hover {&#13;
+  background: #2563EB;&#13;
+&#13;
+  color: #FFFFFF;&#13;
+&#13;
+  transform: translateY(-1px);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   18. TABLET&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 991px) {&#13;
+&#13;
+  .cfa-navbar-inner {&#13;
+    min-height: 70px;&#13;
+&#13;
+    padding: 0 28px !important;&#13;
   }&#13;
-  .cfa-nav-links.open{ display:flex; }&#13;
-  .cfa-menu-toggle{ display:block; }&#13;
+&#13;
+  .cfa-nav-links {&#13;
+    gap: 2px;&#13;
+  }&#13;
+&#13;
+  .cfa-nav-links a {&#13;
+    padding: 0 11px;&#13;
+&#13;
+    font-size: 14px !important;&#13;
+  }&#13;
+&#13;
+  .cfa-brand-name {&#13;
+    font-size: 20px !important;&#13;
+  }&#13;
+&#13;
+  .cfa-logo {&#13;
+    width: 42px;&#13;
+    height: 42px;&#13;
+  }&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   19. MOBILE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 767px) {&#13;
+&#13;
+  .cfa-navbar {&#13;
+    width: 100vw !important;&#13;
+&#13;
+    margin-left:&#13;
+      calc(50% - 50vw) !important;&#13;
+  }&#13;
+&#13;
+  .cfa-navbar-inner {&#13;
+    min-height: 68px;&#13;
+&#13;
+    padding: 0 20px !important;&#13;
+  }&#13;
+&#13;
+  .cfa-nav-links {&#13;
+    display: none;&#13;
+  }&#13;
+&#13;
+  .cfa-nav-links.open {&#13;
+&#13;
+    position: absolute;&#13;
+&#13;
+    z-index: 999;&#13;
+&#13;
+    top: 74px;&#13;
+&#13;
+    left: 18px;&#13;
+    right: 18px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    flex-direction: column;&#13;
+&#13;
+    align-items: stretch;&#13;
+&#13;
+    gap: 4px;&#13;
+&#13;
+    padding: 10px;&#13;
+&#13;
+    background: #1E293B;&#13;
+&#13;
+    border:&#13;
+      1px solid #334155;&#13;
+&#13;
+    border-radius: 14px;&#13;
+&#13;
+    box-shadow:&#13;
+      0 20px 45px rgba(15, 23, 42, 0.30);&#13;
+  }&#13;
+&#13;
+  .cfa-nav-links.open a {&#13;
+&#13;
+    justify-content: flex-start;&#13;
+&#13;
+    min-height: 46px;&#13;
+&#13;
+    padding: 0 16px;&#13;
+&#13;
+    border-radius: 9px;&#13;
+&#13;
+    font-size: 15px !important;&#13;
+  }&#13;
+&#13;
+  .cfa-menu-toggle {&#13;
+    display: inline-flex;&#13;
+  }&#13;
+&#13;
+  .cfa-login-btn {&#13;
+    min-width: 88px;&#13;
+&#13;
+    height: 42px;&#13;
+&#13;
+    padding: 0 17px;&#13;
+&#13;
+    font-size: 14px !important;&#13;
+  }&#13;
+&#13;
+  .cfa-brand-name {&#13;
+    font-size: 19px !important;&#13;
+  }&#13;
+&#13;
+  .cfa-logo {&#13;
+    width: 40px;&#13;
+    height: 40px;&#13;
+&#13;
+    font-size: 17px;&#13;
+  }&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   20. SMALL MOBILE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 480px) {&#13;
+&#13;
+  .cfa-navbar-inner {&#13;
+    padding: 0 15px !important;&#13;
+&#13;
+    gap: 10px;&#13;
+  }&#13;
+&#13;
+  .cfa-brand {&#13;
+    gap: 8px;&#13;
+  }&#13;
+&#13;
+  .cfa-brand-name {&#13;
+    font-size: 18px !important;&#13;
+  }&#13;
+&#13;
+  .cfa-logo {&#13;
+    width: 38px;&#13;
+    height: 38px;&#13;
+&#13;
+    border-radius: 10px;&#13;
+  }&#13;
+&#13;
+  .cfa-login-btn {&#13;
+    min-width: 78px;&#13;
+&#13;
+    height: 40px;&#13;
+&#13;
+    padding: 0 13px;&#13;
+&#13;
+    font-size: 13px !important;&#13;
+  }&#13;
+&#13;
+  .cfa-menu-toggle {&#13;
+    width: 40px;&#13;
+    height: 40px;&#13;
+  }&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   21. ACCESSIBILITY&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-navbar a:focus-visible,&#13;
+.cfa-navbar button:focus-visible {&#13;
+&#13;
+  outline:&#13;
+    2px solid #60A5FA;&#13;
+&#13;
+  outline-offset:&#13;
+    3px;&#13;
+&#13;
+  border-radius:&#13;
+    8px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   22. REDUCED MOTION&#13;
+   ========================================================= */&#13;
+&#13;
+@media (prefers-reduced-motion: reduce) {&#13;
+&#13;
+  .cfa-navbar *,&#13;
+  .cfa-navbar *::before,&#13;
+  .cfa-navbar *::after {&#13;
+&#13;
+    animation: none !important;&#13;
+&#13;
+    transition: none !important;&#13;
+  }&#13;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -116,33 +751,105 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 03:10:42</sys_created_on>
         <sys_id>b6a3b879806303107f4447e44ab1d577</sys_id>
-        <sys_mod_count>12</sys_mod_count>
+        <sys_mod_count>30</sys_mod_count>
         <sys_name>Food_Services_Navbar</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sp_widget_b6a3b879806303107f4447e44ab1d577</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-10-01 06:54:39</sys_updated_on>
+        <sys_updated_on>2026-10-05 06:59:21</sys_updated_on>
         <template><![CDATA[<div class="cfa-navbar">
+
   <div class="cfa-navbar-inner">
+
+
+    <!-- MealCare Brand -->
+
     <div class="cfa-brand">
-      <span class="cfa-logo">]]>🍳<![CDATA[</span>
-      <span>Campus<b>Food AI</b></span>
+
+      <span class="cfa-logo">
+         ]]>🍽
+<![CDATA[      </span>
+
+      <span class="cfa-brand-name">
+        MealCare
+      </span>
+
     </div>
 
-    <nav class="cfa-nav-links" ng-class="{'open': c.menuOpen}">
-      <a href="#home" ng-click="c.closeMenu()">Home</a>
-      <a href="#services" ng-click="c.closeMenu()">Services</a>
-      <a href="#about" ng-click="c.closeMenu()">About</a>
-      <a href="#contact" ng-click="c.closeMenu()">Contact</a>
+
+    <!-- Navigation -->
+
+    <nav
+      class="cfa-nav-links"
+      ng-class="{'open': c.menuOpen}">
+
+      <a
+        href="#home"
+        ng-click="c.closeMenu()">
+
+        Home
+
+      </a>
+
+
+      <a
+        href="#services"
+        ng-click="c.closeMenu()">
+
+        Food Services
+
+      </a>
+
+
+      <a
+        href="#about"
+        ng-click="c.closeMenu()">
+
+        About
+
+      </a>
+
+
+      <a
+        href="#contact"
+        ng-click="c.closeMenu()">
+
+        Contact
+
+      </a>
+
     </nav>
 
+
+    <!-- Actions -->
+
     <div class="cfa-nav-actions">
-      <a class="cfa-login-btn" href="{{c.data.loginUrl}}">Login</a>
-      <button class="cfa-menu-toggle" ng-click="c.menuOpen = !c.menuOpen" aria-label="Toggle menu">☰</button>
+
+      <a
+        class="cfa-login-btn"
+        href="{{c.data.loginUrl}}">
+
+        Login
+
+      </a>
+
+
+      <button
+        class="cfa-menu-toggle"
+        ng-click="c.menuOpen = !c.menuOpen"
+        aria-label="Toggle menu">
+
+        ☰
+
+      </button>
+
     </div>
+
+
   </div>
+
 </div>]]></template>
     </sp_widget>
 </record_update>

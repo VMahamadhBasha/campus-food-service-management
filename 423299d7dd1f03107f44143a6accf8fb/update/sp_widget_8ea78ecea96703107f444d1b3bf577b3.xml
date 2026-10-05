@@ -7,1859 +7,1408 @@
 
 
     /* ==========================================
-       DEFAULT SECTION
+       PAGE
        ========================================== */
 
-    c.activeSection = 'dashboard';
-
+    c.currentPage =
+        'overview';
 
 
     /* ==========================================
-       RECORD FORM
+       FORM
        ========================================== */
 
-    c.showRecordForm = false;
+    c.showRecordForm =
+        false;
 
-    c.selectedRecord = null;
+    c.selectedRecord =
+        null;
 
-    c.savingRecord = false;
+    c.savingRecord =
+        false;
 
-    c.formError = '';
+    c.formError =
+        '';
 
-    c.formSuccess = '';
+    c.formSuccess =
+        '';
 
-    c.showNotesField = false;
+    c.notesVisible =
+        false;
 
+    c.notesRequired =
+        false;
 
 
     /* ==========================================
-       FILTERS
+       FILTER OPTIONS
        ========================================== */
+
+    c.useCaseOptions =
+        c.data.filterOptions &&
+        c.data.filterOptions.useCases
+            ? c.data.filterOptions.useCases
+            : [];
+
+    c.priorityOptions =
+        c.data.filterOptions &&
+        c.data.filterOptions.priorities
+            ? c.data.filterOptions.priorities
+            : [];
+
 
     c.assignmentFilters = {
 
-        use_case: '',
+        use_case:
+            '',
 
-        current_priority: ''
-
+        current_priority:
+            ''
     };
 
 
-    c.useCaseOptions = [];
-
-    c.priorityOptions = [];
-
-
-
-    /* ==========================================
-       ASSIGNMENT ARRAYS
-       ========================================== */
-
-    c.allAssignments = [];
-
-    c.filteredAssignments = [];
-
-    c.recentAssignments = [];
-
-    c.historyAssignments = [];
-
-
-
-    /* ==========================================
-       LOAD DATA
-       ========================================== */
-
-    c.loadData = function() {
-
-        /*
-         * Active records
-         */
-
-        c.allAssignments = [];
-
-        if (c.data.allActiveAssignments) {
-
-            angular.forEach(
-                c.data.activeOrder,
-                function(sysId) {
-
-                    var record =
-                        c.data.allActiveAssignments[sysId];
-
-                    if (record) {
-
-                        c.allAssignments.push(record);
-
-                    }
-
-                }
-            );
-
-        }
-
-
-        /*
-         * Closed records
-         */
-
-        c.historyAssignments = [];
-
-        if (c.data.allClosedAssignments) {
-
-            angular.forEach(
-                c.data.closedOrder,
-                function(sysId) {
-
-                    var record =
-                        c.data.allClosedAssignments[sysId];
-
-                    if (record) {
-
-                        c.historyAssignments.push(record);
-
-                    }
-
-                }
-            );
-
-        }
-
-
-        /*
-         * Filter options
-         */
-
-        c.useCaseOptions = [];
-
-        angular.forEach(
-            c.data.filterOptions.useCases,
-            function(value) {
-
-                c.useCaseOptions.push(value);
-
-            }
+    c.filteredAssignmentIds =
+        angular.copy(
+            c.data.myAssignmentIds ||
+            []
         );
 
 
-        c.priorityOptions = [];
+    /* ==========================================
+       CHANGE PAGE
+       ========================================== */
 
-        angular.forEach(
-            c.data.filterOptions.priorities,
-            function(value) {
+    c.changePage =
+        function(page) {
 
-                c.priorityOptions.push(value);
+            c.currentPage =
+                page;
 
-            }
-        );
-
-
-        /*
-         * Apply filters
-         */
-
-        c.applyAssignmentFilters();
-
-
-        /*
-         * Recent top 5
-         *
-         * activeOrder is ascending.
-         * Therefore take the last five records.
-         */
-
-        c.recentAssignments = [];
-
-        var totalActive =
-            c.allAssignments.length;
-
-        var start =
-            Math.max(0, totalActive - 5);
-
-
-        for (
-            var i = start;
-            i < totalActive;
-            i++
-        ) {
-
-            c.recentAssignments.push(
-                c.allAssignments[i]
-            );
-
-        }
-
-    };
-
+            c.closeRecordForm();
+        };
 
 
     /* ==========================================
-       NAVIGATION
+       APPLY FILTERS
        ========================================== */
 
-    c.selectSection = function(section) {
+    c.applyAssignmentFilters =
+        function() {
 
-        c.activeSection = section;
+            var filtered = [];
 
-    };
-
-
-
-    /* ==========================================
-       FILTER ASSIGNMENTS
-       ========================================== */
-
-    c.applyAssignmentFilters = function() {
-
-        c.filteredAssignments = [];
+            var ids =
+                c.data.myAssignmentIds ||
+                [];
 
 
-        for (
-            var i = 0;
-            i < c.allAssignments.length;
-            i++
-        ) {
-
-            var record =
-                c.allAssignments[i];
+            var selectedUseCase =
+                String(
+                    c.assignmentFilters.use_case ||
+                    ''
+                ).trim();
 
 
-            var useCaseMatch = true;
+            var selectedPriority =
+                String(
+                    c.assignmentFilters.current_priority ||
+                    ''
+                ).trim();
 
-            var priorityMatch = true;
 
-
-            /* ------------------------------------------
-               USE CASE
-               ------------------------------------------ */
-
-            if (
-                c.assignmentFilters.use_case &&
-                record.use_case !==
-                c.assignmentFilters.use_case
+            for (
+                var i = 0;
+                i < ids.length;
+                i++
             ) {
 
-                useCaseMatch = false;
+                var sysId =
+                    ids[i];
 
+
+                var record =
+                    c.data.records[
+                        sysId
+                    ];
+
+
+                if (!record) {
+
+                    continue;
+                }
+
+
+                /* --------------------------------
+                   USE CASE
+                   -------------------------------- */
+
+                var useCaseMatch =
+                    true;
+
+
+                if (
+                    selectedUseCase !== ''
+                ) {
+
+                    var recordUseCase =
+                        String(
+                            record.use_case ||
+                            ''
+                        ).trim();
+
+
+                    var recordUseCaseDisplay =
+                        String(
+                            record.use_case_display ||
+                            ''
+                        ).trim();
+
+
+                    useCaseMatch =
+                        recordUseCase ===
+                            selectedUseCase ||
+                        recordUseCaseDisplay ===
+                            selectedUseCase;
+                }
+
+
+                /* --------------------------------
+                   PRIORITY
+                   -------------------------------- */
+
+                var priorityMatch =
+                    true;
+
+
+                if (
+                    selectedPriority !== ''
+                ) {
+
+                    var recordPriority =
+                        String(
+                            record.current_priority ||
+                            ''
+                        ).trim();
+
+
+                    var recordPriorityDisplay =
+                        String(
+                            record.current_priority_display ||
+                            ''
+                        ).trim();
+
+
+                    priorityMatch =
+                        recordPriority ===
+                            selectedPriority ||
+                        recordPriorityDisplay ===
+                            selectedPriority;
+                }
+
+
+                if (
+                    useCaseMatch &&
+                    priorityMatch
+                ) {
+
+                    filtered.push(
+                        sysId
+                    );
+                }
             }
 
 
-            /* ------------------------------------------
-               PRIORITY
-               ------------------------------------------ */
-
-            if (
-                c.assignmentFilters.current_priority &&
-                record.current_priority !==
-                c.assignmentFilters.current_priority
-            ) {
-
-                priorityMatch = false;
-
-            }
-
-
-            /* ------------------------------------------
-               ADD MATCHING RECORD
-               ------------------------------------------ */
-
-            if (
-                useCaseMatch &&
-                priorityMatch
-            ) {
-
-                c.filteredAssignments.push(record);
-
-            }
-
-        }
-
-    };
-
+            c.filteredAssignmentIds =
+                filtered;
+        };
 
 
     /* ==========================================
        CLEAR FILTERS
        ========================================== */
 
-    c.clearAssignmentFilters = function() {
+    c.clearAssignmentFilters =
+        function() {
 
-        c.assignmentFilters.use_case = '';
+            c.assignmentFilters.use_case =
+                '';
 
-        c.assignmentFilters.current_priority = '';
+            c.assignmentFilters.current_priority =
+                '';
 
-        c.applyAssignmentFilters();
 
-    };
-
+            c.filteredAssignmentIds =
+                angular.copy(
+                    c.data.myAssignmentIds ||
+                    []
+                );
+        };
 
 
     /* ==========================================
        OPEN RECORD
        ========================================== */
 
-    c.openRecord = function(sysId) {
-
-        c.formError = '';
-
-        c.formSuccess = '';
-
-        c.savingRecord = false;
-
-
-        /*
-         * First try active dictionary.
-         */
-
-        var record =
-            c.data.allActiveAssignments[sysId];
-
-
-        /*
-         * If not found, try closed dictionary.
-         */
-
-        if (!record) {
-
-            record =
-                c.data.allClosedAssignments[sysId];
-
-        }
-
-
-        if (!record) {
+    c.openRecord =
+        function(sysId) {
 
             c.formError =
-                'Unable to find the selected record.';
+                '';
 
-            return;
+            c.formSuccess =
+                '';
 
-        }
+            c.selectedRecord =
+                null;
 
 
-        /*
-         * Create a copy.
-         *
-         * This prevents accidental changes
-         * to the original dictionary record
-         * before Save.
-         */
+            var record =
+                c.data.records[
+                    sysId
+                ];
 
-        c.selectedRecord =
-            angular.copy(record);
 
+            if (!record) {
 
-        /*
-         * Normalize approval.
-         */
+                c.formError =
+                    'The selected task could not be found.';
 
-        if (!c.selectedRecord.approval) {
+                return;
+            }
 
-            c.selectedRecord.approval =
-                'not requested';
 
-        }
-
-
-        c.selectedRecord.approval =
-            String(
-                c.selectedRecord.approval
-            ).toLowerCase();
-
-
-        /*
-         * Show/hide notes.
-         */
-
-        c.updateNotesVisibility();
-
-
-        /*
-         * Open form.
-         */
-
-        c.showRecordForm = true;
-
-    };
-
-
-
-    /* ==========================================
-       APPROVAL CHANGED
-       ========================================== */
-
-    c.approvalChanged = function() {
-
-        c.formError = '';
-
-        c.formSuccess = '';
-
-        c.updateNotesVisibility();
-
-    };
-
-
-
-    /* ==========================================
-       NOTES VISIBILITY
-       ========================================== */
-
-    c.updateNotesVisibility = function() {
-
-        if (
-            c.selectedRecord &&
-            c.selectedRecord.approval === 'rejected'
-        ) {
-
-            c.showNotesField = true;
-
-        } else {
-
-            c.showNotesField = false;
-
-        }
-
-    };
-
-
-
-    /* ==========================================
-       SAVE RECORD
-       ========================================== */
-
-    c.saveRecord = function() {
-
-        c.formError = '';
-
-        c.formSuccess = '';
-
-
-        if (!c.selectedRecord) {
-
-            c.formError =
-                'No record selected.';
-
-            return;
-
-        }
-
-
-        var approval =
-            String(
-                c.selectedRecord.approval || ''
-            ).toLowerCase();
-
-
-        var notes =
-            String(
-                c.selectedRecord.notes || ''
-            ).trim();
-
-
-
-        /* ==========================================
-           APPROVAL VALIDATION
-           ========================================== */
-
-        if (!approval) {
-
-            c.formError =
-                'Please select an approval value.';
-
-            return;
-
-        }
-
-
-        if (
-            approval !== 'not requested' &&
-            approval !== 'approved' &&
-            approval !== 'rejected'
-        ) {
-
-            c.formError =
-                'Please select a valid approval value.';
-
-            return;
-
-        }
-
-
-
-        /* ==========================================
-           REJECTION VALIDATION
-           ========================================== */
-
-        if (
-            approval === 'rejected' &&
-            !notes
-        ) {
-
-            c.formError =
-                'Notes are mandatory when the request is rejected.';
-
-            c.showNotesField = true;
-
-            return;
-
-        }
-
-
-
-        /* ==========================================
-           START SAVE
-           ========================================== */
-
-        c.savingRecord = true;
-
-
-        c.server.get({
-
-            action: 'updateApproval',
-
-            sys_id:
-                c.selectedRecord.sys_id,
-
-            approval:
-                approval,
-
-            notes:
-                notes
-
-        }).then(function(response) {
-
-
-            c.savingRecord = false;
+            c.selectedRecord =
+                angular.copy(
+                    record
+                );
 
 
             if (
-                response.data.updateSuccess === true
+                !c.selectedRecord.approval
             ) {
 
-                /*
-                 * Record is now closed.
-                 *
-                 * Reload server data so:
-                 *
-                 * - it disappears from active
-                 * - it appears in History
-                 * - KPI values update
-                 */
-
-                c.showRecordForm = false;
-
-                c.selectedRecord = null;
-
-                c.formSuccess =
-                    'Record updated and closed successfully.';
-
-
-                /*
-                 * Reload complete widget data.
-                 */
-
-                c.server.update().then(function() {
-
-                    c.loadData();
-
-                    /*
-                     * Stay on My Assignments
-                     * if user was there.
-                     */
-
-                    if (
-                        c.activeSection !== 'history'
-                    ) {
-
-                        c.activeSection =
-                            'assignments';
-
-                    }
-
-                });
-
-
-            } else {
-
-                c.formError =
-                    response.data.updateError ||
-                    'Unable to update the record.';
-
+                c.selectedRecord.approval =
+                    'requested';
             }
 
-        }, function() {
 
-            c.savingRecord = false;
+            c.selectedRecord.approval =
+                String(
+                    c.selectedRecord.approval
+                ).toLowerCase();
+
+
+            c.updateNotesVisibility();
+
+
+            c.showRecordForm =
+                true;
+        };
+
+
+    /* ==========================================
+       ACCEPT TASK
+       ========================================== */
+
+    c.acceptRecord =
+        function(sysId) {
 
             c.formError =
-                'An error occurred while updating the record.';
+                '';
 
-        });
+            c.formSuccess =
+                '';
 
-    };
 
+            var record =
+                c.data.records[
+                    sysId
+                ];
+
+
+            if (!record) {
+
+                c.formError =
+                    'The selected task could not be found.';
+
+                return;
+            }
+
+
+            c.selectedRecord =
+                angular.copy(
+                    record
+                );
+
+
+            c.selectedRecord.approval =
+                'approved';
+
+
+            c.updateNotesVisibility();
+
+
+            c.showRecordForm =
+                true;
+        };
 
 
     /* ==========================================
        CLOSE FORM
        ========================================== */
 
-    c.closeRecordForm = function() {
+    c.closeRecordForm =
+        function() {
 
-        if (c.savingRecord) {
+            c.showRecordForm =
+                false;
 
-            return;
+            c.selectedRecord =
+                null;
 
-        }
+            c.formError =
+                '';
 
-        c.showRecordForm = false;
+            c.formSuccess =
+                '';
 
-        c.selectedRecord = null;
+            c.savingRecord =
+                false;
 
-        c.formError = '';
+            c.notesVisible =
+                false;
 
-        c.formSuccess = '';
-
-    };
-
-
-
-    /* ==========================================
-       PRIORITY CSS
-       ========================================== */
-
-    c.getPriorityClass = function(priority) {
-
-        if (!priority) {
-
-            return 'priority-default';
-
-        }
-
-
-        var value =
-            String(priority).toLowerCase();
-
-
-        if (
-            value.indexOf('high') !== -1
-        ) {
-
-            return 'priority-high';
-
-        }
-
-
-        if (
-            value.indexOf('medium') !== -1
-        ) {
-
-            return 'priority-medium';
-
-        }
-
-
-        if (
-            value.indexOf('low') !== -1
-        ) {
-
-            return 'priority-low';
-
-        }
-
-
-        return 'priority-default';
-
-    };
-
+            c.notesRequired =
+                false;
+        };
 
 
     /* ==========================================
-       APPROVAL CSS
+       NOTES VISIBILITY
        ========================================== */
 
-    c.getApprovalClass = function(approval) {
+    c.updateNotesVisibility =
+        function() {
 
-        if (!approval) {
+            if (!c.selectedRecord) {
 
-            return 'approval-not-requested';
+                c.notesVisible =
+                    false;
 
-        }
+                c.notesRequired =
+                    false;
 
-
-        var value =
-            String(approval).toLowerCase();
-
-
-        if (
-            value === 'approved'
-        ) {
-
-            return 'approval-approved';
-
-        }
+                return;
+            }
 
 
-        if (
-            value === 'rejected'
-        ) {
-
-            return 'approval-rejected';
-
-        }
+            var approval =
+                String(
+                    c.selectedRecord.approval ||
+                    ''
+                ).toLowerCase();
 
 
-        return 'approval-not-requested';
+            if (
+                approval === 'requested'
+            ) {
 
-    };
+                c.notesVisible =
+                    false;
 
+                c.notesRequired =
+                    false;
+
+            } else {
+
+                /*
+                 * Approved and Rejected
+                 * both require Notes.
+                 */
+
+                c.notesVisible =
+                    true;
+
+                c.notesRequired =
+                    true;
+            }
+        };
 
 
     /* ==========================================
-       INITIALIZE
+       SAVE TASK
        ========================================== */
 
-    c.loadData();
+    c.saveRecord =
+        function() {
+
+            c.formError =
+                '';
+
+            c.formSuccess =
+                '';
+
+
+            if (
+                !c.selectedRecord ||
+                !c.selectedRecord.sys_id
+            ) {
+
+                c.formError =
+                    'No task selected.';
+
+                return;
+            }
+
+
+            var approval =
+                String(
+                    c.selectedRecord.approval ||
+                    ''
+                ).toLowerCase();
+
+
+            var notes =
+                String(
+                    c.selectedRecord.notes ||
+                    ''
+                );
+
+
+            if (
+                approval !== 'requested' &&
+                approval !== 'approved' &&
+                approval !== 'rejected'
+            ) {
+
+                c.formError =
+                    'Please select a valid approval status.';
+
+                return;
+            }
+
+
+            if (
+                (
+                    approval === 'approved' ||
+                    approval === 'rejected'
+                ) &&
+                notes.trim() === ''
+            ) {
+
+                c.formError =
+                    'Notes are required when the approval is Approved or Rejected.';
+
+                return;
+            }
+
+
+            c.savingRecord =
+                true;
+
+
+            c.server.get({
+
+                action:
+                    'saveRecord',
+
+                sys_id:
+                    c.selectedRecord.sys_id,
+
+                approval:
+                    approval,
+
+                notes:
+                    notes
+
+            }).then(
+
+                function(response) {
+
+                    if (
+                        response.data &&
+                        response.data.saveError
+                    ) {
+
+                        c.formError =
+                            response.data.saveError;
+
+                        c.savingRecord =
+                            false;
+
+                        return;
+                    }
+
+
+                    if (
+                        response.data
+                    ) {
+
+                        angular.extend(
+                            c.data,
+                            response.data
+                        );
+                    }
+
+
+                    c.useCaseOptions =
+                        c.data.filterOptions &&
+                        c.data.filterOptions.useCases
+                            ? c.data.filterOptions.useCases
+                            : [];
+
+
+                    c.priorityOptions =
+                        c.data.filterOptions &&
+                        c.data.filterOptions.priorities
+                            ? c.data.filterOptions.priorities
+                            : [];
+
+
+                    c.filteredAssignmentIds =
+                        angular.copy(
+                            c.data.myAssignmentIds ||
+                            []
+                        );
+
+
+                    c.applyAssignmentFilters();
+
+
+                    if (
+                        response.data &&
+                        response.data.saveSuccess
+                    ) {
+
+                        c.formSuccess =
+                            'Task updated successfully.';
+
+
+                        setTimeout(
+                            function() {
+
+                                $scope.$apply(
+                                    function() {
+
+                                        c.closeRecordForm();
+
+                                    }
+                                );
+
+                            },
+                            700
+                        );
+                    }
+
+
+                    c.savingRecord =
+                        false;
+                },
+
+
+                function() {
+
+                    c.formError =
+                        'Unable to update the task. Please try again.';
+
+                    c.savingRecord =
+                        false;
+                }
+            );
+        };
+
+
+    /* ==========================================
+       HORIZONTAL TABLE DRAG
+       ========================================== */
+
+    setTimeout(
+        function() {
+
+            var staffTable =
+                document.getElementById(
+                    'staffAssignmentScroll'
+                );
+
+
+            if (!staffTable) {
+
+                return;
+            }
+
+
+            var dragging =
+                false;
+
+            var startX =
+                0;
+
+            var startScroll =
+                0;
+
+
+            staffTable.addEventListener(
+                'mousedown',
+                function(event) {
+
+                    dragging =
+                        true;
+
+                    startX =
+                        event.pageX -
+                        staffTable.offsetLeft;
+
+                    startScroll =
+                        staffTable.scrollLeft;
+                }
+            );
+
+
+            staffTable.addEventListener(
+                'mouseleave',
+                function() {
+
+                    dragging =
+                        false;
+                }
+            );
+
+
+            staffTable.addEventListener(
+                'mouseup',
+                function() {
+
+                    dragging =
+                        false;
+                }
+            );
+
+
+            staffTable.addEventListener(
+                'mousemove',
+                function(event) {
+
+                    if (!dragging) {
+
+                        return;
+                    }
+
+
+                    event.preventDefault();
+
+
+                    var x =
+                        event.pageX -
+                        staffTable.offsetLeft;
+
+
+                    var distance =
+                        (
+                            x -
+                            startX
+                        ) * 1.2;
+
+
+                    staffTable.scrollLeft =
+                        startScroll -
+                        distance;
+                }
+            );
+
+        },
+        500
+    );
 
 };]]></client_script>
         <controller_as>c</controller_as>
-        <css>/* ==========================================
-   MAIN DASHBOARD
-   ========================================== */
-
-.staff-dashboard {
-    min-height: 100vh;
-    background: #f5f7fb;
-    font-family: Arial, sans-serif;
-    color: #222;
-}
-
-
-/* ==========================================
-   SIDEBAR
-   ========================================== */
-
-.staff-sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 250px;
-    height: 100vh;
-    background: #172033;
-    color: white;
-    z-index: 1000;
-}
-
-.sidebar-title {
-    height: 70px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 0 22px;
-    font-size: 20px;
-    font-weight: bold;
-    border-bottom: 1px solid #29344a;
-}
-
-.sidebar-logo {
-    font-size: 26px;
-}
-
-.sidebar-menu {
-    padding: 20px 12px;
-}
-
-.menu-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 14px 16px;
-    margin-bottom: 8px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.2s;
-    color: #d9dfeb;
-}
-
-.menu-item:hover {
-    background: #26334a;
-    color: white;
-}
-
-.menu-item.active {
-    background: #3b82f6;
-    color: white;
-}
-
-.menu-icon {
-    width: 25px;
-    text-align: center;
-    font-size: 18px;
-}
-
-.menu-text {
-    font-size: 15px;
-}
-
-
-/* ==========================================
-   MAIN
-   ========================================== */
-
-.staff-main {
-    margin-left: 250px;
-    padding: 30px;
-    min-height: 100vh;
-}
-
-
-/* ==========================================
-   PAGE HEADER
-   ========================================== */
-
-.page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.page-header h1 {
-    margin: 0 0 6px 0;
-    font-size: 28px;
-    color: #172033;
-}
-
-.page-header p {
-    margin: 0;
-    color: #697386;
-    font-size: 14px;
-}
-
-
-/* ==========================================
-   KPI
-   ========================================== */
-
-.kpi-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 25px;
-}
-
-.kpi-card {
-    background: white;
-    border-radius: 12px;
-    padding: 22px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-    border-left: 5px solid #3b82f6;
-}
-
-.resolved-card {
-    border-left-color: #22c55e;
-}
-
-.pending-card {
-    border-left-color: #f59e0b;
-}
-
-.kpi-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #eef4ff;
-    font-size: 25px;
-}
-
-.resolved-card .kpi-icon {
-    background: #ecfdf3;
-}
-
-.pending-card .kpi-icon {
-    background: #fff8e7;
-}
-
-.kpi-title {
-    font-size: 14px;
-    color: #697386;
-    margin-bottom: 6px;
-}
-
-.kpi-value {
-    font-size: 28px;
-    font-weight: bold;
-    color: #172033;
-}
-
-
-/* ==========================================
-   CONTENT CARD
-   ========================================== */
-
-.content-card {
-    background: white;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-    margin-bottom: 25px;
-}
-
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.section-header h2 {
-    margin: 0 0 5px 0;
-    font-size: 20px;
-    color: #172033;
-}
-
-.section-header p {
-    margin: 0;
-    color: #697386;
-    font-size: 13px;
-}
-
-
-/* ==========================================
-   FILTER
-   ========================================== */
-
-.filter-card {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-}
-
-.filter-title {
-    font-size: 17px;
-    font-weight: bold;
-    color: #172033;
-    margin-bottom: 16px;
-}
-
-.filter-container {
-    display: flex;
-    align-items: end;
-    gap: 18px;
-    flex-wrap: wrap;
-}
-
-.filter-field {
-    min-width: 240px;
-}
-
-.filter-field label {
-    display: block;
-    font-size: 13px;
-    font-weight: bold;
-    color: #495057;
-    margin-bottom: 7px;
-}
-
-.filter-field select {
-    width: 100%;
-    height: 40px;
-    border: 1px solid #d5dbe5;
-    border-radius: 6px;
-    padding: 0 10px;
-    background: white;
-}
-
-.filter-action {
-    padding-bottom: 0;
-}
-
-.clear-filter-button {
-    height: 40px;
-    border: 1px solid #d5dbe5;
-    background: white;
-    border-radius: 6px;
-    padding: 0 18px;
-    cursor: pointer;
-}
-
-.clear-filter-button:hover {
-    background: #f1f4f8;
-}
-
-
-/* ==========================================
-   TABLE
-   ========================================== */
-
-.table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-}
-
-.assignment-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 1000px;
-}
-
-.assignment-table th {
-    background: #f7f8fa;
-    color: #596579;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: left;
-    padding: 13px 12px;
-    border-bottom: 1px solid #e3e7ee;
-    white-space: nowrap;
-}
-
-.assignment-table td {
-    padding: 14px 12px;
-    border-bottom: 1px solid #edf0f4;
-    font-size: 13px;
-    color: #343b48;
-    vertical-align: middle;
-}
-
-.assignment-table tbody tr:hover {
-    background: #fafbfc;
-}
-
-.description-cell {
-    max-width: 220px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-
-/* ==========================================
-   OPEN BUTTON
-   ========================================== */
-
-.open-button {
-    background: #3b82f6;
-    border: none;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.open-button:hover {
-    background: #2563eb;
-}
-
-
-/* ==========================================
-   PRIORITY
-   ========================================== */
-
-.priority-badge,
-.approval-badge {
-    display: inline-block;
-    padding: 5px 9px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: bold;
-    text-transform: capitalize;
-}
-
-.priority-high {
-    background: #fee2e2;
-    color: #b91c1c;
-}
-
-.priority-medium {
-    background: #fef3c7;
-    color: #92400e;
-}
-
-.priority-low {
-    background: #dcfce7;
-    color: #166534;
-}
-
-.priority-default {
-    background: #e5e7eb;
-    color: #374151;
-}
-
-.approval-approved {
-    background: #dcfce7;
-    color: #166534;
-}
-
-.approval-rejected {
-    background: #fee2e2;
-    color: #b91c1c;
-}
-
-.approval-not-requested {
-    background: #e5e7eb;
-    color: #374151;
-}
-
-
-/* ==========================================
-   EMPTY STATE
-   ========================================== */
-
-.empty-state {
-    text-align: center;
-    padding: 45px 20px;
-    color: #7b8494;
-}
-
-.empty-icon {
-    font-size: 35px;
-    margin-bottom: 10px;
-}
-
-.empty-state p {
-    margin: 0;
-}
-
-
-/* ==========================================
-   RECORD FORM OVERLAY
-   ========================================== */
-
-.record-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(15, 23, 42, 0.65);
-    z-index: 2000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 25px;
-}
-
-.record-form-container {
-    width: 900px;
-    max-width: 100%;
-    max-height: 92vh;
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-}
-
-.record-form-header {
-    padding: 20px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.record-form-header h2 {
-    margin: 0 0 4px 0;
-    color: #172033;
-    font-size: 21px;
-}
-
-.record-form-header p {
-    margin: 0;
-    color: #697386;
-    font-size: 13px;
-}
-
-.close-form-button {
-    width: 35px;
-    height: 35px;
-    border: none;
-    border-radius: 6px;
-    background: #f1f3f6;
-    color: #555;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-.close-form-button:hover {
-    background: #e5e7eb;
-}
-
-
-/* ==========================================
-   FORM BODY
-   ========================================== */
-
-.record-form-body {
-    padding: 24px;
-    overflow-y: auto;
-}
-
-.form-info {
-    background: #eef4ff;
-    color: #315b9b;
-    border-radius: 7px;
-    padding: 11px 14px;
-    margin-bottom: 20px;
-    font-size: 13px;
-}
-
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-}
-
-.form-field {
-    display: flex;
-    flex-direction: column;
-}
-
-.form-field.full-width {
-    grid-column: 1 / -1;
-}
-
-.form-field label {
-    font-size: 13px;
-    font-weight: bold;
-    color: #495057;
-    margin-bottom: 7px;
-}
-
-.form-field input,
-.form-field textarea,
-.form-field select {
-    width: 100%;
-    border: 1px solid #d5dbe5;
-    border-radius: 6px;
-    padding: 10px 12px;
-    font-size: 13px;
-    box-sizing: border-box;
-}
-
-.form-field input {
-    height: 40px;
-}
-
-.form-field textarea {
-    min-height: 85px;
-    resize: vertical;
-}
-
-.form-field input[readonly],
-.form-field textarea[readonly] {
-    background: #f5f6f8;
-    color: #596579;
-    cursor: not-allowed;
-}
-
-.editable-field select {
-    background: white;
-}
-
-.required-mark {
-    color: #dc2626;
-}
-
-.field-help {
-    margin-top: 5px;
-    color: #b91c1c;
-    font-size: 12px;
-}
-
-
-/* ==========================================
-   FORM MESSAGES
-   ========================================== */
-
-.form-error {
-    margin-top: 18px;
-    padding: 11px 14px;
-    border-radius: 6px;
-    background: #fee2e2;
-    color: #991b1b;
-    font-size: 13px;
-}
-
-.form-success {
-    margin-top: 18px;
-    padding: 11px 14px;
-    border-radius: 6px;
-    background: #dcfce7;
-    color: #166534;
-    font-size: 13px;
-}
-
-
-/* ==========================================
-   FORM FOOTER
-   ========================================== */
-
-.record-form-footer {
-    padding: 18px 24px;
-    border-top: 1px solid #e5e7eb;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.cancel-button,
-.save-button {
-    height: 40px;
-    padding: 0 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.cancel-button {
-    border: 1px solid #d5dbe5;
-    background: white;
-    color: #495057;
-}
-
-.save-button {
-    border: none;
-    background: #2563eb;
-    color: white;
-}
-
-.save-button:hover {
-    background: #1d4ed8;
-}
-
-.cancel-button:disabled,
-.save-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-
-/* ==========================================
-   RESPONSIVE
-   ========================================== */
-
-@media (max-width: 900px) {
-
-    .staff-sidebar {
-        width: 210px;
-    }
-
-    .staff-main {
-        margin-left: 210px;
-        padding: 20px;
-    }
-
-    .kpi-container {
-        grid-template-columns: 1fr;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .form-field.full-width {
-        grid-column: auto;
-    }
-
-}
-
-
-@media (max-width: 650px) {
-
-    .staff-sidebar {
-        position: relative;
-        width: 100%;
-        height: auto;
-    }
-
-    .staff-main {
-        margin-left: 0;
-    }
-
-    .sidebar-menu {
-        display: flex;
-        overflow-x: auto;
-    }
-
-    .menu-item {
-        white-space: nowrap;
-    }
-
-    .record-overlay {
-        padding: 10px;
-    }
-
-}
-/* =========================================================
-   MESS STAFF DASHBOARD
-   STUDENT DASHBOARD STYLE / STRUCTURE
-   ========================================================= */
-
-/* MAIN PAGE */
-.staff-dashboard {
-    display: flex;
-    min-height: 100vh;
-    background: #f1f5f9;
-    font-family: 'Segoe UI', system-ui, Arial, sans-serif;
-    color: #0f172a;
-}
-
-
-/* =========================================================
-   SIDEBAR
-   ========================================================= */
-
-.staff-sidebar {
-    position: relative;
-    top: auto;
-    left: auto;
-
-    width: 240px;
-    min-height: 100vh;
-    height: auto;
-
-    background: #0f172a;
-    color: white;
-
-    padding: 25px 15px;
-    box-sizing: border-box;
-
-    flex-shrink: 0;
-    z-index: 1;
-}
-
-
-/* SIDEBAR TITLE */
-
-.sidebar-title {
-    height: auto;
-
-    display: flex;
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 10px 15px 25px 15px;
-
-    font-size: 20px;
-    font-weight: bold;
-
-    border-bottom: none;
-}
-
-
-/* SIDEBAR MENU */
-
-.sidebar-menu {
-    padding: 0;
-}
-
-
-/* MENU ITEMS */
-
-.menu-item {
-    width: 100%;
-
-    border: none;
-
-    background: transparent;
-    color: #cbd5e1;
-
-    padding: 14px 15px;
-    margin-bottom: 8px;
-
-    border-radius: 8px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 12px;
-
-    font-size: 15px;
-
-    text-align: left;
-
-    cursor: pointer;
-
-    box-sizing: border-box;
-}
-
-
-/* HOVER */
-
-.menu-item:hover {
-    background: #1e293b;
-    color: #ffffff;
-}
-
-
-/* ACTIVE */
-
-.menu-item.active {
-    background: #0d9488;
-    color: #ffffff;
-}
-
-
-/* ICON */
-
-.menu-icon {
-    width: 25px;
-    text-align: center;
-    font-size: 18px;
-}
-
-
-/* TEXT */
-
-.menu-text {
-    font-size: 15px;
-}
-
-
-/* =========================================================
-   MAIN CONTENT
-   ========================================================= */
-
-.staff-main {
-    flex: 1;
-
-    margin-left: 0;
-
-    padding: 30px;
-
-    min-height: 100vh;
-
-    box-sizing: border-box;
-
-    color: #0f172a;
-}
-
-
-/* =========================================================
-   PAGE HEADER
-   ========================================================= */
-
-.page-header {
-    display: block;
-
-    margin-bottom: 25px;
-}
-
-
-.page-header h1 {
-    margin: 0 0 8px 0;
-
-    font-size: 28px;
-
-    color: #172033;
-}
-
-
-.page-header p {
-    margin: 0;
-
-    color: #64748b;
-
-    font-size: 14px;
-}
-
-
-/* =========================================================
-   KPI CARDS
-   ========================================================= */
-
-.kpi-container {
-    display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 20px;
-
-    margin-bottom: 30px;
-}
-
-
-.kpi-card {
-    background: #ffffff;
-
-    border-radius: 12px;
-
-    padding: 22px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 18px;
-
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-
-    border-left: none;
-}
-
-
-/* KPI ICON */
-
-.kpi-icon {
-    width: 48px;
-    height: 48px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #f0fdfa;
-
-    border-radius: 10px;
-
-    font-size: 24px;
-
-    flex-shrink: 0;
-}
-
-
-/* KEEP DIFFERENT CONTENT COLORS IF NEEDED */
-
-.resolved-card .kpi-icon {
-    background: #f0fdfa;
-}
-
-.pending-card .kpi-icon {
-    background: #f0fdfa;
-}
-
-
-/* KPI TITLE */
-
-.kpi-title {
-    margin: 0 0 5px 0;
-
-    font-size: 14px;
-
-    color: #64748b;
-}
-
-
-/* KPI VALUE */
-
-.kpi-value {
-    margin: 0;
-
-    font-size: 25px;
-
-    font-weight: normal;
-
-    color: #172033;
-}
-
-
-/* =========================================================
-   CONTENT CARD
-   ========================================================= */
-
-.content-card {
-    background: #ffffff;
-
-    border-radius: 12px;
-
-    padding: 25px;
-
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-
-    margin-bottom: 30px;
-}
-
-
-/* =========================================================
-   SECTION HEADER
-   ========================================================= */
-
-.section-header {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    margin-bottom: 20px;
-}
-
-
-.section-header h2 {
-    margin: 0;
-
-    font-size: 20px;
-
-    color: #172033;
-}
-
-
-.section-header p {
-    margin: 0;
-
-    color: #64748b;
-
-    font-size: 14px;
-}
-
-
-/* =========================================================
-   FILTER
-   ========================================================= */
-
-.filter-card {
-    background: #ffffff;
-
-    padding: 20px;
-
-    border-radius: 12px;
-
-    margin-bottom: 20px;
-
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-}
-
-
-/* =========================================================
-   TABLE
-   ========================================================= */
-
-.table-wrapper {
-    width: 100%;
-
-    overflow-x: auto;
-}
-
-
-.assignment-table {
-    width: 100%;
-
-    border-collapse: collapse;
-
-    min-width: 1000px;
-}
-
-
-.assignment-table th {
-    background: #f8fafc;
-
-    color: #475569;
-
-    font-size: 13px;
-
-    font-weight: 600;
-
-    text-align: left;
-
-    padding: 14px;
-
-    border-bottom: 1px solid #e2e8f0;
-
-    white-space: nowrap;
-}
-
-
-.assignment-table td {
-    padding: 14px;
-
-    border-bottom: 1px solid #e2e8f0;
-
-    color: #334155;
-
-    font-size: 14px;
-
-    vertical-align: middle;
-}
-
-
-.assignment-table tbody tr:hover {
-    background: #f8fafc;
-}
-
-
-/* =========================================================
-   OPEN BUTTON
-   ========================================================= */
-
-.open-button {
-    border: none;
-
-    background: #0d9488;
-
-    color: #ffffff;
-
-    padding: 8px 15px;
-
-    border-radius: 6px;
-
-    cursor: pointer;
-
-    font-size: 13px;
-
-    font-weight: normal;
-}
-
-
-.open-button:hover {
-    background: #0f766e;
-}
-
-
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
-
-@media (max-width: 900px) {
-
-    .kpi-container {
-        grid-template-columns: 1fr;
-    }
-
-    .staff-sidebar {
-        width: 210px;
-    }
-
-    .staff-main {
-        padding: 20px;
-    }
-}
-
-
-@media (max-width: 700px) {
-
-    .staff-dashboard {
-        flex-direction: column;
-    }
-
-    .staff-sidebar {
-        width: 100%;
-        min-height: auto;
-    }
-
-    .staff-main {
-        padding: 20px;
-    }
-
-    .sidebar-menu {
-        display: flex;
-        overflow-x: auto;
-    }
-
-    .menu-item {
-        white-space: nowrap;
-    }
+        <css>/* ==========================================&#13;
+   STAFF DASHBOARD&#13;
+   ========================================== */&#13;
+&#13;
+.staff-dashboard {&#13;
+    display: flex;&#13;
+    min-height: 100vh;&#13;
+    background: #f5f7f8;&#13;
+    color: #243238;&#13;
+    font-family: Arial, Helvetica, sans-serif;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   SIDEBAR&#13;
+   ========================================== */&#13;
+&#13;
+.staff-sidebar {&#13;
+    width: 240px;&#13;
+    min-width: 240px;&#13;
+    background: #1E293B;&#13;
+    border-right: 1px solid #334155;&#13;
+    padding: 22px 16px;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.staff-brand {&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 12px;&#13;
+    padding: 6px 8px 26px;&#13;
+}&#13;
+&#13;
+.staff-brand-icon {&#13;
+    width: 38px;&#13;
+    height: 38px;&#13;
+    border-radius: 50%;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    background: #2563EB;&#13;
+    color: #FFFFFF;&#13;
+    font-size: 18px;&#13;
+    font-weight: 700;&#13;
+    border: 2px solid #60A5FA;&#13;
+    box-shadow: 0 5px 12px rgba(37, 99, 235, 0.30);&#13;
+}&#13;
+&#13;
+.staff-brand-title {&#13;
+    font-size: 16px;&#13;
+    font-weight: 700;&#13;
+    color: #FFFFFF;&#13;
+}&#13;
+&#13;
+.staff-brand-subtitle {&#13;
+    margin-top: 3px;&#13;
+    font-size: 12px;&#13;
+    color: #94A3B8;&#13;
+}&#13;
+&#13;
+.staff-navigation {&#13;
+    display: flex;&#13;
+    flex-direction: column;&#13;
+    gap: 6px;&#13;
+}&#13;
+&#13;
+.staff-nav-item {&#13;
+    width: 100%;&#13;
+    min-height: 44px;&#13;
+    padding: 0 13px;&#13;
+    border: 0;&#13;
+    border-radius: 8px;&#13;
+    background: transparent;&#13;
+    color: #CBD5E1;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 12px;&#13;
+    text-align: left;&#13;
+    cursor: pointer;&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+.staff-nav-item:hover {&#13;
+    background: #334155;&#13;
+    color: #FFFFFF;&#13;
+}&#13;
+&#13;
+.staff-nav-item.active {&#13;
+    background: #2563EB;&#13;
+    color: #FFFFFF;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.staff-nav-icon {&#13;
+    width: 20px;&#13;
+    text-align: center;&#13;
+    font-size: 17px;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   CONTENT&#13;
+   ========================================== */&#13;
+&#13;
+.staff-content {&#13;
+    flex: 1;&#13;
+    min-width: 0;&#13;
+    padding: 30px;&#13;
+    overflow-x: hidden;&#13;
+}&#13;
+&#13;
+.staff-page {&#13;
+    width: 100%;&#13;
+}&#13;
+&#13;
+.staff-page-header {&#13;
+    display: flex;&#13;
+    justify-content: space-between;&#13;
+    align-items: flex-start;&#13;
+    margin-bottom: 24px;&#13;
+}&#13;
+&#13;
+.staff-page-header h1 {&#13;
+    margin: 0;&#13;
+    font-size: 27px;&#13;
+    color: #123c3a;&#13;
+}&#13;
+&#13;
+.staff-page-header p {&#13;
+    margin: 7px 0 0;&#13;
+    color: #6d7977;&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   KPI&#13;
+   ========================================== */&#13;
+&#13;
+.staff-kpi-grid {&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(3, 1fr);&#13;
+    gap: 18px;&#13;
+    margin-bottom: 22px;&#13;
+}&#13;
+&#13;
+.staff-kpi-card {&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #dfe5e7;&#13;
+    border-radius: 12px;&#13;
+    padding: 21px;&#13;
+}&#13;
+&#13;
+.staff-kpi-label {&#13;
+    font-size: 13px;&#13;
+    color: #697674;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.staff-kpi-value {&#13;
+    margin-top: 8px;&#13;
+    font-size: 30px;&#13;
+    font-weight: 700;&#13;
+    color: #123c3a;&#13;
+}&#13;
+&#13;
+.staff-kpi-caption {&#13;
+    margin-top: 5px;&#13;
+    font-size: 12px;&#13;
+    color: #8a9492;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   SECTION CARD&#13;
+   ========================================== */&#13;
+&#13;
+.staff-section-card {&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #dfe5e7;&#13;
+    border-radius: 12px;&#13;
+    overflow: hidden;&#13;
+    margin-bottom: 22px;&#13;
+}&#13;
+&#13;
+.staff-section-header {&#13;
+    padding: 19px 21px;&#13;
+    border-bottom: 1px solid #e5e9ea;&#13;
+    display: flex;&#13;
+    justify-content: space-between;&#13;
+    align-items: center;&#13;
+    gap: 15px;&#13;
+}&#13;
+&#13;
+.staff-section-header h2 {&#13;
+    margin: 0;&#13;
+    font-size: 18px;&#13;
+    color: #123c3a;&#13;
+}&#13;
+&#13;
+.staff-section-header p {&#13;
+    margin: 5px 0 0;&#13;
+    color: #7a8583;&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+.staff-link-button {&#13;
+    border: 0;&#13;
+    background: transparent;&#13;
+    color: #123c3a;&#13;
+    font-weight: 600;&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+.staff-link-button:hover {&#13;
+    text-decoration: underline;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   FILTERS&#13;
+   ========================================== */&#13;
+&#13;
+.staff-filter-card {&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #dfe5e7;&#13;
+    border-radius: 12px;&#13;
+    margin-bottom: 22px;&#13;
+    padding: 20px;&#13;
+}&#13;
+&#13;
+.staff-filter-header {&#13;
+    display: flex;&#13;
+    justify-content: space-between;&#13;
+    align-items: center;&#13;
+    margin-bottom: 18px;&#13;
+}&#13;
+&#13;
+.staff-filter-header h3 {&#13;
+    margin: 0;&#13;
+    color: #123c3a;&#13;
+    font-size: 16px;&#13;
+}&#13;
+&#13;
+.staff-filter-header span {&#13;
+    display: block;&#13;
+    margin-top: 4px;&#13;
+    color: #7a8583;&#13;
+    font-size: 12px;&#13;
+}&#13;
+&#13;
+.staff-filter-grid {&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(2, minmax(200px, 1fr));&#13;
+    gap: 16px;&#13;
+}&#13;
+&#13;
+.staff-filter-field label,&#13;
+.staff-form-field label {&#13;
+    display: block;&#13;
+    margin-bottom: 7px;&#13;
+    font-size: 12px;&#13;
+    font-weight: 600;&#13;
+    color: #4d5a58;&#13;
+}&#13;
+&#13;
+.staff-select {&#13;
+    width: 100%;&#13;
+    height: 40px;&#13;
+    padding: 0 11px;&#13;
+    border: 1px solid #ccd5d3;&#13;
+    border-radius: 7px;&#13;
+    background: #ffffff;&#13;
+    color: #273533;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.staff-select:focus {&#13;
+    outline: none;&#13;
+    border-color: #123c3a;&#13;
+}&#13;
+&#13;
+.staff-clear-button {&#13;
+    border: 1px solid #ccd5d3;&#13;
+    border-radius: 7px;&#13;
+    background: #ffffff;&#13;
+    padding: 8px 13px;&#13;
+    color: #53615f;&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+.staff-clear-button:hover {&#13;
+    background: #f3f6f5;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   TABLE&#13;
+   ========================================== */&#13;
+&#13;
+.staff-table-scroll {&#13;
+    width: 100%;&#13;
+    overflow-x: auto;&#13;
+    overflow-y: hidden;&#13;
+    cursor: grab;&#13;
+}&#13;
+&#13;
+.staff-table-scroll:active {&#13;
+    cursor: grabbing;&#13;
+}&#13;
+&#13;
+.staff-wide-table {&#13;
+    max-height: 650px;&#13;
+    overflow: auto;&#13;
+}&#13;
+&#13;
+.staff-task-table {&#13;
+    width: max-content;&#13;
+    min-width: 100%;&#13;
+    border-collapse: collapse;&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+.staff-task-table th {&#13;
+    position: sticky;&#13;
+    top: 0;&#13;
+    z-index: 2;&#13;
+    background: #f1f5f4;&#13;
+    color: #43514f;&#13;
+    font-size: 11px;&#13;
+    font-weight: 700;&#13;
+    text-align: left;&#13;
+    white-space: nowrap;&#13;
+    padding: 12px 13px;&#13;
+    border-bottom: 1px solid #d9e0de;&#13;
+}&#13;
+&#13;
+.staff-task-table td {&#13;
+    padding: 12px 13px;&#13;
+    border-bottom: 1px solid #e7ebeb;&#13;
+    color: #465350;&#13;
+    vertical-align: top;&#13;
+    max-width: 260px;&#13;
+    line-height: 1.45;&#13;
+}&#13;
+&#13;
+.staff-task-table tbody tr:hover {&#13;
+    background: #fafcfc;&#13;
+}&#13;
+&#13;
+.staff-action-cell {&#13;
+    min-width: 150px;&#13;
+    white-space: nowrap;&#13;
+}&#13;
+&#13;
+.staff-empty-cell {&#13;
+    text-align: center !important;&#13;
+    padding: 35px !important;&#13;
+    color: #8a9593 !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   BUTTONS&#13;
+   ========================================== */&#13;
+&#13;
+.staff-open-button,&#13;
+.staff-accept-button {&#13;
+    border: 0;&#13;
+    border-radius: 6px;&#13;
+    padding: 7px 11px;&#13;
+    font-size: 12px;&#13;
+    font-weight: 600;&#13;
+    cursor: pointer;&#13;
+    margin-right: 5px;&#13;
+}&#13;
+&#13;
+.staff-open-button {&#13;
+    background: #e8f0ed;&#13;
+    color: #123c3a;&#13;
+}&#13;
+&#13;
+.staff-open-button:hover {&#13;
+    background: #dce8e4;&#13;
+}&#13;
+&#13;
+.staff-accept-button {&#13;
+    background: #123c3a;&#13;
+    color: #ffffff;&#13;
+}&#13;
+&#13;
+.staff-accept-button:hover {&#13;
+    opacity: 0.9;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   MODAL&#13;
+   ========================================== */&#13;
+&#13;
+.staff-modal-overlay {&#13;
+    position: fixed;&#13;
+    inset: 0;&#13;
+    z-index: 1000;&#13;
+    background: rgba(20, 31, 30, 0.55);&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    padding: 25px;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.staff-modal {&#13;
+    width: min(1050px, 100%);&#13;
+    max-height: 92vh;&#13;
+    background: #ffffff;&#13;
+    border-radius: 14px;&#13;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.18);&#13;
+    display: flex;&#13;
+    flex-direction: column;&#13;
+    overflow: hidden;&#13;
+}&#13;
+&#13;
+.staff-modal-header {&#13;
+    padding: 20px 24px;&#13;
+    border-bottom: 1px solid #e1e7e5;&#13;
+    display: flex;&#13;
+    justify-content: space-between;&#13;
+    align-items: flex-start;&#13;
+}&#13;
+&#13;
+.staff-modal-header h2 {&#13;
+    margin: 0;&#13;
+    color: #123c3a;&#13;
+    font-size: 20px;&#13;
+}&#13;
+&#13;
+.staff-modal-header p {&#13;
+    margin: 5px 0 0;&#13;
+    color: #7a8583;&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+.staff-modal-close {&#13;
+    width: 34px;&#13;
+    height: 34px;&#13;
+    border: 0;&#13;
+    border-radius: 7px;&#13;
+    background: #f2f5f4;&#13;
+    color: #53615f;&#13;
+    font-size: 22px;&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+.staff-modal-close:hover {&#13;
+    background: #e8eeec;&#13;
+}&#13;
+&#13;
+.staff-modal-body {&#13;
+    padding: 24px;&#13;
+    overflow-y: auto;&#13;
+}&#13;
+&#13;
+.staff-form-section {&#13;
+    margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+.staff-form-section:last-child {&#13;
+    margin-bottom: 0;&#13;
+}&#13;
+&#13;
+.staff-form-section-title {&#13;
+    margin-bottom: 15px;&#13;
+    padding-bottom: 9px;&#13;
+    border-bottom: 1px solid #e5e9e8;&#13;
+    color: #123c3a;&#13;
+    font-size: 14px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.staff-form-grid {&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(2, minmax(0, 1fr));&#13;
+    gap: 16px;&#13;
+}&#13;
+&#13;
+.staff-form-field {&#13;
+    min-width: 0;&#13;
+}&#13;
+&#13;
+.staff-form-field input,&#13;
+.staff-form-field textarea,&#13;
+.staff-form-field select {&#13;
+    width: 100%;&#13;
+    box-sizing: border-box;&#13;
+    border: 1px solid #ccd5d3;&#13;
+    border-radius: 7px;&#13;
+    background: #ffffff;&#13;
+    color: #283633;&#13;
+    font-size: 13px;&#13;
+    padding: 10px 11px;&#13;
+}&#13;
+&#13;
+.staff-form-field input {&#13;
+    height: 40px;&#13;
+}&#13;
+&#13;
+.staff-form-field textarea {&#13;
+    min-height: 95px;&#13;
+    resize: vertical;&#13;
+    line-height: 1.5;&#13;
+}&#13;
+&#13;
+.staff-form-field input[readonly],&#13;
+.staff-form-field textarea[readonly] {&#13;
+    background: #f5f7f7;&#13;
+    color: #5d6967;&#13;
+}&#13;
+&#13;
+.staff-form-field select:focus,&#13;
+.staff-form-field textarea:focus {&#13;
+    outline: none;&#13;
+    border-color: #123c3a;&#13;
+}&#13;
+&#13;
+.staff-full-field {&#13;
+    grid-column: 1 / -1;&#13;
+}&#13;
+&#13;
+.staff-approval-select {&#13;
+    background: #ffffff;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.staff-notes {&#13;
+    min-height: 120px !important;&#13;
+}&#13;
+&#13;
+.staff-required {&#13;
+    color: #b52b2b;&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+.staff-field-help {&#13;
+    display: block;&#13;
+    margin-top: 6px;&#13;
+    color: #7b8785;&#13;
+    font-size: 11px;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   MODAL FOOTER&#13;
+   ========================================== */&#13;
+&#13;
+.staff-modal-footer {&#13;
+    padding: 16px 24px;&#13;
+    border-top: 1px solid #e1e7e5;&#13;
+    display: flex;&#13;
+    justify-content: flex-end;&#13;
+    gap: 10px;&#13;
+}&#13;
+&#13;
+.staff-cancel-button,&#13;
+.staff-save-button {&#13;
+    min-width: 110px;&#13;
+    height: 40px;&#13;
+    padding: 0 16px;&#13;
+    border-radius: 7px;&#13;
+    font-size: 13px;&#13;
+    font-weight: 600;&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+.staff-cancel-button {&#13;
+    border: 1px solid #ccd5d3;&#13;
+    background: #ffffff;&#13;
+    color: #53615f;&#13;
+}&#13;
+&#13;
+.staff-cancel-button:hover {&#13;
+    background: #f4f6f5;&#13;
+}&#13;
+&#13;
+.staff-save-button {&#13;
+    border: 0;&#13;
+    background: #123c3a;&#13;
+    color: #ffffff;&#13;
+}&#13;
+&#13;
+.staff-save-button:hover {&#13;
+    opacity: 0.92;&#13;
+}&#13;
+&#13;
+.staff-save-button:disabled,&#13;
+.staff-cancel-button:disabled {&#13;
+    opacity: 0.6;&#13;
+    cursor: not-allowed;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   MESSAGES&#13;
+   ========================================== */&#13;
+&#13;
+.staff-form-message {&#13;
+    margin: 16px 24px 0;&#13;
+    padding: 11px 13px;&#13;
+    border-radius: 7px;&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+.staff-error {&#13;
+    background: #fff1f1;&#13;
+    border: 1px solid #efcccc;&#13;
+    color: #a22c2c;&#13;
+}&#13;
+&#13;
+.staff-success {&#13;
+    background: #eef8f2;&#13;
+    border: 1px solid #cce5d5;&#13;
+    color: #2f6f45;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   RESPONSIVE&#13;
+   ========================================== */&#13;
+&#13;
+@media (max-width: 900px) {&#13;
+&#13;
+    .staff-sidebar {&#13;
+        width: 200px;&#13;
+        min-width: 200px;&#13;
+    }&#13;
+&#13;
+    .staff-content {&#13;
+        padding: 20px;&#13;
+    }&#13;
+&#13;
+    .staff-kpi-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 700px) {&#13;
+&#13;
+    .staff-dashboard {&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+    .staff-sidebar {&#13;
+        width: 100%;&#13;
+        min-width: 100%;&#13;
+        border-right: 0;&#13;
+        border-bottom: 1px solid #334155;&#13;
+    }&#13;
+&#13;
+    .staff-navigation {&#13;
+        flex-direction: row;&#13;
+        overflow-x: auto;&#13;
+    }&#13;
+&#13;
+    .staff-nav-item {&#13;
+        min-width: max-content;&#13;
+    }&#13;
+&#13;
+    .staff-content {&#13;
+        padding: 15px;&#13;
+    }&#13;
+&#13;
+    .staff-filter-grid,&#13;
+    .staff-form-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+    .staff-full-field {&#13;
+        grid-column: auto;&#13;
+    }&#13;
+&#13;
+    .staff-modal-overlay {&#13;
+        padding: 10px;&#13;
+    }&#13;
+&#13;
+    .staff-modal {&#13;
+        max-height: 96vh;&#13;
+    }&#13;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -1879,385 +1428,631 @@
         <script><![CDATA[(function() {
 
     /* ==========================================
-       INITIAL DATA
+       DEFAULT DATA
        ========================================== */
 
-    data.allActiveAssignments = {};
-    data.allClosedAssignments = {};
+    data.totalRequests = 0;
+    data.pendingProblems = 0;
+    data.resolvedRequests = 0;
 
-    data.activeOrder = [];
-    data.closedOrder = [];
+    data.records = {};
 
-    data.dashboard = {
-        total: 0,
-        resolved: 0,
-        pending: 0
-    };
+    data.myAssignmentIds = [];
+    data.recentAssignmentIds = [];
+    data.historyIds = [];
 
     data.filterOptions = {
-        useCases: {},
-        priorities: {}
+        useCases: [],
+        priorities: []
     };
 
-    data.updateSuccess = false;
-    data.updateError = '';
+    data.saveSuccess = false;
+    data.saveError = '';
 
 
     /* ==========================================
-       MESS STAFF GROUP SYS ID
+       STAFF GROUP / TASK TABLE
        ========================================== */
 
-    var userID =
+    var staffGroup =
         '4f04d11fdd1f03107f44143a6accf8c1';
 
+    var taskTable =
+        'x_snc_campus_foo_1_complain_tasks';
 
 
     /* ==========================================
-       UPDATE EXISTING RECORD
+       SAVE EXISTING TASK
        ========================================== */
 
-    if (input && input.action === 'updateApproval') {
+    if (
+        input &&
+        input.action === 'saveRecord' &&
+        input.sys_id
+    ) {
 
-        var updateSysId = input.sys_id;
-        var approval = String(input.approval || '').toLowerCase();
-        var notes = String(input.notes || '').trim();
+        var updateTask =
+            new GlideRecord(taskTable);
 
+        if (!updateTask.get(input.sys_id)) {
 
-        /* ------------------------------------------
-           BASIC VALIDATION
-           ------------------------------------------ */
-
-        if (!updateSysId) {
-
-            data.updateError =
-                'Record ID is required.';
-
-        } else if (!approval) {
-
-            data.updateError =
-                'Approval is required.';
+            data.saveError =
+                'The selected task could not be found.';
 
         } else if (
-            approval !== 'not requested' &&
-            approval !== 'approved' &&
-            approval !== 'rejected'
+            updateTask.getValue('assignment_group') !==
+            staffGroup
         ) {
 
-            data.updateError =
-                'Invalid approval value.';
-
-        } else if (
-            approval === 'rejected' &&
-            !notes
-        ) {
-
-            data.updateError =
-                'Notes are mandatory when the request is rejected.';
+            data.saveError =
+                'You are not allowed to update this task.';
 
         } else {
 
-            /* ------------------------------------------
-               FIND EXISTING RECORD
-               ------------------------------------------ */
+            var newApproval =
+                String(
+                    input.approval || ''
+                ).toLowerCase();
 
-            var updateGR =
-                new GlideRecord(
-                    'x_snc_campus_foo_1_complain_tasks'
+            var newNotes =
+                String(
+                    input.notes || ''
                 );
 
 
-            if (!updateGR.get(updateSysId)) {
+            /* --------------------------------------
+               VALID APPROVAL
+               -------------------------------------- */
 
-                data.updateError =
-                    'The selected record was not found.';
-
-            } else if (
-                updateGR.getValue('assignment_group') !== userID
+            if (
+                newApproval !== 'requested' &&
+                newApproval !== 'approved' &&
+                newApproval !== 'rejected'
             ) {
 
-                data.updateError =
-                    'You are not allowed to update this record.';
+                data.saveError =
+                    'Please select a valid approval status.';
 
-            } else if (
-                updateGR.getValue('active') !== '1'
+            }
+
+
+            /* --------------------------------------
+               NOTES REQUIRED FOR FINAL DECISION
+               -------------------------------------- */
+
+            else if (
+                (
+                    newApproval === 'approved' ||
+                    newApproval === 'rejected'
+                ) &&
+                newNotes.trim() === ''
             ) {
 
-                data.updateError =
-                    'This assignment is already closed.';
+                data.saveError =
+                    'Notes are required when the approval is Approved or Rejected.';
 
-            } else {
+            }
 
-                /* ------------------------------------------
-                   UPDATE APPROVAL
-                   ------------------------------------------ */
 
-                updateGR.setValue(
+            /* --------------------------------------
+               UPDATE EXISTING TASK
+               -------------------------------------- */
+
+            else {
+
+                updateTask.setValue(
                     'approval',
-                    approval
+                    newApproval
                 );
 
-
-                /* ------------------------------------------
-                   UPDATE NOTES
-                   ------------------------------------------ */
-
-                updateGR.setValue(
+                updateTask.setValue(
                     'notes',
-                    notes
+                    newNotes
                 );
 
 
-                /* ------------------------------------------
-                   CLOSE RECORD
-                   ------------------------------------------ */
+                /* ----------------------------------
+                   CLOSE TASK WHEN FINAL DECISION
+                   ---------------------------------- */
 
-                updateGR.setValue(
-                    'active',
-                    false
-                );
+                if (
+                    newApproval === 'approved' ||
+                    newApproval === 'rejected'
+                ) {
+
+                    updateTask.setValue(
+                        'active',
+                        false
+                    );
+
+                    updateTask.setValue(
+                        'closed_at',
+                        new GlideDateTime()
+                    );
+
+                    updateTask.setValue(
+                        'closed_by',
+                        gs.getUserID()
+                    );
+                }
 
 
-                updateGR.setValue(
-                    'closed_at',
-                    new GlideDateTime()
-                );
+                updateTask.update();
 
-
-                updateGR.setValue(
-                    'closed_by',
-                    gs.getUserID()
-                );
-
-
-                /* ------------------------------------------
-                   SAVE SAME RECORD
-                   ------------------------------------------ */
-
-                updateGR.update();
-
-                data.updateSuccess = true;
+                data.saveSuccess =
+                    true;
             }
         }
     }
 
 
-
     /* ==========================================
-       LOAD ALL ASSIGNMENTS
+       KPI - TOTAL STAFF REQUESTS
+       FROM COMPLAINT TASK TABLE
        ========================================== */
 
-    var gr =
-        new GlideRecord(
-            'x_snc_campus_foo_1_complain_tasks'
+    var totalGA =
+        new GlideAggregate(
+            taskTable
         );
 
-
-    /* ------------------------------------------
-       ONLY MESS STAFF GROUP
-       ------------------------------------------ */
-
-    gr.addQuery(
+    totalGA.addQuery(
         'assignment_group',
-        userID
+        staffGroup
     );
 
+    totalGA.addAggregate(
+        'COUNT'
+    );
 
-    /* ------------------------------------------
-       SORT BY CREATED DATE ASCENDING
-       ------------------------------------------ */
+    totalGA.query();
 
-    gr.orderBy('sys_created_on');
+    if (totalGA.next()) {
 
-    gr.query();
+        data.totalRequests =
+            parseInt(
+                totalGA.getAggregate(
+                    'COUNT'
+                ),
+                10
+            ) || 0;
+    }
 
 
-    while (gr.next()) {
+    /* ==========================================
+       KPI - PENDING STAFF REQUESTS
+       FROM COMPLAINT TASK TABLE
+       ========================================== */
+
+    var pendingGA =
+        new GlideAggregate(
+            taskTable
+        );
+
+    pendingGA.addQuery(
+        'assignment_group',
+        staffGroup
+    );
+
+    pendingGA.addQuery(
+        'approval',
+        'requested'
+    );
+
+    pendingGA.addAggregate(
+        'COUNT'
+    );
+
+    pendingGA.query();
+
+    if (pendingGA.next()) {
+
+        data.pendingProblems =
+            parseInt(
+                pendingGA.getAggregate(
+                    'COUNT'
+                ),
+                10
+            ) || 0;
+    }
+
+
+    /* ==========================================
+       KPI - RESOLVED REQUESTS
+       TOTAL - PENDING
+       ========================================== */
+
+    data.resolvedRequests =
+        data.totalRequests -
+        data.pendingProblems;
+
+
+    if (
+        data.resolvedRequests < 0
+    ) {
+
+        data.resolvedRequests =
+            0;
+    }
+
+
+    /* ==========================================
+       USE CASE FILTER OPTIONS
+       ========================================== */
+
+    var useCaseChoice =
+        new GlideRecord(
+            'sys_choice'
+        );
+
+    useCaseChoice.addQuery(
+        'name',
+        taskTable
+    );
+
+    useCaseChoice.addQuery(
+        'element',
+        'use_case'
+    );
+
+    useCaseChoice.addQuery(
+        'inactive',
+        false
+    );
+
+    useCaseChoice.orderBy(
+        'sequence'
+    );
+
+    useCaseChoice.query();
+
+    while (
+        useCaseChoice.next()
+    ) {
+
+        data.filterOptions.useCases.push({
+
+            value:
+                useCaseChoice.getValue(
+                    'value'
+                ),
+
+            label:
+                useCaseChoice.getValue(
+                    'label'
+                )
+        });
+    }
+
+
+    /* ==========================================
+       PRIORITY FILTER OPTIONS
+       ========================================== */
+
+    var priorityChoice =
+        new GlideRecord(
+            'sys_choice'
+        );
+
+    priorityChoice.addQuery(
+        'name',
+        taskTable
+    );
+
+    priorityChoice.addQuery(
+        'element',
+        'current_priority'
+    );
+
+    priorityChoice.addQuery(
+        'inactive',
+        false
+    );
+
+    priorityChoice.orderBy(
+        'sequence'
+    );
+
+    priorityChoice.query();
+
+    while (
+        priorityChoice.next()
+    ) {
+
+        data.filterOptions.priorities.push({
+
+            value:
+                priorityChoice.getValue(
+                    'value'
+                ),
+
+            label:
+                priorityChoice.getValue(
+                    'label'
+                )
+        });
+    }
+
+
+    /* ==========================================
+       LOAD COMPLAINT TASK RECORDS
+       ========================================== */
+
+    var taskGR =
+        new GlideRecord(
+            taskTable
+        );
+
+    taskGR.orderByDesc(
+        'sys_created_on'
+    );
+
+    taskGR.query();
+
+
+    while (
+        taskGR.next()
+    ) {
 
         var sysId =
-            gr.getUniqueValue();
+            taskGR.getUniqueValue();
 
 
-        /* ==========================================
-           CREATE RECORD OBJECT
-           ========================================== */
+        /* --------------------------------------
+           FIELD HELPERS
+           -------------------------------------- */
 
-        var record = {
+        function getValue(
+            fieldName
+        ) {
 
-            sys_id: sysId,
+            if (
+                taskGR.isValidField(
+                    fieldName
+                )
+            ) {
+
+                return taskGR.getValue(
+                    fieldName
+                ) || '';
+
+            }
+
+            return '';
+        }
+
+
+        function getDisplay(
+            fieldName
+        ) {
+
+            if (
+                taskGR.isValidField(
+                    fieldName
+                )
+            ) {
+
+                return taskGR.getDisplayValue(
+                    fieldName
+                ) || '';
+
+            }
+
+            return '';
+        }
+
+
+        /* --------------------------------------
+           STORE TASK
+           -------------------------------------- */
+
+        data.records[sysId] = {
+
+            sys_id:
+                sysId,
 
             number:
-                gr.getValue('number'),
+                getValue(
+                    'number'
+                ),
 
             use_case:
-                gr.getDisplayValue('use_case'),
+                getValue(
+                    'use_case'
+                ),
+
+            use_case_display:
+                getDisplay(
+                    'use_case'
+                ),
 
             current_priority:
-                gr.getDisplayValue('current_priority'),
+                getValue(
+                    'current_priority'
+                ),
+
+            current_priority_display:
+                getDisplay(
+                    'current_priority'
+                ),
 
             student_count:
-                gr.getValue('student_count'),
+                parseInt(
+                    getValue(
+                        'student_count'
+                    ),
+                    10
+                ) || 0,
+
+            state:
+                getValue(
+                    'state'
+                ),
+
+            state_display:
+                getDisplay(
+                    'state'
+                ),
+
+            assignment_group:
+                getValue(
+                    'assignment_group'
+                ),
+
+            assignment_group_display:
+                getDisplay(
+                    'assignment_group'
+                ),
 
             problem_type:
-                gr.getDisplayValue('problem_type'),
+                getValue(
+                    'problem_type'
+                ),
+
+            problem_type_display:
+                getDisplay(
+                    'problem_type'
+                ),
 
             short_description:
-                gr.getValue('short_description'),
-
-            use_case_number:
-                gr.getValue('use_case_number'),
-
-            meal_type:
-                gr.getDisplayValue('meal_type'),
-
-            priority_reason:
-                gr.getValue('priority_reason'),
-
-            recomended_actions:
-                gr.getValue('recomended_actions'),
+                getValue(
+                    'short_description'
+                ),
 
             approval:
-                String(gr.getValue('approval') || 'not requested')
-                    .toLowerCase(),
+                getValue(
+                    'approval'
+                ),
 
-            notes:
-                gr.getValue('notes'),
+            approval_display:
+                getDisplay(
+                    'approval'
+                ),
 
-            description:
-                gr.getValue('description'),
+            use_case_number:
+                getValue(
+                    'use_case_number'
+                ),
 
-            comments:
-                gr.getValue('comments'),
+            mess_hall:
+                getValue(
+                    'mess_hall'
+                ),
 
-            manager_response:
-                gr.getDisplayValue('mnager_response'),
+            mess_hall_display:
+                getDisplay(
+                    'mess_hall'
+                ),
+
+            meal_type:
+                getValue(
+                    'meal_type'
+                ),
+
+            meal_type_display:
+                getDisplay(
+                    'meal_type'
+                ),
+
+            priority_reason:
+                getValue(
+                    'priority_reason'
+                ),
+
+            recomended_actions:
+                getValue(
+                    'recomended_actions'
+                ),
 
             resolution_status:
-                gr.getDisplayValue('resolution_status'),
+                getValue(
+                    'resolution_status'
+                ),
 
-            due_date:
-                gr.getDisplayValue('due_date'),
+            resolution_status_display:
+                getDisplay(
+                    'resolution_status'
+                ),
 
-            opened_at:
-                gr.getDisplayValue('opened_at'),
+            notes:
+                getValue(
+                    'notes'
+                ),
 
-            opened_by:
-                gr.getDisplayValue('opened_by'),
+            updated:
+                getValue(
+                    'sys_updated_on'
+                ),
 
-            sys_created_on:
-                gr.getDisplayValue('sys_created_on'),
-
-            closed_at:
-                gr.getDisplayValue('closed_at'),
-
-            closed_by:
-                gr.getDisplayValue('closed_by'),
-
-            active:
-                gr.getValue('active')
-
+            updated_display:
+                getDisplay(
+                    'sys_updated_on'
+                )
         };
 
 
+        /* ======================================
+           STAFF ASSIGNED TASKS
+           ====================================== */
 
-        /* ==========================================
-           TOTAL
-           ========================================== */
+        if (
+            getValue(
+                'assignment_group'
+            ) === staffGroup &&
+            getValue(
+                'approval'
+            ) === 'requested'
+        ) {
 
-        data.dashboard.total++;
-
-
-
-        /* ==========================================
-           ACTIVE RECORD
-           ========================================== */
-
-        if (gr.getValue('active') === '1') {
-
-            data.dashboard.pending++;
-
-
-            /*
-             * Store using SYS_ID as key.
-             */
-
-            data.allActiveAssignments[sysId] =
-                record;
-
-
-            /*
-             * Keep the sorted order separately.
-             */
-
-            data.activeOrder.push(sysId);
-
-
-            /* ------------------------------------------
-               USE CASE FILTER DICTIONARY
-               ------------------------------------------ */
-
-            if (record.use_case) {
-
-                data.filterOptions.useCases[
-                    record.use_case
-                ] = record.use_case;
-
-            }
-
-
-            /* ------------------------------------------
-               PRIORITY FILTER DICTIONARY
-               ------------------------------------------ */
-
-            if (record.current_priority) {
-
-                data.filterOptions.priorities[
-                    record.current_priority
-                ] = record.current_priority;
-
-            }
-
+            data.myAssignmentIds.push(
+                sysId
+            );
         }
 
 
+        /* ======================================
+           STAFF TASK HISTORY
+           ====================================== */
 
-        /* ==========================================
-           CLOSED RECORD
-           ========================================== */
+        if (
+            getValue(
+                'assignment_group'
+            ) === staffGroup &&
+            (
+                getValue(
+                    'approval'
+                ) === 'approved' ||
+                getValue(
+                    'approval'
+                ) === 'rejected'
+            )
+        ) {
 
-        else {
-
-            data.dashboard.resolved++;
-
-
-            /*
-             * Store closed record using SYS_ID as key.
-             */
-
-            data.allClosedAssignments[sysId] =
-                record;
-
-
-            data.closedOrder.push(sysId);
-
+            data.historyIds.push(
+                sysId
+            );
         }
-
     }
 
 
-
     /* ==========================================
-       TOTAL
+       RECENT STAFF TASKS
        ========================================== */
 
-    /*
-     * This guarantees:
-     *
-     * Total = Pending + Resolved
-     */
+    for (
+        var recentIndex = 0;
+        recentIndex <
+            data.myAssignmentIds.length &&
+        recentIndex < 5;
+        recentIndex++
+    ) {
 
-    data.dashboard.total =
-        data.dashboard.pending +
-        data.dashboard.resolved;
+        data.recentAssignmentIds.push(
+            data.myAssignmentIds[
+                recentIndex
+            ]
+        );
+    }
 
 })();]]></script>
         <servicenow>false</servicenow>
@@ -2265,154 +2060,179 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-27 03:54:09</sys_created_on>
         <sys_id>8ea78ecea96703107f444d1b3bf577b3</sys_id>
-        <sys_mod_count>14</sys_mod_count>
+        <sys_mod_count>17</sys_mod_count>
         <sys_name>Food Service Staff dashboard widget</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sp_widget_8ea78ecea96703107f444d1b3bf577b3</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-29 08:46:02</sys_updated_on>
+        <sys_updated_on>2026-10-05 07:22:21</sys_updated_on>
         <template><![CDATA[<div class="staff-dashboard">
 
     <!-- ==========================================
          SIDEBAR
          ========================================== -->
 
-    <div class="staff-sidebar">
+    <aside class="staff-sidebar">
 
-        <div class="sidebar-title">
-            <span class="sidebar-logo">]]>🍴<![CDATA[</span>
-            <span>Staff Portal</span>
-        </div>
+        <div class="staff-brand">
 
-        <div class="sidebar-menu">
-
-            <!-- DASHBOARD -->
-            <div class="menu-item"
-                 ng-class="{active: c.activeSection === 'dashboard'}"
-                 ng-click="c.selectSection('dashboard')">
-
-                <span class="menu-icon">]]>🏠<![CDATA[</span>
-                <span class="menu-text">Dashboard</span>
-
+            <div class="staff-brand-icon">
+                S
             </div>
 
+            <div>
 
-            <!-- MY ASSIGNMENTS -->
-            <div class="menu-item"
-                 ng-class="{active: c.activeSection === 'assignments'}"
-                 ng-click="c.selectSection('assignments')">
+                <div class="staff-brand-title">
+                    Staff Portal
+                </div>
 
-                <span class="menu-icon">]]>📋<![CDATA[</span>
-                <span class="menu-text">My Assignments</span>
-
-            </div>
-
-
-            <!-- HISTORY -->
-            <div class="menu-item"
-                 ng-class="{active: c.activeSection === 'history'}"
-                 ng-click="c.selectSection('history')">
-
-                <span class="menu-icon">]]>📜<![CDATA[</span>
-                <span class="menu-text">History</span>
+                <div class="staff-brand-subtitle">
+                    Mess Operations
+                </div>
 
             </div>
 
         </div>
 
-    </div>
+
+        <nav class="staff-navigation">
+
+            <button
+                class="staff-nav-item"
+                ng-class="{'active': c.currentPage === 'overview'}"
+                ng-click="c.changePage('overview')">
+
+                <span class="staff-nav-icon">
+                    ⌂
+                </span>
+
+                <span>
+                    Overview
+                </span>
+
+            </button>
+
+
+            <button
+                class="staff-nav-item"
+                ng-class="{'active': c.currentPage === 'assigned'}"
+                ng-click="c.changePage('assigned')">
+
+                <span class="staff-nav-icon">
+                    ▣
+                </span>
+
+                <span>
+                    Assigned Tasks
+                </span>
+
+            </button>
+
+
+            <button
+                class="staff-nav-item"
+                ng-class="{'active': c.currentPage === 'history'}"
+                ng-click="c.changePage('history')">
+
+                <span class="staff-nav-icon">
+                    ↺
+                </span>
+
+                <span>
+                    Task History
+                </span>
+
+            </button>
+
+        </nav>
+
+    </aside>
 
 
     <!-- ==========================================
-         MAIN CONTENT
+         CONTENT
          ========================================== -->
 
-    <div class="staff-main">
+    <main class="staff-content">
 
 
-        <!-- ==========================================
-             DASHBOARD
-             ========================================== -->
+        <!-- ======================================
+             OVERVIEW
+             ====================================== -->
 
-        <section ng-if="c.activeSection === 'dashboard'">
+        <section
+            class="staff-page"
+            ng-if="c.currentPage === 'overview'">
 
-            <div class="page-header">
+            <div class="staff-page-header">
 
                 <div>
-                    <h1>Staff Dashboard</h1>
-                    <p>Manage and review food complaint assignments.</p>
+
+                    <h1>
+                        Staff Overview
+                    </h1>
+
+                    <p>
+                        Monitor and manage food complaint tasks assigned to the Mess Staff team.
+                    </p>
+
                 </div>
 
             </div>
 
 
-            <!-- KPI CARDS -->
+            <!-- KPI -->
 
-            <div class="kpi-container">
+            <div class="staff-kpi-grid">
 
-                <!-- TOTAL -->
-                <div class="kpi-card total-card">
+                <div class="staff-kpi-card">
 
-                    <div class="kpi-icon">
-                        ]]>📊
-<![CDATA[                    </div>
+                    <div class="staff-kpi-label">
+                        Total Requests
+                    </div>
 
-                    <div class="kpi-content">
+                    <div class="staff-kpi-value">
+                        {{c.data.totalRequests}}
+                    </div>
 
-                        <div class="kpi-title">
-                            Total Requests
-                        </div>
-
-                        <div class="kpi-value">
-                            {{data.dashboard.total}}
-                        </div>
-
+                    <div class="staff-kpi-caption">
+                        Requests assigned to Mess Staff
                     </div>
 
                 </div>
 
 
-                <!-- RESOLVED -->
-                <div class="kpi-card resolved-card">
+                <div class="staff-kpi-card">
 
-                    <div class="kpi-icon">
-                        ✅
+                    <div class="staff-kpi-label">
+                        Pending Problems
                     </div>
 
-                    <div class="kpi-content">
+                    <div class="staff-kpi-value">
+                        {{c.data.pendingProblems}}
+                    </div>
 
-                        <div class="kpi-title">
-                            Resolved
-                        </div>
-
-                        <div class="kpi-value">
-                            {{data.dashboard.resolved}}
-                        </div>
-
+                    <div class="staff-kpi-caption">
+                        Open requests
                     </div>
 
                 </div>
 
 
-                <!-- PENDING -->
-                <div class="kpi-card pending-card">
+                <div class="staff-kpi-card">
 
-                    <div class="kpi-icon">
-                        ⏳
+                    <div class="staff-kpi-label">
+                        Resolved Requests
                     </div>
 
-                    <div class="kpi-content">
+                    <div class="staff-kpi-value">
+                        {{c.data.resolvedRequests}}
+                    </div>
 
-                        <div class="kpi-title">
-                            Pending
-                        </div>
-
-                        <div class="kpi-value">
-                            {{data.dashboard.pending}}
-                        </div>
-
+                    <div class="staff-kpi-caption">
+                        Completed requests
                     </div>
 
                 </div>
@@ -2420,38 +2240,64 @@
             </div>
 
 
-            <!-- ==========================================
-                 RECENT ASSIGNMENTS
-                 ========================================== -->
+            <!-- RECENT TASKS -->
 
-            <div class="content-card">
+            <div class="staff-section-card">
 
-                <div class="section-header">
+                <div class="staff-section-header">
 
                     <div>
-                        <h2>Recent Assignments</h2>
-                        <p>Latest active food complaint assignments.</p>
+
+                        <h2>
+                            Recent Assigned Tasks
+                        </h2>
+
+                        <p>
+                            Latest tasks assigned to the Mess Staff team.
+                        </p>
+
                     </div>
+
+
+                    <button
+                        class="staff-link-button"
+                        ng-click="c.changePage('assigned')">
+
+                        View All
+
+                    </button>
 
                 </div>
 
 
-                <div class="table-wrapper"
-                     ng-if="c.recentAssignments.length > 0">
+                <div
+                    class="staff-table-scroll"
+                    id="staffRecentScroll">
 
-                    <table class="assignment-table">
+                    <table class="staff-task-table">
 
                         <thead>
 
                             <tr>
+
+                                <th>Action</th>
                                 <th>Number</th>
                                 <th>Use Case</th>
-                                <th>Priority</th>
-                                <th>Students</th>
+                                <th>Current Priority</th>
+                                <th>Student Count</th>
+                                <th>State</th>
+                                <th>Assignment Group</th>
                                 <th>Problem Type</th>
                                 <th>Short Description</th>
+                                <th>Approval</th>
+                                <th>Use Case Number</th>
+                                <th>Mess Hall</th>
                                 <th>Meal Type</th>
-                                <th>Action</th>
+                                <th>Priority Reason</th>
+                                <th>Recommended Actions</th>
+                                <th>Resolution Status</th>
+                                <th>Updated</th>
+
                             </tr>
 
                         </thead>
@@ -2459,53 +2305,106 @@
 
                         <tbody>
 
-                            <tr ng-repeat="record in c.recentAssignments track by record.sys_id">
+                            <tr
+                                ng-repeat="sysId in c.data.recentAssignmentIds">
 
-                                <td>
-                                    <strong>
-                                        {{record.number}}
-                                    </strong>
-                                </td>
+                                <td class="staff-action-cell">
 
-                                <td>
-                                    {{record.use_case}}
-                                </td>
-
-                                <td>
-
-                                    <span class="priority-badge"
-                                          ng-class="c.getPriorityClass(record.current_priority)">
-
-                                        {{record.current_priority}}
-
-                                    </span>
-
-                                </td>
-
-                                <td>
-                                    {{record.student_count}}
-                                </td>
-
-                                <td>
-                                    {{record.problem_type}}
-                                </td>
-
-                                <td class="description-cell">
-                                    {{record.short_description}}
-                                </td>
-
-                                <td>
-                                    {{record.meal_type}}
-                                </td>
-
-                                <td>
-
-                                    <button class="open-button"
-                                            ng-click="c.openRecord(record.sys_id)">
+                                    <button
+                                        class="staff-open-button"
+                                        ng-click="c.openRecord(sysId)">
 
                                         Open
 
                                     </button>
+
+
+                                    <button
+                                        class="staff-accept-button"
+                                        ng-click="c.acceptRecord(sysId)">
+
+                                        Accept
+
+                                    </button>
+
+                                </td>
+
+
+                                <td>
+                                    {{c.data.records[sysId].number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].current_priority_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].student_count}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].state_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].assignment_group_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].problem_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].short_description}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].approval_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].mess_hall_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].meal_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].priority_reason}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].recomended_actions}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].resolution_status_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].updated_display}}
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                ng-if="!c.data.recentAssignmentIds.length">
+
+                                <td
+                                    colspan="17"
+                                    class="staff-empty-cell">
+
+                                    No recent assigned tasks found.
 
                                 </td>
 
@@ -2517,35 +2416,31 @@
 
                 </div>
 
-
-                <div class="empty-state"
-                     ng-if="c.recentAssignments.length === 0">
-
-                    <div class="empty-icon">
-                        ]]>📭
-<![CDATA[                    </div>
-
-                    <p>No active assignments found.</p>
-
-                </div>
-
             </div>
 
         </section>
 
 
+        <!-- ======================================
+             ASSIGNED TASKS
+             ====================================== -->
 
-        <!-- ==========================================
-             MY ASSIGNMENTS
-             ========================================== -->
+        <section
+            class="staff-page"
+            ng-if="c.currentPage === 'assigned'">
 
-        <section ng-if="c.activeSection === 'assignments'">
-
-            <div class="page-header">
+            <div class="staff-page-header">
 
                 <div>
-                    <h1>My Assignments</h1>
-                    <p>View and manage active food complaint assignments.</p>
+
+                    <h1>
+                        Assigned Tasks
+                    </h1>
+
+                    <p>
+                        Review and process tasks assigned to the Mess Staff team.
+                    </p>
+
                 </div>
 
             </div>
@@ -2553,34 +2448,56 @@
 
             <!-- FILTERS -->
 
-            <div class="filter-card">
+            <div class="staff-filter-card">
 
-                <div class="filter-title">
-                    Filter Assignments
+                <div class="staff-filter-header">
+
+                    <div>
+
+                        <h3>
+                            Task Filters
+                        </h3>
+
+                        <span>
+                            Filter the currently assigned tasks.
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        class="staff-clear-button"
+                        ng-click="c.clearAssignmentFilters()">
+
+                        Clear Filters
+
+                    </button>
+
                 </div>
 
 
-                <div class="filter-container">
+                <div class="staff-filter-grid">
 
-                    <!-- USE CASE -->
-
-                    <div class="filter-field">
+                    <div class="staff-filter-field">
 
                         <label>
                             Use Case
                         </label>
 
-                        <select ng-model="c.assignmentFilters.use_case"
-                                ng-change="c.applyAssignmentFilters()">
+                        <select
+                            class="staff-select"
+                            ng-model="c.assignmentFilters.use_case"
+                            ng-change="c.applyAssignmentFilters()">
 
                             <option value="">
                                 All Use Cases
                             </option>
 
-                            <option ng-repeat="useCase in c.useCaseOptions"
-                                    value="{{useCase}}">
+                            <option
+                                ng-repeat="item in c.useCaseOptions"
+                                ng-value="item.value">
 
-                                {{useCase}}
+                                {{item.label}}
 
                             </option>
 
@@ -2589,43 +2506,30 @@
                     </div>
 
 
-                    <!-- CURRENT PRIORITY -->
-
-                    <div class="filter-field">
+                    <div class="staff-filter-field">
 
                         <label>
                             Current Priority
                         </label>
 
-                        <select ng-model="c.assignmentFilters.current_priority"
-                                ng-change="c.applyAssignmentFilters()">
+                        <select
+                            class="staff-select"
+                            ng-model="c.assignmentFilters.current_priority"
+                            ng-change="c.applyAssignmentFilters()">
 
                             <option value="">
                                 All Priorities
                             </option>
 
-                            <option ng-repeat="priority in c.priorityOptions"
-                                    value="{{priority}}">
+                            <option
+                                ng-repeat="item in c.priorityOptions"
+                                ng-value="item.value">
 
-                                {{priority}}
+                                {{item.label}}
 
                             </option>
 
                         </select>
-
-                    </div>
-
-
-                    <!-- CLEAR -->
-
-                    <div class="filter-action">
-
-                        <button class="clear-filter-button"
-                                ng-click="c.clearAssignmentFilters()">
-
-                            Clear Filters
-
-                        </button>
 
                     </div>
 
@@ -2634,17 +2538,20 @@
             </div>
 
 
-            <!-- ASSIGNMENTS TABLE -->
+            <!-- TASK TABLE -->
 
-            <div class="content-card">
+            <div class="staff-section-card">
 
-                <div class="section-header">
+                <div class="staff-section-header">
 
                     <div>
-                        <h2>Active Assignments</h2>
+
+                        <h2>
+                            Current Assigned Tasks
+                        </h2>
 
                         <p>
-                            Showing {{c.filteredAssignments.length}} assignment(s).
+                            {{c.filteredAssignmentIds.length}} task(s) found
                         </p>
 
                     </div>
@@ -2652,22 +2559,34 @@
                 </div>
 
 
-                <div class="table-wrapper"
-                     ng-if="c.filteredAssignments.length > 0">
+                <div
+                    class="staff-table-scroll staff-wide-table"
+                    id="staffAssignmentScroll">
 
-                    <table class="assignment-table">
+                    <table class="staff-task-table">
 
                         <thead>
 
                             <tr>
+
+                                <th>Action</th>
                                 <th>Number</th>
                                 <th>Use Case</th>
-                                <th>Priority</th>
-                                <th>Students</th>
+                                <th>Current Priority</th>
+                                <th>Student Count</th>
+                                <th>State</th>
+                                <th>Assignment Group</th>
                                 <th>Problem Type</th>
                                 <th>Short Description</th>
+                                <th>Approval</th>
+                                <th>Use Case Number</th>
+                                <th>Mess Hall</th>
                                 <th>Meal Type</th>
-                                <th>Action</th>
+                                <th>Priority Reason</th>
+                                <th>Recommended Actions</th>
+                                <th>Resolution Status</th>
+                                <th>Updated</th>
+
                             </tr>
 
                         </thead>
@@ -2675,49 +2594,207 @@
 
                         <tbody>
 
-                            <tr ng-repeat="record in c.filteredAssignments track by record.sys_id">
+                            <tr
+                                ng-repeat="sysId in c.filteredAssignmentIds">
+
+                                <td class="staff-action-cell">
+
+                                    <button
+                                        class="staff-open-button"
+                                        ng-click="c.openRecord(sysId)">
+
+                                        Open
+
+                                    </button>
+
+
+                                    <button
+                                        class="staff-accept-button"
+                                        ng-click="c.acceptRecord(sysId)">
+
+                                        Accept
+
+                                    </button>
+
+                                </td>
+
 
                                 <td>
-                                    <strong>
-                                        {{record.number}}
-                                    </strong>
+                                    {{c.data.records[sysId].number}}
                                 </td>
 
                                 <td>
-                                    {{record.use_case}}
+                                    {{c.data.records[sysId].use_case_display}}
                                 </td>
 
                                 <td>
-
-                                    <span class="priority-badge"
-                                          ng-class="c.getPriorityClass(record.current_priority)">
-
-                                        {{record.current_priority}}
-
-                                    </span>
-
+                                    {{c.data.records[sysId].current_priority_display}}
                                 </td>
 
                                 <td>
-                                    {{record.student_count}}
+                                    {{c.data.records[sysId].student_count}}
                                 </td>
 
                                 <td>
-                                    {{record.problem_type}}
-                                </td>
-
-                                <td class="description-cell">
-                                    {{record.short_description}}
+                                    {{c.data.records[sysId].state_display}}
                                 </td>
 
                                 <td>
-                                    {{record.meal_type}}
+                                    {{c.data.records[sysId].assignment_group_display}}
                                 </td>
 
                                 <td>
+                                    {{c.data.records[sysId].problem_type_display}}
+                                </td>
 
-                                    <button class="open-button"
-                                            ng-click="c.openRecord(record.sys_id)">
+                                <td>
+                                    {{c.data.records[sysId].short_description}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].approval_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].mess_hall_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].meal_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].priority_reason}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].recomended_actions}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].resolution_status_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].updated_display}}
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                ng-if="!c.filteredAssignmentIds.length">
+
+                                <td
+                                    colspan="17"
+                                    class="staff-empty-cell">
+
+                                    No assigned tasks match the selected filters.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             HISTORY
+             ====================================== -->
+
+        <section
+            class="staff-page"
+            ng-if="c.currentPage === 'history'">
+
+            <div class="staff-page-header">
+
+                <div>
+
+                    <h1>
+                        Task History
+                    </h1>
+
+                    <p>
+                        Previously processed tasks assigned to the Mess Staff team.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="staff-section-card">
+
+                <div class="staff-section-header">
+
+                    <div>
+
+                        <h2>
+                            Processed Tasks
+                        </h2>
+
+                        <p>
+                            Approved and rejected task records.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="staff-table-scroll staff-wide-table">
+
+                    <table class="staff-task-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Action</th>
+                                <th>Number</th>
+                                <th>Use Case</th>
+                                <th>Current Priority</th>
+                                <th>Student Count</th>
+                                <th>State</th>
+                                <th>Assignment Group</th>
+                                <th>Problem Type</th>
+                                <th>Short Description</th>
+                                <th>Approval</th>
+                                <th>Use Case Number</th>
+                                <th>Mess Hall</th>
+                                <th>Meal Type</th>
+                                <th>Priority Reason</th>
+                                <th>Recommended Actions</th>
+                                <th>Resolution Status</th>
+                                <th>Updated</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr
+                                ng-repeat="sysId in c.data.historyIds">
+
+                                <td>
+
+                                    <button
+                                        class="staff-open-button"
+                                        ng-click="c.openRecord(sysId)">
 
                                         Open
 
@@ -2725,6 +2802,85 @@
 
                                 </td>
 
+
+                                <td>
+                                    {{c.data.records[sysId].number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].current_priority_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].student_count}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].state_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].assignment_group_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].problem_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].short_description}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].approval_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].mess_hall_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].meal_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].priority_reason}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].recomended_actions}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].resolution_status_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].updated_display}}
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                ng-if="!c.data.historyIds.length">
+
+                                <td
+                                    colspan="17"
+                                    class="staff-empty-cell">
+
+                                    No task history found.
+
+                                </td>
+
                             </tr>
 
                         </tbody>
@@ -2733,484 +2889,411 @@
 
                 </div>
 
-
-                <div class="empty-state"
-                     ng-if="c.filteredAssignments.length === 0">
-
-                    <div class="empty-icon">
-                        ]]>🔍
-<![CDATA[                    </div>
-
-                    <p>
-                        No assignments match the selected filters.
-                    </p>
-
-                </div>
-
             </div>
 
         </section>
 
+    </main>
 
 
-        <!-- ==========================================
-             HISTORY
-             ========================================== -->
+    <!-- ==========================================
+         OPEN RECORD FORM
+         ========================================== -->
 
-        <section ng-if="c.activeSection === 'history'">
+    <div
+        class="staff-modal-overlay"
+        ng-if="c.showRecordForm">
 
-            <div class="page-header">
+        <div class="staff-modal">
+
+
+            <!-- HEADER -->
+
+            <div class="staff-modal-header">
 
                 <div>
-                    <h1>History</h1>
-                    <p>Previously resolved food complaint assignments.</p>
-                </div>
 
-            </div>
-
-
-            <div class="content-card">
-
-                <div class="section-header">
-
-                    <div>
-                        <h2>Resolved Assignments</h2>
-
-                        <p>
-                            {{c.historyAssignments.length}} closed record(s).
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="table-wrapper"
-                     ng-if="c.historyAssignments.length > 0">
-
-                    <table class="assignment-table history-table">
-
-                        <thead>
-
-                            <tr>
-
-                                <th>Number</th>
-                                <th>Use Case</th>
-                                <th>Priority</th>
-                                <th>Students</th>
-                                <th>Problem Type</th>
-                                <th>Short Description</th>
-                                <th>Meal Type</th>
-                                <th>Approval</th>
-                                <th>Closed At</th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-                            <tr ng-repeat="record in c.historyAssignments track by record.sys_id">
-
-                                <td>
-                                    <strong>
-                                        {{record.number}}
-                                    </strong>
-                                </td>
-
-                                <td>
-                                    {{record.use_case}}
-                                </td>
-
-                                <td>
-
-                                    <span class="priority-badge"
-                                          ng-class="c.getPriorityClass(record.current_priority)">
-
-                                        {{record.current_priority}}
-
-                                    </span>
-
-                                </td>
-
-                                <td>
-                                    {{record.student_count}}
-                                </td>
-
-                                <td>
-                                    {{record.problem_type}}
-                                </td>
-
-                                <td class="description-cell">
-                                    {{record.short_description}}
-                                </td>
-
-                                <td>
-                                    {{record.meal_type}}
-                                </td>
-
-                                <td>
-
-                                    <span class="approval-badge"
-                                          ng-class="c.getApprovalClass(record.approval)">
-
-                                        {{record.approval}}
-
-                                    </span>
-
-                                </td>
-
-                                <td>
-                                    {{record.closed_at}}
-                                </td>
-
-                            </tr>
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-
-                <div class="empty-state"
-                     ng-if="c.historyAssignments.length === 0">
-
-                    <div class="empty-icon">
-                        ]]>📜
-<![CDATA[                    </div>
+                    <h2>
+                        Task Review
+                    </h2>
 
                     <p>
-                        No resolved assignments found.
+                        Review and update the selected complaint task.
                     </p>
 
                 </div>
 
+
+                <button
+                    class="staff-modal-close"
+                    ng-click="c.closeRecordForm()">
+
+                    ×
+
+                </button>
+
             </div>
 
-        </section>
+
+            <!-- ERROR -->
+
+            <div
+                class="staff-form-message staff-error"
+                ng-if="c.formError">
+
+                {{c.formError}}
+
+            </div>
 
 
+            <!-- SUCCESS -->
 
-        <!-- ==========================================
-             CUSTOM RECORD FORM
-             ========================================== -->
+            <div
+                class="staff-form-message staff-success"
+                ng-if="c.formSuccess">
 
-        <div class="record-overlay"
-             ng-if="c.showRecordForm">
+                {{c.formSuccess}}
 
-            <div class="record-form-container">
+            </div>
 
-                <div class="record-form-header">
 
-                    <div>
+            <!-- FORM BODY -->
 
-                        <h2>
-                            Food Complaint Task
-                        </h2>
+            <div
+                class="staff-modal-body"
+                ng-if="c.selectedRecord">
 
-                        <p>
-                            {{c.selectedRecord.number}}
-                        </p>
 
+                <!-- TASK INFORMATION -->
+
+                <div class="staff-form-section">
+
+                    <div class="staff-form-section-title">
+                        Task Information
                     </div>
 
 
-                    <button class="close-form-button"
-                            ng-click="c.closeRecordForm()">
-
-                        ✕
-
-                    </button>
-
-                </div>
+                    <div class="staff-form-grid">
 
 
-                <!-- ==========================================
-                     FORM BODY
-                     ========================================== -->
-
-                <div class="record-form-body">
-
-                    <div class="form-info">
-                        Fields marked as read-only cannot be changed.
-                    </div>
-
-
-                    <div class="form-grid">
-
-
-                        <!-- NUMBER -->
-
-                        <div class="form-field">
+                        <div class="staff-form-field">
 
                             <label>
                                 Number
                             </label>
 
-                            <input type="text"
-                                   ng-model="c.selectedRecord.number"
-                                   readonly>
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.number"
+                                readonly>
 
                         </div>
 
 
-                        <!-- USE CASE -->
-
-                        <div class="form-field">
+                        <div class="staff-form-field">
 
                             <label>
                                 Use Case
                             </label>
 
-                            <input type="text"
-                                   ng-model="c.selectedRecord.use_case"
-                                   readonly>
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.use_case_display"
+                                readonly>
 
                         </div>
 
 
-                        <!-- CURRENT PRIORITY -->
-
-                        <div class="form-field">
+                        <div class="staff-form-field">
 
                             <label>
                                 Current Priority
                             </label>
 
-                            <input type="text"
-                                   ng-model="c.selectedRecord.current_priority"
-                                   readonly>
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.current_priority_display"
+                                readonly>
 
                         </div>
 
 
-                        <!-- STUDENT COUNT -->
-
-                        <div class="form-field">
+                        <div class="staff-form-field">
 
                             <label>
                                 Student Count
                             </label>
 
-                            <input type="text"
-                                   ng-model="c.selectedRecord.student_count"
-                                   readonly>
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.student_count"
+                                readonly>
 
                         </div>
 
 
-                        <!-- PROBLEM TYPE -->
+                        <div class="staff-form-field">
 
-                        <div class="form-field">
+                            <label>
+                                State
+                            </label>
+
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.state_display"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="staff-form-field">
+
+                            <label>
+                                Assignment Group
+                            </label>
+
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.assignment_group_display"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="staff-form-field">
 
                             <label>
                                 Problem Type
                             </label>
 
-                            <input type="text"
-                                   ng-model="c.selectedRecord.problem_type"
-                                   readonly>
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.problem_type_display"
+                                readonly>
 
                         </div>
 
 
-                        <!-- SHORT DESCRIPTION -->
-
-                        <div class="form-field full-width">
+                        <div class="staff-form-field">
 
                             <label>
                                 Short Description
                             </label>
 
-                            <textarea
+                            <input
+                                type="text"
                                 ng-model="c.selectedRecord.short_description"
                                 readonly>
-                            </textarea>
 
                         </div>
 
 
-                        <!-- USE CASE NUMBER -->
-
-                        <div class="form-field">
+                        <div class="staff-form-field">
 
                             <label>
                                 Use Case Number
                             </label>
 
-                            <input type="text"
-                                   ng-model="c.selectedRecord.use_case_number"
-                                   readonly>
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.use_case_number"
+                                readonly>
 
                         </div>
 
 
-                        <!-- MEAL TYPE -->
+                        <div class="staff-form-field">
 
-                        <div class="form-field">
+                            <label>
+                                Mess Hall
+                            </label>
+
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.mess_hall_display"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="staff-form-field">
 
                             <label>
                                 Meal Type
                             </label>
 
-                            <input type="text"
-                                   ng-model="c.selectedRecord.meal_type"
-                                   readonly>
-
-                        </div>
-
-
-                        <!-- PRIORITY REASON -->
-
-                        <div class="form-field full-width">
-
-                            <label>
-                                Priority Reason
-                            </label>
-
-                            <textarea
-                                ng-model="c.selectedRecord.priority_reason"
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.meal_type_display"
                                 readonly>
-                            </textarea>
 
                         </div>
 
 
-                        <!-- RECOMMENDED ACTIONS -->
-
-                        <div class="form-field full-width">
+                        <div class="staff-form-field">
 
                             <label>
-                                Recommended Actions
+                                Resolution Status
                             </label>
 
-                            <textarea
-                                ng-model="c.selectedRecord.recomended_actions"
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.resolution_status_display"
                                 readonly>
-                            </textarea>
 
                         </div>
-
-
-                        <!-- APPROVAL -->
-
-                        <div class="form-field editable-field">
-
-                            <label>
-                                Approval
-                                <span class="required-mark">*</span>
-                            </label>
-
-                            <select ng-model="c.selectedRecord.approval"
-                                    ng-change="c.approvalChanged()">
-
-                                <option value="not requested">
-                                    Not Requested
-                                </option>
-
-                                <option value="approved">
-                                    Approved
-                                </option>
-
-                                <option value="rejected">
-                                    Rejected
-                                </option>
-
-                            </select>
-
-                        </div>
-
-
-                        <!-- NOTES -->
-
-                        <div class="form-field full-width notes-field"
-                             ng-if="c.showNotesField">
-
-                            <label>
-
-                                Notes
-
-                                <span class="required-mark"
-                                      ng-if="c.selectedRecord.approval === 'rejected'">
-
-                                    *
-
-                                </span>
-
-                            </label>
-
-                            <textarea
-                                ng-model="c.selectedRecord.notes"
-                                ng-required="c.selectedRecord.approval === 'rejected'"
-                                placeholder="Enter the reason for rejection...">
-                            </textarea>
-
-                            <div class="field-help"
-                                 ng-if="c.selectedRecord.approval === 'rejected'">
-
-                                Notes are mandatory when the request is rejected.
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- ERROR -->
-
-                    <div class="form-error"
-                         ng-if="c.formError">
-
-                        {{c.formError}}
-
-                    </div>
-
-
-                    <!-- SUCCESS -->
-
-                    <div class="form-success"
-                         ng-if="c.formSuccess">
-
-                        {{c.formSuccess}}
 
                     </div>
 
                 </div>
 
 
-                <!-- ==========================================
-                     FORM FOOTER
-                     ========================================== -->
+                <!-- GUIDANCE -->
 
-                <div class="record-form-footer">
+                <div class="staff-form-section">
 
-                    <button class="cancel-button"
-                            ng-click="c.closeRecordForm()"
-                            ng-disabled="c.savingRecord">
-
-                        Cancel
-
-                    </button>
+                    <div class="staff-form-section-title">
+                        Task Guidance
+                    </div>
 
 
-                    <button class="save-button"
-                            ng-click="c.saveRecord()"
-                            ng-disabled="c.savingRecord">
+                    <div class="staff-form-field staff-full-field">
 
-                        <span ng-if="!c.savingRecord">
-                            Save & Close
-                        </span>
+                        <label>
+                            Priority Reason
+                        </label>
 
-                        <span ng-if="c.savingRecord">
-                            Saving...
-                        </span>
+                        <textarea
+                            ng-model="c.selectedRecord.priority_reason"
+                            readonly>
+                        </textarea>
 
-                    </button>
+                    </div>
+
+
+                    <div class="staff-form-field staff-full-field">
+
+                        <label>
+                            Recommended Actions
+                        </label>
+
+                        <textarea
+                            ng-model="c.selectedRecord.recomended_actions"
+                            readonly>
+                        </textarea>
+
+                    </div>
 
                 </div>
+
+
+                <!-- STAFF ACTION -->
+
+                <div class="staff-form-section">
+
+                    <div class="staff-form-section-title">
+                        Staff Action
+                    </div>
+
+
+                    <div class="staff-form-field staff-full-field">
+
+                        <label>
+                            Approval
+                        </label>
+
+                        <select
+                            class="staff-approval-select"
+                            ng-model="c.selectedRecord.approval"
+                            ng-change="c.updateNotesVisibility()">
+
+                            <option value="requested">
+                                Requested
+                            </option>
+
+                            <option value="approved">
+                                Approved
+                            </option>
+
+                            <option value="rejected">
+                                Rejected
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div
+                        class="staff-form-field staff-full-field"
+                        ng-if="c.notesVisible">
+
+                        <label>
+
+                            Notes
+
+                            <span class="staff-required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <textarea
+                            class="staff-notes"
+                            ng-model="c.selectedRecord.notes"
+                            ng-required="c.notesRequired"
+                            placeholder="Enter the reason or action taken...">
+                        </textarea>
+
+
+                        <small class="staff-field-help">
+
+                            Notes are mandatory when Approval is Approved or Rejected.
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="staff-modal-footer">
+
+                <button
+                    class="staff-cancel-button"
+                    ng-click="c.closeRecordForm()"
+                    ng-disabled="c.savingRecord">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    class="staff-save-button"
+                    ng-click="c.saveRecord()"
+                    ng-disabled="c.savingRecord">
+
+                    <span
+                        ng-if="!c.savingRecord">
+
+                        Save Changes
+
+                    </span>
+
+                    <span
+                        ng-if="c.savingRecord">
+
+                        Saving...
+
+                    </span>
+
+                </button>
 
             </div>
 

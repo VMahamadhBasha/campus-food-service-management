@@ -23,6 +23,7 @@
         <element choice="1" label="State" mandatory="true" max_length="40" name="status" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Resolved" value="resolved"/>
+                <element inactive_on_update="false" label="Not Resolved" value="not_resolved"/>
                 <element inactive_on_update="false" label="Monitoring" value="monitoring"/>
                 <element inactive_on_update="false" label="Active" value="active"/>
             </choice>

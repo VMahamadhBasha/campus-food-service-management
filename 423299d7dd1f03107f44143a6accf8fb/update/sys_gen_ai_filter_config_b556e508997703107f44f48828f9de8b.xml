@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_gen_ai_filter_config">
+    <sys_gen_ai_filter_config action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <document_id>9456e108997703107f44f48828f9de97</document_id>
+        <document_table>sys_cs_context_profile</document_table>
+        <filter display_value="Complaint">b968d9b09fb81210f29e21164b0a1cdc</filter>
+        <sys_class_name>sys_gen_ai_filter_config</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-03 06:34:53</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>b556e508997703107f44f48828f9de8b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_gen_ai_filter_config_b556e508997703107f44f48828f9de8b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-03 06:34:53</sys_updated_on>
+    </sys_gen_ai_filter_config>
+</record_update>

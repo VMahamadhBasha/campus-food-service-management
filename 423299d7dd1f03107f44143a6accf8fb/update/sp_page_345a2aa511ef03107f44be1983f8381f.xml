@@ -1,7 +1,214 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_page">
     <sp_page action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <css/>
+        <css>/* =========================================================&#13;
+   MEALCARE — PAGE CSS&#13;
+   Premium ServiceNow / Hackathon Presentation&#13;
+   HTML UNCHANGED&#13;
+   ========================================================= */&#13;
+&#13;
+html,&#13;
+body {&#13;
+  margin: 0 !important;&#13;
+  padding: 0 !important;&#13;
+&#13;
+  background: #F5F7F3 !important;&#13;
+  color: #173B38;&#13;
+&#13;
+  font-family:&#13;
+    Inter,&#13;
+    "Segoe UI",&#13;
+    Roboto,&#13;
+    Arial,&#13;
+    sans-serif;&#13;
+&#13;
+  overflow-x: hidden !important;&#13;
+&#13;
+  scroll-behavior: smooth;&#13;
+&#13;
+  -webkit-font-smoothing: antialiased;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SERVICENOW PAGE RESET&#13;
+   ========================================================= */&#13;
+&#13;
+body,&#13;
+.sp-page-root,&#13;
+.page,&#13;
+.main-content,&#13;
+.sp-content,&#13;
+.sp-page-root .container,&#13;
+.sp-page-root .container-fluid {&#13;
+  margin: 0 !important;&#13;
+  padding: 0 !important;&#13;
+&#13;
+  width: 100% !important;&#13;
+  max-width: none !important;&#13;
+&#13;
+  background: #F5F7F3 !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   REMOVE DEFAULT SERVICE NOW ROW GAPS&#13;
+   ========================================================= */&#13;
+&#13;
+.sp-page-root .row,&#13;
+.main-content .row {&#13;
+  margin-left: 0 !important;&#13;
+  margin-right: 0 !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FULL-WIDTH MEALCARE SECTIONS&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-hero,&#13;
+.cfa-welcome,&#13;
+.cfa-services,&#13;
+.cfa-about,&#13;
+.cfa-contact {&#13;
+&#13;
+  width: 100vw !important;&#13;
+  max-width: none !important;&#13;
+&#13;
+  margin-left:&#13;
+    calc(50% - 50vw) !important;&#13;
+&#13;
+  margin-right:&#13;
+    calc(50% - 50vw) !important;&#13;
+&#13;
+  box-sizing: border-box;&#13;
+&#13;
+  overflow: hidden;&#13;
+&#13;
+  position: relative;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   ANCHOR POSITION&#13;
+   Prevent ServiceNow navbar overlap&#13;
+   ========================================================= */&#13;
+&#13;
+#home,&#13;
+#services,&#13;
+#about,&#13;
+#contact {&#13;
+  scroll-margin-top: 90px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   GLOBAL BOX SIZING&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-hero *,&#13;
+.cfa-welcome *,&#13;
+.cfa-services *,&#13;
+.cfa-about *,&#13;
+.cfa-contact *,&#13;
+.cfa-hero *::before,&#13;
+.cfa-welcome *::before,&#13;
+.cfa-services *::before,&#13;
+.cfa-about *::before,&#13;
+.cfa-contact *::before,&#13;
+.cfa-hero *::after,&#13;
+.cfa-welcome *::after,&#13;
+.cfa-services *::after,&#13;
+.cfa-about *::after,&#13;
+.cfa-contact *::after {&#13;
+&#13;
+  box-sizing: border-box;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SELECTION&#13;
+   ========================================================= */&#13;
+&#13;
+::selection {&#13;
+  background: #123C3A;&#13;
+  color: #F7C56F;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SCROLLBAR&#13;
+   ========================================================= */&#13;
+&#13;
+::-webkit-scrollbar {&#13;
+  width: 8px;&#13;
+}&#13;
+&#13;
+::-webkit-scrollbar-track {&#13;
+  background: #E9EFEB;&#13;
+}&#13;
+&#13;
+::-webkit-scrollbar-thumb {&#13;
+  background: #123C3A;&#13;
+  border-radius: 20px;&#13;
+}&#13;
+&#13;
+::-webkit-scrollbar-thumb:hover {&#13;
+  background: #E89B3C;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   ACCESSIBILITY&#13;
+   ========================================================= */&#13;
+&#13;
+a:focus-visible,&#13;
+button:focus-visible {&#13;
+  outline:&#13;
+    3px solid #E89B3C !important;&#13;
+&#13;
+  outline-offset: 4px;&#13;
+&#13;
+  border-radius: 6px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   MOBILE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 767px) {&#13;
+&#13;
+  .cfa-hero,&#13;
+  .cfa-welcome,&#13;
+  .cfa-services,&#13;
+  .cfa-about,&#13;
+  .cfa-contact {&#13;
+&#13;
+    width: 100% !important;&#13;
+&#13;
+    margin-left: 0 !important;&#13;
+    margin-right: 0 !important;&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (prefers-reduced-motion: reduce) {&#13;
+&#13;
+  html {&#13;
+    scroll-behavior: auto !important;&#13;
+  }&#13;
+&#13;
+  *,&#13;
+  *::before,&#13;
+  *::after {&#13;
+    animation-duration: 0.01ms !important;&#13;
+    animation-iteration-count: 1 !important;&#13;
+    transition-duration: 0.01ms !important;&#13;
+  }&#13;
+&#13;
+}</css>
         <draft>false</draft>
         <dynamic_title_structure/>
         <human_readable_url_structure/>
@@ -16,14 +223,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-25 17:07:07</sys_created_on>
         <sys_id>345a2aa511ef03107f44be1983f8381f</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>11</sys_mod_count>
         <sys_name>food_services_landing</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sp_page_345a2aa511ef03107f44be1983f8381f</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-26 04:51:19</sys_updated_on>
+        <sys_updated_on>2026-10-03 05:26:13</sys_updated_on>
         <title>Food_Services_Landing</title>
         <use_seo_script>false</use_seo_script>
     </sp_page>

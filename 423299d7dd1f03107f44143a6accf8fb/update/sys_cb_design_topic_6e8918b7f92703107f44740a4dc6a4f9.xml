@@ -1,0 +1,1666 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_design_topic">
+    <sys_cb_design_topic action="INSERT_OR_UPDATE">
+        <compiled_topic display_value="cfms_staff_assistant">968918b7f92703107f44740a4dc6a4d3</compiled_topic>
+        <design_definition>{"type":"FlowTopic","triggers":[{"type":"Trigger","name":"adebaa929edc4688b5eadb2eb4ca1b5b","triggerType":"request","applicability":{"type":"Applicability","mode":"script","value":"true"},"id":"adebaa929edc4688b5eadb2eb4ca1b5b"}],"goals":[{"name":"primary","trigger_id":"adebaa929edc4688b5eadb2eb4ca1b5b","nodes":[{"type":"StartGoal","goal_id":"primary","greeting_msg":{"type":"String","mode":"string","value":""},"id":"fafcaf4870f6422d8fc0b29bc1d546c8","name":"Start","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","confirmation_msg":{"type":"String","mode":"string","value":""},"id":"ce6bf0d573774049928f17d0924c1851","name":"End","expert_mode":false},{"type":"TextOutputPrompt","value":[{"type":"String","mode":"string","value":"gs.getMessageLang(\"va:topic:10163ac3c8af03107f44b32b644b29d3:node:88d30a9e387c4f919ea3d42bbfdb4a1d:field:0\", vaContext.getRequesterLang())"}],"request_feedback":true,"isCollapsible":true,"id":"88d30a9e387c4f919ea3d42bbfdb4a1d","name":"Welcome_Staff","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"secure":false},{"type":"LibraryCall","library_topic_name":"Data Collector","library_topic_id":"4c19933e4322211006650464dbb8f22d","library_topic_is_template":false,"parameter-mappings":[{"parameter-name":"definition","value":{"type":"String","mode":"script","value":"(function execute() {\n        var config = {\n            configuration: {\"purpose\":\"{{0}}\",\"inputs\":[{\"name\":\"staff_menu\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{4}}\",\"skipMode\":\"'simple'\",\"skipCondition\":\"\\\"\\\"\",\"helpText\":\"false\",\"choices\":[{\"value\":\"view_assigned\",\"label\":\"View Assigned Complaints\"},{\"value\":\"view_details\",\"label\":\"View Complaint Details\"},{\"value\":\"update_status\",\"label\":\"Update Complaint Status\"},{\"value\":\"add_resolution\",\"label\":\"Add Resolution\"},{\"value\":\"view_pending\",\"label\":\"View Pending Complaints\"}],\"applicability\":\"\",\"validation\":\"\"}],\"instructions\":\"{{1}}\",\"advanced_parameters\":\"{{2}}\",\"callingTask\":\"{{3}}\",\"confirm_summary\":false,\"slots\":[{\"name\":\"complaint_number_input\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{5}}\",\"validation\":\"\"},{\"name\":\"complaint_number_update\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{6}}\",\"validation\":\"\"},{\"name\":\"complaint_status\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{7}}\",\"validation\":\"\",\"choices\":[{\"value\":\"new\",\"label\":\"New\"},{\"value\":\"in_progress\",\"label\":\"In Progress\"},{\"value\":\"on_hold\",\"label\":\"On Hold\"},{\"value\":\"resolved\",\"label\":\"Resolved\"},{\"value\":\"closed\",\"label\":\"Closed\"}]},{\"name\":\"resolution_complaint_number\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{8}}\",\"validation\":\"\"},{\"name\":\"resolution_details\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{9}}\",\"validation\":\"\"}],\"applicability\":\"\",\"classificationOverrides\":[]}\n        };\n        return JSON.stringify(config);\n    })()"},"metadata":{"type":"String","list":false,"items":[],"use_items":false}},{"parameter-name":"inputs","metadata":{"type":"String","list":true,"items":[{"type":"String","mode":"string","value":"Collect user input"},{"type":"String","mode":"string","value":""},{"type":"String","mode":"string","value":""},{"type":"String","mode":"script","value":"(function() { return vaSystem.getConversationTaskId()})()"},{"type":"String","mode":"string","value":"\"Please select an option to manage your food service requests:\""},{"type":"String","mode":"string","value":"\"Please enter the complaint number you want to view, for example INC0010012.\""},{"type":"String","mode":"string","value":"\"Please enter the complaint number you want to update. For example, INC0010012.\""},{"type":"String","mode":"string","value":"\"Please select the new status for this complaint:\""},{"type":"String","mode":"string","value":"\"Please enter the complaint number for which you want to add a resolution. For example, INC0010015.\""},{"type":"String","mode":"string","value":"\"Please enter the resolution details for this complaint.\""}],"use_items":true}}],"return-value-mappings":[{"main_topic_variable_namespace":"vaInputs","library_topic_return_parameter_name":"outputs","main_topic_mapped_variable_name":"ai_data_collector_618146df27184733bb8abefd63ab9591_output"}],"header_card_fields":[],"input_parameters_mode":"dynamic","output_parameters_mode":"dynamic","id":"618146df27184733bb8abefd63ab9591","name":"Staff_Menu","goal_id":"primary","expert_mode":false,"variableIds":["5a5ab8c0806947f3aa3006a995251ce5"]},{"type":"Decision","name":"Decision","branches":[{"type":"Branch","label":"View_Assigned","expression":{"type":"Applicability","mode":"query","value":"staff_menu=view_assigned"},"id":"55273cb3ead04bcf8b4b569dcb2b80a1","name":"View_Assigned","expert_mode":false},{"type":"Branch","label":"View_Details","expression":{"type":"Applicability","mode":"query","value":"staff_menu=view_details"},"id":"9b26c9697037433a803b5398cabd546f","name":"View_Details","expert_mode":false},{"type":"Branch","label":"Update_Status","expression":{"type":"Applicability","mode":"query","value":"staff_menu=update_status"},"id":"41f822c7e4fd458390d983f6fec382c8","name":"Update_Status","expert_mode":false},{"type":"Branch","label":"Add_Resolution","expression":{"type":"Applicability","mode":"query","value":"staff_menu=add_resolution"},"id":"c5ea329099c74f2c947b9a5684fa2b0f","name":"Add_Resolution","expert_mode":false},{"type":"Branch","label":"View_Pending","expression":{"type":"Applicability","mode":"query","value":"staff_menu=view_pending"},"id":"a9a7a1485fa94204a86d76bb3c5792f7","name":"View_Pending","expert_mode":false}],"id":"d84ddf36e2874f13a13b2a517f73770a","goal_id":"primary","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","id":"d59ac43b0f4a4c1db539bb2ae092eb1d","name":"ImplicitEnd__e3d7d14e120146f19b02b02058a46d21","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","id":"4b69afcfb18f4415b4283b37cb7fb4fe","name":"ImplicitEnd__0a98d64d83c041eb8abbbe95677133e6","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","id":"e4443128dbc14e289100c7499cba4d5f","name":"ImplicitEnd__750ec2f967f543c387fcf783d22272d4","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","id":"9ec8472f75c2463b84ce3328873db081","name":"ImplicitEnd__95683a228ce84638baa9f94d013e1c30","expert_mode":false},{"type":"CRUDAction","mode":"read","read_mode":"variable","query":"caller_id=a79046eb081f03107f447d6c83c8220b","variable_id":"05c5bd9b6d704220835e9f3d88d323d7","id":"d2ea185707c74dbdb12543e6ce4da34a","name":"Assigned_Complaints_Lookup","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"condition":{"type":"Condition","mode":"glide_query","value":"caller_id=a79046eb081f03107f447d6c83c8220b"}},{"type":"TableOutput","mode":"glide_record","conditionType":"simple","query":"caller_id=a79046eb081f03107f447d6c83c8220b","sortBy":"^ORDERBYnumber","table":"incident","title":{"type":"String","mode":"string","value":""},"columns":[{"name":"number","label":"Complaint Number"},{"name":"short_description","label":"Complaint"},{"name":"state","label":"Status"},{"name":"caller_id","label":"Student"}],"showColumnHeaders":true,"noResultsMessage":{"type":"String","mode":"string","value":"You currently have no assigned food service complaints."},"showLink":false,"id":"e69fa98fd46b4168880f4c91e183aa91","name":"Display_Assigned_Complaints","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false},{"type":"LibraryCall","library_topic_name":"Data Collector","library_topic_id":"4c19933e4322211006650464dbb8f22d","library_topic_is_template":false,"parameter-mappings":[{"parameter-name":"definition","value":{"type":"String","mode":"script","value":"(function execute() {\n        var config = {\n            configuration: {\"purpose\":\"{{0}}\",\"inputs\":[{\"name\":\"complaint_number_input\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{4}}\",\"skipMode\":\"'simple'\",\"skipCondition\":\"\\\"\\\"\",\"helpText\":\"false\",\"applicability\":\"\",\"validation\":\"\"}],\"instructions\":\"{{1}}\",\"advanced_parameters\":\"{{2}}\",\"callingTask\":\"{{3}}\",\"confirm_summary\":false,\"slots\":[{\"name\":\"staff_menu\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{5}}\",\"validation\":\"\",\"choices\":[{\"value\":\"view_assigned\",\"label\":\"View Assigned Complaints\"},{\"value\":\"view_details\",\"label\":\"View Complaint Details\"},{\"value\":\"update_status\",\"label\":\"Update Complaint Status\"},{\"value\":\"add_resolution\",\"label\":\"Add Resolution\"},{\"value\":\"view_pending\",\"label\":\"View Pending Complaints\"}]},{\"name\":\"complaint_number_update\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{6}}\",\"validation\":\"\"},{\"name\":\"complaint_status\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{7}}\",\"validation\":\"\",\"choices\":[{\"value\":\"new\",\"label\":\"New\"},{\"value\":\"in_progress\",\"label\":\"In Progress\"},{\"value\":\"on_hold\",\"label\":\"On Hold\"},{\"value\":\"resolved\",\"label\":\"Resolved\"},{\"value\":\"closed\",\"label\":\"Closed\"}]},{\"name\":\"resolution_complaint_number\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{8}}\",\"validation\":\"\"},{\"name\":\"resolution_details\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{9}}\",\"validation\":\"\"}],\"applicability\":\"\",\"classificationOverrides\":[]}\n        };\n        return JSON.stringify(config);\n    })()"},"metadata":{"type":"String","list":false,"items":[],"use_items":false}},{"parameter-name":"inputs","metadata":{"type":"String","list":true,"items":[{"type":"String","mode":"string","value":"Collect user input"},{"type":"String","mode":"string","value":""},{"type":"String","mode":"string","value":""},{"type":"String","mode":"script","value":"(function() { return vaSystem.getConversationTaskId()})()"},{"type":"String","mode":"string","value":"\"Please enter the complaint number you want to view, for example INC0010012.\""},{"type":"String","mode":"string","value":"\"Please select an option to manage your food service requests:\""},{"type":"String","mode":"string","value":"\"Please enter the complaint number you want to update. For example, INC0010012.\""},{"type":"String","mode":"string","value":"\"Please select the new status for this complaint:\""},{"type":"String","mode":"string","value":"\"Please enter the complaint number for which you want to add a resolution. For example, INC0010015.\""},{"type":"String","mode":"string","value":"\"Please enter the resolution details for this complaint.\""}],"use_items":true}}],"return-value-mappings":[{"main_topic_variable_namespace":"vaInputs","library_topic_return_parameter_name":"outputs","main_topic_mapped_variable_name":"ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output"}],"header_card_fields":[],"input_parameters_mode":"dynamic","output_parameters_mode":"dynamic","id":"c8d24bb155d94db28e7fb02dd742b51f","name":"Complaint_Number_Input","goal_id":"primary","expert_mode":false,"variableIds":["d9888e07a1864123a5dc9d723343d443"]},{"type":"CRUDAction","mode":"read","read_mode":"variable","query":"number=Complaint_Number_Input","variable_id":"47cf1425fbab40b389f4a13fc5373bf4","id":"d94628868686440787796552cde34ca4","name":"Complaint_Details_Lookup","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"condition":{"type":"Condition","mode":"glide_query","value":"number=Complaint_Number_Input"}},{"type":"LibraryCall","library_topic_name":"Data Collector","library_topic_id":"4c19933e4322211006650464dbb8f22d","library_topic_is_template":false,"parameter-mappings":[{"parameter-name":"definition","value":{"type":"String","mode":"script","value":"(function execute() {\n        var config = {\n            configuration: {\"purpose\":\"{{0}}\",\"inputs\":[{\"name\":\"complaint_number_update\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{4}}\",\"skipMode\":\"'simple'\",\"skipCondition\":\"\\\"\\\"\",\"helpText\":\"false\",\"applicability\":\"\",\"validation\":\"\"}],\"instructions\":\"{{1}}\",\"advanced_parameters\":\"{{2}}\",\"callingTask\":\"{{3}}\",\"confirm_summary\":false,\"slots\":[{\"name\":\"staff_menu\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{5}}\",\"validation\":\"\",\"choices\":[{\"value\":\"view_assigned\",\"label\":\"View Assigned Complaints\"},{\"value\":\"view_details\",\"label\":\"View Complaint Details\"},{\"value\":\"update_status\",\"label\":\"Update Complaint Status\"},{\"value\":\"add_resolution\",\"label\":\"Add Resolution\"},{\"value\":\"view_pending\",\"label\":\"View Pending Complaints\"}]},{\"name\":\"complaint_number_input\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{6}}\",\"validation\":\"\"},{\"name\":\"complaint_status\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{7}}\",\"validation\":\"\",\"choices\":[{\"value\":\"new\",\"label\":\"New\"},{\"value\":\"in_progress\",\"label\":\"In Progress\"},{\"value\":\"on_hold\",\"label\":\"On Hold\"},{\"value\":\"resolved\",\"label\":\"Resolved\"},{\"value\":\"closed\",\"label\":\"Closed\"}]},{\"name\":\"resolution_complaint_number\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{8}}\",\"validation\":\"\"},{\"name\":\"resolution_details\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{9}}\",\"validation\":\"\"}],\"applicability\":\"\",\"classificationOverrides\":[]}\n        };\n        return JSON.stringify(config);\n    })()"},"metadata":{"type":"String","list":false,"items":[],"use_items":false}},{"parameter-name":"inputs","metadata":{"type":"String","list":true,"items":[{"type":"String","mode":"string","value":"Collect user input"},{"type":"String","mode":"string","value":""},{"type":"String","mode":"string","value":""},{"type":"String","mode":"script","value":"(function() { return vaSystem.getConversationTaskId()})()"},{"type":"String","mode":"string","value":"\"Please enter the complaint number you want to update. For example, INC0010012.\""},{"type":"String","mode":"string","value":"\"Please select an option to manage your food service requests:\""},{"type":"String","mode":"string","value":"\"Please enter the complaint number you want to view, for example INC0010012.\""},{"type":"String","mode":"string","value":"\"Please select the new status for this complaint:\""},{"type":"String","mode":"string","value":"\"Please enter the complaint number for which you want to add a resolution. For example, INC0010015.\""},{"type":"String","mode":"string","value":"\"Please enter the resolution details for this complaint.\""}],"use_items":true}}],"return-value-mappings":[{"main_topic_variable_namespace":"vaInputs","library_topic_return_parameter_name":"outputs","main_topic_mapped_variable_name":"ai_data_collector_d326b177aedd46d8935030a72f6ab280_output"}],"header_card_fields":[],"input_parameters_mode":"dynamic","output_parameters_mode":"dynamic","id":"d326b177aedd46d8935030a72f6ab280","name":"Complaint_Number_Update","goal_id":"primary","expert_mode":false,"variableIds":["5774c8a6375c489c81810e89c541fd91"]},{"type":"CRUDAction","mode":"read","read_mode":"variable","query":"number={{vaInputs.complaint_number_update}}","variable_id":"b8f9016fc52f4bc0a093e5d7e77a8b57","id":"b97ad857ece54526913516f6705becfc","name":"Update_Complaint_Lookup","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"condition":{"type":"Condition","mode":"glide_query","value":"number={{vaInputs.complaint_number_update}}"}},{"type":"CRUDAction","mode":"update","query":"state={{vaInputs.complaint_status}}","variable_id":"b8f9016fc52f4bc0a093e5d7e77a8b57","id":"fdfeffde390b43fd8e5eb9d2ccd8667d","name":"Update_Complaint_Record","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"attachments":[{"type":"String","mode":"string","value":""}]},{"type":"LibraryCall","library_topic_name":"Data Collector","library_topic_id":"4c19933e4322211006650464dbb8f22d","library_topic_is_template":false,"parameter-mappings":[{"parameter-name":"definition","value":{"type":"String","mode":"script","value":"(function execute() {\n        var config = {\n            configuration: {\"purpose\":\"{{0}}\",\"inputs\":[{\"name\":\"complaint_status\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{4}}\",\"skipMode\":\"'simple'\",\"skipCondition\":\"\\\"\\\"\",\"helpText\":\"false\",\"choices\":[{\"value\":\"new\",\"label\":\"New\"},{\"value\":\"in_progress\",\"label\":\"In Progress\"},{\"value\":\"on_hold\",\"label\":\"On Hold\"},{\"value\":\"resolved\",\"label\":\"Resolved\"},{\"value\":\"closed\",\"label\":\"Closed\"}],\"applicability\":\"\",\"validation\":\"\"}],\"instructions\":\"{{1}}\",\"advanced_parameters\":\"{{2}}\",\"callingTask\":\"{{3}}\",\"confirm_summary\":false,\"slots\":[{\"name\":\"staff_menu\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{5}}\",\"validation\":\"\",\"choices\":[{\"value\":\"view_assigned\",\"label\":\"View Assigned Complaints\"},{\"value\":\"view_details\",\"label\":\"View Complaint Details\"},{\"value\":\"update_status\",\"label\":\"Update Complaint Status\"},{\"value\":\"add_resolution\",\"label\":\"Add Resolution\"},{\"value\":\"view_pending\",\"label\":\"View Pending Complaints\"}]},{\"name\":\"complaint_number_input\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{6}}\",\"validation\":\"\"},{\"name\":\"complaint_number_update\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{7}}\",\"validation\":\"\"},{\"name\":\"resolution_complaint_number\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{8}}\",\"validation\":\"\"},{\"name\":\"resolution_details\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{9}}\",\"validation\":\"\"}],\"applicability\":\"\",\"classificationOverrides\":[]}\n        };\n        return JSON.stringify(config);\n    })()"},"metadata":{"type":"String","list":false,"items":[],"use_items":false}},{"parameter-name":"inputs","metadata":{"type":"String","list":true,"items":[{"type":"String","mode":"string","value":"Collect user input"},{"type":"String","mode":"string","value":""},{"type":"String","mode":"string","value":""},{"type":"String","mode":"script","value":"(function() { return vaSystem.getConversationTaskId()})()"},{"type":"String","mode":"string","value":"\"Please select the new status for this complaint:\""},{"type":"String","mode":"string","value":"\"Please select an option to manage your food service requests:\""},{"type":"String","mode":"string","value":"\"Please enter the complaint number you want to view, for example INC0010012.\""},{"type":"String","mode":"string","value":"\"Please enter the complaint number you want to update. For example, INC0010012.\""},{"type":"String","mode":"string","value":"\"Please enter the complaint number for which you want to add a resolution. For example, INC0010015.\""},{"type":"String","mode":"string","value":"\"Please enter the resolution details for this complaint.\""}],"use_items":true}}],"return-value-mappings":[{"main_topic_variable_namespace":"vaInputs","library_topic_return_parameter_name":"outputs","main_topic_mapped_variable_name":"ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output"}],"header_card_fields":[],"input_parameters_mode":"dynamic","output_parameters_mode":"dynamic","id":"5749506f8aac4fcaadc1d5dc4fc9d1d0","name":"Complaint_Status","goal_id":"primary","expert_mode":false,"variableIds":["df33d5136ff74e76afe1e73bb903fc2c"]},{"type":"LibraryCall","library_topic_name":"Data Collector","library_topic_id":"4c19933e4322211006650464dbb8f22d","library_topic_is_template":false,"parameter-mappings":[{"parameter-name":"definition","value":{"type":"String","mode":"script","value":"(function execute() {\n        var config = {\n            configuration: {\"purpose\":\"{{0}}\",\"inputs\":[{\"name\":\"resolution_complaint_number\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{4}}\",\"skipMode\":\"'simple'\",\"skipCondition\":\"\\\"\\\"\",\"helpText\":\"false\",\"applicability\":\"\",\"validation\":\"\"},{\"name\":\"resolution_details\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{5}}\",\"skipMode\":\"'simple'\",\"skipCondition\":\"\\\"\\\"\",\"helpText\":\"false\",\"applicability\":\"\",\"validation\":\"\"}],\"instructions\":\"{{1}}\",\"advanced_parameters\":\"{{2}}\",\"callingTask\":\"{{3}}\",\"confirm_summary\":false,\"slots\":[{\"name\":\"staff_menu\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{6}}\",\"validation\":\"\",\"choices\":[{\"value\":\"view_assigned\",\"label\":\"View Assigned Complaints\"},{\"value\":\"view_details\",\"label\":\"View Complaint Details\"},{\"value\":\"update_status\",\"label\":\"Update Complaint Status\"},{\"value\":\"add_resolution\",\"label\":\"Add Resolution\"},{\"value\":\"view_pending\",\"label\":\"View Pending Complaints\"}]},{\"name\":\"complaint_number_input\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{7}}\",\"validation\":\"\"},{\"name\":\"complaint_number_update\",\"type\":\"string\",\"discoverable\":false,\"description\":\"{{8}}\",\"validation\":\"\"},{\"name\":\"complaint_status\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{9}}\",\"validation\":\"\",\"choices\":[{\"value\":\"new\",\"label\":\"New\"},{\"value\":\"in_progress\",\"label\":\"In Progress\"},{\"value\":\"on_hold\",\"label\":\"On Hold\"},{\"value\":\"resolved\",\"label\":\"Resolved\"},{\"value\":\"closed\",\"label\":\"Closed\"}]}],\"applicability\":\"\",\"classificationOverrides\":[]}\n        };\n        return JSON.stringify(config);\n    })()"},"metadata":{"type":"String","list":false,"items":[],"use_items":false}},{"parameter-name":"inputs","metadata":{"type":"String","list":true,"items":[{"type":"String","mode":"string","value":""},{"type":"String","mode":"string","value":""},{"type":"String","mode":"string","value":""},{"type":"String","mode":"script","value":"(function() { return vaSystem.getConversationTaskId()})()"},{"type":"String","mode":"string","value":"\"Please enter the complaint number for which you want to add a resolution. For example, INC0010015.\""},{"type":"String","mode":"string","value":"\"Please enter the resolution details for this complaint.\""},{"type":"String","mode":"string","value":"\"Please select an option to manage your food service requests:\""},{"type":"String","mode":"string","value":"\"Please enter the complaint number you want to view, for example INC0010012.\""},{"type":"String","mode":"string","value":"\"Please enter the complaint number you want to update. For example, INC0010012.\""},{"type":"String","mode":"string","value":"\"Please select the new status for this complaint:\""}],"use_items":true}}],"return-value-mappings":[{"main_topic_variable_namespace":"vaInputs","library_topic_return_parameter_name":"outputs","main_topic_mapped_variable_name":"ai_data_collector_46341ee995a4499bbc00d1c911f01236_output"}],"header_card_fields":[],"input_parameters_mode":"dynamic","output_parameters_mode":"dynamic","id":"46341ee995a4499bbc00d1c911f01236","name":"Resolution_Complaint_Number","goal_id":"primary","expert_mode":false,"variableIds":["80b382f790264a71a97163c5608318b9","98071153fb7040948522f387e79951a5"]},{"type":"CRUDAction","mode":"read","read_mode":"variable","query":"number={{vaInputs.resolution_complaint_number}}","variable_id":"9c0204eb718f484ea28d933d36b4b615","id":"ecc90ac9674e42afb026843cf5aa7a44","name":"Resolution_Complaint_Lookup","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"condition":{"type":"Condition","mode":"glide_query","value":"number={{vaInputs.resolution_complaint_number}}"}},{"type":"CRUDAction","mode":"update","query":"close_notes={{vaInputs.resolution_details}}^state=6","variable_id":"9c0204eb718f484ea28d933d36b4b615","id":"871504bbff1748709bdf23c58c56825a","name":"Update_Resolution_Record","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"attachments":[{"type":"String","mode":"string","value":""}]},{"type":"TextOutputPrompt","value":[{"type":"String","mode":"string","value":"gs.getMessageLang(\"✅ The resolution has been added successfully, and the complaint has been marked as Resolved.\", vaContext.getRequesterLang())"}],"request_feedback":true,"isCollapsible":true,"id":"3c66833ca65a4aac855f8ffb5ab7c7f3","name":"Resolution_Success","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"secure":false},{"type":"CRUDAction","mode":"read","read_mode":"variable","query":"state=6","variable_id":"5b272527bcb747fbb8f79a7d7bf219d9","id":"ef7dec31fa464b08a2340d5f01ffa9a7","name":"Pending_Complaints_Lookup","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"condition":{"type":"Condition","mode":"glide_query","value":"state=6"}},{"type":"TableOutput","mode":"glide_record","conditionType":"simple","query":"state=6^NQstate=7","sortBy":"^ORDERBYnumber","table":"incident","title":{"type":"String","mode":"string","value":""},"columns":[{"name":"number","label":"Complaint Number"},{"name":"short_description","label":"Complaint"},{"name":"state","label":"Status"},{"name":"priority","label":"Priority"}],"showColumnHeaders":true,"noResultsMessage":{"type":"String","mode":"string","value":"You currently have no pending food service complaints."},"showLink":false,"id":"d638bf615c164b37a4f351f863284a84","name":"Display_Pending_Complaints","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false},{"type":"ScriptedAction","script":"(function execute() {\n                    var mappings = {\"staff_menu\":\"staff_menu\",\"ai_data_collector_618146df27184733bb8abefd63ab9591_output\":\"ai_data_collector_618146df27184733bb8abefd63ab9591_output\"};\n                    var output = JSON.parse(vaInputs['ai_data_collector_618146df27184733bb8abefd63ab9591_output']);\n                    var variables = {\"user\":{\"category\":\"vaInputs\",\"id\":\"current-user\",\"label\":\"User\",\"name\":\"user\",\"table\":\"sys_user\",\"varType\":\"reference\"},\"ai_data_collector_618146df27184733bb8abefd63ab9591_output\":{\"id\":\"e3942ef72e3249e7aba9df30ebb60483\",\"name\":\"ai_data_collector_618146df27184733bb8abefd63ab9591_output\",\"label\":\"Ai_data_collector_618146df27184733bb8abefd63ab9591_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"staff_menu\":{\"id\":\"5a5ab8c0806947f3aa3006a995251ce5\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Staff_Menu\",\"name\":\"staff_menu\",\"choices\":[{\"label\":\"View Assigned Complaints\",\"value\":\"view_assigned\"},{\"label\":\"View Complaint Details\",\"value\":\"view_details\"},{\"label\":\"Update Complaint Status\",\"value\":\"update_status\",\"checked\":true,\"meta\":{}},{\"label\":\"Add Resolution\",\"value\":\"add_resolution\",\"checked\":true,\"meta\":{}},{\"label\":\"View Pending Complaints\",\"value\":\"view_pending\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"618146df27184733bb8abefd63ab9591\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"assigned_complaints_lookup\":{\"id\":\"05c5bd9b6d704220835e9f3d88d323d7\",\"name\":\"assigned_complaints_lookup\",\"label\":\"Assigned_Complaints_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"d2ea185707c74dbdb12543e6ce4da34a\",\"isHidden\":false},\"ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\":{\"id\":\"a45cf13da07048e0ba6643a296ef41f2\",\"name\":\"ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\",\"label\":\"Ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_number_input\":{\"id\":\"d9888e07a1864123a5dc9d723343d443\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Complaint_Number_Input\",\"name\":\"complaint_number_input\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"c8d24bb155d94db28e7fb02dd742b51f\",\"isHidden\":false,\"description\":\"\"},\"complaint_details_lookup\":{\"id\":\"47cf1425fbab40b389f4a13fc5373bf4\",\"name\":\"complaint_details_lookup\",\"label\":\"Complaint_Details_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"d94628868686440787796552cde34ca4\",\"isHidden\":false},\"ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\":{\"id\":\"9cd6061f72c741a89cbb9aeb7c8df427\",\"name\":\"ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\",\"label\":\"Ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_number_update\":{\"id\":\"5774c8a6375c489c81810e89c541fd91\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Complaint_Number_Update\",\"name\":\"complaint_number_update\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"d326b177aedd46d8935030a72f6ab280\",\"isHidden\":false,\"description\":\"\"},\"update_complaint_lookup\":{\"id\":\"b8f9016fc52f4bc0a093e5d7e77a8b57\",\"name\":\"update_complaint_lookup\",\"label\":\"Update_Complaint_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"b97ad857ece54526913516f6705becfc\",\"isHidden\":false},\"update_complaint_record\":{\"id\":\"a68a3d28d0e34288a41781809827428a\",\"name\":\"update_complaint_record\",\"label\":\"Update_Complaint_Record\",\"varType\":\"reference\",\"table\":\"incident\",\"inactive\":true,\"category\":\"vaInputs\",\"nodeId\":\"fdfeffde390b43fd8e5eb9d2ccd8667d\",\"isHidden\":false},\"ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\":{\"id\":\"cd79aa12a60243c2aa65ac2f8d6bbdc7\",\"name\":\"ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\",\"label\":\"Ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_status\":{\"id\":\"df33d5136ff74e76afe1e73bb903fc2c\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Complaint_Status\",\"name\":\"complaint_status\",\"choices\":[{\"label\":\"New\",\"value\":\"new\"},{\"label\":\"In Progress\",\"value\":\"in_progress\"},{\"label\":\"On Hold\",\"value\":\"on_hold\",\"checked\":true,\"meta\":{}},{\"label\":\"Resolved\",\"value\":\"resolved\",\"checked\":true,\"meta\":{}},{\"label\":\"Closed\",\"value\":\"closed\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"5749506f8aac4fcaadc1d5dc4fc9d1d0\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\":{\"id\":\"3de1064cb8f44d97b187aa0c24a248a2\",\"name\":\"ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\",\"label\":\"Ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"resolution_complaint_number\":{\"id\":\"80b382f790264a71a97163c5608318b9\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Resolution_Complaint_Number\",\"name\":\"resolution_complaint_number\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"46341ee995a4499bbc00d1c911f01236\",\"isHidden\":false,\"description\":\"\"},\"ai_data_collector_5dc68168a8d64b398315abcfee045cda_output\":{\"id\":\"31c54d62a1774babaf010caabbb20745\",\"name\":\"ai_data_collector_5dc68168a8d64b398315abcfee045cda_output\",\"label\":\"Ai_data_collector_5dc68168a8d64b398315abcfee045cda_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"resolution_details\":{\"id\":\"98071153fb7040948522f387e79951a5\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Resolution_Details\",\"name\":\"resolution_details\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"5dc68168a8d64b398315abcfee045cda\",\"isHidden\":false,\"description\":\"\"},\"resolution_complaint_lookup\":{\"id\":\"9c0204eb718f484ea28d933d36b4b615\",\"name\":\"resolution_complaint_lookup\",\"label\":\"Resolution_Complaint_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"ecc90ac9674e42afb026843cf5aa7a44\",\"isHidden\":false},\"update_resolution_record\":{\"id\":\"2a89358178d24db29789d8f899ce4753\",\"name\":\"update_resolution_record\",\"label\":\"Update_Resolution_Record\",\"varType\":\"reference\",\"table\":\"\",\"inactive\":true,\"category\":\"vaInputs\",\"nodeId\":\"871504bbff1748709bdf23c58c56825a\",\"isHidden\":false},\"pending_complaints_lookup\":{\"id\":\"5b272527bcb747fbb8f79a7d7bf219d9\",\"name\":\"pending_complaints_lookup\",\"label\":\"Pending_Complaints_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"ef7dec31fa464b08a2340d5f01ffa9a7\",\"isHidden\":false}}\n                    Object.keys(output).forEach(function(key) {\n                        var mappedKey = mappings[key];\n                        if (!vaInputs[mappedKey]) {vaInputs.initialize(mappedKey);}\n                        var isMultiSelect = variables[mappedKey] &amp;&amp; variables[mappedKey].varType === 'array.reference';\n                        if (isMultiSelect) {vaInputs[mappedKey] = output[key] ? JSON.parse(output[key]) : '';}\n                        else {vaInputs[mappedKey] = output[key];}\n                    });\n                })()","id":"4690588826b947b18664d7b0cf35616c","name":"618146df27184733bb8abefd63ab9591_ai_data_collector_output_handler","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false},{"type":"ScriptedAction","script":"(function execute() {\n                    var mappings = {\"complaint_number_input\":\"complaint_number_input\",\"ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\":\"ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\"};\n                    var output = JSON.parse(vaInputs['ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output']);\n                    var variables = {\"user\":{\"category\":\"vaInputs\",\"id\":\"current-user\",\"label\":\"User\",\"name\":\"user\",\"table\":\"sys_user\",\"varType\":\"reference\"},\"ai_data_collector_618146df27184733bb8abefd63ab9591_output\":{\"id\":\"e3942ef72e3249e7aba9df30ebb60483\",\"name\":\"ai_data_collector_618146df27184733bb8abefd63ab9591_output\",\"label\":\"Ai_data_collector_618146df27184733bb8abefd63ab9591_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"staff_menu\":{\"id\":\"5a5ab8c0806947f3aa3006a995251ce5\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Staff_Menu\",\"name\":\"staff_menu\",\"choices\":[{\"label\":\"View Assigned Complaints\",\"value\":\"view_assigned\"},{\"label\":\"View Complaint Details\",\"value\":\"view_details\"},{\"label\":\"Update Complaint Status\",\"value\":\"update_status\",\"checked\":true,\"meta\":{}},{\"label\":\"Add Resolution\",\"value\":\"add_resolution\",\"checked\":true,\"meta\":{}},{\"label\":\"View Pending Complaints\",\"value\":\"view_pending\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"618146df27184733bb8abefd63ab9591\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"assigned_complaints_lookup\":{\"id\":\"05c5bd9b6d704220835e9f3d88d323d7\",\"name\":\"assigned_complaints_lookup\",\"label\":\"Assigned_Complaints_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"d2ea185707c74dbdb12543e6ce4da34a\",\"isHidden\":false},\"ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\":{\"id\":\"a45cf13da07048e0ba6643a296ef41f2\",\"name\":\"ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\",\"label\":\"Ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_number_input\":{\"id\":\"d9888e07a1864123a5dc9d723343d443\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Complaint_Number_Input\",\"name\":\"complaint_number_input\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"c8d24bb155d94db28e7fb02dd742b51f\",\"isHidden\":false,\"description\":\"\"},\"complaint_details_lookup\":{\"id\":\"47cf1425fbab40b389f4a13fc5373bf4\",\"name\":\"complaint_details_lookup\",\"label\":\"Complaint_Details_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"d94628868686440787796552cde34ca4\",\"isHidden\":false},\"ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\":{\"id\":\"9cd6061f72c741a89cbb9aeb7c8df427\",\"name\":\"ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\",\"label\":\"Ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_number_update\":{\"id\":\"5774c8a6375c489c81810e89c541fd91\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Complaint_Number_Update\",\"name\":\"complaint_number_update\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"d326b177aedd46d8935030a72f6ab280\",\"isHidden\":false,\"description\":\"\"},\"update_complaint_lookup\":{\"id\":\"b8f9016fc52f4bc0a093e5d7e77a8b57\",\"name\":\"update_complaint_lookup\",\"label\":\"Update_Complaint_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"b97ad857ece54526913516f6705becfc\",\"isHidden\":false},\"update_complaint_record\":{\"id\":\"a68a3d28d0e34288a41781809827428a\",\"name\":\"update_complaint_record\",\"label\":\"Update_Complaint_Record\",\"varType\":\"reference\",\"table\":\"incident\",\"inactive\":true,\"category\":\"vaInputs\",\"nodeId\":\"fdfeffde390b43fd8e5eb9d2ccd8667d\",\"isHidden\":false},\"ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\":{\"id\":\"cd79aa12a60243c2aa65ac2f8d6bbdc7\",\"name\":\"ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\",\"label\":\"Ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_status\":{\"id\":\"df33d5136ff74e76afe1e73bb903fc2c\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Complaint_Status\",\"name\":\"complaint_status\",\"choices\":[{\"label\":\"New\",\"value\":\"new\"},{\"label\":\"In Progress\",\"value\":\"in_progress\"},{\"label\":\"On Hold\",\"value\":\"on_hold\",\"checked\":true,\"meta\":{}},{\"label\":\"Resolved\",\"value\":\"resolved\",\"checked\":true,\"meta\":{}},{\"label\":\"Closed\",\"value\":\"closed\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"5749506f8aac4fcaadc1d5dc4fc9d1d0\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\":{\"id\":\"3de1064cb8f44d97b187aa0c24a248a2\",\"name\":\"ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\",\"label\":\"Ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"resolution_complaint_number\":{\"id\":\"80b382f790264a71a97163c5608318b9\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Resolution_Complaint_Number\",\"name\":\"resolution_complaint_number\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"46341ee995a4499bbc00d1c911f01236\",\"isHidden\":false,\"description\":\"\"},\"ai_data_collector_5dc68168a8d64b398315abcfee045cda_output\":{\"id\":\"31c54d62a1774babaf010caabbb20745\",\"name\":\"ai_data_collector_5dc68168a8d64b398315abcfee045cda_output\",\"label\":\"Ai_data_collector_5dc68168a8d64b398315abcfee045cda_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"resolution_details\":{\"id\":\"98071153fb7040948522f387e79951a5\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Resolution_Details\",\"name\":\"resolution_details\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"5dc68168a8d64b398315abcfee045cda\",\"isHidden\":false,\"description\":\"\"},\"resolution_complaint_lookup\":{\"id\":\"9c0204eb718f484ea28d933d36b4b615\",\"name\":\"resolution_complaint_lookup\",\"label\":\"Resolution_Complaint_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"ecc90ac9674e42afb026843cf5aa7a44\",\"isHidden\":false},\"update_resolution_record\":{\"id\":\"2a89358178d24db29789d8f899ce4753\",\"name\":\"update_resolution_record\",\"label\":\"Update_Resolution_Record\",\"varType\":\"reference\",\"table\":\"\",\"inactive\":true,\"category\":\"vaInputs\",\"nodeId\":\"871504bbff1748709bdf23c58c56825a\",\"isHidden\":false},\"pending_complaints_lookup\":{\"id\":\"5b272527bcb747fbb8f79a7d7bf219d9\",\"name\":\"pending_complaints_lookup\",\"label\":\"Pending_Complaints_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"ef7dec31fa464b08a2340d5f01ffa9a7\",\"isHidden\":false}}\n                    Object.keys(output).forEach(function(key) {\n                        var mappedKey = mappings[key];\n                        if (!vaInputs[mappedKey]) {vaInputs.initialize(mappedKey);}\n                        var isMultiSelect = variables[mappedKey] &amp;&amp; variables[mappedKey].varType === 'array.reference';\n                        if (isMultiSelect) {vaInputs[mappedKey] = output[key] ? JSON.parse(output[key]) : '';}\n                        else {vaInputs[mappedKey] = output[key];}\n                    });\n                })()","id":"fb475ce8d3ef45c5a34642bc28fd927f","name":"c8d24bb155d94db28e7fb02dd742b51f_ai_data_collector_output_handler","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false},{"type":"ScriptedAction","script":"(function execute() {\n                    var mappings = {\"complaint_number_update\":\"complaint_number_update\",\"ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\":\"ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\"};\n                    var output = JSON.parse(vaInputs['ai_data_collector_d326b177aedd46d8935030a72f6ab280_output']);\n                    var variables = {\"user\":{\"category\":\"vaInputs\",\"id\":\"current-user\",\"label\":\"User\",\"name\":\"user\",\"table\":\"sys_user\",\"varType\":\"reference\"},\"ai_data_collector_618146df27184733bb8abefd63ab9591_output\":{\"id\":\"e3942ef72e3249e7aba9df30ebb60483\",\"name\":\"ai_data_collector_618146df27184733bb8abefd63ab9591_output\",\"label\":\"Ai_data_collector_618146df27184733bb8abefd63ab9591_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"staff_menu\":{\"id\":\"5a5ab8c0806947f3aa3006a995251ce5\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Staff_Menu\",\"name\":\"staff_menu\",\"choices\":[{\"label\":\"View Assigned Complaints\",\"value\":\"view_assigned\"},{\"label\":\"View Complaint Details\",\"value\":\"view_details\"},{\"label\":\"Update Complaint Status\",\"value\":\"update_status\",\"checked\":true,\"meta\":{}},{\"label\":\"Add Resolution\",\"value\":\"add_resolution\",\"checked\":true,\"meta\":{}},{\"label\":\"View Pending Complaints\",\"value\":\"view_pending\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"618146df27184733bb8abefd63ab9591\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"assigned_complaints_lookup\":{\"id\":\"05c5bd9b6d704220835e9f3d88d323d7\",\"name\":\"assigned_complaints_lookup\",\"label\":\"Assigned_Complaints_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"d2ea185707c74dbdb12543e6ce4da34a\",\"isHidden\":false},\"ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\":{\"id\":\"a45cf13da07048e0ba6643a296ef41f2\",\"name\":\"ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\",\"label\":\"Ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_number_input\":{\"id\":\"d9888e07a1864123a5dc9d723343d443\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Complaint_Number_Input\",\"name\":\"complaint_number_input\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"c8d24bb155d94db28e7fb02dd742b51f\",\"isHidden\":false,\"description\":\"\"},\"complaint_details_lookup\":{\"id\":\"47cf1425fbab40b389f4a13fc5373bf4\",\"name\":\"complaint_details_lookup\",\"label\":\"Complaint_Details_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"d94628868686440787796552cde34ca4\",\"isHidden\":false},\"ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\":{\"id\":\"9cd6061f72c741a89cbb9aeb7c8df427\",\"name\":\"ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\",\"label\":\"Ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_number_update\":{\"id\":\"5774c8a6375c489c81810e89c541fd91\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Complaint_Number_Update\",\"name\":\"complaint_number_update\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"d326b177aedd46d8935030a72f6ab280\",\"isHidden\":false,\"description\":\"\"},\"update_complaint_lookup\":{\"id\":\"b8f9016fc52f4bc0a093e5d7e77a8b57\",\"name\":\"update_complaint_lookup\",\"label\":\"Update_Complaint_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"b97ad857ece54526913516f6705becfc\",\"isHidden\":false},\"update_complaint_record\":{\"id\":\"a68a3d28d0e34288a41781809827428a\",\"name\":\"update_complaint_record\",\"label\":\"Update_Complaint_Record\",\"varType\":\"reference\",\"table\":\"incident\",\"inactive\":true,\"category\":\"vaInputs\",\"nodeId\":\"fdfeffde390b43fd8e5eb9d2ccd8667d\",\"isHidden\":false},\"ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\":{\"id\":\"cd79aa12a60243c2aa65ac2f8d6bbdc7\",\"name\":\"ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\",\"label\":\"Ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_status\":{\"id\":\"df33d5136ff74e76afe1e73bb903fc2c\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Complaint_Status\",\"name\":\"complaint_status\",\"choices\":[{\"label\":\"New\",\"value\":\"new\"},{\"label\":\"In Progress\",\"value\":\"in_progress\"},{\"label\":\"On Hold\",\"value\":\"on_hold\",\"checked\":true,\"meta\":{}},{\"label\":\"Resolved\",\"value\":\"resolved\",\"checked\":true,\"meta\":{}},{\"label\":\"Closed\",\"value\":\"closed\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"5749506f8aac4fcaadc1d5dc4fc9d1d0\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\":{\"id\":\"3de1064cb8f44d97b187aa0c24a248a2\",\"name\":\"ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\",\"label\":\"Ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"resolution_complaint_number\":{\"id\":\"80b382f790264a71a97163c5608318b9\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Resolution_Complaint_Number\",\"name\":\"resolution_complaint_number\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"46341ee995a4499bbc00d1c911f01236\",\"isHidden\":false,\"description\":\"\"},\"ai_data_collector_5dc68168a8d64b398315abcfee045cda_output\":{\"id\":\"31c54d62a1774babaf010caabbb20745\",\"name\":\"ai_data_collector_5dc68168a8d64b398315abcfee045cda_output\",\"label\":\"Ai_data_collector_5dc68168a8d64b398315abcfee045cda_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"resolution_details\":{\"id\":\"98071153fb7040948522f387e79951a5\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Resolution_Details\",\"name\":\"resolution_details\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"5dc68168a8d64b398315abcfee045cda\",\"isHidden\":false,\"description\":\"\"},\"resolution_complaint_lookup\":{\"id\":\"9c0204eb718f484ea28d933d36b4b615\",\"name\":\"resolution_complaint_lookup\",\"label\":\"Resolution_Complaint_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"ecc90ac9674e42afb026843cf5aa7a44\",\"isHidden\":false},\"update_resolution_record\":{\"id\":\"2a89358178d24db29789d8f899ce4753\",\"name\":\"update_resolution_record\",\"label\":\"Update_Resolution_Record\",\"varType\":\"reference\",\"table\":\"\",\"inactive\":true,\"category\":\"vaInputs\",\"nodeId\":\"871504bbff1748709bdf23c58c56825a\",\"isHidden\":false},\"pending_complaints_lookup\":{\"id\":\"5b272527bcb747fbb8f79a7d7bf219d9\",\"name\":\"pending_complaints_lookup\",\"label\":\"Pending_Complaints_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"ef7dec31fa464b08a2340d5f01ffa9a7\",\"isHidden\":false}}\n                    Object.keys(output).forEach(function(key) {\n                        var mappedKey = mappings[key];\n                        if (!vaInputs[mappedKey]) {vaInputs.initialize(mappedKey);}\n                        var isMultiSelect = variables[mappedKey] &amp;&amp; variables[mappedKey].varType === 'array.reference';\n                        if (isMultiSelect) {vaInputs[mappedKey] = output[key] ? JSON.parse(output[key]) : '';}\n                        else {vaInputs[mappedKey] = output[key];}\n                    });\n                })()","id":"0a557800ed2b49298eea6e15f9865b2f","name":"d326b177aedd46d8935030a72f6ab280_ai_data_collector_output_handler","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false},{"type":"ScriptedAction","script":"(function execute() {\n                    var mappings = {\"complaint_status\":\"complaint_status\",\"ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\":\"ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\"};\n                    var output = JSON.parse(vaInputs['ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output']);\n                    var variables = {\"user\":{\"category\":\"vaInputs\",\"id\":\"current-user\",\"label\":\"User\",\"name\":\"user\",\"table\":\"sys_user\",\"varType\":\"reference\"},\"ai_data_collector_618146df27184733bb8abefd63ab9591_output\":{\"id\":\"e3942ef72e3249e7aba9df30ebb60483\",\"name\":\"ai_data_collector_618146df27184733bb8abefd63ab9591_output\",\"label\":\"Ai_data_collector_618146df27184733bb8abefd63ab9591_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"staff_menu\":{\"id\":\"5a5ab8c0806947f3aa3006a995251ce5\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Staff_Menu\",\"name\":\"staff_menu\",\"choices\":[{\"label\":\"View Assigned Complaints\",\"value\":\"view_assigned\"},{\"label\":\"View Complaint Details\",\"value\":\"view_details\"},{\"label\":\"Update Complaint Status\",\"value\":\"update_status\",\"checked\":true,\"meta\":{}},{\"label\":\"Add Resolution\",\"value\":\"add_resolution\",\"checked\":true,\"meta\":{}},{\"label\":\"View Pending Complaints\",\"value\":\"view_pending\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"618146df27184733bb8abefd63ab9591\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"assigned_complaints_lookup\":{\"id\":\"05c5bd9b6d704220835e9f3d88d323d7\",\"name\":\"assigned_complaints_lookup\",\"label\":\"Assigned_Complaints_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"d2ea185707c74dbdb12543e6ce4da34a\",\"isHidden\":false},\"ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\":{\"id\":\"a45cf13da07048e0ba6643a296ef41f2\",\"name\":\"ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\",\"label\":\"Ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_number_input\":{\"id\":\"d9888e07a1864123a5dc9d723343d443\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Complaint_Number_Input\",\"name\":\"complaint_number_input\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"c8d24bb155d94db28e7fb02dd742b51f\",\"isHidden\":false,\"description\":\"\"},\"complaint_details_lookup\":{\"id\":\"47cf1425fbab40b389f4a13fc5373bf4\",\"name\":\"complaint_details_lookup\",\"label\":\"Complaint_Details_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"d94628868686440787796552cde34ca4\",\"isHidden\":false},\"ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\":{\"id\":\"9cd6061f72c741a89cbb9aeb7c8df427\",\"name\":\"ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\",\"label\":\"Ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_number_update\":{\"id\":\"5774c8a6375c489c81810e89c541fd91\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Complaint_Number_Update\",\"name\":\"complaint_number_update\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"d326b177aedd46d8935030a72f6ab280\",\"isHidden\":false,\"description\":\"\"},\"update_complaint_lookup\":{\"id\":\"b8f9016fc52f4bc0a093e5d7e77a8b57\",\"name\":\"update_complaint_lookup\",\"label\":\"Update_Complaint_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"b97ad857ece54526913516f6705becfc\",\"isHidden\":false},\"update_complaint_record\":{\"id\":\"a68a3d28d0e34288a41781809827428a\",\"name\":\"update_complaint_record\",\"label\":\"Update_Complaint_Record\",\"varType\":\"reference\",\"table\":\"incident\",\"inactive\":true,\"category\":\"vaInputs\",\"nodeId\":\"fdfeffde390b43fd8e5eb9d2ccd8667d\",\"isHidden\":false},\"ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\":{\"id\":\"cd79aa12a60243c2aa65ac2f8d6bbdc7\",\"name\":\"ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\",\"label\":\"Ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_status\":{\"id\":\"df33d5136ff74e76afe1e73bb903fc2c\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Complaint_Status\",\"name\":\"complaint_status\",\"choices\":[{\"label\":\"New\",\"value\":\"new\"},{\"label\":\"In Progress\",\"value\":\"in_progress\"},{\"label\":\"On Hold\",\"value\":\"on_hold\",\"checked\":true,\"meta\":{}},{\"label\":\"Resolved\",\"value\":\"resolved\",\"checked\":true,\"meta\":{}},{\"label\":\"Closed\",\"value\":\"closed\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"5749506f8aac4fcaadc1d5dc4fc9d1d0\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\":{\"id\":\"3de1064cb8f44d97b187aa0c24a248a2\",\"name\":\"ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\",\"label\":\"Ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"resolution_complaint_number\":{\"id\":\"80b382f790264a71a97163c5608318b9\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Resolution_Complaint_Number\",\"name\":\"resolution_complaint_number\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"46341ee995a4499bbc00d1c911f01236\",\"isHidden\":false,\"description\":\"\"},\"ai_data_collector_5dc68168a8d64b398315abcfee045cda_output\":{\"id\":\"31c54d62a1774babaf010caabbb20745\",\"name\":\"ai_data_collector_5dc68168a8d64b398315abcfee045cda_output\",\"label\":\"Ai_data_collector_5dc68168a8d64b398315abcfee045cda_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"resolution_details\":{\"id\":\"98071153fb7040948522f387e79951a5\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Resolution_Details\",\"name\":\"resolution_details\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"5dc68168a8d64b398315abcfee045cda\",\"isHidden\":false,\"description\":\"\"},\"resolution_complaint_lookup\":{\"id\":\"9c0204eb718f484ea28d933d36b4b615\",\"name\":\"resolution_complaint_lookup\",\"label\":\"Resolution_Complaint_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"ecc90ac9674e42afb026843cf5aa7a44\",\"isHidden\":false},\"update_resolution_record\":{\"id\":\"2a89358178d24db29789d8f899ce4753\",\"name\":\"update_resolution_record\",\"label\":\"Update_Resolution_Record\",\"varType\":\"reference\",\"table\":\"\",\"inactive\":true,\"category\":\"vaInputs\",\"nodeId\":\"871504bbff1748709bdf23c58c56825a\",\"isHidden\":false},\"pending_complaints_lookup\":{\"id\":\"5b272527bcb747fbb8f79a7d7bf219d9\",\"name\":\"pending_complaints_lookup\",\"label\":\"Pending_Complaints_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"ef7dec31fa464b08a2340d5f01ffa9a7\",\"isHidden\":false}}\n                    Object.keys(output).forEach(function(key) {\n                        var mappedKey = mappings[key];\n                        if (!vaInputs[mappedKey]) {vaInputs.initialize(mappedKey);}\n                        var isMultiSelect = variables[mappedKey] &amp;&amp; variables[mappedKey].varType === 'array.reference';\n                        if (isMultiSelect) {vaInputs[mappedKey] = output[key] ? JSON.parse(output[key]) : '';}\n                        else {vaInputs[mappedKey] = output[key];}\n                    });\n                })()","id":"a252cf5fe5c344d48240562729043058","name":"5749506f8aac4fcaadc1d5dc4fc9d1d0_ai_data_collector_output_handler","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false},{"type":"ScriptedAction","script":"(function execute() {\n                    var mappings = {\"resolution_complaint_number\":\"resolution_complaint_number\",\"resolution_details\":\"resolution_details\",\"ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\":\"ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\"};\n                    var output = JSON.parse(vaInputs['ai_data_collector_46341ee995a4499bbc00d1c911f01236_output']);\n                    var variables = {\"user\":{\"category\":\"vaInputs\",\"id\":\"current-user\",\"label\":\"User\",\"name\":\"user\",\"table\":\"sys_user\",\"varType\":\"reference\"},\"ai_data_collector_618146df27184733bb8abefd63ab9591_output\":{\"id\":\"e3942ef72e3249e7aba9df30ebb60483\",\"name\":\"ai_data_collector_618146df27184733bb8abefd63ab9591_output\",\"label\":\"Ai_data_collector_618146df27184733bb8abefd63ab9591_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"staff_menu\":{\"id\":\"5a5ab8c0806947f3aa3006a995251ce5\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Staff_Menu\",\"name\":\"staff_menu\",\"choices\":[{\"label\":\"View Assigned Complaints\",\"value\":\"view_assigned\"},{\"label\":\"View Complaint Details\",\"value\":\"view_details\"},{\"label\":\"Update Complaint Status\",\"value\":\"update_status\",\"checked\":true,\"meta\":{}},{\"label\":\"Add Resolution\",\"value\":\"add_resolution\",\"checked\":true,\"meta\":{}},{\"label\":\"View Pending Complaints\",\"value\":\"view_pending\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"618146df27184733bb8abefd63ab9591\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"assigned_complaints_lookup\":{\"id\":\"05c5bd9b6d704220835e9f3d88d323d7\",\"name\":\"assigned_complaints_lookup\",\"label\":\"Assigned_Complaints_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"d2ea185707c74dbdb12543e6ce4da34a\",\"isHidden\":false},\"ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\":{\"id\":\"a45cf13da07048e0ba6643a296ef41f2\",\"name\":\"ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\",\"label\":\"Ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_number_input\":{\"id\":\"d9888e07a1864123a5dc9d723343d443\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Complaint_Number_Input\",\"name\":\"complaint_number_input\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"c8d24bb155d94db28e7fb02dd742b51f\",\"isHidden\":false,\"description\":\"\"},\"complaint_details_lookup\":{\"id\":\"47cf1425fbab40b389f4a13fc5373bf4\",\"name\":\"complaint_details_lookup\",\"label\":\"Complaint_Details_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"d94628868686440787796552cde34ca4\",\"isHidden\":false},\"ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\":{\"id\":\"9cd6061f72c741a89cbb9aeb7c8df427\",\"name\":\"ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\",\"label\":\"Ai_data_collector_d326b177aedd46d8935030a72f6ab280_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_number_update\":{\"id\":\"5774c8a6375c489c81810e89c541fd91\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Complaint_Number_Update\",\"name\":\"complaint_number_update\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"d326b177aedd46d8935030a72f6ab280\",\"isHidden\":false,\"description\":\"\"},\"update_complaint_lookup\":{\"id\":\"b8f9016fc52f4bc0a093e5d7e77a8b57\",\"name\":\"update_complaint_lookup\",\"label\":\"Update_Complaint_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"b97ad857ece54526913516f6705becfc\",\"isHidden\":false},\"update_complaint_record\":{\"id\":\"a68a3d28d0e34288a41781809827428a\",\"name\":\"update_complaint_record\",\"label\":\"Update_Complaint_Record\",\"varType\":\"reference\",\"table\":\"incident\",\"inactive\":true,\"category\":\"vaInputs\",\"nodeId\":\"fdfeffde390b43fd8e5eb9d2ccd8667d\",\"isHidden\":false},\"ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\":{\"id\":\"cd79aa12a60243c2aa65ac2f8d6bbdc7\",\"name\":\"ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\",\"label\":\"Ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"complaint_status\":{\"id\":\"df33d5136ff74e76afe1e73bb903fc2c\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Complaint_Status\",\"name\":\"complaint_status\",\"choices\":[{\"label\":\"New\",\"value\":\"new\"},{\"label\":\"In Progress\",\"value\":\"in_progress\"},{\"label\":\"On Hold\",\"value\":\"on_hold\",\"checked\":true,\"meta\":{}},{\"label\":\"Resolved\",\"value\":\"resolved\",\"checked\":true,\"meta\":{}},{\"label\":\"Closed\",\"value\":\"closed\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"5749506f8aac4fcaadc1d5dc4fc9d1d0\",\"isHidden\":false,\"description\":\"\",\"translation\":true},\"ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\":{\"id\":\"3de1064cb8f44d97b187aa0c24a248a2\",\"name\":\"ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\",\"label\":\"Ai_data_collector_46341ee995a4499bbc00d1c911f01236_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"resolution_complaint_number\":{\"id\":\"80b382f790264a71a97163c5608318b9\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Resolution_Complaint_Number\",\"name\":\"resolution_complaint_number\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"46341ee995a4499bbc00d1c911f01236\",\"isHidden\":false,\"description\":\"\"},\"ai_data_collector_5dc68168a8d64b398315abcfee045cda_output\":{\"id\":\"31c54d62a1774babaf010caabbb20745\",\"name\":\"ai_data_collector_5dc68168a8d64b398315abcfee045cda_output\",\"label\":\"Ai_data_collector_5dc68168a8d64b398315abcfee045cda_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"resolution_details\":{\"id\":\"98071153fb7040948522f387e79951a5\",\"varType\":\"string\",\"category\":\"vaInputs\",\"label\":\"Resolution_Details\",\"name\":\"resolution_details\",\"choices\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"5dc68168a8d64b398315abcfee045cda\",\"isHidden\":false,\"description\":\"\"},\"resolution_complaint_lookup\":{\"id\":\"9c0204eb718f484ea28d933d36b4b615\",\"name\":\"resolution_complaint_lookup\",\"label\":\"Resolution_Complaint_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"ecc90ac9674e42afb026843cf5aa7a44\",\"isHidden\":false},\"update_resolution_record\":{\"id\":\"2a89358178d24db29789d8f899ce4753\",\"name\":\"update_resolution_record\",\"label\":\"Update_Resolution_Record\",\"varType\":\"reference\",\"table\":\"\",\"inactive\":true,\"category\":\"vaInputs\",\"nodeId\":\"871504bbff1748709bdf23c58c56825a\",\"isHidden\":false},\"pending_complaints_lookup\":{\"id\":\"5b272527bcb747fbb8f79a7d7bf219d9\",\"name\":\"pending_complaints_lookup\",\"label\":\"Pending_Complaints_Lookup\",\"varType\":\"reference\",\"table\":\"incident\",\"category\":\"vaInputs\",\"nodeId\":\"ef7dec31fa464b08a2340d5f01ffa9a7\",\"isHidden\":false}}\n                    Object.keys(output).forEach(function(key) {\n                        var mappedKey = mappings[key];\n                        if (!vaInputs[mappedKey]) {vaInputs.initialize(mappedKey);}\n                        var isMultiSelect = variables[mappedKey] &amp;&amp; variables[mappedKey].varType === 'array.reference';\n                        if (isMultiSelect) {vaInputs[mappedKey] = output[key] ? JSON.parse(output[key]) : '';}\n                        else {vaInputs[mappedKey] = output[key];}\n                    });\n                })()","id":"b422641809894407b4db1def38edc219","name":"46341ee995a4499bbc00d1c911f01236_ai_data_collector_output_handler","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false}],"edges":[{"type":"Edge","source_node_id":"46341ee995a4499bbc00d1c911f01236","target_node_id":"b422641809894407b4db1def38edc219","id":"e1c8fb7f71e744d78b2cfd0d55754214"},{"type":"Edge","source_node_id":"b422641809894407b4db1def38edc219","target_node_id":"ecc90ac9674e42afb026843cf5aa7a44","id":"dfd163ccfab54dd180ed3824ca533163"},{"type":"Edge","source_node_id":"d94628868686440787796552cde34ca4","target_node_id":"e4443128dbc14e289100c7499cba4d5f","id":"7dcf2a9f97e44d2daf2ab1c0d415acd5"},{"type":"Edge","source_node_id":"fafcaf4870f6422d8fc0b29bc1d546c8","target_node_id":"88d30a9e387c4f919ea3d42bbfdb4a1d","id":"4f2cdf4acec04ed8bb7b92e5b638c1d4"},{"type":"Edge","source_node_id":"88d30a9e387c4f919ea3d42bbfdb4a1d","target_node_id":"618146df27184733bb8abefd63ab9591","id":"b84f3e51b1a244dd8766fe2ebe5ce579"},{"type":"Edge","source_node_id":"618146df27184733bb8abefd63ab9591","target_node_id":"4690588826b947b18664d7b0cf35616c","id":"fc5b8d638ff7480fbff6a243aca1f9bf"},{"type":"Edge","source_node_id":"4690588826b947b18664d7b0cf35616c","target_node_id":"d84ddf36e2874f13a13b2a517f73770a","id":"5b219df34e384b09a62679bdfc09a2ce"},{"type":"Edge","source_node_id":"d84ddf36e2874f13a13b2a517f73770a","target_node_id":"d2ea185707c74dbdb12543e6ce4da34a","branch_id":"55273cb3ead04bcf8b4b569dcb2b80a1","id":"c4d57cde2c9d4d18801f002cc207f7b3","name":"55273cb3ead04bcf8b4b569dcb2b80a1"},{"type":"Edge","source_node_id":"d2ea185707c74dbdb12543e6ce4da34a","target_node_id":"e69fa98fd46b4168880f4c91e183aa91","id":"dbb3c7828a2d4e9880a4cb39864de6a2"},{"type":"Edge","source_node_id":"e69fa98fd46b4168880f4c91e183aa91","target_node_id":"4b69afcfb18f4415b4283b37cb7fb4fe","id":"a8dfd768ad0a43c88671b3f28ee08538"},{"type":"Edge","source_node_id":"d84ddf36e2874f13a13b2a517f73770a","target_node_id":"c8d24bb155d94db28e7fb02dd742b51f","branch_id":"9b26c9697037433a803b5398cabd546f","id":"84dcd117f7d24206a23133f7d6e767fb","name":"9b26c9697037433a803b5398cabd546f"},{"type":"Edge","source_node_id":"c8d24bb155d94db28e7fb02dd742b51f","target_node_id":"fb475ce8d3ef45c5a34642bc28fd927f","id":"e75d2990824e4811a8f73d85e21e8b15"},{"type":"Edge","source_node_id":"fb475ce8d3ef45c5a34642bc28fd927f","target_node_id":"d94628868686440787796552cde34ca4","id":"242ade2911e8413689afc77887c01ec0"},{"type":"Edge","source_node_id":"d84ddf36e2874f13a13b2a517f73770a","target_node_id":"d326b177aedd46d8935030a72f6ab280","branch_id":"41f822c7e4fd458390d983f6fec382c8","id":"060d62f4080a43bf9874ea3943704eb8","name":"41f822c7e4fd458390d983f6fec382c8"},{"type":"Edge","source_node_id":"d326b177aedd46d8935030a72f6ab280","target_node_id":"0a557800ed2b49298eea6e15f9865b2f","id":"b958da64ef284c47b364699eab91f903"},{"type":"Edge","source_node_id":"0a557800ed2b49298eea6e15f9865b2f","target_node_id":"b97ad857ece54526913516f6705becfc","id":"6e56054700284465bea2b4db04f89d7c"},{"type":"Edge","source_node_id":"fdfeffde390b43fd8e5eb9d2ccd8667d","target_node_id":"9ec8472f75c2463b84ce3328873db081","id":"a28d5944b3224daba2a31229cedb3f52"},{"type":"Edge","source_node_id":"b97ad857ece54526913516f6705becfc","target_node_id":"5749506f8aac4fcaadc1d5dc4fc9d1d0","id":"0ae233241c1240bcb910bf50ba3af58b"},{"type":"Edge","source_node_id":"5749506f8aac4fcaadc1d5dc4fc9d1d0","target_node_id":"a252cf5fe5c344d48240562729043058","id":"391700fe28d74ef39dba12a1719815e5"},{"type":"Edge","source_node_id":"a252cf5fe5c344d48240562729043058","target_node_id":"fdfeffde390b43fd8e5eb9d2ccd8667d","id":"05aff0cf88d64c32a9452c024aecf327"},{"type":"Edge","source_node_id":"d84ddf36e2874f13a13b2a517f73770a","target_node_id":"46341ee995a4499bbc00d1c911f01236","branch_id":"c5ea329099c74f2c947b9a5684fa2b0f","id":"709f6607c51d430e804f9eb27b8f92bf","name":"c5ea329099c74f2c947b9a5684fa2b0f"},{"type":"Edge","source_node_id":"ecc90ac9674e42afb026843cf5aa7a44","target_node_id":"871504bbff1748709bdf23c58c56825a","id":"491f915e97064f4498afdb7cf06f197a"},{"type":"Edge","source_node_id":"871504bbff1748709bdf23c58c56825a","target_node_id":"3c66833ca65a4aac855f8ffb5ab7c7f3","id":"eb6e7d9033c84ae7a334f324a34417fc"},{"type":"Edge","source_node_id":"3c66833ca65a4aac855f8ffb5ab7c7f3","target_node_id":"ce6bf0d573774049928f17d0924c1851","id":"1d180164f1c444f999553fbc9ab3efd1"},{"type":"Edge","source_node_id":"d84ddf36e2874f13a13b2a517f73770a","target_node_id":"ef7dec31fa464b08a2340d5f01ffa9a7","branch_id":"a9a7a1485fa94204a86d76bb3c5792f7","id":"a50973f1ff6b437db9bf2fd98547a308","name":"a9a7a1485fa94204a86d76bb3c5792f7"},{"type":"Edge","source_node_id":"ef7dec31fa464b08a2340d5f01ffa9a7","target_node_id":"d638bf615c164b37a4f351f863284a84","id":"95340dc3bf7b47e3b486b34968a802c4"},{"type":"Edge","source_node_id":"d638bf615c164b37a4f351f863284a84","target_node_id":"d59ac43b0f4a4c1db539bb2ae092eb1d","id":"af4d45c645e64c2b8f5a72c3b6194649"}],"id":"primary"}],"script_variables":[],"glide_variables":[{"type":"Reference","table":"sys_user","auto_select":false,"id":"current-user","name":"user","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false},{"type":"String","name":"ai_data_collector_618146df27184733bb8abefd63ab9591_output","list":false,"id":"e3942ef72e3249e7aba9df30ebb60483","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"Choice","choices":[{"name":"View Assigned Complaints","element":"view_assigned"},{"name":"View Complaint Details","element":"view_details"},{"name":"Update Complaint Status","element":"update_status"},{"name":"Add Resolution","element":"add_resolution"},{"name":"View Pending Complaints","element":"view_pending"}],"id":"5a5ab8c0806947f3aa3006a995251ce5","name":"staff_menu","description":"","formatType":"text","secure":false,"sensitive":false,"aiInput":true,"list":false,"translation":true,"label":"Staff_Menu"},{"type":"Reference","table":"incident","auto_select":false,"id":"05c5bd9b6d704220835e9f3d88d323d7","name":"assigned_complaints_lookup","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false},{"type":"String","name":"ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output","list":false,"id":"a45cf13da07048e0ba6643a296ef41f2","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"String","name":"complaint_number_input","description":"","list":false,"id":"d9888e07a1864123a5dc9d723343d443","formatType":"text","secure":false,"sensitive":false,"aiInput":true},{"type":"Reference","table":"incident","auto_select":false,"id":"47cf1425fbab40b389f4a13fc5373bf4","name":"complaint_details_lookup","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false},{"type":"String","name":"ai_data_collector_d326b177aedd46d8935030a72f6ab280_output","list":false,"id":"9cd6061f72c741a89cbb9aeb7c8df427","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"String","name":"complaint_number_update","description":"","list":false,"id":"5774c8a6375c489c81810e89c541fd91","formatType":"text","secure":false,"sensitive":false,"aiInput":true},{"type":"Reference","table":"incident","auto_select":false,"id":"b8f9016fc52f4bc0a093e5d7e77a8b57","name":"update_complaint_lookup","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false},{"type":"Reference","table":"incident","auto_select":false,"id":"a68a3d28d0e34288a41781809827428a","name":"update_complaint_record","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false},{"type":"String","name":"ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output","list":false,"id":"cd79aa12a60243c2aa65ac2f8d6bbdc7","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"Choice","choices":[{"name":"New","element":"new"},{"name":"In Progress","element":"in_progress"},{"name":"On Hold","element":"on_hold"},{"name":"Resolved","element":"resolved"},{"name":"Closed","element":"closed"}],"id":"df33d5136ff74e76afe1e73bb903fc2c","name":"complaint_status","description":"","formatType":"text","secure":false,"sensitive":false,"aiInput":true,"list":false,"translation":true,"label":"Complaint_Status"},{"type":"String","name":"ai_data_collector_46341ee995a4499bbc00d1c911f01236_output","list":false,"id":"3de1064cb8f44d97b187aa0c24a248a2","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"String","name":"resolution_complaint_number","description":"","list":false,"id":"80b382f790264a71a97163c5608318b9","formatType":"text","secure":false,"sensitive":false,"aiInput":true},{"type":"String","name":"ai_data_collector_5dc68168a8d64b398315abcfee045cda_output","list":false,"id":"31c54d62a1774babaf010caabbb20745","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"String","name":"resolution_details","description":"","list":false,"id":"98071153fb7040948522f387e79951a5","formatType":"text","secure":false,"sensitive":false,"aiInput":true},{"type":"Reference","table":"incident","auto_select":false,"id":"9c0204eb718f484ea28d933d36b4b615","name":"resolution_complaint_lookup","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false},{"type":"Reference","table":"","auto_select":false,"id":"2a89358178d24db29789d8f899ce4753","name":"update_resolution_record","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false},{"type":"Reference","table":"incident","auto_select":false,"id":"5b272527bcb747fbb8f79a7d7bf219d9","name":"pending_complaints_lookup","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false}],"applicability":{"type":"Applicability","mode":"script","value":"true"},"roles":["x_snc_campus_foo_1.x_cfsa_staff"],"scope":"423299d7dd1f03107f44143a6accf8fb","domain":"global","topic_type":"STANDARD","channels":[],"dialog_acts_enabled":false,"id":"10163ac3c8af03107f44b32b644b29d3","name":"cfms_staff_assistant","key_phrases":[],"nlu_provider":"","nlu_model":"","nlu_model_label":"","nlu_intent":"","nlu_intent_label":"","flexible_conversation_switching":false,"autopilot_topic":false,"design_categories":[],"triggerable_by_notification":false,"description":"Helps CFMS staff manage assigned food service complaints, view complaint details, update complaint status, add resolutions, and view pending complaints.","model_type":"llm","foundational":false,"modify_confirmation_enabled":false,"context_profiles":["b51fa936046f03107f44b8d89e324c99"],"title":"CFMS Staff Assistant","library":false,"csTopicId":"968918b7f92703107f44740a4dc6a4d3","readOnly":false,"nluMapping":"[]"}</design_definition>
+        <design_topic_id>10163ac3c8af03107f44b32b644b29d3</design_topic_id>
+        <graph>{
+  "graph_api_version": "1.0.82",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "fafcaf4870f6422d8fc0b29bc1d546c8": {
+          "id": "fafcaf4870f6422d8fc0b29bc1d546c8",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "ce6bf0d573774049928f17d0924c1851": {
+          "id": "ce6bf0d573774049928f17d0924c1851",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "88d30a9e387c4f919ea3d42bbfdb4a1d": {
+          "id": "88d30a9e387c4f919ea3d42bbfdb4a1d",
+          "stepType": "TextOutput",
+          "name": "Welcome_Staff",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "👋 Welcome to the Campus Food Management System."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "I'm your Staff Assistant. I can help you manage assigned food service complaints, view complaint details, update complaint status, add resolutions, and check pending requests."
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "_key": "ac3f84ca967e4bfcb122fedaa6c3f5c2"
+            }
+          ],
+          "isCollapsible": true,
+          "requestFeedback": true,
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "618146df27184733bb8abefd63ab9591": {
+          "id": "618146df27184733bb8abefd63ab9591",
+          "stepType": "StandaloneAIChoicePrompt",
+          "name": "Staff_Menu",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "c9e19377df6746e7b1b388cb1b8e7ddb",
+              "displayName": "Staff_Menu",
+              "name": "staff_menu",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Please select an option to manage your food service requests:"
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "choice",
+              "variableId": "5a5ab8c0806947f3aa3006a995251ce5",
+              "choices": [
+                {
+                  "label": "View Assigned Complaints",
+                  "value": "view_assigned"
+                },
+                {
+                  "label": "View Complaint Details",
+                  "value": "view_details"
+                },
+                {
+                  "label": "Update Complaint Status",
+                  "value": "update_status",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Add Resolution",
+                  "value": "add_resolution",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "View Pending Complaints",
+                  "value": "view_pending",
+                  "checked": true,
+                  "meta": {}
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "ChoicePrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "e3942ef72e3249e7aba9df30ebb60483"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_618146df27184733bb8abefd63ab9591_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "5a5ab8c0806947f3aa3006a995251ce5"
+          ]
+        },
+        "d84ddf36e2874f13a13b2a517f73770a": {
+          "id": "d84ddf36e2874f13a13b2a517f73770a",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "d59ac43b0f4a4c1db539bb2ae092eb1d": {
+          "id": "d59ac43b0f4a4c1db539bb2ae092eb1d",
+          "stepType": "ImplicitEnd"
+        },
+        "4b69afcfb18f4415b4283b37cb7fb4fe": {
+          "id": "4b69afcfb18f4415b4283b37cb7fb4fe",
+          "stepType": "ImplicitEnd"
+        },
+        "e4443128dbc14e289100c7499cba4d5f": {
+          "id": "e4443128dbc14e289100c7499cba4d5f",
+          "stepType": "ImplicitEnd"
+        },
+        "9ec8472f75c2463b84ce3328873db081": {
+          "id": "9ec8472f75c2463b84ce3328873db081",
+          "stepType": "ImplicitEnd"
+        },
+        "d2ea185707c74dbdb12543e6ce4da34a": {
+          "id": "d2ea185707c74dbdb12543e6ce4da34a",
+          "stepType": "LookupRecord",
+          "name": "Assigned_Complaints_Lookup",
+          "condition": {
+            "mode": "glide_query",
+            "value": "caller_id=a79046eb081f03107f447d6c83c8220b"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "05c5bd9b6d704220835e9f3d88d323d7"
+        },
+        "e69fa98fd46b4168880f4c91e183aa91": {
+          "id": "e69fa98fd46b4168880f4c91e183aa91",
+          "stepType": "TableOutput",
+          "name": "Display_Assigned_Complaints",
+          "header": {
+            "value": "",
+            "mode": "simple"
+          },
+          "displayColumnHeaders": true,
+          "dataSourceType": "table",
+          "script": "",
+          "tableName": "incident",
+          "sortByColumns": [
+            {
+              "column": "number",
+              "sortDirection": "ASC"
+            }
+          ],
+          "tableCondition": {
+            "mode": "glide_query",
+            "value": "caller_id=a79046eb081f03107f447d6c83c8220b"
+          },
+          "columns": [
+            {
+              "key": "number",
+              "value": "Complaint Number",
+              "label": "Number"
+            },
+            {
+              "key": "short_description",
+              "value": "Complaint",
+              "label": "Short description"
+            },
+            {
+              "key": "state",
+              "value": "Status",
+              "label": "State"
+            },
+            {
+              "key": "caller_id",
+              "value": "Student",
+              "label": "Caller"
+            }
+          ],
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "You currently have no assigned food service complaints."
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "showLink": false
+        },
+        "c8d24bb155d94db28e7fb02dd742b51f": {
+          "id": "c8d24bb155d94db28e7fb02dd742b51f",
+          "stepType": "StandaloneAITextPrompt",
+          "name": "Complaint_Number_Input",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "42e4ef97416c463e89fb78f5be2be503",
+              "displayName": "Complaint_Number_Input",
+              "name": "complaint_number_input",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Please enter the complaint number you want to view, for example INC0010012."
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "string",
+              "variableId": "d9888e07a1864123a5dc9d723343d443",
+              "choices": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "TextPrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "a45cf13da07048e0ba6643a296ef41f2"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "d9888e07a1864123a5dc9d723343d443"
+          ]
+        },
+        "d94628868686440787796552cde34ca4": {
+          "id": "d94628868686440787796552cde34ca4",
+          "stepType": "LookupRecord",
+          "name": "Complaint_Details_Lookup",
+          "condition": {
+            "mode": "glide_query",
+            "value": "number=Complaint_Number_Input"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "47cf1425fbab40b389f4a13fc5373bf4"
+        },
+        "d326b177aedd46d8935030a72f6ab280": {
+          "id": "d326b177aedd46d8935030a72f6ab280",
+          "stepType": "StandaloneAITextPrompt",
+          "name": "Complaint_Number_Update",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "9bd5f27861f64b2dbeef091ce23e26a9",
+              "displayName": "Complaint_Number_Update",
+              "name": "complaint_number_update",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Please enter the complaint number you want to update. For example, INC0010012."
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "string",
+              "variableId": "5774c8a6375c489c81810e89c541fd91",
+              "choices": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "TextPrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "9cd6061f72c741a89cbb9aeb7c8df427"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_d326b177aedd46d8935030a72f6ab280_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "5774c8a6375c489c81810e89c541fd91"
+          ]
+        },
+        "b97ad857ece54526913516f6705becfc": {
+          "id": "b97ad857ece54526913516f6705becfc",
+          "stepType": "LookupRecord",
+          "name": "Update_Complaint_Lookup",
+          "condition": {
+            "mode": "glide_query",
+            "value": "number={{vaInputs.complaint_number_update}}"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "b8f9016fc52f4bc0a093e5d7e77a8b57"
+        },
+        "fdfeffde390b43fd8e5eb9d2ccd8667d": {
+          "id": "fdfeffde390b43fd8e5eb9d2ccd8667d",
+          "stepType": "CrudAction",
+          "name": "Update_Complaint_Record",
+          "template": {
+            "query": {
+              "terms": [
+                {
+                  "prefix": "",
+                  "operator": "=",
+                  "operand": "state",
+                  "expression": "{{vaInputs.complaint_status}}",
+                  "id": "5fe38397161e45cb87355e7d705d43d1"
+                }
+              ]
+            },
+            "queryString": "state={{vaInputs.complaint_status}}"
+          },
+          "mode": "update",
+          "record": "b8f9016fc52f4bc0a093e5d7e77a8b57",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "attachments": [
+            {
+              "value": "",
+              "mode": "simple"
+            }
+          ],
+          "variableId": "a68a3d28d0e34288a41781809827428a"
+        },
+        "5749506f8aac4fcaadc1d5dc4fc9d1d0": {
+          "id": "5749506f8aac4fcaadc1d5dc4fc9d1d0",
+          "stepType": "StandaloneAIChoicePrompt",
+          "name": "Complaint_Status",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "494b8c4fd5dc4fccbd81c4049c397a27",
+              "displayName": "Complaint_Status",
+              "name": "complaint_status",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Please select the new status for this complaint:"
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "choice",
+              "variableId": "df33d5136ff74e76afe1e73bb903fc2c",
+              "choices": [
+                {
+                  "label": "New",
+                  "value": "new"
+                },
+                {
+                  "label": "In Progress",
+                  "value": "in_progress"
+                },
+                {
+                  "label": "On Hold",
+                  "value": "on_hold",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Resolved",
+                  "value": "resolved",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Closed",
+                  "value": "closed",
+                  "checked": true,
+                  "meta": {}
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "ChoicePrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "cd79aa12a60243c2aa65ac2f8d6bbdc7"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "df33d5136ff74e76afe1e73bb903fc2c"
+          ]
+        },
+        "46341ee995a4499bbc00d1c911f01236": {
+          "id": "46341ee995a4499bbc00d1c911f01236",
+          "stepType": "StandaloneAITextPrompt",
+          "name": "Resolution_Complaint_Number",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "fa8bde25802242aab350a46d6ee6132f",
+              "displayName": "Resolution_Complaint_Number",
+              "name": "resolution_complaint_number",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Please enter the complaint number for which you want to add a resolution. For example, INC0010015."
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "string",
+              "variableId": "80b382f790264a71a97163c5608318b9",
+              "choices": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "TextPrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "3de1064cb8f44d97b187aa0c24a248a2"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_46341ee995a4499bbc00d1c911f01236_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "80b382f790264a71a97163c5608318b9"
+          ]
+        },
+        "5dc68168a8d64b398315abcfee045cda": {
+          "id": "5dc68168a8d64b398315abcfee045cda",
+          "stepType": "StandaloneAITextPrompt",
+          "name": "Resolution_Details",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "6a87fa5607484b7e82861239a79f0075",
+              "displayName": "Resolution_Details",
+              "name": "resolution_details",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Please enter the resolution details for this complaint."
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "string",
+              "variableId": "98071153fb7040948522f387e79951a5",
+              "choices": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "TextPrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "31c54d62a1774babaf010caabbb20745"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_5dc68168a8d64b398315abcfee045cda_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "98071153fb7040948522f387e79951a5"
+          ]
+        },
+        "ecc90ac9674e42afb026843cf5aa7a44": {
+          "id": "ecc90ac9674e42afb026843cf5aa7a44",
+          "stepType": "LookupRecord",
+          "name": "Resolution_Complaint_Lookup",
+          "condition": {
+            "mode": "glide_query",
+            "value": "number={{vaInputs.resolution_complaint_number}}"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "9c0204eb718f484ea28d933d36b4b615"
+        },
+        "871504bbff1748709bdf23c58c56825a": {
+          "id": "871504bbff1748709bdf23c58c56825a",
+          "stepType": "CrudAction",
+          "name": "Update_Resolution_Record",
+          "template": {
+            "query": {
+              "terms": [
+                {
+                  "prefix": "",
+                  "operator": "=",
+                  "operand": "close_notes",
+                  "expression": "{{vaInputs.resolution_details}}",
+                  "deserializedExpression": [
+                    {
+                      "type": "paragraph",
+                      "children": [
+                        {
+                          "text": ""
+                        },
+                        {
+                          "type": "datapill",
+                          "dataPill": {
+                            "value": "{{vaInputs.resolution_details}}",
+                            "displayValue": "Input Variables➛Resolution_Details"
+                          },
+                          "children": [
+                            {
+                              "text": ""
+                            }
+                          ]
+                        },
+                        {
+                          "text": ""
+                        }
+                      ]
+                    }
+                  ],
+                  "id": "af2faf85fb2148f18de4ad8b32e9b192"
+                },
+                {
+                  "prefix": "",
+                  "operator": "=",
+                  "operand": "state",
+                  "expression": "6",
+                  "id": "2d81538167c442b59fc5e55fa34bcc70"
+                }
+              ]
+            },
+            "queryString": "close_notes={{vaInputs.resolution_details}}^state=6"
+          },
+          "mode": "update",
+          "record": "9c0204eb718f484ea28d933d36b4b615",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "attachments": [
+            {
+              "value": "",
+              "mode": "simple"
+            }
+          ],
+          "variableId": "2a89358178d24db29789d8f899ce4753"
+        },
+        "3c66833ca65a4aac855f8ffb5ab7c7f3": {
+          "id": "3c66833ca65a4aac855f8ffb5ab7c7f3",
+          "stepType": "TextOutput",
+          "name": "Resolution_Success",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "✅ The resolution has been added successfully, and the complaint has been marked as Resolved."
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "_key": "ff83775982da42c39de900992233c781"
+            }
+          ],
+          "isCollapsible": true,
+          "requestFeedback": true,
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "ef7dec31fa464b08a2340d5f01ffa9a7": {
+          "id": "ef7dec31fa464b08a2340d5f01ffa9a7",
+          "stepType": "LookupRecord",
+          "name": "Pending_Complaints_Lookup",
+          "condition": {
+            "mode": "glide_query",
+            "value": "state=6"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "5b272527bcb747fbb8f79a7d7bf219d9"
+        },
+        "d638bf615c164b37a4f351f863284a84": {
+          "id": "d638bf615c164b37a4f351f863284a84",
+          "stepType": "TableOutput",
+          "name": "Display_Pending_Complaints",
+          "header": {
+            "value": "",
+            "mode": "simple"
+          },
+          "displayColumnHeaders": true,
+          "dataSourceType": "table",
+          "script": "",
+          "tableName": "incident",
+          "sortByColumns": [
+            {
+              "column": "number",
+              "sortDirection": "ASC"
+            }
+          ],
+          "tableCondition": {
+            "mode": "glide_query",
+            "value": "state=6^NQstate=7"
+          },
+          "columns": [
+            {
+              "key": "number",
+              "value": "Complaint Number",
+              "label": "Number"
+            },
+            {
+              "key": "short_description",
+              "value": "Complaint",
+              "label": "Short description"
+            },
+            {
+              "key": "state",
+              "value": "Status",
+              "label": "State"
+            },
+            {
+              "key": "priority",
+              "value": "Priority",
+              "label": "Priority"
+            }
+          ],
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "You currently have no pending food service complaints."
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "showLink": false
+        }
+      },
+      "edges": [
+        {
+          "id": "7dcf2a9f97e44d2daf2ab1c0d415acd5",
+          "edgeType": "Edge",
+          "source": "d94628868686440787796552cde34ca4",
+          "target": "e4443128dbc14e289100c7499cba4d5f",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "4f2cdf4acec04ed8bb7b92e5b638c1d4",
+          "edgeType": "Edge",
+          "source": "fafcaf4870f6422d8fc0b29bc1d546c8",
+          "target": "88d30a9e387c4f919ea3d42bbfdb4a1d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "b84f3e51b1a244dd8766fe2ebe5ce579",
+          "edgeType": "Edge",
+          "source": "88d30a9e387c4f919ea3d42bbfdb4a1d",
+          "target": "618146df27184733bb8abefd63ab9591",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "7ee48e31db804a6f855e9ec2c003e473",
+          "edgeType": "Edge",
+          "source": "618146df27184733bb8abefd63ab9591",
+          "target": "d84ddf36e2874f13a13b2a517f73770a",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "c4d57cde2c9d4d18801f002cc207f7b3",
+          "edgeType": "Branch",
+          "source": "d84ddf36e2874f13a13b2a517f73770a",
+          "target": "d2ea185707c74dbdb12543e6ce4da34a",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.staff_menu=view_assigned",
+            "mode": "query"
+          },
+          "label": "View_Assigned"
+        },
+        {
+          "id": "dbb3c7828a2d4e9880a4cb39864de6a2",
+          "edgeType": "Edge",
+          "source": "d2ea185707c74dbdb12543e6ce4da34a",
+          "target": "e69fa98fd46b4168880f4c91e183aa91",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "a8dfd768ad0a43c88671b3f28ee08538",
+          "edgeType": "Edge",
+          "source": "e69fa98fd46b4168880f4c91e183aa91",
+          "target": "4b69afcfb18f4415b4283b37cb7fb4fe",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "84dcd117f7d24206a23133f7d6e767fb",
+          "edgeType": "Branch",
+          "source": "d84ddf36e2874f13a13b2a517f73770a",
+          "target": "c8d24bb155d94db28e7fb02dd742b51f",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.staff_menu=view_details",
+            "mode": "query"
+          },
+          "label": "View_Details"
+        },
+        {
+          "id": "d52a0d2e42774174885dc38f268e429e",
+          "edgeType": "Edge",
+          "source": "c8d24bb155d94db28e7fb02dd742b51f",
+          "target": "d94628868686440787796552cde34ca4",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "060d62f4080a43bf9874ea3943704eb8",
+          "edgeType": "Branch",
+          "source": "d84ddf36e2874f13a13b2a517f73770a",
+          "target": "d326b177aedd46d8935030a72f6ab280",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.staff_menu=update_status",
+            "mode": "query"
+          },
+          "label": "Update_Status"
+        },
+        {
+          "id": "8526ccfa96df45619fe343fc3a902a7d",
+          "edgeType": "Edge",
+          "source": "d326b177aedd46d8935030a72f6ab280",
+          "target": "b97ad857ece54526913516f6705becfc",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "a28d5944b3224daba2a31229cedb3f52",
+          "edgeType": "Edge",
+          "source": "fdfeffde390b43fd8e5eb9d2ccd8667d",
+          "target": "9ec8472f75c2463b84ce3328873db081",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "0ae233241c1240bcb910bf50ba3af58b",
+          "edgeType": "Edge",
+          "source": "b97ad857ece54526913516f6705becfc",
+          "target": "5749506f8aac4fcaadc1d5dc4fc9d1d0",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "b6aa17c3271940b69618fef7451057cd",
+          "edgeType": "Edge",
+          "source": "5749506f8aac4fcaadc1d5dc4fc9d1d0",
+          "target": "fdfeffde390b43fd8e5eb9d2ccd8667d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "709f6607c51d430e804f9eb27b8f92bf",
+          "edgeType": "Branch",
+          "source": "d84ddf36e2874f13a13b2a517f73770a",
+          "target": "46341ee995a4499bbc00d1c911f01236",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.staff_menu=add_resolution",
+            "mode": "query"
+          },
+          "label": "Add_Resolution"
+        },
+        {
+          "id": "59b5734590c94f4bbcd32a5786ebc5bb",
+          "edgeType": "Edge",
+          "source": "46341ee995a4499bbc00d1c911f01236",
+          "target": "5dc68168a8d64b398315abcfee045cda",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "8815f36e8c304425a5927f14cff4dc6c",
+          "edgeType": "Edge",
+          "source": "5dc68168a8d64b398315abcfee045cda",
+          "target": "ecc90ac9674e42afb026843cf5aa7a44",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "491f915e97064f4498afdb7cf06f197a",
+          "edgeType": "Edge",
+          "source": "ecc90ac9674e42afb026843cf5aa7a44",
+          "target": "871504bbff1748709bdf23c58c56825a",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "eb6e7d9033c84ae7a334f324a34417fc",
+          "edgeType": "Edge",
+          "source": "871504bbff1748709bdf23c58c56825a",
+          "target": "3c66833ca65a4aac855f8ffb5ab7c7f3",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "1d180164f1c444f999553fbc9ab3efd1",
+          "edgeType": "Edge",
+          "source": "3c66833ca65a4aac855f8ffb5ab7c7f3",
+          "target": "ce6bf0d573774049928f17d0924c1851",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "a50973f1ff6b437db9bf2fd98547a308",
+          "edgeType": "Branch",
+          "source": "d84ddf36e2874f13a13b2a517f73770a",
+          "target": "ef7dec31fa464b08a2340d5f01ffa9a7",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.staff_menu=view_pending",
+            "mode": "query"
+          },
+          "label": "View_Pending"
+        },
+        {
+          "id": "95340dc3bf7b47e3b486b34968a802c4",
+          "edgeType": "Edge",
+          "source": "ef7dec31fa464b08a2340d5f01ffa9a7",
+          "target": "d638bf615c164b37a4f351f863284a84",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "af4d45c645e64c2b8f5a72c3b6194649",
+          "edgeType": "Edge",
+          "source": "d638bf615c164b37a4f351f863284a84",
+          "target": "d59ac43b0f4a4c1db539bb2ae092eb1d",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "e3942ef72e3249e7aba9df30ebb60483": {
+      "id": "e3942ef72e3249e7aba9df30ebb60483",
+      "name": "ai_data_collector_618146df27184733bb8abefd63ab9591_output",
+      "label": "Ai_data_collector_618146df27184733bb8abefd63ab9591_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "5a5ab8c0806947f3aa3006a995251ce5": {
+      "id": "5a5ab8c0806947f3aa3006a995251ce5",
+      "varType": "choice",
+      "category": "vaInputs",
+      "label": "Staff_Menu",
+      "name": "staff_menu",
+      "choices": [
+        {
+          "label": "View Assigned Complaints",
+          "value": "view_assigned"
+        },
+        {
+          "label": "View Complaint Details",
+          "value": "view_details"
+        },
+        {
+          "label": "Update Complaint Status",
+          "value": "update_status",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Add Resolution",
+          "value": "add_resolution",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "View Pending Complaints",
+          "value": "view_pending",
+          "checked": true,
+          "meta": {}
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "618146df27184733bb8abefd63ab9591",
+      "isHidden": false,
+      "description": "",
+      "translation": true
+    },
+    "05c5bd9b6d704220835e9f3d88d323d7": {
+      "id": "05c5bd9b6d704220835e9f3d88d323d7",
+      "name": "assigned_complaints_lookup",
+      "label": "Assigned_Complaints_Lookup",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "d2ea185707c74dbdb12543e6ce4da34a",
+      "isHidden": false
+    },
+    "a45cf13da07048e0ba6643a296ef41f2": {
+      "id": "a45cf13da07048e0ba6643a296ef41f2",
+      "name": "ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output",
+      "label": "Ai_data_collector_c8d24bb155d94db28e7fb02dd742b51f_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "d9888e07a1864123a5dc9d723343d443": {
+      "id": "d9888e07a1864123a5dc9d723343d443",
+      "varType": "string",
+      "category": "vaInputs",
+      "label": "Complaint_Number_Input",
+      "name": "complaint_number_input",
+      "choices": [
+        {
+          "label": "",
+          "value": ""
+        },
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "c8d24bb155d94db28e7fb02dd742b51f",
+      "isHidden": false,
+      "description": ""
+    },
+    "47cf1425fbab40b389f4a13fc5373bf4": {
+      "id": "47cf1425fbab40b389f4a13fc5373bf4",
+      "name": "complaint_details_lookup",
+      "label": "Complaint_Details_Lookup",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "d94628868686440787796552cde34ca4",
+      "isHidden": false
+    },
+    "9cd6061f72c741a89cbb9aeb7c8df427": {
+      "id": "9cd6061f72c741a89cbb9aeb7c8df427",
+      "name": "ai_data_collector_d326b177aedd46d8935030a72f6ab280_output",
+      "label": "Ai_data_collector_d326b177aedd46d8935030a72f6ab280_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "5774c8a6375c489c81810e89c541fd91": {
+      "id": "5774c8a6375c489c81810e89c541fd91",
+      "varType": "string",
+      "category": "vaInputs",
+      "label": "Complaint_Number_Update",
+      "name": "complaint_number_update",
+      "choices": [
+        {
+          "label": "",
+          "value": ""
+        },
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "d326b177aedd46d8935030a72f6ab280",
+      "isHidden": false,
+      "description": ""
+    },
+    "b8f9016fc52f4bc0a093e5d7e77a8b57": {
+      "id": "b8f9016fc52f4bc0a093e5d7e77a8b57",
+      "name": "update_complaint_lookup",
+      "label": "Update_Complaint_Lookup",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "b97ad857ece54526913516f6705becfc",
+      "isHidden": false
+    },
+    "a68a3d28d0e34288a41781809827428a": {
+      "id": "a68a3d28d0e34288a41781809827428a",
+      "name": "update_complaint_record",
+      "label": "Update_Complaint_Record",
+      "varType": "reference",
+      "table": "incident",
+      "inactive": true,
+      "category": "vaInputs",
+      "nodeId": "fdfeffde390b43fd8e5eb9d2ccd8667d",
+      "isHidden": false
+    },
+    "cd79aa12a60243c2aa65ac2f8d6bbdc7": {
+      "id": "cd79aa12a60243c2aa65ac2f8d6bbdc7",
+      "name": "ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output",
+      "label": "Ai_data_collector_5749506f8aac4fcaadc1d5dc4fc9d1d0_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "df33d5136ff74e76afe1e73bb903fc2c": {
+      "id": "df33d5136ff74e76afe1e73bb903fc2c",
+      "varType": "choice",
+      "category": "vaInputs",
+      "label": "Complaint_Status",
+      "name": "complaint_status",
+      "choices": [
+        {
+          "label": "New",
+          "value": "new"
+        },
+        {
+          "label": "In Progress",
+          "value": "in_progress"
+        },
+        {
+          "label": "On Hold",
+          "value": "on_hold",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Resolved",
+          "value": "resolved",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Closed",
+          "value": "closed",
+          "checked": true,
+          "meta": {}
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "5749506f8aac4fcaadc1d5dc4fc9d1d0",
+      "isHidden": false,
+      "description": "",
+      "translation": true
+    },
+    "3de1064cb8f44d97b187aa0c24a248a2": {
+      "id": "3de1064cb8f44d97b187aa0c24a248a2",
+      "name": "ai_data_collector_46341ee995a4499bbc00d1c911f01236_output",
+      "label": "Ai_data_collector_46341ee995a4499bbc00d1c911f01236_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "80b382f790264a71a97163c5608318b9": {
+      "id": "80b382f790264a71a97163c5608318b9",
+      "varType": "string",
+      "category": "vaInputs",
+      "label": "Resolution_Complaint_Number",
+      "name": "resolution_complaint_number",
+      "choices": [
+        {
+          "label": "",
+          "value": ""
+        },
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "46341ee995a4499bbc00d1c911f01236",
+      "isHidden": false,
+      "description": ""
+    },
+    "31c54d62a1774babaf010caabbb20745": {
+      "id": "31c54d62a1774babaf010caabbb20745",
+      "name": "ai_data_collector_5dc68168a8d64b398315abcfee045cda_output",
+      "label": "Ai_data_collector_5dc68168a8d64b398315abcfee045cda_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "98071153fb7040948522f387e79951a5": {
+      "id": "98071153fb7040948522f387e79951a5",
+      "varType": "string",
+      "category": "vaInputs",
+      "label": "Resolution_Details",
+      "name": "resolution_details",
+      "choices": [
+        {
+          "label": "",
+          "value": ""
+        },
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "5dc68168a8d64b398315abcfee045cda",
+      "isHidden": false,
+      "description": ""
+    },
+    "9c0204eb718f484ea28d933d36b4b615": {
+      "id": "9c0204eb718f484ea28d933d36b4b615",
+      "name": "resolution_complaint_lookup",
+      "label": "Resolution_Complaint_Lookup",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "ecc90ac9674e42afb026843cf5aa7a44",
+      "isHidden": false
+    },
+    "2a89358178d24db29789d8f899ce4753": {
+      "id": "2a89358178d24db29789d8f899ce4753",
+      "name": "update_resolution_record",
+      "label": "Update_Resolution_Record",
+      "varType": "reference",
+      "table": "",
+      "inactive": true,
+      "category": "vaInputs",
+      "nodeId": "871504bbff1748709bdf23c58c56825a",
+      "isHidden": false
+    },
+    "5b272527bcb747fbb8f79a7d7bf219d9": {
+      "id": "5b272527bcb747fbb8f79a7d7bf219d9",
+      "name": "pending_complaints_lookup",
+      "label": "Pending_Complaints_Lookup",
+      "varType": "reference",
+      "table": "incident",
+      "category": "vaInputs",
+      "nodeId": "ef7dec31fa464b08a2340d5f01ffa9a7",
+      "isHidden": false
+    }
+  }
+}</graph>
+        <name>cfms_staff_assistant</name>
+        <sys_class_name>sys_cb_design_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-02 06:20:51</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>6e8918b7f92703107f44740a4dc6a4f9</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>FlowTopic</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_cb_design_topic_6e8918b7f92703107f44740a4dc6a4f9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-03 06:16:29</sys_updated_on>
+        <type>FlowTopic</type>
+    </sys_cb_design_topic>
+</record_update>
