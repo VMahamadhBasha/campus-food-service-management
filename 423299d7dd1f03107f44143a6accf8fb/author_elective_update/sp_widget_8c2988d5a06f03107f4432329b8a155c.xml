@@ -1,0 +1,3283 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+
+    var c = this;
+
+
+    /*
+     * =========================================
+     * FILTER VARIABLES
+     * =========================================
+     */
+
+    c.searchText = "";
+
+    c.statusFilter = "all";
+
+
+    /*
+     * =========================================
+     * FILTER REQUESTS
+     * =========================================
+     */
+
+    c.filteredRequests = function() {
+
+        var results = [];
+
+        var requests =
+            c.data.requests || [];
+
+
+        var search =
+            (c.searchText || "")
+                .toLowerCase();
+
+
+        var filter =
+            c.statusFilter || "all";
+
+
+        angular.forEach(
+            requests,
+            function(request) {
+
+
+                /*
+                 * SEARCH
+                 */
+
+                var matchesSearch = true;
+
+
+                if (search) {
+
+                    var text =
+                        (
+                            request.number +
+                            " " +
+                            request.short_description +
+                            " " +
+                            request.state +
+                            " " +
+                            request.priority +
+                            " " +
+                            request.mealType +
+                            " " +
+                            request.messHall
+                        ).toLowerCase();
+
+
+                    matchesSearch =
+                        text.indexOf(search) !== -1;
+
+                }
+
+
+                /*
+                 * STATUS FILTER
+                 */
+
+                var matchesStatus = true;
+
+
+                if (filter == "active") {
+
+                    matchesStatus =
+                        request.stateValue != "6" &&
+                        request.stateValue != "7";
+
+                }
+
+                else if (filter == "resolved") {
+
+                    matchesStatus =
+                        request.stateValue == "6" ||
+                        request.stateValue == "7";
+
+                }
+
+
+                /*
+                 * ADD RESULT
+                 */
+
+                if (matchesSearch &&
+                    matchesStatus) {
+
+                    results.push(request);
+
+                }
+
+            }
+        );
+
+
+        return results;
+
+    };
+
+
+    /*
+     * =========================================
+     * BACK TO DASHBOARD
+     * =========================================
+     */
+
+    c.backToDashboard = function() {
+
+        window.location.href =
+            "?id=cfms_student";
+
+    };
+
+
+    /*
+     * =========================================
+     * RAISE NEW REQUEST
+     * =========================================
+     */
+
+    c.raiseRequest = function() {
+
+        window.location.href =
+            "?id=cfms_raise";
+
+    };
+
+
+    /*
+     * =========================================
+     * VIEW REQUEST
+     * =========================================
+     */
+
+    c.viewRequest = function(request) {
+
+        /*
+         * For now, open the ServiceNow
+         * incident form.
+         */
+
+        if (request &&
+            request.sys_id) {
+
+            window.location.href =
+                "?id=cfms_request_detail" +
+                "&sys_id=" +
+                encodeURIComponent(
+                    request.sys_id
+                );
+
+        }
+
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================&#13;
+   CFMS MY REQUESTS&#13;
+   ========================================= */&#13;
+&#13;
+.cfms-my-requests {&#13;
+    min-height: 100vh;&#13;
+&#13;
+    background: #f0fbfc;&#13;
+&#13;
+    color: #263238;&#13;
+&#13;
+    font-family:&#13;
+        "Segoe UI",&#13;
+        Tahoma,&#13;
+        Geneva,&#13;
+        Verdana,&#13;
+        sans-serif;&#13;
+&#13;
+    padding-bottom: 50px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   HEADER&#13;
+   ========================================= */&#13;
+&#13;
+.requests-header {&#13;
+    min-height: 105px;&#13;
+&#13;
+    background: #00acc1;&#13;
+&#13;
+    color: white;&#13;
+&#13;
+    padding: 25px 7%;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: space-between;&#13;
+}&#13;
+&#13;
+&#13;
+.header-left {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 18px;&#13;
+}&#13;
+&#13;
+&#13;
+.back-btn {&#13;
+    width: 42px;&#13;
+    height: 42px;&#13;
+&#13;
+    border: 1px solid rgba(255,255,255,0.7);&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    background: transparent;&#13;
+&#13;
+    color: white;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+.back-btn:hover {&#13;
+    background: white;&#13;
+&#13;
+    color: #00acc1;&#13;
+}&#13;
+&#13;
+&#13;
+.header-left h1 {&#13;
+    margin: 0 0 5px;&#13;
+&#13;
+    font-size: 29px;&#13;
+}&#13;
+&#13;
+&#13;
+.header-left p {&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    opacity: 0.9;&#13;
+}&#13;
+&#13;
+&#13;
+.new-request-btn {&#13;
+    padding: 11px 18px;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    background: white;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+.new-request-btn:hover {&#13;
+    background: #e0f7fa;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   CONTAINER&#13;
+   ========================================= */&#13;
+&#13;
+.requests-container {&#13;
+    max-width: 1100px;&#13;
+&#13;
+    margin: 35px auto;&#13;
+&#13;
+    padding: 0 25px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   SUMMARY&#13;
+   ========================================= */&#13;
+&#13;
+.summary-grid {&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns:&#13;
+        repeat(3, 1fr);&#13;
+&#13;
+    gap: 18px;&#13;
+&#13;
+    margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+.summary-card {&#13;
+    background: white;&#13;
+&#13;
+    border: 1px solid #e1eff1;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    padding: 20px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 14px;&#13;
+&#13;
+    box-shadow:&#13;
+        0 4px 15px rgba(0,0,0,0.05);&#13;
+}&#13;
+&#13;
+&#13;
+.summary-icon {&#13;
+    width: 48px;&#13;
+    height: 48px;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 20px;&#13;
+}&#13;
+&#13;
+&#13;
+.summary-icon.teal {&#13;
+    background: #e0f7fa;&#13;
+&#13;
+    color: #00acc1;&#13;
+}&#13;
+&#13;
+&#13;
+.summary-icon.blue {&#13;
+    background: #e3f2fd;&#13;
+&#13;
+    color: #1976d2;&#13;
+}&#13;
+&#13;
+&#13;
+.summary-icon.green {&#13;
+    background: #e8f5e9;&#13;
+&#13;
+    color: #43a047;&#13;
+}&#13;
+&#13;
+&#13;
+.summary-card span {&#13;
+    display: block;&#13;
+&#13;
+    color: #78909c;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    margin-bottom: 4px;&#13;
+}&#13;
+&#13;
+&#13;
+.summary-card strong {&#13;
+    color: #263238;&#13;
+&#13;
+    font-size: 24px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   FILTER&#13;
+   ========================================= */&#13;
+&#13;
+.filter-card {&#13;
+    background: white;&#13;
+&#13;
+    border: 1px solid #e1eff1;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    padding: 15px;&#13;
+&#13;
+    margin-bottom: 20px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    gap: 15px;&#13;
+}&#13;
+&#13;
+&#13;
+.search-box {&#13;
+    flex: 1;&#13;
+&#13;
+    position: relative;&#13;
+}&#13;
+&#13;
+&#13;
+.search-box i {&#13;
+    position: absolute;&#13;
+&#13;
+    left: 13px;&#13;
+&#13;
+    top: 13px;&#13;
+&#13;
+    color: #90a4ae;&#13;
+}&#13;
+&#13;
+&#13;
+.search-box input {&#13;
+    width: 100%;&#13;
+&#13;
+    height: 42px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    padding: 8px 12px 8px 38px;&#13;
+&#13;
+    border: 1px solid #d5e4e6;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    outline: none;&#13;
+&#13;
+    font-family: inherit;&#13;
+}&#13;
+&#13;
+&#13;
+.search-box input:focus {&#13;
+    border-color: #00acc1;&#13;
+&#13;
+    box-shadow:&#13;
+        0 0 0 3px rgba(0,172,193,0.08);&#13;
+}&#13;
+&#13;
+&#13;
+.status-filter {&#13;
+    width: 180px;&#13;
+&#13;
+    height: 42px;&#13;
+&#13;
+    padding: 8px 12px;&#13;
+&#13;
+    border: 1px solid #d5e4e6;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    background: white;&#13;
+&#13;
+    color: #37474f;&#13;
+&#13;
+    outline: none;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   REQUESTS CARD&#13;
+   ========================================= */&#13;
+&#13;
+.requests-card {&#13;
+    background: white;&#13;
+&#13;
+    border: 1px solid #e1eff1;&#13;
+&#13;
+    border-radius: 13px;&#13;
+&#13;
+    overflow: hidden;&#13;
+&#13;
+    box-shadow:&#13;
+        0 4px 15px rgba(0,0,0,0.04);&#13;
+}&#13;
+&#13;
+&#13;
+.requests-card-header {&#13;
+    padding: 22px 25px;&#13;
+&#13;
+    border-bottom: 1px solid #edf3f4;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: space-between;&#13;
+}&#13;
+&#13;
+&#13;
+.requests-card-header h2 {&#13;
+    margin: 0 0 4px;&#13;
+&#13;
+    font-size: 20px;&#13;
+}&#13;
+&#13;
+&#13;
+.requests-card-header p {&#13;
+    margin: 0;&#13;
+&#13;
+    color: #78909c;&#13;
+&#13;
+    font-size: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+.request-count {&#13;
+    color: #00acc1;&#13;
+&#13;
+    background: #e0f7fa;&#13;
+&#13;
+    padding: 7px 11px;&#13;
+&#13;
+    border-radius: 20px;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   REQUEST ITEM&#13;
+   ========================================= */&#13;
+&#13;
+.request-item {&#13;
+    min-height: 90px;&#13;
+&#13;
+    padding: 18px 22px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 16px;&#13;
+&#13;
+    border-bottom: 1px solid #edf3f4;&#13;
+&#13;
+    transition: 0.2s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.request-item:last-child {&#13;
+    border-bottom: none;&#13;
+}&#13;
+&#13;
+&#13;
+.request-item:hover {&#13;
+    background: #fbfefe;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   REQUEST ICON&#13;
+   ========================================= */&#13;
+&#13;
+.request-type-icon {&#13;
+    width: 46px;&#13;
+    height: 46px;&#13;
+&#13;
+    flex-shrink: 0;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 19px;&#13;
+}&#13;
+&#13;
+&#13;
+.request-type-icon.teal {&#13;
+    background: #e0f7fa;&#13;
+&#13;
+    color: #00acc1;&#13;
+}&#13;
+&#13;
+&#13;
+.request-type-icon.orange {&#13;
+    background: #fff3e0;&#13;
+&#13;
+    color: #fb8c00;&#13;
+}&#13;
+&#13;
+&#13;
+.request-type-icon.red {&#13;
+    background: #ffebee;&#13;
+&#13;
+    color: #e53935;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   INFORMATION&#13;
+   ========================================= */&#13;
+&#13;
+.request-information {&#13;
+    flex: 1;&#13;
+&#13;
+    min-width: 0;&#13;
+}&#13;
+&#13;
+&#13;
+.request-title-row {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 10px;&#13;
+&#13;
+    margin-bottom: 5px;&#13;
+}&#13;
+&#13;
+&#13;
+.request-title-row h3 {&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    color: #00acc1;&#13;
+}&#13;
+&#13;
+&#13;
+.request-information h4 {&#13;
+    margin: 0 0 9px;&#13;
+&#13;
+    color: #37474f;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    white-space: nowrap;&#13;
+&#13;
+    overflow: hidden;&#13;
+&#13;
+    text-overflow: ellipsis;&#13;
+}&#13;
+&#13;
+&#13;
+.request-meta {&#13;
+    display: flex;&#13;
+&#13;
+    gap: 17px;&#13;
+&#13;
+    flex-wrap: wrap;&#13;
+}&#13;
+&#13;
+&#13;
+.request-meta span {&#13;
+    color: #90a4ae;&#13;
+&#13;
+    font-size: 11px;&#13;
+}&#13;
+&#13;
+&#13;
+.request-meta i {&#13;
+    margin-right: 4px;&#13;
+&#13;
+    color: #00acc1;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   STATUS&#13;
+   ========================================= */&#13;
+&#13;
+.status-badge {&#13;
+    padding: 5px 9px;&#13;
+&#13;
+    border-radius: 20px;&#13;
+&#13;
+    font-size: 10px;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+.status-active {&#13;
+    background: #fff8e1;&#13;
+&#13;
+    color: #f57f17;&#13;
+}&#13;
+&#13;
+&#13;
+.status-resolved {&#13;
+    background: #e8f5e9;&#13;
+&#13;
+    color: #2e7d32;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   PRIORITY&#13;
+   ========================================= */&#13;
+&#13;
+.priority-section {&#13;
+    min-width: 80px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    flex-direction: column;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 5px;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-label {&#13;
+    color: #90a4ae;&#13;
+&#13;
+    font-size: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-badge {&#13;
+    padding: 5px 9px;&#13;
+&#13;
+    border-radius: 15px;&#13;
+&#13;
+    font-size: 10px;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-critical {&#13;
+    background: #ffebee;&#13;
+&#13;
+    color: #c62828;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-high {&#13;
+    background: #fff3e0;&#13;
+&#13;
+    color: #ef6c00;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-medium {&#13;
+    background: #fff8e1;&#13;
+&#13;
+    color: #f9a825;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-low {&#13;
+    background: #e8f5e9;&#13;
+&#13;
+    color: #388e3c;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   VIEW BUTTON&#13;
+   ========================================= */&#13;
+&#13;
+.view-btn {&#13;
+    padding: 8px 12px;&#13;
+&#13;
+    border: 1px solid #b2ebf2;&#13;
+&#13;
+    border-radius: 6px;&#13;
+&#13;
+    background: white;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+.view-btn:hover {&#13;
+    background: #e0f7fa;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   EMPTY&#13;
+   ========================================= */&#13;
+&#13;
+.empty-state {&#13;
+    padding: 60px 20px;&#13;
+&#13;
+    text-align: center;&#13;
+}&#13;
+&#13;
+&#13;
+.empty-icon {&#13;
+    width: 65px;&#13;
+    height: 65px;&#13;
+&#13;
+    margin: 0 auto 15px;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: #e0f7fa;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 27px;&#13;
+}&#13;
+&#13;
+&#13;
+.empty-state h3 {&#13;
+    margin: 0 0 7px;&#13;
+&#13;
+    font-size: 18px;&#13;
+}&#13;
+&#13;
+&#13;
+.empty-state p {&#13;
+    color: #78909c;&#13;
+&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+.raise-empty-btn {&#13;
+    margin-top: 10px;&#13;
+&#13;
+    padding: 10px 18px;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    background: #00acc1;&#13;
+&#13;
+    color: white;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   TRACKING INFO&#13;
+   ========================================= */&#13;
+&#13;
+.tracking-info {&#13;
+    margin-top: 20px;&#13;
+&#13;
+    padding: 18px 20px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 15px;&#13;
+&#13;
+    border-radius: 11px;&#13;
+&#13;
+    background: #4dd0e1;&#13;
+}&#13;
+&#13;
+&#13;
+.tracking-icon {&#13;
+    width: 42px;&#13;
+    height: 42px;&#13;
+&#13;
+    flex-shrink: 0;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: white;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+}&#13;
+&#13;
+&#13;
+.tracking-info h3 {&#13;
+    margin: 0 0 4px;&#13;
+&#13;
+    font-size: 15px;&#13;
+}&#13;
+&#13;
+&#13;
+.tracking-info p {&#13;
+    margin: 0;&#13;
+&#13;
+    color: #37474f;&#13;
+&#13;
+    font-size: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   RESPONSIVE&#13;
+   ========================================= */&#13;
+&#13;
+@media (max-width: 800px) {&#13;
+&#13;
+    .summary-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+    .request-item {&#13;
+        flex-wrap: wrap;&#13;
+    }&#13;
+&#13;
+    .priority-section {&#13;
+        display: none;&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+    .requests-header {&#13;
+        padding: 22px 20px;&#13;
+&#13;
+        flex-direction: column;&#13;
+&#13;
+        align-items: flex-start;&#13;
+&#13;
+        gap: 15px;&#13;
+    }&#13;
+&#13;
+    .new-request-btn {&#13;
+        width: 100%;&#13;
+    }&#13;
+&#13;
+    .requests-container {&#13;
+        padding: 0 15px;&#13;
+&#13;
+        margin-top: 20px;&#13;
+    }&#13;
+&#13;
+    .filter-card {&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+    .status-filter {&#13;
+        width: 100%;&#13;
+    }&#13;
+&#13;
+    .requests-card-header {&#13;
+        padding: 18px;&#13;
+    }&#13;
+&#13;
+    .request-item {&#13;
+        padding: 16px;&#13;
+    }&#13;
+&#13;
+    .view-btn {&#13;
+        width: 100%;&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>cfms_my_requests</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>CFMS My Requests</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    /*
+     * =========================================
+     * DEFAULT DATA
+     * =========================================
+     */
+
+    data.requests = [];
+
+    data.total = 0;
+
+    data.active = 0;
+
+    data.resolved = 0;
+
+    data.error = "";
+
+
+    /*
+     * =========================================
+     * LOGIN CHECK
+     * =========================================
+     */
+
+    if (!gs.isLoggedIn()) {
+
+        data.error =
+            "Please login to view your requests.";
+
+        return;
+    }
+
+
+    /*
+     * =========================================
+     * ROLE CHECK
+     * =========================================
+     */
+
+    if (!gs.hasRole("cfms_student") &&
+        !gs.hasRole("admin")) {
+
+        data.error =
+            "You are not authorized to view these requests.";
+
+        return;
+    }
+
+
+    /*
+     * =========================================
+     * GET STUDENT REQUESTS
+     * =========================================
+     */
+
+    var gr =
+        new GlideRecord("incident");
+
+
+    /*
+     * IMPORTANT:
+     *
+     * Only show incidents created for
+     * the currently logged-in student.
+     */
+
+    gr.addQuery(
+        "caller_id",
+        gs.getUserID()
+    );
+
+
+    gr.orderByDesc("sys_created_on");
+
+    gr.query();
+
+
+    while (gr.next()) {
+
+        data.total++;
+
+
+        /*
+         * STATE
+         */
+
+        var stateValue =
+            gr.getValue("state");
+
+        var stateText =
+            gr.getDisplayValue("state");
+
+
+        /*
+         * ServiceNow incident:
+         *
+         * 6 = Resolved
+         * 7 = Closed
+         */
+
+        var isResolved =
+            stateValue == "6" ||
+            stateValue == "7";
+
+
+        if (isResolved) {
+
+            data.resolved++;
+
+        } else {
+
+            data.active++;
+
+        }
+
+
+        /*
+         * =====================================
+         * PRIORITY
+         * =====================================
+         */
+
+        var priorityValue =
+            gr.getValue("priority");
+
+        var priorityText =
+            gr.getDisplayValue("priority");
+
+        var priorityClass =
+            "priority-medium";
+
+
+        if (priorityValue == "1") {
+
+            priorityText = "Critical";
+
+            priorityClass =
+                "priority-critical";
+
+        }
+
+        else if (priorityValue == "2") {
+
+            priorityText = "High";
+
+            priorityClass =
+                "priority-high";
+
+        }
+
+        else if (priorityValue == "3") {
+
+            priorityText = "Medium";
+
+            priorityClass =
+                "priority-medium";
+
+        }
+
+        else if (priorityValue == "4") {
+
+            priorityText = "Low";
+
+            priorityClass =
+                "priority-low";
+
+        }
+
+
+        /*
+         * =====================================
+         * STATUS CLASS
+         * =====================================
+         */
+
+        var statusClass =
+            isResolved
+                ? "status-resolved"
+                : "status-active";
+
+
+        /*
+         * =====================================
+         * DEFAULT ICON
+         * =====================================
+         */
+
+        var icon =
+            "fa-file-text";
+
+        var iconClass =
+            "teal";
+
+
+        /*
+         * =====================================
+         * CFMS CUSTOM FIELDS
+         * =====================================
+         */
+
+        var mealType = "";
+
+        var messHall = "";
+
+
+        if (gr.isValidField("u_cfms_meal_type")) {
+
+            mealType =
+                gr.getDisplayValue(
+                    "u_cfms_meal_type"
+                );
+
+        }
+
+
+        if (gr.isValidField("u_cfms_mess_hall")) {
+
+            messHall =
+                gr.getDisplayValue(
+                    "u_cfms_mess_hall"
+                );
+
+        }
+
+
+        /*
+         * =====================================
+         * REQUEST OBJECT
+         * =====================================
+         */
+
+        data.requests.push({
+
+            sys_id:
+                gr.getUniqueValue(),
+
+            number:
+                gr.getValue("number"),
+
+            short_description:
+                gr.getValue(
+                    "short_description"
+                ),
+
+            state:
+                stateText,
+
+            stateValue:
+                stateValue,
+
+            statusClass:
+                statusClass,
+
+            priority:
+                priorityText,
+
+            priorityValue:
+                priorityValue,
+
+            priorityClass:
+                priorityClass,
+
+            created:
+                gr.getDisplayValue(
+                    "sys_created_on"
+                ),
+
+            mealType:
+                mealType || "Food Service",
+
+            messHall:
+                messHall || "Campus Mess",
+
+            icon:
+                icon,
+
+            iconClass:
+                iconClass
+
+        });
+
+    }
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 10:52:35</sys_created_on>
+        <sys_id>8c2988d5a06f03107f4432329b8a155c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>CFMS My Requests</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_8c2988d5a06f03107f4432329b8a155c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 10:52:35</sys_updated_on>
+        <template><![CDATA[<div class="cfms-my-requests">
+
+    <!-- HEADER -->
+    <div class="requests-header">
+
+        <div class="header-left">
+
+            <button
+                class="back-btn"
+                ng-click="c.backToDashboard()">
+
+                <i class="fa fa-arrow-left"></i>
+
+            </button>
+
+            <div>
+                <h1>My Requests</h1>
+
+                <p>
+                    View and track your food service requests
+                </p>
+            </div>
+
+        </div>
+
+        <button
+            class="new-request-btn"
+            ng-click="c.raiseRequest()">
+
+            <i class="fa fa-plus"></i>
+
+            Raise New Request
+
+        </button>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="requests-container">
+
+
+        <!-- SUMMARY -->
+        <div class="summary-grid">
+
+            <div class="summary-card">
+
+                <div class="summary-icon teal">
+                    <i class="fa fa-files-o"></i>
+                </div>
+
+                <div>
+                    <span>Total Requests</span>
+                    <strong>{{c.data.total}}</strong>
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon blue">
+                    <i class="fa fa-clock-o"></i>
+                </div>
+
+                <div>
+                    <span>Active</span>
+                    <strong>{{c.data.active}}</strong>
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon green">
+                    <i class="fa fa-check-circle"></i>
+                </div>
+
+                <div>
+                    <span>Resolved</span>
+                    <strong>{{c.data.resolved}}</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FILTER BAR -->
+        <div class="filter-card">
+
+            <div class="search-box">
+
+                <i class="fa fa-search"></i>
+
+                <input
+                    type="text"
+                    ng-model="c.searchText"
+                    placeholder="Search requests...">
+
+            </div>
+
+
+            <select
+                class="status-filter"
+                ng-model="c.statusFilter">
+
+                <option value="all">
+                    All Requests
+                </option>
+
+                <option value="active">
+                    Active
+                </option>
+
+                <option value="resolved">
+                    Resolved
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- REQUESTS -->
+        <div class="requests-card">
+
+            <div class="requests-card-header">
+
+                <div>
+                    <h2>Request History</h2>
+
+                    <p>
+                        Your submitted food service requests
+                    </p>
+                </div>
+
+                <span class="request-count">
+                    {{c.filteredRequests().length}} Requests
+                </span>
+
+            </div>
+
+
+            <!-- EMPTY -->
+            <div
+                class="empty-state"
+                ng-if="c.filteredRequests().length == 0">
+
+                <div class="empty-icon">
+
+                    <i class="fa fa-inbox"></i>
+
+                </div>
+
+                <h3>
+                    No Requests Found
+                </h3>
+
+                <p ng-if="c.searchText || c.statusFilter != 'all'">
+                    Try changing your search or filter.
+                </p>
+
+                <p ng-if="!c.searchText && c.statusFilter == 'all'">
+                    You haven't raised any food requests yet.
+                </p>
+
+                <button
+                    class="raise-empty-btn"
+                    ng-click="c.raiseRequest()">
+
+                    Raise Food Request
+
+                </button>
+
+            </div>
+
+
+            <!-- REQUEST LIST -->
+            <div
+                class="request-list"
+                ng-if="c.filteredRequests().length > 0">
+
+                <div
+                    class="request-item"
+                    ng-repeat="request in c.filteredRequests() track by request.sys_id">
+
+
+                    <!-- ICON -->
+                    <div
+                        class="request-type-icon"
+                        ng-class="request.iconClass">
+
+                        <i
+                            class="fa"
+                            ng-class="request.icon">
+                        </i>
+
+                    </div>
+
+
+                    <!-- MAIN INFORMATION -->
+                    <div class="request-information">
+
+                        <div class="request-title-row">
+
+                            <h3>
+                                {{request.number}}
+                            </h3>
+
+                            <span
+                                class="status-badge"
+                                ng-class="request.statusClass">
+
+                                {{request.state}}
+
+                            </span>
+
+                        </div>
+
+
+                        <h4>
+                            {{request.short_description}}
+                        </h4>
+
+
+                        <div class="request-meta">
+
+                            <span>
+
+                                <i class="fa fa-calendar"></i>
+
+                                {{request.created}}
+
+                            </span>
+
+
+                            <span>
+
+                                <i class="fa fa-cutlery"></i>
+
+                                {{request.mealType}}
+
+                            </span>
+
+
+                            <span>
+
+                                <i class="fa fa-building"></i>
+
+                                {{request.messHall}}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PRIORITY -->
+                    <div class="priority-section">
+
+                        <span class="priority-label">
+                            Priority
+                        </span>
+
+                        <span
+                            class="priority-badge"
+                            ng-class="request.priorityClass">
+
+                            {{request.priority}}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- VIEW -->
+                    <button
+                        class="view-btn"
+                        ng-click="c.viewRequest(request)">
+
+                        View
+
+                        <i class="fa fa-angle-right"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- INFORMATION -->
+        <div class="tracking-info">
+
+            <div class="tracking-icon">
+                <i class="fa fa-info-circle"></i>
+            </div>
+
+            <div>
+
+                <h3>Track Your Request</h3>
+
+                <p>
+                    Your request status will be updated as
+                    the food service team works on it.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>sp_widget_8c2988d5a06f03107f4432329b8a155c</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller = function() {
+
+    var c = this;
+
+
+    /*
+     * =========================================
+     * FILTER VARIABLES
+     * =========================================
+     */
+
+    c.searchText = "";
+
+    c.statusFilter = "all";
+
+
+    /*
+     * =========================================
+     * FILTER REQUESTS
+     * =========================================
+     */
+
+    c.filteredRequests = function() {
+
+        var results = [];
+
+        var requests =
+            c.data.requests || [];
+
+
+        var search =
+            (c.searchText || "")
+                .toLowerCase();
+
+
+        var filter =
+            c.statusFilter || "all";
+
+
+        angular.forEach(
+            requests,
+            function(request) {
+
+
+                /*
+                 * SEARCH
+                 */
+
+                var matchesSearch = true;
+
+
+                if (search) {
+
+                    var text =
+                        (
+                            request.number +
+                            " " +
+                            request.short_description +
+                            " " +
+                            request.state +
+                            " " +
+                            request.priority +
+                            " " +
+                            request.mealType +
+                            " " +
+                            request.messHall
+                        ).toLowerCase();
+
+
+                    matchesSearch =
+                        text.indexOf(search) !== -1;
+
+                }
+
+
+                /*
+                 * STATUS FILTER
+                 */
+
+                var matchesStatus = true;
+
+
+                if (filter == "active") {
+
+                    matchesStatus =
+                        request.stateValue != "6" &amp;&amp;
+                        request.stateValue != "7";
+
+                }
+
+                else if (filter == "resolved") {
+
+                    matchesStatus =
+                        request.stateValue == "6" ||
+                        request.stateValue == "7";
+
+                }
+
+
+                /*
+                 * ADD RESULT
+                 */
+
+                if (matchesSearch &amp;&amp;
+                    matchesStatus) {
+
+                    results.push(request);
+
+                }
+
+            }
+        );
+
+
+        return results;
+
+    };
+
+
+    /*
+     * =========================================
+     * BACK TO DASHBOARD
+     * =========================================
+     */
+
+    c.backToDashboard = function() {
+
+        window.location.href =
+            "?id=cfms_student";
+
+    };
+
+
+    /*
+     * =========================================
+     * RAISE NEW REQUEST
+     * =========================================
+     */
+
+    c.raiseRequest = function() {
+
+        window.location.href =
+            "?id=cfms_raise";
+
+    };
+
+
+    /*
+     * =========================================
+     * VIEW REQUEST
+     * =========================================
+     */
+
+    c.viewRequest = function(request) {
+
+        /*
+         * For now, open the ServiceNow
+         * incident form.
+         */
+
+        if (request &amp;&amp;
+            request.sys_id) {
+
+            window.location.href =
+                "?id=cfms_request_detail" +
+                "&amp;sys_id=" +
+                encodeURIComponent(
+                    request.sys_id
+                );
+
+        }
+
+    };
+
+};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;/* =========================================&amp;#13;
+   CFMS MY REQUESTS&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.cfms-my-requests {&amp;#13;
+    min-height: 100vh;&amp;#13;
+&amp;#13;
+    background: #f0fbfc;&amp;#13;
+&amp;#13;
+    color: #263238;&amp;#13;
+&amp;#13;
+    font-family:&amp;#13;
+        "Segoe UI",&amp;#13;
+        Tahoma,&amp;#13;
+        Geneva,&amp;#13;
+        Verdana,&amp;#13;
+        sans-serif;&amp;#13;
+&amp;#13;
+    padding-bottom: 50px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   HEADER&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.requests-header {&amp;#13;
+    min-height: 105px;&amp;#13;
+&amp;#13;
+    background: #00acc1;&amp;#13;
+&amp;#13;
+    color: white;&amp;#13;
+&amp;#13;
+    padding: 25px 7%;&amp;#13;
+&amp;#13;
+    box-sizing: border-box;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: space-between;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.header-left {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 18px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.back-btn {&amp;#13;
+    width: 42px;&amp;#13;
+    height: 42px;&amp;#13;
+&amp;#13;
+    border: 1px solid rgba(255,255,255,0.7);&amp;#13;
+&amp;#13;
+    border-radius: 8px;&amp;#13;
+&amp;#13;
+    background: transparent;&amp;#13;
+&amp;#13;
+    color: white;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.back-btn:hover {&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.header-left h1 {&amp;#13;
+    margin: 0 0 5px;&amp;#13;
+&amp;#13;
+    font-size: 29px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.header-left p {&amp;#13;
+    margin: 0;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+&amp;#13;
+    opacity: 0.9;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.new-request-btn {&amp;#13;
+    padding: 11px 18px;&amp;#13;
+&amp;#13;
+    border: none;&amp;#13;
+&amp;#13;
+    border-radius: 7px;&amp;#13;
+&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.new-request-btn:hover {&amp;#13;
+    background: #e0f7fa;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   CONTAINER&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.requests-container {&amp;#13;
+    max-width: 1100px;&amp;#13;
+&amp;#13;
+    margin: 35px auto;&amp;#13;
+&amp;#13;
+    padding: 0 25px;&amp;#13;
+&amp;#13;
+    box-sizing: border-box;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   SUMMARY&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.summary-grid {&amp;#13;
+    display: grid;&amp;#13;
+&amp;#13;
+    grid-template-columns:&amp;#13;
+        repeat(3, 1fr);&amp;#13;
+&amp;#13;
+    gap: 18px;&amp;#13;
+&amp;#13;
+    margin-bottom: 25px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.summary-card {&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    border: 1px solid #e1eff1;&amp;#13;
+&amp;#13;
+    border-radius: 12px;&amp;#13;
+&amp;#13;
+    padding: 20px;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 14px;&amp;#13;
+&amp;#13;
+    box-shadow:&amp;#13;
+        0 4px 15px rgba(0,0,0,0.05);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.summary-icon {&amp;#13;
+    width: 48px;&amp;#13;
+    height: 48px;&amp;#13;
+&amp;#13;
+    border-radius: 10px;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    font-size: 20px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.summary-icon.teal {&amp;#13;
+    background: #e0f7fa;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.summary-icon.blue {&amp;#13;
+    background: #e3f2fd;&amp;#13;
+&amp;#13;
+    color: #1976d2;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.summary-icon.green {&amp;#13;
+    background: #e8f5e9;&amp;#13;
+&amp;#13;
+    color: #43a047;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.summary-card span {&amp;#13;
+    display: block;&amp;#13;
+&amp;#13;
+    color: #78909c;&amp;#13;
+&amp;#13;
+    font-size: 12px;&amp;#13;
+&amp;#13;
+    margin-bottom: 4px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.summary-card strong {&amp;#13;
+    color: #263238;&amp;#13;
+&amp;#13;
+    font-size: 24px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   FILTER&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.filter-card {&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    border: 1px solid #e1eff1;&amp;#13;
+&amp;#13;
+    border-radius: 12px;&amp;#13;
+&amp;#13;
+    padding: 15px;&amp;#13;
+&amp;#13;
+    margin-bottom: 20px;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    gap: 15px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.search-box {&amp;#13;
+    flex: 1;&amp;#13;
+&amp;#13;
+    position: relative;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.search-box i {&amp;#13;
+    position: absolute;&amp;#13;
+&amp;#13;
+    left: 13px;&amp;#13;
+&amp;#13;
+    top: 13px;&amp;#13;
+&amp;#13;
+    color: #90a4ae;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.search-box input {&amp;#13;
+    width: 100%;&amp;#13;
+&amp;#13;
+    height: 42px;&amp;#13;
+&amp;#13;
+    box-sizing: border-box;&amp;#13;
+&amp;#13;
+    padding: 8px 12px 8px 38px;&amp;#13;
+&amp;#13;
+    border: 1px solid #d5e4e6;&amp;#13;
+&amp;#13;
+    border-radius: 7px;&amp;#13;
+&amp;#13;
+    outline: none;&amp;#13;
+&amp;#13;
+    font-family: inherit;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.search-box input:focus {&amp;#13;
+    border-color: #00acc1;&amp;#13;
+&amp;#13;
+    box-shadow:&amp;#13;
+        0 0 0 3px rgba(0,172,193,0.08);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.status-filter {&amp;#13;
+    width: 180px;&amp;#13;
+&amp;#13;
+    height: 42px;&amp;#13;
+&amp;#13;
+    padding: 8px 12px;&amp;#13;
+&amp;#13;
+    border: 1px solid #d5e4e6;&amp;#13;
+&amp;#13;
+    border-radius: 7px;&amp;#13;
+&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    color: #37474f;&amp;#13;
+&amp;#13;
+    outline: none;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   REQUESTS CARD&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.requests-card {&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    border: 1px solid #e1eff1;&amp;#13;
+&amp;#13;
+    border-radius: 13px;&amp;#13;
+&amp;#13;
+    overflow: hidden;&amp;#13;
+&amp;#13;
+    box-shadow:&amp;#13;
+        0 4px 15px rgba(0,0,0,0.04);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.requests-card-header {&amp;#13;
+    padding: 22px 25px;&amp;#13;
+&amp;#13;
+    border-bottom: 1px solid #edf3f4;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: space-between;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.requests-card-header h2 {&amp;#13;
+    margin: 0 0 4px;&amp;#13;
+&amp;#13;
+    font-size: 20px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.requests-card-header p {&amp;#13;
+    margin: 0;&amp;#13;
+&amp;#13;
+    color: #78909c;&amp;#13;
+&amp;#13;
+    font-size: 12px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-count {&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    background: #e0f7fa;&amp;#13;
+&amp;#13;
+    padding: 7px 11px;&amp;#13;
+&amp;#13;
+    border-radius: 20px;&amp;#13;
+&amp;#13;
+    font-size: 11px;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   REQUEST ITEM&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.request-item {&amp;#13;
+    min-height: 90px;&amp;#13;
+&amp;#13;
+    padding: 18px 22px;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 16px;&amp;#13;
+&amp;#13;
+    border-bottom: 1px solid #edf3f4;&amp;#13;
+&amp;#13;
+    transition: 0.2s ease;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-item:last-child {&amp;#13;
+    border-bottom: none;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-item:hover {&amp;#13;
+    background: #fbfefe;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   REQUEST ICON&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.request-type-icon {&amp;#13;
+    width: 46px;&amp;#13;
+    height: 46px;&amp;#13;
+&amp;#13;
+    flex-shrink: 0;&amp;#13;
+&amp;#13;
+    border-radius: 10px;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    font-size: 19px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-type-icon.teal {&amp;#13;
+    background: #e0f7fa;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-type-icon.orange {&amp;#13;
+    background: #fff3e0;&amp;#13;
+&amp;#13;
+    color: #fb8c00;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-type-icon.red {&amp;#13;
+    background: #ffebee;&amp;#13;
+&amp;#13;
+    color: #e53935;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   INFORMATION&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.request-information {&amp;#13;
+    flex: 1;&amp;#13;
+&amp;#13;
+    min-width: 0;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-title-row {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 10px;&amp;#13;
+&amp;#13;
+    margin-bottom: 5px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-title-row h3 {&amp;#13;
+    margin: 0;&amp;#13;
+&amp;#13;
+    font-size: 14px;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-information h4 {&amp;#13;
+    margin: 0 0 9px;&amp;#13;
+&amp;#13;
+    color: #37474f;&amp;#13;
+&amp;#13;
+    font-size: 14px;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+&amp;#13;
+    white-space: nowrap;&amp;#13;
+&amp;#13;
+    overflow: hidden;&amp;#13;
+&amp;#13;
+    text-overflow: ellipsis;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-meta {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    gap: 17px;&amp;#13;
+&amp;#13;
+    flex-wrap: wrap;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-meta span {&amp;#13;
+    color: #90a4ae;&amp;#13;
+&amp;#13;
+    font-size: 11px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-meta i {&amp;#13;
+    margin-right: 4px;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   STATUS&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.status-badge {&amp;#13;
+    padding: 5px 9px;&amp;#13;
+&amp;#13;
+    border-radius: 20px;&amp;#13;
+&amp;#13;
+    font-size: 10px;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.status-active {&amp;#13;
+    background: #fff8e1;&amp;#13;
+&amp;#13;
+    color: #f57f17;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.status-resolved {&amp;#13;
+    background: #e8f5e9;&amp;#13;
+&amp;#13;
+    color: #2e7d32;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   PRIORITY&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.priority-section {&amp;#13;
+    min-width: 80px;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    flex-direction: column;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 5px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-label {&amp;#13;
+    color: #90a4ae;&amp;#13;
+&amp;#13;
+    font-size: 10px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-badge {&amp;#13;
+    padding: 5px 9px;&amp;#13;
+&amp;#13;
+    border-radius: 15px;&amp;#13;
+&amp;#13;
+    font-size: 10px;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-critical {&amp;#13;
+    background: #ffebee;&amp;#13;
+&amp;#13;
+    color: #c62828;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-high {&amp;#13;
+    background: #fff3e0;&amp;#13;
+&amp;#13;
+    color: #ef6c00;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-medium {&amp;#13;
+    background: #fff8e1;&amp;#13;
+&amp;#13;
+    color: #f9a825;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-low {&amp;#13;
+    background: #e8f5e9;&amp;#13;
+&amp;#13;
+    color: #388e3c;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   VIEW BUTTON&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.view-btn {&amp;#13;
+    padding: 8px 12px;&amp;#13;
+&amp;#13;
+    border: 1px solid #b2ebf2;&amp;#13;
+&amp;#13;
+    border-radius: 6px;&amp;#13;
+&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    font-size: 11px;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.view-btn:hover {&amp;#13;
+    background: #e0f7fa;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   EMPTY&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.empty-state {&amp;#13;
+    padding: 60px 20px;&amp;#13;
+&amp;#13;
+    text-align: center;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.empty-icon {&amp;#13;
+    width: 65px;&amp;#13;
+    height: 65px;&amp;#13;
+&amp;#13;
+    margin: 0 auto 15px;&amp;#13;
+&amp;#13;
+    border-radius: 50%;&amp;#13;
+&amp;#13;
+    background: #e0f7fa;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    font-size: 27px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.empty-state h3 {&amp;#13;
+    margin: 0 0 7px;&amp;#13;
+&amp;#13;
+    font-size: 18px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.empty-state p {&amp;#13;
+    color: #78909c;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.raise-empty-btn {&amp;#13;
+    margin-top: 10px;&amp;#13;
+&amp;#13;
+    padding: 10px 18px;&amp;#13;
+&amp;#13;
+    border: none;&amp;#13;
+&amp;#13;
+    border-radius: 7px;&amp;#13;
+&amp;#13;
+    background: #00acc1;&amp;#13;
+&amp;#13;
+    color: white;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   TRACKING INFO&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.tracking-info {&amp;#13;
+    margin-top: 20px;&amp;#13;
+&amp;#13;
+    padding: 18px 20px;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 15px;&amp;#13;
+&amp;#13;
+    border-radius: 11px;&amp;#13;
+&amp;#13;
+    background: #4dd0e1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.tracking-icon {&amp;#13;
+    width: 42px;&amp;#13;
+    height: 42px;&amp;#13;
+&amp;#13;
+    flex-shrink: 0;&amp;#13;
+&amp;#13;
+    border-radius: 50%;&amp;#13;
+&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.tracking-info h3 {&amp;#13;
+    margin: 0 0 4px;&amp;#13;
+&amp;#13;
+    font-size: 15px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.tracking-info p {&amp;#13;
+    margin: 0;&amp;#13;
+&amp;#13;
+    color: #37474f;&amp;#13;
+&amp;#13;
+    font-size: 12px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   RESPONSIVE&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+@media (max-width: 800px) {&amp;#13;
+&amp;#13;
+    .summary-grid {&amp;#13;
+        grid-template-columns: 1fr;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .request-item {&amp;#13;
+        flex-wrap: wrap;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .priority-section {&amp;#13;
+        display: none;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+@media (max-width: 600px) {&amp;#13;
+&amp;#13;
+    .requests-header {&amp;#13;
+        padding: 22px 20px;&amp;#13;
+&amp;#13;
+        flex-direction: column;&amp;#13;
+&amp;#13;
+        align-items: flex-start;&amp;#13;
+&amp;#13;
+        gap: 15px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .new-request-btn {&amp;#13;
+        width: 100%;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .requests-container {&amp;#13;
+        padding: 0 15px;&amp;#13;
+&amp;#13;
+        margin-top: 20px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .filter-card {&amp;#13;
+        flex-direction: column;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .status-filter {&amp;#13;
+        width: 100%;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .requests-card-header {&amp;#13;
+        padding: 18px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .request-item {&amp;#13;
+        padding: 16px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .view-btn {&amp;#13;
+        width: 100%;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+}&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;cfms_my_requests&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]&gt;&lt;/link&gt;&lt;name&gt;CFMS My Requests&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;false&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+
+    /*
+     * =========================================
+     * DEFAULT DATA
+     * =========================================
+     */
+
+    data.requests = [];
+
+    data.total = 0;
+
+    data.active = 0;
+
+    data.resolved = 0;
+
+    data.error = "";
+
+
+    /*
+     * =========================================
+     * LOGIN CHECK
+     * =========================================
+     */
+
+    if (!gs.isLoggedIn()) {
+
+        data.error =
+            "Please login to view your requests.";
+
+        return;
+    }
+
+
+    /*
+     * =========================================
+     * ROLE CHECK
+     * =========================================
+     */
+
+    if (!gs.hasRole("cfms_student") &amp;&amp;
+        !gs.hasRole("admin")) {
+
+        data.error =
+            "You are not authorized to view these requests.";
+
+        return;
+    }
+
+
+    /*
+     * =========================================
+     * GET STUDENT REQUESTS
+     * =========================================
+     */
+
+    var gr =
+        new GlideRecord("incident");
+
+
+    /*
+     * IMPORTANT:
+     *
+     * Only show incidents created for
+     * the currently logged-in student.
+     */
+
+    gr.addQuery(
+        "caller_id",
+        gs.getUserID()
+    );
+
+
+    gr.orderByDesc("sys_created_on");
+
+    gr.query();
+
+
+    while (gr.next()) {
+
+        data.total++;
+
+
+        /*
+         * STATE
+         */
+
+        var stateValue =
+            gr.getValue("state");
+
+        var stateText =
+            gr.getDisplayValue("state");
+
+
+        /*
+         * ServiceNow incident:
+         *
+         * 6 = Resolved
+         * 7 = Closed
+         */
+
+        var isResolved =
+            stateValue == "6" ||
+            stateValue == "7";
+
+
+        if (isResolved) {
+
+            data.resolved++;
+
+        } else {
+
+            data.active++;
+
+        }
+
+
+        /*
+         * =====================================
+         * PRIORITY
+         * =====================================
+         */
+
+        var priorityValue =
+            gr.getValue("priority");
+
+        var priorityText =
+            gr.getDisplayValue("priority");
+
+        var priorityClass =
+            "priority-medium";
+
+
+        if (priorityValue == "1") {
+
+            priorityText = "Critical";
+
+            priorityClass =
+                "priority-critical";
+
+        }
+
+        else if (priorityValue == "2") {
+
+            priorityText = "High";
+
+            priorityClass =
+                "priority-high";
+
+        }
+
+        else if (priorityValue == "3") {
+
+            priorityText = "Medium";
+
+            priorityClass =
+                "priority-medium";
+
+        }
+
+        else if (priorityValue == "4") {
+
+            priorityText = "Low";
+
+            priorityClass =
+                "priority-low";
+
+        }
+
+
+        /*
+         * =====================================
+         * STATUS CLASS
+         * =====================================
+         */
+
+        var statusClass =
+            isResolved
+                ? "status-resolved"
+                : "status-active";
+
+
+        /*
+         * =====================================
+         * DEFAULT ICON
+         * =====================================
+         */
+
+        var icon =
+            "fa-file-text";
+
+        var iconClass =
+            "teal";
+
+
+        /*
+         * =====================================
+         * CFMS CUSTOM FIELDS
+         * =====================================
+         */
+
+        var mealType = "";
+
+        var messHall = "";
+
+
+        if (gr.isValidField("u_cfms_meal_type")) {
+
+            mealType =
+                gr.getDisplayValue(
+                    "u_cfms_meal_type"
+                );
+
+        }
+
+
+        if (gr.isValidField("u_cfms_mess_hall")) {
+
+            messHall =
+                gr.getDisplayValue(
+                    "u_cfms_mess_hall"
+                );
+
+        }
+
+
+        /*
+         * =====================================
+         * REQUEST OBJECT
+         * =====================================
+         */
+
+        data.requests.push({
+
+            sys_id:
+                gr.getUniqueValue(),
+
+            number:
+                gr.getValue("number"),
+
+            short_description:
+                gr.getValue(
+                    "short_description"
+                ),
+
+            state:
+                stateText,
+
+            stateValue:
+                stateValue,
+
+            statusClass:
+                statusClass,
+
+            priority:
+                priorityText,
+
+            priorityValue:
+                priorityValue,
+
+            priorityClass:
+                priorityClass,
+
+            created:
+                gr.getDisplayValue(
+                    "sys_created_on"
+                ),
+
+            mealType:
+                mealType || "Food Service",
+
+            messHall:
+                messHall || "Campus Mess",
+
+            icon:
+                icon,
+
+            iconClass:
+                iconClass
+
+        });
+
+    }
+
+})();]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-09-24 10:52:35&lt;/sys_created_on&gt;&lt;sys_id&gt;8c2988d5a06f03107f4432329b8a155c&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;CFMS My Requests&lt;/sys_name&gt;&lt;sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Campus Food Services Assistant"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_8c2988d5a06f03107f4432329b8a155c&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-09-24 10:52:35&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div class="cfms-my-requests"&gt;
+
+    &lt;!-- HEADER --&gt;
+    &lt;div class="requests-header"&gt;
+
+        &lt;div class="header-left"&gt;
+
+            &lt;button
+                class="back-btn"
+                ng-click="c.backToDashboard()"&gt;
+
+                &lt;i class="fa fa-arrow-left"&gt;&lt;/i&gt;
+
+            &lt;/button&gt;
+
+            &lt;div&gt;
+                &lt;h1&gt;My Requests&lt;/h1&gt;
+
+                &lt;p&gt;
+                    View and track your food service requests
+                &lt;/p&gt;
+            &lt;/div&gt;
+
+        &lt;/div&gt;
+
+        &lt;button
+            class="new-request-btn"
+            ng-click="c.raiseRequest()"&gt;
+
+            &lt;i class="fa fa-plus"&gt;&lt;/i&gt;
+
+            Raise New Request
+
+        &lt;/button&gt;
+
+    &lt;/div&gt;
+
+
+    &lt;!-- MAIN CONTENT --&gt;
+    &lt;div class="requests-container"&gt;
+
+
+        &lt;!-- SUMMARY --&gt;
+        &lt;div class="summary-grid"&gt;
+
+            &lt;div class="summary-card"&gt;
+
+                &lt;div class="summary-icon teal"&gt;
+                    &lt;i class="fa fa-files-o"&gt;&lt;/i&gt;
+                &lt;/div&gt;
+
+                &lt;div&gt;
+                    &lt;span&gt;Total Requests&lt;/span&gt;
+                    &lt;strong&gt;{{c.data.total}}&lt;/strong&gt;
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+
+
+            &lt;div class="summary-card"&gt;
+
+                &lt;div class="summary-icon blue"&gt;
+                    &lt;i class="fa fa-clock-o"&gt;&lt;/i&gt;
+                &lt;/div&gt;
+
+                &lt;div&gt;
+                    &lt;span&gt;Active&lt;/span&gt;
+                    &lt;strong&gt;{{c.data.active}}&lt;/strong&gt;
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+
+
+            &lt;div class="summary-card"&gt;
+
+                &lt;div class="summary-icon green"&gt;
+                    &lt;i class="fa fa-check-circle"&gt;&lt;/i&gt;
+                &lt;/div&gt;
+
+                &lt;div&gt;
+                    &lt;span&gt;Resolved&lt;/span&gt;
+                    &lt;strong&gt;{{c.data.resolved}}&lt;/strong&gt;
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+
+        &lt;/div&gt;
+
+
+        &lt;!-- FILTER BAR --&gt;
+        &lt;div class="filter-card"&gt;
+
+            &lt;div class="search-box"&gt;
+
+                &lt;i class="fa fa-search"&gt;&lt;/i&gt;
+
+                &lt;input
+                    type="text"
+                    ng-model="c.searchText"
+                    placeholder="Search requests..."&gt;
+
+            &lt;/div&gt;
+
+
+            &lt;select
+                class="status-filter"
+                ng-model="c.statusFilter"&gt;
+
+                &lt;option value="all"&gt;
+                    All Requests
+                &lt;/option&gt;
+
+                &lt;option value="active"&gt;
+                    Active
+                &lt;/option&gt;
+
+                &lt;option value="resolved"&gt;
+                    Resolved
+                &lt;/option&gt;
+
+            &lt;/select&gt;
+
+        &lt;/div&gt;
+
+
+        &lt;!-- REQUESTS --&gt;
+        &lt;div class="requests-card"&gt;
+
+            &lt;div class="requests-card-header"&gt;
+
+                &lt;div&gt;
+                    &lt;h2&gt;Request History&lt;/h2&gt;
+
+                    &lt;p&gt;
+                        Your submitted food service requests
+                    &lt;/p&gt;
+                &lt;/div&gt;
+
+                &lt;span class="request-count"&gt;
+                    {{c.filteredRequests().length}} Requests
+                &lt;/span&gt;
+
+            &lt;/div&gt;
+
+
+            &lt;!-- EMPTY --&gt;
+            &lt;div
+                class="empty-state"
+                ng-if="c.filteredRequests().length == 0"&gt;
+
+                &lt;div class="empty-icon"&gt;
+
+                    &lt;i class="fa fa-inbox"&gt;&lt;/i&gt;
+
+                &lt;/div&gt;
+
+                &lt;h3&gt;
+                    No Requests Found
+                &lt;/h3&gt;
+
+                &lt;p ng-if="c.searchText || c.statusFilter != 'all'"&gt;
+                    Try changing your search or filter.
+                &lt;/p&gt;
+
+                &lt;p ng-if="!c.searchText &amp;&amp; c.statusFilter == 'all'"&gt;
+                    You haven't raised any food requests yet.
+                &lt;/p&gt;
+
+                &lt;button
+                    class="raise-empty-btn"
+                    ng-click="c.raiseRequest()"&gt;
+
+                    Raise Food Request
+
+                &lt;/button&gt;
+
+            &lt;/div&gt;
+
+
+            &lt;!-- REQUEST LIST --&gt;
+            &lt;div
+                class="request-list"
+                ng-if="c.filteredRequests().length &gt; 0"&gt;
+
+                &lt;div
+                    class="request-item"
+                    ng-repeat="request in c.filteredRequests() track by request.sys_id"&gt;
+
+
+                    &lt;!-- ICON --&gt;
+                    &lt;div
+                        class="request-type-icon"
+                        ng-class="request.iconClass"&gt;
+
+                        &lt;i
+                            class="fa"
+                            ng-class="request.icon"&gt;
+                        &lt;/i&gt;
+
+                    &lt;/div&gt;
+
+
+                    &lt;!-- MAIN INFORMATION --&gt;
+                    &lt;div class="request-information"&gt;
+
+                        &lt;div class="request-title-row"&gt;
+
+                            &lt;h3&gt;
+                                {{request.number}}
+                            &lt;/h3&gt;
+
+                            &lt;span
+                                class="status-badge"
+                                ng-class="request.statusClass"&gt;
+
+                                {{request.state}}
+
+                            &lt;/span&gt;
+
+                        &lt;/div&gt;
+
+
+                        &lt;h4&gt;
+                            {{request.short_description}}
+                        &lt;/h4&gt;
+
+
+                        &lt;div class="request-meta"&gt;
+
+                            &lt;span&gt;
+
+                                &lt;i class="fa fa-calendar"&gt;&lt;/i&gt;
+
+                                {{request.created}}
+
+                            &lt;/span&gt;
+
+
+                            &lt;span&gt;
+
+                                &lt;i class="fa fa-cutlery"&gt;&lt;/i&gt;
+
+                                {{request.mealType}}
+
+                            &lt;/span&gt;
+
+
+                            &lt;span&gt;
+
+                                &lt;i class="fa fa-building"&gt;&lt;/i&gt;
+
+                                {{request.messHall}}
+
+                            &lt;/span&gt;
+
+                        &lt;/div&gt;
+
+                    &lt;/div&gt;
+
+
+                    &lt;!-- PRIORITY --&gt;
+                    &lt;div class="priority-section"&gt;
+
+                        &lt;span class="priority-label"&gt;
+                            Priority
+                        &lt;/span&gt;
+
+                        &lt;span
+                            class="priority-badge"
+                            ng-class="request.priorityClass"&gt;
+
+                            {{request.priority}}
+
+                        &lt;/span&gt;
+
+                    &lt;/div&gt;
+
+
+                    &lt;!-- VIEW --&gt;
+                    &lt;button
+                        class="view-btn"
+                        ng-click="c.viewRequest(request)"&gt;
+
+                        View
+
+                        &lt;i class="fa fa-angle-right"&gt;&lt;/i&gt;
+
+                    &lt;/button&gt;
+
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+
+        &lt;/div&gt;
+
+
+        &lt;!-- INFORMATION --&gt;
+        &lt;div class="tracking-info"&gt;
+
+            &lt;div class="tracking-icon"&gt;
+                &lt;i class="fa fa-info-circle"&gt;&lt;/i&gt;
+            &lt;/div&gt;
+
+            &lt;div&gt;
+
+                &lt;h3&gt;Track Your Request&lt;/h3&gt;
+
+                &lt;p&gt;
+                    Your request status will be updated as
+                    the food service team works on it.
+                &lt;/p&gt;
+
+            &lt;/div&gt;
+
+        &lt;/div&gt;
+
+    &lt;/div&gt;
+
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-955009003</payload_hash>
+        <record_name>CFMS My Requests</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 10:52:35</sys_created_on>
+        <sys_id>950b0cd5a06f03107f4432329b8a1536</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0d30bb9050000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 10:52:35</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>950b0cd56b6f03103fb1555f116c5835</update_guid>
+        <update_guid_history>950b0cd56b6f03103fb1555f116c5835:-955009003</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="CFMS My Requests">b596fabd802743107f4447e44ab1d512</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 12:39:11</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>503f6d34de5a49c985a31d9bdb877701</sys_id>
+        <sys_metadata>8c2988d5a06f03107f4432329b8a155c</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>CFMS My Requests</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>sp_widget_8c2988d5a06f03107f4432329b8a155c</sys_update_name>
+        <sys_update_version display_value="sp_widget_8c2988d5a06f03107f4432329b8a155c">950b0cd5a06f03107f4432329b8a1536</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 12:39:11</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

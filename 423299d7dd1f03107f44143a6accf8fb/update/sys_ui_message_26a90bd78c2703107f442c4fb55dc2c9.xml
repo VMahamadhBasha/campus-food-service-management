@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_message">
+    <sys_ui_message action="INSERT_OR_UPDATE">
+        <application>Virtual Agent</application>
+        <code/>
+        <commented_message/>
+        <key>va:topic:e3f68f538c2703107f442c4fb55dc29e:node:ac23f400f4fe485b84f86b5af131f7f6:field:0</key>
+        <language>en</language>
+        <message>👋 Welcome to the Campus Food Management System.
+
+I'm your Admin Assistant. I can help you manage complaints, users, assignments, records, and monitor overall campus food service operations.
+
+Please select an option below to continue.</message>
+        <sys_class_name>sys_ui_message</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-01 05:53:24</sys_created_on>
+        <sys_id>26a90bd78c2703107f442c4fb55dc2c9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>va:topic:e3f68f538c2703107f442c4fb55dc29e:node:ac23f400f4fe485b84f86b5af131f7f6:field:0</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_ui_message_26a90bd78c2703107f442c4fb55dc2c9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-01 05:53:24</sys_updated_on>
+    </sys_ui_message>
+</record_update>

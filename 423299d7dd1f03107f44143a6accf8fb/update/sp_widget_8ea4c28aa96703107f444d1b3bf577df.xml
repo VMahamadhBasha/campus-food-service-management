@@ -1,0 +1,829 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function($window) {
+
+    var c = this;
+
+    // ==========================================
+    // INITIAL DATA
+    // ==========================================
+
+    c.data.userName = "";
+    c.data.userRole = "";
+    c.profileMenuOpen = false;
+
+
+    // ==========================================
+    // GET LOGIN DATA FROM LOCAL STORAGE
+    // ==========================================
+
+    var campusLogin =
+        localStorage.getItem("campusLogin");
+
+    if (campusLogin) {
+
+        try {
+
+            var loginData =
+                JSON.parse(campusLogin);
+
+            if (loginData.userName) {
+
+                c.data.userName =
+                    loginData.userName;
+            }
+
+            if (loginData.userRole) {
+
+                c.data.userRole =
+                    loginData.userRole;
+            }
+
+        } catch (e) {
+
+            console.error(
+                "Error reading campusLogin:",
+                e
+            );
+        }
+    }
+
+
+    // ==========================================
+    // PROFILE MENU
+    // ==========================================
+
+    c.toggleProfileMenu = function() {
+
+        c.profileMenuOpen =
+            !c.profileMenuOpen;
+    };
+
+
+    // ==========================================
+    // LOGOUT
+    // ==========================================
+
+    c.logout = function() {
+
+        console.log(
+            "========== LOGOUT STARTED =========="
+        );
+
+        var campusLogin =
+            localStorage.getItem("campusLogin");
+
+
+        // --------------------------------------
+        // NO LOGIN DATA
+        // --------------------------------------
+
+        if (!campusLogin) {
+
+            console.log(
+                "No campusLogin found"
+            );
+
+            $window.location.href =
+                "/food_services";
+
+            return;
+        }
+
+
+        // --------------------------------------
+        // READ SESSION
+        // --------------------------------------
+
+        try {
+
+            var loginData =
+                JSON.parse(campusLogin);
+
+            var sessionId =
+                loginData.sessionId;
+
+
+            console.log(
+                "Session ID:",
+                sessionId
+            );
+
+
+            // ----------------------------------
+            // SESSION ID MISSING
+            // ----------------------------------
+
+            if (!sessionId) {
+
+                console.log(
+                    "Session ID missing"
+                );
+
+                localStorage.removeItem(
+                    "campusLogin"
+                );
+
+                $window.location.href =
+                    "/food_services";
+
+                return;
+            }
+
+
+            // ----------------------------------
+            // CALL SERVER SCRIPT
+            // ----------------------------------
+
+            console.log(
+                "Sending logout request to server..."
+            );
+
+            c.server.get({
+
+                action: "logout",
+
+                sessionId: sessionId
+
+            }).then(function(response) {
+
+                console.log(
+                    "Logout server response:",
+                    response
+                );
+
+                console.log(
+                    "Logout result:",
+                    response.data.logoutSuccess
+                );
+
+
+                // --------------------------------
+                // REMOVE LOCAL SESSION
+                // --------------------------------
+
+                localStorage.removeItem(
+                    "campusLogin"
+                );
+
+                console.log(
+                    "campusLogin removed from localStorage"
+                );
+
+
+                // --------------------------------
+                // REDIRECT TO LANDING PAGE
+                // --------------------------------
+
+                console.log(
+                    "Redirecting to landing page..."
+                );
+
+                $window.location.href =
+                    "/food_services";
+
+            }).catch(function(error) {
+
+                console.error(
+                    "Logout server error:",
+                    error
+                );
+
+                // Even if server fails,
+                // remove local session
+                // and return to landing page.
+
+                localStorage.removeItem(
+                    "campusLogin"
+                );
+
+                $window.location.href =
+                    "/food_services";
+            });
+
+
+        } catch (e) {
+
+            console.error(
+                "Logout processing error:",
+                e
+            );
+
+            localStorage.removeItem(
+                "campusLogin"
+            );
+
+            $window.location.href =
+                "/food_services";
+        }
+
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================================&#13;
+   MEALCARE — DASHBOARD SHARED HEADER CSS&#13;
+   Professional Dark Frame Theme&#13;
+   Used by Student, Staff, Admin and Manager dashboards&#13;
+   HTML / Angular bindings unchanged&#13;
+   ServiceNow Compatible&#13;
+   ========================================================= */&#13;
+&#13;
+.campus-header {&#13;
+  position: relative;&#13;
+  z-index: 1000;&#13;
+  width: 100%;&#13;
+  height: 74px;&#13;
+  padding: 0 28px;&#13;
+  box-sizing: border-box;&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: space-between;&#13;
+  font-family: "Segoe UI", Arial, sans-serif;&#13;
+  border-bottom: 1px solid #334155;&#13;
+  background:&#13;
+    radial-gradient(&#13;
+      circle at 85% 0%,&#13;
+      rgba(37, 99, 235, 0.22),&#13;
+      transparent 42%&#13;
+    ),&#13;
+    linear-gradient(&#13;
+      rgba(96, 165, 250, 0.025) 1px,&#13;
+      transparent 1px&#13;
+    ),&#13;
+    linear-gradient(&#13;
+      90deg,&#13;
+      rgba(96, 165, 250, 0.025) 1px,&#13;
+      transparent 1px&#13;
+    ),&#13;
+    #1E293B;&#13;
+  background-size: auto, 48px 48px, 48px 48px, auto;&#13;
+}&#13;
+&#13;
+/* =========================================================&#13;
+   BRAND&#13;
+   ========================================================= */&#13;
+&#13;
+.brand-section {&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  gap: 12px;&#13;
+}&#13;
+&#13;
+.brand-logo {&#13;
+  width: 44px;&#13;
+  height: 44px;&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+  background: linear-gradient(145deg, #60A5FA, #2563EB);&#13;
+  border-radius: 12px;&#13;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.30);&#13;
+  font-size: 22px;&#13;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;&#13;
+}&#13;
+&#13;
+.brand-section:hover .brand-logo {&#13;
+  transform: translateY(-2px);&#13;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.38);&#13;
+}&#13;
+&#13;
+.brand-name {&#13;
+  font-size: 24px;&#13;
+  font-weight: 800;&#13;
+  letter-spacing: -0.7px;&#13;
+  color: #FFFFFF;&#13;
+  white-space: nowrap;&#13;
+}&#13;
+&#13;
+/* =========================================================&#13;
+   PROFILE&#13;
+   ========================================================= */&#13;
+&#13;
+.profile-section {&#13;
+  position: relative;&#13;
+}&#13;
+&#13;
+.profile-button {&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  gap: 10px;&#13;
+  padding: 7px 10px;&#13;
+  background: transparent;&#13;
+  border: 1px solid transparent;&#13;
+  border-radius: 12px;&#13;
+  cursor: pointer;&#13;
+  transition:&#13;
+    background-color 0.25s ease,&#13;
+    border-color 0.25s ease,&#13;
+    box-shadow 0.25s ease;&#13;
+}&#13;
+&#13;
+.profile-button:hover {&#13;
+  background: rgba(255, 255, 255, 0.07);&#13;
+  border-color: #475569;&#13;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.20);&#13;
+}&#13;
+&#13;
+.user-name {&#13;
+  font-size: 14px;&#13;
+  font-weight: 700;&#13;
+  color: #F8FAFC;&#13;
+  white-space: nowrap;&#13;
+}&#13;
+&#13;
+.profile-icon {&#13;
+  width: 38px;&#13;
+  height: 38px;&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+  background: linear-gradient(145deg, #60A5FA, #2563EB);&#13;
+  border-radius: 11px;&#13;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.28);&#13;
+  font-size: 18px;&#13;
+}&#13;
+&#13;
+.arrow {&#13;
+  font-size: 10px;&#13;
+  color: #94A3B8;&#13;
+  transition:&#13;
+    transform 0.25s ease,&#13;
+    color 0.25s ease;&#13;
+}&#13;
+&#13;
+.profile-button:hover .arrow {&#13;
+  color: #60A5FA;&#13;
+}&#13;
+&#13;
+.arrow.open {&#13;
+  transform: rotate(180deg);&#13;
+}&#13;
+&#13;
+/* =========================================================&#13;
+   PROFILE DROPDOWN&#13;
+   ========================================================= */&#13;
+&#13;
+.profile-dropdown {&#13;
+  position: absolute;&#13;
+  top: 58px;&#13;
+  right: 0;&#13;
+  width: 250px;&#13;
+  padding: 10px;&#13;
+  box-sizing: border-box;&#13;
+  background: #FFFFFF;&#13;
+  border: 1px solid #E2E8F0;&#13;
+  border-radius: 14px;&#13;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.22);&#13;
+  animation: cfaDashDropdown 0.2s ease-out both;&#13;
+}&#13;
+&#13;
+/* =========================================================&#13;
+   DROPDOWN USER&#13;
+   ========================================================= */&#13;
+&#13;
+.profile-user {&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  gap: 11px;&#13;
+  padding: 10px;&#13;
+}&#13;
+&#13;
+.dropdown-user-icon {&#13;
+  width: 40px;&#13;
+  height: 40px;&#13;
+  flex-shrink: 0;&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+  background: #EFF6FF;&#13;
+  border: 1px solid #DBEAFE;&#13;
+  border-radius: 10px;&#13;
+  color: #2563EB;&#13;
+  font-size: 18px;&#13;
+}&#13;
+&#13;
+.dropdown-user-name {&#13;
+  font-size: 14px;&#13;
+  font-weight: 800;&#13;
+  color: #0F172A;&#13;
+  line-height: 1.3;&#13;
+}&#13;
+&#13;
+.dropdown-user-role {&#13;
+  margin-top: 3px;&#13;
+  font-size: 12px;&#13;
+  color: #64748B;&#13;
+  line-height: 1.4;&#13;
+}&#13;
+&#13;
+/* =========================================================&#13;
+   DIVIDER&#13;
+   ========================================================= */&#13;
+&#13;
+.dropdown-divider {&#13;
+  height: 1px;&#13;
+  margin: 6px 0;&#13;
+  background: #E2E8F0;&#13;
+}&#13;
+&#13;
+/* =========================================================&#13;
+   LOGOUT&#13;
+   ========================================================= */&#13;
+&#13;
+.logout-button {&#13;
+  width: 100%;&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  gap: 10px;&#13;
+  padding: 11px 10px;&#13;
+  background: transparent;&#13;
+  border: none;&#13;
+  border-radius: 9px;&#13;
+  cursor: pointer;&#13;
+  font-family: "Segoe UI", Arial, sans-serif;&#13;
+  font-size: 14px;&#13;
+  font-weight: 700;&#13;
+  color: #334155;&#13;
+  text-align: left;&#13;
+  transition:&#13;
+    background-color 0.2s ease,&#13;
+    color 0.2s ease,&#13;
+    transform 0.2s ease;&#13;
+}&#13;
+&#13;
+.logout-button:hover {&#13;
+  background: #EFF6FF;&#13;
+  color: #1D4ED8;&#13;
+  transform: translateX(3px);&#13;
+}&#13;
+&#13;
+/* =========================================================&#13;
+   DROPDOWN ANIMATION&#13;
+   ========================================================= */&#13;
+&#13;
+@keyframes cfaDashDropdown {&#13;
+  from {&#13;
+    opacity: 0;&#13;
+    transform: translateY(-6px);&#13;
+  }&#13;
+&#13;
+  to {&#13;
+    opacity: 1;&#13;
+    transform: translateY(0);&#13;
+  }&#13;
+}&#13;
+&#13;
+/* =========================================================&#13;
+   ACCESSIBILITY&#13;
+   ========================================================= */&#13;
+&#13;
+.campus-header button:focus-visible {&#13;
+  outline: 2px solid #60A5FA;&#13;
+  outline-offset: 3px;&#13;
+  border-radius: 10px;&#13;
+}&#13;
+&#13;
+/* =========================================================&#13;
+   RESPONSIVE — TABLET / SMALL DESKTOP&#13;
+   ========================================================= */&#13;
+&#13;
+@media (min-width: 992px) and (max-width: 1199px) {&#13;
+  .campus-header {&#13;
+    padding: 0 24px;&#13;
+  }&#13;
+}&#13;
+&#13;
+/* =========================================================&#13;
+   RESPONSIVE — TABLET&#13;
+   ========================================================= */&#13;
+&#13;
+@media (min-width: 768px) and (max-width: 991px) {&#13;
+  .campus-header {&#13;
+    height: 68px;&#13;
+    padding: 0 24px;&#13;
+  }&#13;
+&#13;
+  .brand-name {&#13;
+    font-size: 21px;&#13;
+  }&#13;
+&#13;
+  .brand-logo {&#13;
+    width: 40px;&#13;
+    height: 40px;&#13;
+    font-size: 20px;&#13;
+  }&#13;
+&#13;
+  .user-name {&#13;
+    font-size: 13px;&#13;
+  }&#13;
+}&#13;
+&#13;
+/* =========================================================&#13;
+   RESPONSIVE — LARGE MOBILE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (min-width: 576px) and (max-width: 767px) {&#13;
+  .campus-header {&#13;
+    height: 66px;&#13;
+    padding: 0 22px;&#13;
+  }&#13;
+&#13;
+  .brand-name {&#13;
+    font-size: 20px;&#13;
+  }&#13;
+&#13;
+  .brand-logo {&#13;
+    width: 38px;&#13;
+    height: 38px;&#13;
+    font-size: 19px;&#13;
+  }&#13;
+&#13;
+  .user-name {&#13;
+    display: none;&#13;
+  }&#13;
+&#13;
+  .profile-dropdown {&#13;
+    top: 54px;&#13;
+    width: 230px;&#13;
+  }&#13;
+}&#13;
+&#13;
+/* =========================================================&#13;
+   RESPONSIVE — MOBILE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 575px) {&#13;
+  .campus-header {&#13;
+    height: 64px;&#13;
+    padding: 0 18px;&#13;
+  }&#13;
+&#13;
+  .brand-name {&#13;
+    font-size: 19px;&#13;
+  }&#13;
+&#13;
+  .brand-logo {&#13;
+    width: 36px;&#13;
+    height: 36px;&#13;
+    font-size: 18px;&#13;
+  }&#13;
+&#13;
+  .user-name {&#13;
+    display: none;&#13;
+  }&#13;
+&#13;
+  .profile-button {&#13;
+    gap: 7px;&#13;
+    padding: 5px 7px;&#13;
+  }&#13;
+&#13;
+  .profile-icon {&#13;
+    width: 34px;&#13;
+    height: 34px;&#13;
+    font-size: 17px;&#13;
+  }&#13;
+&#13;
+  .profile-dropdown {&#13;
+    top: 52px;&#13;
+    right: -2px;&#13;
+    width: 225px;&#13;
+  }&#13;
+}&#13;
+&#13;
+/* =========================================================&#13;
+   RESPONSIVE — VERY SMALL MOBILE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 399px) {&#13;
+  .campus-header {&#13;
+    height: 60px;&#13;
+    padding: 0 15px;&#13;
+  }&#13;
+&#13;
+  .brand-name {&#13;
+    font-size: 18px;&#13;
+  }&#13;
+&#13;
+  .brand-logo {&#13;
+    width: 34px;&#13;
+    height: 34px;&#13;
+    font-size: 17px;&#13;
+  }&#13;
+&#13;
+  .profile-icon {&#13;
+    width: 32px;&#13;
+    height: 32px;&#13;
+    font-size: 16px;&#13;
+  }&#13;
+&#13;
+  .profile-dropdown {&#13;
+    top: 48px;&#13;
+    width: 215px;&#13;
+  }&#13;
+}&#13;
+&#13;
+/* =========================================================&#13;
+   REDUCED MOTION&#13;
+   ========================================================= */&#13;
+&#13;
+@media (prefers-reduced-motion: reduce) {&#13;
+  .campus-header *,&#13;
+  .campus-header *::before,&#13;
+  .campus-header *::after {&#13;
+    animation: none !important;&#13;
+    transition: none !important;&#13;
+  }&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>food_service_dashboard_header</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Food Service Dashboard Header</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.userName = "";
+    data.userRole = "";
+    data.logoutSuccess = false;
+
+    // ==========================================
+    // LOGOUT
+    // ==========================================
+
+    if (input && input.action == "logout") {
+
+        var sessionId = input.sessionId;
+
+        gs.info(
+            "CAMPUS LOGOUT REQUEST RECEIVED. SESSION ID: " +
+            sessionId
+        );
+
+        if (sessionId) {
+
+            var sessionGR = new GlideRecord(
+                "x_snc_campus_foo_1_campus_login_session"
+            );
+
+            sessionGR.addQuery(
+                "session_id",
+                sessionId
+            );
+
+            sessionGR.addQuery(
+                "status",
+                "active"
+            );
+
+            sessionGR.query();
+
+            if (sessionGR.next()) {
+
+                // Close the existing session
+                sessionGR.setValue(
+                    "status",
+                    "logout"
+                );
+
+                sessionGR.setValue(
+                    "end_time",
+                    new GlideDateTime()
+                );
+
+                sessionGR.update();
+
+                data.logoutSuccess = true;
+
+                gs.info(
+                    "CAMPUS SESSION CLOSED SUCCESSFULLY: " +
+                    sessionId
+                );
+
+            } else {
+
+                // Session already closed/not found
+                data.logoutSuccess = true;
+
+                gs.info(
+                    "CAMPUS SESSION NOT FOUND OR ALREADY CLOSED: " +
+                    sessionId
+                );
+            }
+
+        } else {
+
+            data.logoutSuccess = false;
+
+            gs.info(
+                "CAMPUS LOGOUT FAILED: SESSION ID MISSING"
+            );
+        }
+
+        return;
+    }
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 03:44:51</sys_created_on>
+        <sys_id>8ea4c28aa96703107f444d1b3bf577df</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>Food Service Dashboard Header</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_8ea4c28aa96703107f444d1b3bf577df</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-05 06:10:41</sys_updated_on>
+        <template><![CDATA[<div class="campus-header">
+
+    <!-- Left Side: Logo / Brand -->
+    <div class="brand-section">
+    <div class="brand-logo">
+        ]]>🍽
+<![CDATA[    </div>
+
+    <div class="brand-name">
+        MealCare
+    </div>
+</div>
+
+
+    <!-- Right Side: Profile -->
+    <div class="profile-section">
+
+        <button class="profile-button"
+                ng-click="c.toggleProfileMenu()">
+
+            <span class="user-name">
+                {{c.data.userName}}
+            </span>
+
+            <span class="profile-icon">
+                ]]>👤
+<![CDATA[            </span>
+
+            <span class="arrow"
+                  ng-class="{'open': c.profileMenuOpen}">
+                ▼
+            </span>
+
+        </button>
+
+
+        <!-- Dropdown Menu -->
+        <div class="profile-dropdown"
+             ng-if="c.profileMenuOpen">
+
+            <div class="profile-user">
+
+                <div class="dropdown-user-icon">
+                    ]]>👤
+<![CDATA[                </div>
+
+                <div>
+
+                    <div class="dropdown-user-name">
+                        {{c.data.userName}}
+                    </div>
+
+                    <div class="dropdown-user-role">
+                        {{c.data.userRole}}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="dropdown-divider"></div>
+
+
+            <!-- Logout -->
+            <button class="logout-button"
+                    ng-click="c.logout()">
+
+                <span>]]>🚪<![CDATA[</span>
+                <span>Logout</span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

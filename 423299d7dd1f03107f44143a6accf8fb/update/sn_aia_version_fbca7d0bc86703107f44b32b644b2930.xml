@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sn_aia_version">
+    <sn_aia_version action="INSERT_OR_UPDATE">
+        <condition/>
+        <instructions>1. Retrieve and parse analytics from Get Food Management Analytics, Food Base Problem Analytics, and Food Complaint Task Analytics.
+
+2. Combine and analyze data across Mess Halls, Meal Types, Use Cases, Problem Types, Priorities, States, Assignment Groups, Approval Status, affected students, and AI analysis results.
+
+3. Identify operational workload and classify tasks as open, closed complete, or closed incomplete based on explicit state values.
+
+4. Detect significant patterns only when supported by multiple records or aggregate data.
+
+5. Generate concise, evidence-based management insights and practical recommendations strictly from the current analytics.
+
+6. Populate every report field dynamically, using actual categories and counts from analytics tools.
+
+7. Validate the report for completeness, accuracy, and adherence to required structure before saving.
+
+8. Use the Create Food Management Report tool to save exactly one complete management report per manager request. Set Report Title to "Food Management Intelligence Report" and Report Content to the complete final JSON returned by the agent.
+
+9. Return the final management report as a valid JSON object, directly parseable by the frontend application.</instructions>
+        <state>published</state>
+        <sys_class_name>sn_aia_version</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 05:30:24</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>fbca7d0bc86703107f44b32b644b2930</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>V1</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sn_aia_version_fbca7d0bc86703107f44b32b644b2930</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-05 06:41:14</sys_updated_on>
+        <target_id>96a93587c86703107f44b32b644b2981</target_id>
+        <target_table>sn_aia_agent</target_table>
+        <version_name>V1</version_name>
+        <version_number>1</version_number>
+    </sn_aia_version>
+</record_update>

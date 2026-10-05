@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($location) {
+    var c = this;
+
+    // ---------------------------------------------------------
+    // Navigation: routes to the correct page and tracks which
+    // nav item is "active" for highlighting.
+    // ---------------------------------------------------------
+    c.goTo = function(pageId, navKey) {
+        c.data.currentPage = navKey;
+        $location.path('/' + pageId);
+    };
+
+    // ---------------------------------------------------------
+    // Logout: uses Service Portal's native logout mechanism.
+    // No backend widget logic needed — this is a platform action.
+    // ---------------------------------------------------------
+    c.logout = function() {
+        window.location.href = '/logout.do';
+    };
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.cfa-sidebar-nav{&#13;
+  display:flex;&#13;
+  flex-direction:column;&#13;
+  gap:4px;&#13;
+  padding:12px;&#13;
+}&#13;
+.cfa-nav-item{&#13;
+  display:flex;&#13;
+  align-items:center;&#13;
+  gap:10px;&#13;
+  padding:11px 14px;&#13;
+  border-radius:10px;&#13;
+  border:none;&#13;
+  background:none;&#13;
+  color:#cbd5e1;&#13;
+  font-size:14px;&#13;
+  font-weight:600;&#13;
+  cursor:pointer;&#13;
+  text-align:left;&#13;
+  width:100%;&#13;
+}&#13;
+.cfa-nav-item:hover{&#13;
+  background:#1e293b;&#13;
+  color:#fff;&#13;
+}&#13;
+.cfa-nav-item.active{&#13;
+  background:#0d9488;&#13;
+  color:#fff;&#13;
+}&#13;
+.cfa-nav-ic{&#13;
+  font-size:16px;&#13;
+}&#13;
+&#13;
+.cfa-sidebar-footer{&#13;
+  padding:16px;&#13;
+  border-top:1px solid #1e293b;&#13;
+  margin-top:auto;&#13;
+}&#13;
+.cfa-side-user b{&#13;
+  color:#fff;&#13;
+  display:block;&#13;
+  font-size:13.5px;&#13;
+}&#13;
+.cfa-side-user span{&#13;
+  font-size:12px;&#13;
+  color:#94a3b8;&#13;
+}&#13;
+.cfa-btn-logout{&#13;
+  width:100%;&#13;
+  margin-top:10px;&#13;
+  background:#1e293b;&#13;
+  color:#cbd5e1;&#13;
+  border:1px solid #334155;&#13;
+  border-radius:8px;&#13;
+  padding:9px;&#13;
+  cursor:pointer;&#13;
+  font-size:12.5px;&#13;
+}&#13;
+.cfa-btn-logout:hover{&#13;
+  background:#dc2626;&#13;
+  color:#fff;&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>food_services_sidebar_</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Food Services Sidebar </name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    // ---------------------------------------------------------
+    // FRONTEND-ONLY STUB: nav items are hardcoded here for now
+    // since we're building the visual/layout first, backend
+    // logic comes later.
+    //
+    // WHEN BACKEND IS WIRED, THIS BLOCK SHOULD INSTEAD:
+    //   1. Check gs.hasRole('x_cfsa_student') — if false, this
+    //      widget shouldn't render these items at all
+    //   2. Build data.navItems as an array the server decides,
+    //      e.g. only include "Raise a Request" if the student's
+    //      u_student record is active, etc.
+    //   3. Any future lock/unlock logic (like the earlier
+    //      Feedback-locked pattern) would compute a boolean
+    //      here — e.g. data.feedbackAvailable = <GlideRecord
+    //      check> — and the HTML would read that flag, not
+    //      decide it client-side.
+    // ---------------------------------------------------------
+
+    data.userName = gs.getUser().getDisplayName();
+    data.userMeta = 'Student'; // later: pull roll number / hostel from x_snc_campus_foo_1_student
+
+    // currentPage would ideally come from the page context itself
+    // rather than being passed in — placeholder for now
+    data.currentPage = input.currentPage || 'dashboard';
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 01:30:42</sys_created_on>
+        <sys_id>1606edcaa96303107f444d1b3bf57755</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Food Services Sidebar </sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_1606edcaa96303107f444d1b3bf57755</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-27 01:30:42</sys_updated_on>
+        <template><![CDATA[<!-- =========================================================
+     STUDENT SIDEBAR NAVIGATION
+     4 items: Dashboard, My Requests, Raise a Request, Help
+     Nav item list itself is STATIC here (frontend-only build).
+     Later, when backend is wired, c.data.navItems should instead
+     come fully from the server script (see server script comments
+     below) — server decides WHICH items to send based on role,
+     and any lock/unlock state (e.g. Feedback-style locking, if
+     ever added back) is computed server-side, not in this HTML.
+     ========================================================= -->
+<nav class="cfa-sidebar-nav">
+
+  <button class="cfa-nav-item"
+          ng-class="{active: c.data.currentPage === 'dashboard'}"
+          ng-click="c.goTo('student_dashboard', 'dashboard')">
+    <span class="cfa-nav-ic">]]>🏠<![CDATA[</span>
+    <span>Dashboard</span>
+  </button>
+
+  <button class="cfa-nav-item"
+          ng-class="{active: c.data.currentPage === 'my_requests'}"
+          ng-click="c.goTo('student_dashboard', 'my_requests')">
+    <span class="cfa-nav-ic">]]>📄<![CDATA[</span>
+    <span>My Requests</span>
+  </button>
+
+  <button class="cfa-nav-item"
+          ng-class="{active: c.data.currentPage === 'raise_request'}"
+          ng-click="c.goTo('student_raise_request', 'raise_request')">
+    <span class="cfa-nav-ic">]]>🎫<![CDATA[</span>
+    <span>Raise a Request</span>
+  </button>
+
+  <button class="cfa-nav-item"
+          ng-class="{active: c.data.currentPage === 'help'}"
+          ng-click="c.goTo('student_help', 'help')">
+    <span class="cfa-nav-ic">❓</span>
+    <span>Help</span>
+  </button>
+
+</nav>
+
+<!-- Sidebar footer: logged-in user + logout, also backend-driven later -->
+<div class="cfa-sidebar-footer">
+  <div class="cfa-side-user">
+    <b>{{c.data.userName}}</b>
+    <span>{{c.data.userMeta}}</span>
+  </div>
+  <button class="cfa-btn-logout" ng-click="c.logout()">Logout</button>
+</div>]]></template>
+    </sp_widget>
+</record_update>

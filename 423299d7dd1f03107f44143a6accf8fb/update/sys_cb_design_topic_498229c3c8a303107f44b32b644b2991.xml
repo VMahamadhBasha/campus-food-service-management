@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_design_topic">
+    <sys_cb_design_topic action="INSERT_OR_UPDATE">
+        <compiled_topic display_value="test">858229c3c8a303107f44b32b644b2988</compiled_topic>
+        <design_definition>{"type":"FlowTopic","triggers":[{"type":"Trigger","name":"7612755647e24fc898894ce4450a2806","triggerType":"request","applicability":{"type":"Applicability","mode":"script","value":"true"},"id":"7612755647e24fc898894ce4450a2806"}],"goals":[{"name":"primary","trigger_id":"7612755647e24fc898894ce4450a2806","nodes":[{"type":"StartGoal","goal_id":"primary","greeting_msg":{"type":"String","mode":"string","value":""},"id":"94eac7a2eb2447828eb7856a407cc9bd","name":"Start","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","confirmation_msg":{"type":"String","mode":"string","value":""},"id":"c180272d73c446b8bfb5cfcde4ef7505","name":"End","expert_mode":false},{"type":"LibraryCall","library_topic_name":"Data Collector","library_topic_id":"4c19933e4322211006650464dbb8f22d","library_topic_is_template":false,"parameter-mappings":[{"parameter-name":"definition","value":{"type":"String","mode":"script","value":"(function execute() {\n        var config = {\n            configuration: {\"purpose\":\"{{0}}\",\"inputs\":[{\"name\":\"student_module\",\"type\":\"choice\",\"discoverable\":true,\"description\":\"here the agent needs to show the all options for the studnet and here some otption based on that option further we will based on the option\",\"skipMode\":\"'simple'\",\"skipCondition\":\"\\\"\\\"\",\"helpText\":\"false\",\"choices\":[{\"value\":\"Raise a Complaint\",\"label\":\"Raise a Complaint\"},{\"value\":\"Get teh record status \",\"label\":\"Get teh record status \"},{\"value\":\"give feedback\",\"label\":\"give feedback\"}],\"applicability\":\"\",\"validation\":\"\"}],\"instructions\":\"{{1}}\",\"advanced_parameters\":\"{{2}}\",\"callingTask\":\"{{3}}\",\"confirm_summary\":false,\"slots\":[],\"applicability\":\"\",\"classificationOverrides\":[]}\n        };\n        return JSON.stringify(config);\n    })()"},"metadata":{"type":"String","list":false,"items":[],"use_items":false}},{"parameter-name":"inputs","metadata":{"type":"String","list":true,"items":[{"type":"String","mode":"string","value":"Collect user input"},{"type":"String","mode":"string","value":""},{"type":"String","mode":"string","value":""},{"type":"String","mode":"script","value":"(function() { return vaSystem.getConversationTaskId()})()"}],"use_items":true}}],"return-value-mappings":[{"main_topic_variable_namespace":"vaInputs","library_topic_return_parameter_name":"outputs","main_topic_mapped_variable_name":"ai_data_collector_e05953d900e54252af689f97a6a33b29_output"}],"header_card_fields":[],"input_parameters_mode":"dynamic","output_parameters_mode":"dynamic","id":"e05953d900e54252af689f97a6a33b29","name":"student Module","goal_id":"primary","expert_mode":false,"variableIds":["6fb8aebe44be46588dbc374b2615bd50"]},{"type":"ScriptedAction","script":"(function execute() {\n                    var mappings = {\"student_module\":\"student_module\",\"ai_data_collector_e05953d900e54252af689f97a6a33b29_output\":\"ai_data_collector_e05953d900e54252af689f97a6a33b29_output\"};\n                    var output = JSON.parse(vaInputs['ai_data_collector_e05953d900e54252af689f97a6a33b29_output']);\n                    var variables = {\"user\":{\"category\":\"vaInputs\",\"id\":\"current-user\",\"label\":\"User\",\"name\":\"user\",\"table\":\"sys_user\",\"varType\":\"reference\"},\"ai_data_collector_e05953d900e54252af689f97a6a33b29_output\":{\"id\":\"cc814758192647a18d00bde5027ada4b\",\"name\":\"ai_data_collector_e05953d900e54252af689f97a6a33b29_output\",\"label\":\"Ai_data_collector_e05953d900e54252af689f97a6a33b29_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"student_module\":{\"id\":\"6fb8aebe44be46588dbc374b2615bd50\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Student Module\",\"name\":\"student_module\",\"choices\":[{\"label\":\"Raise a Complaint\",\"value\":\"Raise a Complaint\"},{\"label\":\"Get teh record status \",\"value\":\"Get teh record status \",\"checked\":true,\"meta\":{}},{\"label\":\"give feedback\",\"value\":\"give feedback\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"e05953d900e54252af689f97a6a33b29\",\"isHidden\":false,\"description\":\"here the agent needs to show the all options for the studnet and here some otption based on that option further we will based on the option\",\"translation\":true},\"ai_data_collector_06e3aafe16e5440f873bb71a3b52117a_output\":{\"id\":\"778cb05c1cd3475486fbef8312c11582\",\"name\":\"ai_data_collector_06e3aafe16e5440f873bb71a3b52117a_output\",\"label\":\"Ai_data_collector_06e3aafe16e5440f873bb71a3b52117a_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}}}\n                    Object.keys(output).forEach(function(key) {\n                        var mappedKey = mappings[key];\n                        if (!vaInputs[mappedKey]) {vaInputs.initialize(mappedKey);}\n                        var isMultiSelect = variables[mappedKey] &amp;&amp; variables[mappedKey].varType === 'array.reference';\n                        if (isMultiSelect) {vaInputs[mappedKey] = output[key] ? JSON.parse(output[key]) : '';}\n                        else {vaInputs[mappedKey] = output[key];}\n                    });\n                })()","id":"918e389b306741ec91e0bdb1f1357c30","name":"e05953d900e54252af689f97a6a33b29_ai_data_collector_output_handler","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false}],"edges":[{"type":"Edge","source_node_id":"e05953d900e54252af689f97a6a33b29","target_node_id":"918e389b306741ec91e0bdb1f1357c30","id":"c61937386e444c1ca0143d70007bb9e0"},{"type":"Edge","source_node_id":"918e389b306741ec91e0bdb1f1357c30","target_node_id":"c180272d73c446b8bfb5cfcde4ef7505","id":"3fff16d4cbb54051bd74c81695f5cd14"},{"type":"Edge","source_node_id":"94eac7a2eb2447828eb7856a407cc9bd","target_node_id":"e05953d900e54252af689f97a6a33b29","id":"b43995138b4544579f9f73ad1df0f992"}],"id":"primary"}],"script_variables":[],"glide_variables":[{"type":"Reference","table":"sys_user","auto_select":false,"id":"current-user","name":"user","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false},{"type":"String","name":"ai_data_collector_e05953d900e54252af689f97a6a33b29_output","list":false,"id":"cc814758192647a18d00bde5027ada4b","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"Choice","choices":[{"name":"Raise a Complaint","element":"Raise a Complaint"},{"name":"Get teh record status ","element":"Get teh record status "},{"name":"give feedback","element":"give feedback"}],"id":"6fb8aebe44be46588dbc374b2615bd50","name":"student_module","description":"here the agent needs to show the all options for the studnet and here some otption based on that option further we will based on the option","formatType":"text","secure":false,"sensitive":false,"aiInput":true,"list":false,"translation":true,"label":"Student Module"},{"type":"String","name":"ai_data_collector_06e3aafe16e5440f873bb71a3b52117a_output","list":false,"id":"778cb05c1cd3475486fbef8312c11582","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false}],"applicability":{"type":"Applicability","mode":"script","value":"true"},"roles":[],"scope":"423299d7dd1f03107f44143a6accf8fb","domain":"global","topic_type":"STANDARD","channels":[],"dialog_acts_enabled":false,"id":"c32e47b604ab43107f44b8d89e324cc1","name":"test","key_phrases":[],"nlu_provider":"","nlu_model":"","nlu_model_label":"","nlu_intent":"","nlu_intent_label":"","flexible_conversation_switching":false,"autopilot_topic":false,"design_categories":[],"triggerable_by_notification":false,"description":"this is the test topic create din thsi ","model_type":"llm","foundational":false,"modify_confirmation_enabled":false,"context_profiles":["95dda1fc3bc8431051a1da6eb5e45a7b","e13840cf77d53110569156391e5a99ba"],"title":"test","library":false,"csTopicId":"858229c3c8a303107f44b32b644b2988","readOnly":false,"nluMapping":"[]"}</design_definition>
+        <design_topic_id>c32e47b604ab43107f44b8d89e324cc1</design_topic_id>
+        <graph>{
+  "graph_api_version": "1.0.82",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "94eac7a2eb2447828eb7856a407cc9bd": {
+          "id": "94eac7a2eb2447828eb7856a407cc9bd",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "c180272d73c446b8bfb5cfcde4ef7505": {
+          "id": "c180272d73c446b8bfb5cfcde4ef7505",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "e05953d900e54252af689f97a6a33b29": {
+          "id": "e05953d900e54252af689f97a6a33b29",
+          "stepType": "StandaloneAIChoicePrompt",
+          "name": "student Module",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "c2a6316c09454f429cfcd3f5f3a528e3",
+              "displayName": "student Module",
+              "name": "student_module",
+              "description": "here the agent needs to show the all options for the studnet and here some otption based on that option further we will based on the option",
+              "discoverable": true,
+              "dynamicDescription": {
+                "value": "",
+                "mode": "simple"
+              },
+              "type": "choice",
+              "variableId": "6fb8aebe44be46588dbc374b2615bd50",
+              "choices": [
+                {
+                  "label": "Raise a Complaint",
+                  "value": "Raise a Complaint"
+                },
+                {
+                  "label": "Get teh record status ",
+                  "value": "Get teh record status ",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "give feedback",
+                  "value": "give feedback",
+                  "checked": true,
+                  "meta": {}
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "ChoicePrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "cc814758192647a18d00bde5027ada4b"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_e05953d900e54252af689f97a6a33b29_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "6fb8aebe44be46588dbc374b2615bd50"
+          ]
+        }
+      },
+      "edges": [
+        {
+          "id": "9f3b5bc1ad1c4e78bdfa8c5123b94d02",
+          "edgeType": "Edge",
+          "source": "e05953d900e54252af689f97a6a33b29",
+          "target": "c180272d73c446b8bfb5cfcde4ef7505",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "b43995138b4544579f9f73ad1df0f992",
+          "edgeType": "Edge",
+          "source": "94eac7a2eb2447828eb7856a407cc9bd",
+          "target": "e05953d900e54252af689f97a6a33b29",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "cc814758192647a18d00bde5027ada4b": {
+      "id": "cc814758192647a18d00bde5027ada4b",
+      "name": "ai_data_collector_e05953d900e54252af689f97a6a33b29_output",
+      "label": "Ai_data_collector_e05953d900e54252af689f97a6a33b29_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "6fb8aebe44be46588dbc374b2615bd50": {
+      "id": "6fb8aebe44be46588dbc374b2615bd50",
+      "varType": "choice",
+      "category": "vaInputs",
+      "label": "Student Module",
+      "name": "student_module",
+      "choices": [
+        {
+          "label": "Raise a Complaint",
+          "value": "Raise a Complaint"
+        },
+        {
+          "label": "Get teh record status ",
+          "value": "Get teh record status ",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "give feedback",
+          "value": "give feedback",
+          "checked": true,
+          "meta": {}
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "e05953d900e54252af689f97a6a33b29",
+      "isHidden": false,
+      "description": "here the agent needs to show the all options for the studnet and here some otption based on that option further we will based on the option",
+      "translation": true
+    },
+    "778cb05c1cd3475486fbef8312c11582": {
+      "id": "778cb05c1cd3475486fbef8312c11582",
+      "name": "ai_data_collector_06e3aafe16e5440f873bb71a3b52117a_output",
+      "label": "Ai_data_collector_06e3aafe16e5440f873bb71a3b52117a_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    }
+  }
+}</graph>
+        <name>test</name>
+        <sys_class_name>sys_cb_design_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 03:44:16</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>498229c3c8a303107f44b32b644b2991</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>FlowTopic</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_cb_design_topic_498229c3c8a303107f44b32b644b2991</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 03:48:32</sys_updated_on>
+        <type>FlowTopic</type>
+    </sys_cb_design_topic>
+</record_update>

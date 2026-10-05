@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_hub_flow">
+    <sys_hub_flow action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <acls/>
+        <active>false</active>
+        <allow_high_security_roles>false</allow_high_security_roles>
+        <annotation/>
+        <attributes>browserActivatedIn=chrome,integrationActivatedIn=standalone,labelCacheCleanUpExecuted=true,viewActivatedIn=naturalLanguage</attributes>
+        <authored_on_release_version>29000</authored_on_release_version>
+        <callable_by_client_api>false</callable_by_client_api>
+        <category/>
+        <compiler_build/>
+        <copied_from/>
+        <copied_from_name/>
+        <description>Starts the Food Management Intelligence agentic workflow on demand when a manager requests a food management report from the Service Portal.</description>
+        <display_name_after_preview/>
+        <flow_priority>MEDIUM</flow_priority>
+        <generation_source/>
+        <internal_name>generate_food_management_intelligence</internal_name>
+        <label_cache>[]</label_cache>
+        <latest_snapshot/>
+        <master_snapshot/>
+        <master_snapshot_digest/>
+        <name>Generate Food Management Intelligence</name>
+        <natlang/>
+        <outputs/>
+        <pre_compiled>false</pre_compiled>
+        <remote_trigger_id/>
+        <run_as>user</run_as>
+        <run_with_roles name="x_snc_campus_foo_1.manager">414e528ea92b03107f444d1b3bf57779</run_with_roles>
+        <sc_callable>false</sc_callable>
+        <show_draft_actions>false</show_draft_actions>
+        <show_triggered_flows>false</show_triggered_flows>
+        <status>draft</status>
+        <substatus/>
+        <sys_class_name>sys_hub_flow</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-02 16:19:35</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>4592ee7334e703107f4478f2299fbd83</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>Generate Food Management Intelligence</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_hub_flow_4592ee7334e703107f4478f2299fbd83</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-02 16:41:38</sys_updated_on>
+        <type>flow</type>
+        <updation_source/>
+        <version>2</version>
+        <version_record>ce972efb34e703107f4478f2299fbde5</version_record>
+    </sys_hub_flow>
+    <sys_translated_text action="delete_multiple" query="documentkey=4592ee7334e703107f4478f2299fbd83"/>
+    <sys_variable_value action="delete_multiple" query="document_key=4592ee7334e703107f4478f2299fbd83"/>
+    <sys_hub_flow_stage action="delete_multiple" query="flow=4592ee7334e703107f4478f2299fbd83"/>
+    <sys_flow_cat_variable_model action="delete_multiple" query="id=4592ee7334e703107f4478f2299fbd83^sys_idNOT IN4192ee7334e703107f4478f2299fbd88"/>
+    <sys_flow_cat_variable_model action="INSERT_OR_UPDATE">
+        <id>4592ee7334e703107f4478f2299fbd83</id>
+        <name>Generate Food Management Intelligence</name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-02 16:19:35</sys_created_on>
+        <sys_id>4192ee7334e703107f4478f2299fbd88</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-02 16:19:35</sys_updated_on>
+    </sys_flow_cat_variable_model>
+    <sys_flow_cat_variable action="delete_multiple" query="flow_catalog_model=4192ee7334e703107f4478f2299fbd88"/>
+    <sys_hub_flow_input action="delete_multiple" query="model=4592ee7334e703107f4478f2299fbd83"/>
+    <sys_hub_flow_output action="delete_multiple" query="model=4592ee7334e703107f4478f2299fbd83"/>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=4592ee7334e703107f4478f2299fbd83"/>
+    <sys_hub_trigger_instance_v2 action="delete_multiple" query="flow=4592ee7334e703107f4478f2299fbd83^sys_idNOT INa597aafb34e703107f4478f2299fbd24"/>
+    <sys_hub_trigger_instance_v2 action="INSERT_OR_UPDATE">
+        <comment/>
+        <display_text/>
+        <flow display_value="Generate Food Management Intelligence">4592ee7334e703107f4478f2299fbd83</flow>
+        <generation_source/>
+        <name>Daily</name>
+        <published_version/>
+        <remote_sys_id/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-02 16:41:28</sys_created_on>
+        <sys_id>a597aafb34e703107f4478f2299fbd24</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-02 16:41:28</sys_updated_on>
+        <trigger_definition display_value="Daily">89142dc0c32222002841b63b12d3ae8a</trigger_definition>
+        <trigger_inputs>H4sIAAAAAAAA/31SXW+cMBD8K5WfKYIj/eKtShSpUtpIvVNeoggteLmz6q/a5hJ6yn/vGgPJtVWRXzy7Ozsz5v7EJLQoWc12QiHLmNABnQa5Gy0SupeCYxNSTYHmEIwbWR3cgBnrnVE7VFZCoOYepCfQOI6O1WVRZOwIcsDt6L9w4iIGDSqyznxTla7lpw/F26Kk82ZT1UVBh6pceCIe7/7b1B2E5A41q+8fMmbB0YIQ159WJzdC/0jbz5tF1FQBv0DeFV21oa8oNh8vyvZ91ZYbXgHiO5r6I6BzC+EfMUXs5nzodSb4FFBz5Gtgf8XqEPitluPacSAvyYKCJy9+4UzlsEfy02Eqrtdmzi7B/RUE2BJ1FwaHSxRGdOhTEhx7GGS4fI2lhlsbhNFpJEArl2kjB6W/pSTYSrA8FSGDJxFoo9EoffbRbw/m8fui8lroKZW5KE0Hcr1BCE60Q4h6TgwlKiJqFFgr9L6xzhzFNExaVD7Fn/fSPNJSL/Y6hy4KzylXyK8Jv5rgO3AiuvhKNDT8nDE/+ksJ3r94oRCbn0NUkpzNHpoUQxzpnLDhMy04Lj/988NvbHokXUkDAAA=</trigger_inputs>
+        <trigger_outputs/>
+        <trigger_type>daily</trigger_type>
+        <updation_source/>
+    </sys_hub_trigger_instance_v2>
+    <sys_hub_action_instance_v2 action="delete_multiple" query="flow=4592ee7334e703107f4478f2299fbd83^sys_idNOT IN1cd4e6b734e703107f4478f2299fbd4d"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="Use an AI agent">b2e7d731ff4832100200ffffffffffed</action_type>
+        <action_type_parent display_value="Use an AI agent">74d79331ff4832100200ffffffffffb0</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot/>
+        <display_text/>
+        <flow display_value="Generate Food Management Intelligence">4592ee7334e703107f4478f2299fbd83</flow>
+        <generation_source/>
+        <order>1</order>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-02 16:29:22</sys_created_on>
+        <sys_id>1cd4e6b734e703107f4478f2299fbd4d</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-02 16:37:28</sys_updated_on>
+        <ui_id>6ab62d7b-c0ea-4f03-8260-b330375696e8</ui_id>
+        <updation_source/>
+        <values>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</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=1cd4e6b734e703107f4478f2299fbd4d"/>
+    <sys_hub_sub_flow_instance_v2 action="delete_multiple" query="flow=4592ee7334e703107f4478f2299fbd83"/>
+    <sys_hub_flow_logic_instance_v2 action="delete_multiple" query="flow=4592ee7334e703107f4478f2299fbd83"/>
+    <sys_hub_pill_compound action="delete_multiple" query="attached_to=4592ee7334e703107f4478f2299fbd83"/>
+    <sys_hub_flow_variable action="delete_multiple" query="model=4592ee7334e703107f4478f2299fbd83"/>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_input_4592ee7334e703107f4478f2299fbd83"/>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_output_4592ee7334e703107f4478f2299fbd83"/>
+    <sys_flow_trigger_plan action="delete_multiple" query="plan_id=4592ee7334e703107f4478f2299fbd83"/>
+    <sys_flow_subflow_plan action="delete_multiple" query="plan_id=4592ee7334e703107f4478f2299fbd83"/>
+</record_update>

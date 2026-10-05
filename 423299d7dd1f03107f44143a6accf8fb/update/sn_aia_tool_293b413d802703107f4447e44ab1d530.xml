@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sn_aia_tool">
+    <sn_aia_tool action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description>Analyze the complete JSON output returned by the "Get Food Base Problem" tool.
+
+Use the "food_base_problem_data" input from that tool output.
+
+The input contains the fields:
+Number, Use Case, Problem Type, Student Count, Meal Type, Mess Hall, Description, and State.
+
+Determine Priority using ONLY Use Case and Student Count.
+
+This tool must be called only after Get Food Base Problem has successfully retrieved the record.</description>
+        <input_schema>[{"name":"food_base_problem_number","description":"The Food Base Problem Number to analyze, for example FBP0001059.","mandatory":true}]</input_schema>
+        <name>Analyze Food Base Problem</name>
+        <record_type>custom</record_type>
+        <script><![CDATA[(function execute(inputs) {
+
+    var result = {
+        found: false,
+        number: "",
+        use_case: "",
+        student_count: 0,
+        priority: "Not specified",
+        priority_reason: "",
+        recommended_action: "",
+        knowledge_insights: "Knowledge analysis will be provided by the configured Food Knowledge RAG tool.",
+        related_knowledge_articles: []
+    };
+
+    var gr = new GlideRecord('x_snc_campus_foo_1_food_base_problem');
+
+    if (!gr.get('number', inputs.food_base_problem_number)) {
+        result.priority_reason =
+            "Food Base Problem " +
+            inputs.food_base_problem_number +
+            " could not be found.";
+
+        return JSON.stringify(result);
+    }
+
+    result.found = true;
+    result.number = gr.getValue('number');
+
+    result.use_case = gr.getDisplayValue('use_case');
+    result.student_count =
+        parseInt(gr.getValue('student_count'), 10) || 0;
+
+    var useCase = result.use_case;
+    var studentCount = result.student_count;
+
+
+    /*
+     * PRIORITY
+     * Priority uses ONLY:
+     * 1. Use Case
+     * 2. Student Count
+     */
+
+    if (useCase === "Emergency Food Assistance") {
+
+        result.priority = "Critical";
+
+        result.priority_reason =
+            "Use Case is Emergency Food Assistance. " +
+            "This use case is configured as Always Critical. " +
+            "Therefore, the Priority is Critical.";
+
+    }
+
+    else if (useCase === "Allergy Management Request") {
+
+        if (studentCount === 0) {
+
+            result.priority = "Low";
+
+            result.priority_reason =
+                "Use Case is Allergy Management Request. " +
+                "Student Count is 0. " +
+                "The configured range for 0 students is Low. " +
+                "Therefore, the Priority is Low.";
+
+        }
+        else if (studentCount >= 1 && studentCount <= 4) {
+
+            result.priority = "High";
+
+            result.priority_reason =
+                "Use Case is Allergy Management Request. " +
+                "Student Count is " + studentCount + ". " +
+                "The configured range for 1–4 students is High. " +
+                "Therefore, the Priority is High.";
+
+        }
+        else {
+
+            result.priority = "Critical";
+
+            result.priority_reason =
+                "Use Case is Allergy Management Request. " +
+                "Student Count is " + studentCount + ". " +
+                "The configured range for 5 or more students is Critical. " +
+                "Therefore, the Priority is Critical.";
+        }
+
+        result.recommended_action =
+            "Record the affected students and suspected food item, " +
+            "notify the responsible mess staff, and investigate the " +
+            "possible allergen exposure immediately.";
+
+    }
+
+    else if (
+        useCase === "Food Quality Complaint" ||
+        useCase === "Meal Not Available" ||
+        useCase === "Special Diet Request" ||
+        useCase === "Missed Meal Request" ||
+        useCase === "Food Wastage Reporting" ||
+        useCase === "Hostel Mess Billing Issue"
+    ) {
+
+        if (studentCount <= 2) {
+            result.priority = "Low";
+        }
+        else if (studentCount <= 4) {
+            result.priority = "Medium";
+        }
+        else if (studentCount <= 7) {
+            result.priority = "High";
+        }
+        else {
+            result.priority = "Critical";
+        }
+
+        result.priority_reason =
+            "Use Case is " + useCase +
+            ". Student Count is " + studentCount +
+            ". The configured range is " +
+            "0–2 = Low, 3–4 = Medium, 5–7 = High, " +
+            "and 8+ = Critical. " +
+            "Therefore, the Priority is " + result.priority + ".";
+
+        result.recommended_action =
+            "Review the submitted food-service request, notify the " +
+            "responsible staff, and follow the configured campus " +
+            "food-service process.";
+
+    }
+
+    else if (useCase === "Food Hygiene Issue") {
+
+        if (studentCount === 0) {
+            result.priority = "Low";
+        }
+        else if (studentCount <= 4) {
+            result.priority = "High";
+        }
+        else {
+            result.priority = "Critical";
+        }
+
+        result.priority_reason =
+            "Use Case is Food Hygiene Issue. " +
+            "Student Count is " + studentCount +
+            ". The configured range is 0 = Low, " +
+            "1–4 = High, and 5+ = Critical. " +
+            "Therefore, the Priority is " + result.priority + ".";
+
+        result.recommended_action =
+            "Inspect the reported hygiene condition, notify the " +
+            "responsible mess staff, and document the corrective action.";
+
+    }
+
+    else if (
+        useCase === "Food Menu Feedback" ||
+        useCase === "Meal Reservation / Pre-Booking" ||
+        useCase === "Smart Menu Recommendation"
+    ) {
+
+        if (studentCount <= 4) {
+            result.priority = "Low";
+        }
+        else if (studentCount <= 7) {
+            result.priority = "Medium";
+        }
+        else if (studentCount <= 10) {
+            result.priority = "High";
+        }
+        else {
+            result.priority = "Critical";
+        }
+
+        result.priority_reason =
+            "Use Case is " + useCase +
+            ". Student Count is " + studentCount +
+            ". The configured range is " +
+            "0–4 = Low, 5–7 = Medium, 8–10 = High, " +
+            "and 11+ = Critical. " +
+            "Therefore, the Priority is " + result.priority + ".";
+
+        result.recommended_action =
+            "Review the submitted request and follow the configured " +
+            "campus food-service process.";
+
+    }
+
+    else {
+
+        result.priority = "Not specified";
+
+        result.priority_reason =
+            "The Use Case '" + useCase +
+            "' does not match a configured priority rule.";
+
+        result.recommended_action =
+            "Review the Food Base Problem and follow the configured " +
+            "campus food-service process.";
+    }
+
+
+    return JSON.stringify({
+        priority: result.priority,
+        priority_reason: result.priority_reason,
+        recommended_action: result.recommended_action,
+        knowledge_insights: result.knowledge_insights,
+        related_knowledge_articles: result.related_knowledge_articles
+    });
+
+})(inputs);]]></script>
+        <sys_class_name>sn_aia_tool</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 04:50:01</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>293b413d802703107f4447e44ab1d530</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Analyze Food Base Problem</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sn_aia_tool_293b413d802703107f4447e44ab1d530</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 05:47:51</sys_updated_on>
+        <target_document/>
+        <target_document_table>sn_aia_tool</target_document_table>
+        <type>script</type>
+    </sn_aia_tool>
+</record_update>

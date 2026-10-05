@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($scope) {
+
+    var c = this;
+
+    c.openComplaint = function(complaintSysId, studentSysId) {
+
+        var url =
+            'https://ltm-hck-2876-0046.lab.service-now.com/now/nav/ui/classic/params/target/x_snc_campus_foo_1_food_complaint.do%3Fsys_id%3Df35e96fd806343107f4447e44ab1d51f%26sysparm_record_target%3Dx_snc_campus_foo_1_food_complaint%26sysparm_record_row%3D1%26sysparm_record_rows%3D1%26sysparm_record_list%3Dstudent%253D99dc4dab085703107f447d6c83c822aa%255Estate%253Dactive%255EORDERBYuse_case'
+
+        window.open(url, '_blank');
+
+    };
+
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.complaint-container {&#13;
+    width: 100%;&#13;
+    padding: 20px;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.complaint-container h2 {&#13;
+    margin: 0 0 20px 0;&#13;
+    font-size: 24px;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.table-wrapper {&#13;
+    width: 100%;&#13;
+    overflow-x: auto;&#13;
+    border: 1px solid #ddd;&#13;
+    border-radius: 8px;&#13;
+}&#13;
+&#13;
+.complaint-table {&#13;
+    width: 100%;&#13;
+    min-width: 1800px;&#13;
+    border-collapse: collapse;&#13;
+    background: #fff;&#13;
+}&#13;
+&#13;
+.complaint-table th {&#13;
+    background: #f4f6f8;&#13;
+    color: #333;&#13;
+    padding: 12px;&#13;
+    text-align: left;&#13;
+    font-weight: 600;&#13;
+    border-bottom: 2px solid #ddd;&#13;
+    white-space: nowrap;&#13;
+}&#13;
+&#13;
+.complaint-table td {&#13;
+    padding: 12px;&#13;
+    border-bottom: 1px solid #e5e5e5;&#13;
+    color: #444;&#13;
+    vertical-align: top;&#13;
+}&#13;
+&#13;
+.complaint-table tbody tr:hover {&#13;
+    background: #f8f9fa;&#13;
+}&#13;
+&#13;
+.feedback-badge {&#13;
+    display: inline-block;&#13;
+    padding: 4px 8px;&#13;
+    border-radius: 12px;&#13;
+    font-size: 12px;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.feedback-badge.eligible {&#13;
+    background: #dff5e3;&#13;
+    color: #1b6b2a;&#13;
+}&#13;
+&#13;
+.feedback-badge.not-eligible {&#13;
+    background: #f1f1f1;&#13;
+    color: #666;&#13;
+}&#13;
+&#13;
+.state-badge {&#13;
+    display: inline-block;&#13;
+    padding: 5px 10px;&#13;
+    border-radius: 12px;&#13;
+    background: #e8f1ff;&#13;
+    color: #245a9b;&#13;
+    font-size: 12px;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.complaint-table td:nth-child(5),&#13;
+.complaint-table td:nth-child(11) {&#13;
+    min-width: 250px;&#13;
+    max-width: 350px;&#13;
+    white-space: normal;&#13;
+    word-break: break-word;&#13;
+}&#13;
+.open-complaint-btn {&#13;
+    padding: 8px 14px;&#13;
+    border: none;&#13;
+    border-radius: 5px;&#13;
+    cursor: pointer;&#13;
+    font-size: 13px;&#13;
+    background: #1976d2;&#13;
+    color: white;&#13;
+}&#13;
+&#13;
+.open-complaint-btn:hover {&#13;
+    opacity: 0.85;&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>tests</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Tests</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.complaints = [];
+
+    var gr = new GlideRecord('x_snc_campus_foo_1_food_complaint');
+
+    gr.addEncodedQuery('student=99dc4dab085703107f447d6c83c822aa^state=active');
+
+    gr.query();
+
+    while (gr.next()) {
+
+        data.complaints.push({
+			complaint_sys_id: gr.getUniqueValue(),
+			student_sys_id: gr.getValue('student'),
+            student: gr.getDisplayValue('student'),
+            number: gr.getValue('number'),
+            use_case: gr.getValue('use_case'),
+            base_problem: gr.getDisplayValue('base_problem'),
+            description: gr.getValue('description'),
+            created_by: gr.getDisplayValue('sys_created_by'),
+            feedback_eligible: gr.getValue('feedback_eligible'),
+            meal_type: gr.getDisplayValue('meal_type'),
+            mess_hall: gr.getDisplayValue('mess_hall'),
+            problem_type: gr.getDisplayValue('problem_type'),
+            resolution_notes: gr.getValue('resolution_notes'),
+            opened_at: gr.getDisplayValue('opened_at'),
+            priority: gr.getDisplayValue('priority'),
+            resolved_at: gr.getDisplayValue('resolved_at'),
+            state: gr.getDisplayValue('state'),
+            feedback_id: gr.getDisplayValue('feedback_id')
+        });
+
+    }
+
+})();
+// (function() {
+
+//     data.incidents = [];
+
+//     var gr = new GlideRecord('incident');
+// 	gr.addQuery();
+
+//     //gr.addQuery('assigned_to', '6816f79cc0a8016401c5a33be04be441');
+
+//     gr.query();
+
+//     while (gr.next()) {
+
+//         data.incidents.push({
+//             number: gr.getValue('number'),
+//             short_description: gr.getValue('short_description'),
+//             state: gr.getDisplayValue('state'),
+//             priority: gr.getDisplayValue('priority'),
+//             assigned_to: gr.getDisplayValue('assigned_to')
+//         });
+
+//     }
+
+// })();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-28 02:06:40</sys_created_on>
+        <sys_id>b0d83a56b52303107f449220c3ec98a0</sys_id>
+        <sys_mod_count>17</sys_mod_count>
+        <sys_name>Tests</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_b0d83a56b52303107f449220c3ec98a0</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-28 02:37:54</sys_updated_on>
+        <template><![CDATA[<div class="complaint-container">
+
+    <h2>Food Complaints</h2>
+
+    <div class="table-wrapper">
+
+        <table class="complaint-table">
+
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Use Case</th>
+                    <th>Base Problem</th>
+                    <th>State</th>
+                    <th>Resolution Notes</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr ng-repeat="complaint in data.complaints">
+
+                    <td>
+                        {{complaint.number}}
+                    </td>
+
+                    <td>
+                        {{complaint.use_case}}
+                    </td>
+
+                    <td>
+                        {{complaint.base_problem}}
+                    </td>
+
+                    <td>
+                        <span class="state-badge">
+                            {{complaint.state}}
+                        </span>
+                    </td>
+
+                    <td>
+                        {{complaint.resolution_notes}}
+                    </td>
+
+                    <td>
+                        <button
+                            class="open-complaint-btn"
+                            ng-click="c.openComplaint(complaint.student_sys_id)">
+                            Open Complaint
+                        </button>
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

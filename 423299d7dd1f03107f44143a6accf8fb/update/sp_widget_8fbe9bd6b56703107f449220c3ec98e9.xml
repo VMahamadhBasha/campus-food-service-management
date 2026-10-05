@@ -1,0 +1,5102 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function($scope) {
+
+    var c = this;
+
+
+    /* =========================================================
+       DEFAULT SECTION
+       ========================================================= */
+
+    c.currentPage = 'overview';
+
+
+    /* =========================================================
+       RECORD FORM
+       ========================================================= */
+
+    c.showRecordForm = false;
+    c.selectedRecord = null;
+
+    c.savingRecord = false;
+
+    c.formError = '';
+    c.formSuccess = '';
+
+    c.showNotesField = false;
+    c.notesRequired = false;
+
+
+    /* =========================================================
+       FILTERS
+       ========================================================= */
+
+    c.assignmentFilters = {
+
+        useCase: '',
+        priority: ''
+
+    };
+
+
+    /* =========================================================
+       FILTERED ASSIGNMENTS
+       ========================================================= */
+
+    c.filteredAssignments =
+        angular.copy(
+            c.data.myAssignments || []
+        );
+
+
+    /* =========================================================
+       CHANGE PAGE
+       ========================================================= */
+
+    c.changePage = function(page) {
+
+        c.currentPage = page;
+
+        c.showRecordForm = false;
+        c.selectedRecord = null;
+
+        c.formError = '';
+        c.formSuccess = '';
+
+        c.savingRecord = false;
+
+    };
+
+
+    /* =========================================================
+       GET RECORD
+       ========================================================= */
+
+    c.getRecord = function(sysId) {
+
+        if (
+            !sysId ||
+            !c.data.records ||
+            !c.data.records[sysId]
+        ) {
+
+            return null;
+
+        }
+
+        return c.data.records[sysId];
+
+    };
+
+
+    /* =========================================================
+       OPEN RECORD
+       ========================================================= */
+
+    c.openRecord = function(sysId) {
+
+        c.formError = '';
+        c.formSuccess = '';
+
+        var record =
+            c.getRecord(sysId);
+
+
+        if (!record) {
+
+            c.formError =
+                'Unable to load the selected record.';
+
+            return;
+
+        }
+
+
+        c.selectedRecord =
+            angular.copy(record);
+
+
+        /* -----------------------------------------------------
+           DEFAULT APPROVAL
+           ----------------------------------------------------- */
+
+        if (
+            !c.selectedRecord.approval
+        ) {
+
+            c.selectedRecord.approval =
+                'requested';
+
+        }
+
+
+        c.selectedRecord.approval =
+            String(
+                c.selectedRecord.approval
+            ).toLowerCase();
+
+
+        /* -----------------------------------------------------
+           UPDATE NOTES VISIBILITY
+           ----------------------------------------------------- */
+
+        c.updateNotesVisibility();
+
+
+        /* -----------------------------------------------------
+           SHOW FORM
+           ----------------------------------------------------- */
+
+        c.showRecordForm = true;
+
+
+        /* -----------------------------------------------------
+           SCROLL TO FORM
+           ----------------------------------------------------- */
+
+        setTimeout(
+            function() {
+
+                var element =
+                    document.getElementById(
+                        'manager-record-form'
+                    );
+
+
+                if (element) {
+
+                    element.scrollIntoView({
+
+                        behavior: 'smooth',
+                        block: 'start'
+
+                    });
+
+                }
+
+            },
+            100
+        );
+
+    };
+
+
+    /* =========================================================
+       ACCEPT RECORD
+       ========================================================= */
+
+    c.acceptRecord = function(sysId) {
+
+        c.formError = '';
+        c.formSuccess = '';
+
+        var record =
+            c.getRecord(sysId);
+
+
+        if (!record) {
+
+            c.formError =
+                'Unable to load the selected record.';
+
+            return;
+
+        }
+
+
+        c.selectedRecord =
+            angular.copy(record);
+
+
+        /* -----------------------------------------------------
+           MANAGER ACCEPTS RECORD
+           ----------------------------------------------------- */
+
+        c.selectedRecord.approval =
+            'approved';
+
+
+        /* -----------------------------------------------------
+           UPDATE NOTES VISIBILITY
+           ----------------------------------------------------- */
+
+        c.updateNotesVisibility();
+
+
+        /* -----------------------------------------------------
+           SHOW FORM
+           ----------------------------------------------------- */
+
+        c.showRecordForm = true;
+
+
+        /* -----------------------------------------------------
+           SCROLL TO FORM
+           ----------------------------------------------------- */
+
+        setTimeout(
+            function() {
+
+                var element =
+                    document.getElementById(
+                        'manager-record-form'
+                    );
+
+
+                if (element) {
+
+                    element.scrollIntoView({
+
+                        behavior: 'smooth',
+                        block: 'start'
+
+                    });
+
+                }
+
+            },
+            100
+        );
+
+    };
+
+
+    /* =========================================================
+       NOTES VISIBILITY
+       ========================================================= */
+
+    c.updateNotesVisibility = function() {
+
+        if (!c.selectedRecord) {
+
+            c.showNotesField = false;
+            c.notesRequired = false;
+
+            return;
+
+        }
+
+
+        var approval =
+            String(
+                c.selectedRecord.approval || ''
+            ).toLowerCase();
+
+
+        if (
+            approval === 'approved' ||
+            approval === 'rejected'
+        ) {
+
+            c.showNotesField = true;
+            c.notesRequired = true;
+
+        } else {
+
+            c.showNotesField = false;
+            c.notesRequired = false;
+
+        }
+
+    };
+
+
+    /* =========================================================
+       APPROVAL CHANGE
+       ========================================================= */
+
+    c.approvalChanged = function() {
+
+        c.updateNotesVisibility();
+
+    };
+
+
+    /* =========================================================
+       SAVE RECORD
+       ========================================================= */
+
+    c.saveRecord = function() {
+
+        /* -----------------------------------------------------
+           CHECK RECORD
+           ----------------------------------------------------- */
+
+        if (!c.selectedRecord) {
+
+            c.formError =
+                'No record selected.';
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------------------
+           CLEAR OLD MESSAGES
+           ----------------------------------------------------- */
+
+        c.formError = '';
+        c.formSuccess = '';
+
+
+        /* -----------------------------------------------------
+           GET APPROVAL
+           ----------------------------------------------------- */
+
+        var approval =
+            String(
+                c.selectedRecord.approval || ''
+            ).toLowerCase();
+
+
+        /* -----------------------------------------------------
+           VALIDATE APPROVAL
+           ----------------------------------------------------- */
+
+        if (
+            approval !== 'requested' &&
+            approval !== 'approved' &&
+            approval !== 'rejected'
+        ) {
+
+            c.formError =
+                'Please select a valid approval status.';
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------------------
+           GET NOTES
+           ----------------------------------------------------- */
+
+        var notes =
+            String(
+                c.selectedRecord.notes || ''
+            );
+
+
+        /* -----------------------------------------------------
+           NOTES REQUIRED FOR APPROVED / REJECTED
+           ----------------------------------------------------- */
+
+        if (
+            (
+                approval === 'approved' ||
+                approval === 'rejected'
+            ) &&
+            notes.trim() === ''
+        ) {
+
+            c.formError =
+                'Notes are mandatory when approval is Approved or Rejected.';
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------------------
+           START SAVING
+           ----------------------------------------------------- */
+
+        c.savingRecord = true;
+
+
+        /* -----------------------------------------------------
+           SAVE EXISTING RECORD
+           ----------------------------------------------------- */
+
+        c.server.get({
+
+            action: 'saveRecord',
+
+            sys_id:
+                c.selectedRecord.sys_id,
+
+            approval:
+                approval,
+
+            notes:
+                notes
+
+        }).then(
+
+            function(response) {
+
+                /* =============================================
+                   CHECK SERVER ERROR
+                   ============================================= */
+
+                if (
+                    response.data &&
+                    response.data.saveError
+                ) {
+
+                    c.formError =
+                        response.data.saveError;
+
+                    c.savingRecord = false;
+
+                    return;
+
+                }
+
+
+                /* =============================================
+                   UPDATE CURRENT DASHBOARD DATA
+                   ============================================= */
+
+                if (response.data) {
+
+                    angular.extend(
+                        c.data,
+                        response.data
+                    );
+
+                }
+
+
+                /* =============================================
+                   REFRESH FILTERED ASSIGNMENTS
+                   ============================================= */
+
+                c.filteredAssignments =
+                    angular.copy(
+                        c.data.myAssignments || []
+                    );
+
+
+                c.applyAssignmentFilters();
+
+
+                /* =============================================
+                   SUCCESS
+                   ============================================= */
+
+                if (
+                    response.data &&
+                    response.data.saveSuccess
+                ) {
+
+                    c.formSuccess =
+                        'Record updated successfully.';
+
+
+                    /* -----------------------------------------
+                       CLOSE FORM AFTER SUCCESS MESSAGE
+                       ----------------------------------------- */
+
+                    setTimeout(
+                        function() {
+
+                            $scope.$apply(
+                                function() {
+
+                                    c.closeRecordForm();
+
+                                }
+                            );
+
+                        },
+                        700
+                    );
+
+                }
+
+
+                c.savingRecord = false;
+
+            },
+
+
+            /* =================================================
+               SERVER REQUEST ERROR
+               ================================================= */
+
+            function() {
+
+                c.formError =
+                    'Something went wrong while saving the record.';
+
+                c.savingRecord = false;
+
+            }
+
+        );
+
+    };
+
+
+    /* =========================================================
+       CLOSE RECORD FORM
+       ========================================================= */
+
+    c.closeRecordForm = function() {
+
+        c.showRecordForm = false;
+
+        c.selectedRecord = null;
+
+        c.formError = '';
+        c.formSuccess = '';
+
+        c.savingRecord = false;
+
+        c.showNotesField = false;
+        c.notesRequired = false;
+
+    };
+
+
+    /* =========================================================
+       ASSIGNMENT FILTER
+       ========================================================= */
+
+    c.applyAssignmentFilters =
+        function() {
+
+            c.filteredAssignments = [];
+
+
+            var assignments =
+                c.data.myAssignments || [];
+
+
+            for (
+                var i = 0;
+                i < assignments.length;
+                i++
+            ) {
+
+                var sysId =
+                    assignments[i];
+
+
+                var record =
+                    c.data.records[sysId];
+
+
+                if (!record) {
+
+                    continue;
+
+                }
+
+
+                /* ---------------------------------------------
+                   USE CASE FILTER
+                   --------------------------------------------- */
+
+                var useCaseMatch = true;
+
+
+                if (
+                    c.assignmentFilters.useCase
+                ) {
+
+                    useCaseMatch =
+                        record.use_case ===
+                        c.assignmentFilters.useCase;
+
+
+                    /* -----------------------------------------
+                       DISPLAY VALUE FALLBACK
+                       ----------------------------------------- */
+
+                    if (!useCaseMatch) {
+
+                        useCaseMatch =
+                            record.use_case_display ===
+                            c.assignmentFilters.useCase;
+
+                    }
+
+                }
+
+
+                /* ---------------------------------------------
+                   PRIORITY FILTER
+                   --------------------------------------------- */
+
+                var priorityMatch = true;
+
+
+                if (
+                    c.assignmentFilters.priority
+                ) {
+
+                    priorityMatch =
+                        record.current_priority ===
+                        c.assignmentFilters.priority;
+
+
+                    /* -----------------------------------------
+                       DISPLAY VALUE FALLBACK
+                       ----------------------------------------- */
+
+                    if (!priorityMatch) {
+
+                        priorityMatch =
+                            record.current_priority_display ===
+                            c.assignmentFilters.priority;
+
+                    }
+
+                }
+
+
+                /* ---------------------------------------------
+                   ADD MATCHING RECORD
+                   --------------------------------------------- */
+
+                if (
+                    useCaseMatch &&
+                    priorityMatch
+                ) {
+
+                    c.filteredAssignments.push(
+                        sysId
+                    );
+
+                }
+
+            }
+
+        };
+
+
+    /* =========================================================
+       CLEAR FILTER
+       ========================================================= */
+
+    c.clearAssignmentFilters =
+        function() {
+
+            c.assignmentFilters = {
+
+                useCase: '',
+                priority: ''
+
+            };
+
+
+            c.filteredAssignments =
+                angular.copy(
+                    c.data.myAssignments || []
+                );
+
+        };
+
+
+    /* =========================================================
+       REPORT WIDTH
+       ========================================================= */
+
+    c.getReportWidth =
+        function(count, collection) {
+
+            if (
+                !collection ||
+                collection.length === 0
+            ) {
+
+                return 0;
+
+            }
+
+
+            var max = 0;
+
+
+            for (
+                var i = 0;
+                i < collection.length;
+                i++
+            ) {
+
+                var currentCount =
+                    parseInt(
+                        collection[i].count,
+                        10
+                    ) || 0;
+
+
+                if (
+                    currentCount > max
+                ) {
+
+                    max = currentCount;
+
+                }
+
+            }
+
+
+            if (max === 0) {
+
+                return 0;
+
+            }
+
+
+            return (
+                (count / max) * 100
+            );
+
+        };
+
+
+    /* =========================================================
+       GENERATE FOOD MANAGEMENT REPORT
+       ========================================================= */
+
+    c.generatingReport = false;
+
+
+    c.generateFoodManagementReport = function() {
+
+        c.generatingReport = true;
+
+        c.formError = '';
+        c.formSuccess = '';
+
+
+        c.server.get({
+
+            action: 'generateFoodManagementReport'
+
+        }).then(
+
+            function(response) {
+
+                if (
+                    response.data &&
+                    response.data.reportStarted
+                ) {
+
+                    /*
+                     * The AI report is running in the background.
+                     * Start checking for the generated record.
+                     */
+
+                    c.checkFoodManagementReport();
+
+                } else {
+
+                    c.generatingReport = false;
+
+                    alert(
+                        (
+                            response.data &&
+                            response.data.reportError
+                        ) ||
+                        'Unable to start report generation.'
+                    );
+
+                }
+
+            },
+
+
+            function() {
+
+                c.generatingReport = false;
+
+                alert(
+                    'Error while starting the Food Management report.'
+                );
+
+            }
+
+        );
+
+    };
+
+
+    /* =========================================================
+       CHECK FOOD MANAGEMENT REPORT
+       ========================================================= */
+
+    c.checkFoodManagementReport = function() {
+
+        c.server.get({
+
+            action: 'checkFoodManagementReport'
+
+        }).then(
+
+            function(response) {
+
+                if (
+                    response.data &&
+                    response.data.reportReady
+                ) {
+
+                    c.generatingReport = false;
+
+
+                    /*
+                     * Report is ready.
+                     * Download it.
+                     */
+
+                    c.downloadFoodManagementReport(
+
+                        response.data.reportContent,
+
+                        response.data.reportNumber
+
+                    );
+
+
+                } else {
+
+                    /*
+                     * Report is not ready yet.
+                     * Check again after 3 seconds.
+                     */
+
+                    setTimeout(
+
+                        function() {
+
+                            $scope.$apply(
+
+                                function() {
+
+                                    c.checkFoodManagementReport();
+
+                                }
+
+                            );
+
+                        },
+
+                        3000
+
+                    );
+
+                }
+
+            },
+
+
+            function() {
+
+                c.generatingReport = false;
+
+                alert(
+                    'Unable to check the Food Management report.'
+                );
+
+            }
+
+        );
+
+    };
+
+
+    /* =========================================================
+       DOWNLOAD FOOD MANAGEMENT REPORT
+       ========================================================= */
+
+    c.downloadFoodManagementReport = function(
+        reportContent,
+        reportNumber
+    ) {
+
+        if (!reportContent) {
+
+            alert(
+                'Report content is empty.'
+            );
+
+            return;
+
+        }
+
+
+        var blob = new Blob(
+
+            [
+                reportContent
+            ],
+
+            {
+                type: 'text/html;charset=utf-8'
+            }
+
+        );
+
+
+        var url =
+            window.URL.createObjectURL(blob);
+
+
+        var link =
+            document.createElement('a');
+
+
+        link.href = url;
+
+
+        link.download =
+            (
+                reportNumber ||
+                'Food_Management_Report'
+            ) +
+            '.html';
+
+
+        document.body.appendChild(link);
+
+
+        link.click();
+
+
+        document.body.removeChild(link);
+
+
+        window.URL.revokeObjectURL(url);
+
+    };
+
+
+    /* =========================================================
+       DOWNLOAD REPORT
+       ========================================================= */
+
+    c.downloadReport = function() {
+
+        c.generatingReport = true;
+
+        c.checkFoodManagementReport();
+
+    };
+
+
+    /* =========================================================
+       HORIZONTAL DRAG
+       ========================================================= */
+
+    c.startDrag =
+        function(event) {
+
+            var table =
+                event.currentTarget;
+
+
+            table.classList.add(
+                'is-dragging'
+            );
+
+
+            table.startX =
+                event.pageX;
+
+
+            table.scrollLeftStart =
+                table.scrollLeft;
+
+        };
+
+
+    c.dragMove =
+        function(event) {
+
+            var table =
+                event.currentTarget;
+
+
+            if (
+                !table.classList.contains(
+                    'is-dragging'
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            var distance =
+                event.pageX -
+                table.startX;
+
+
+            table.scrollLeft =
+                table.scrollLeftStart -
+                distance;
+
+        };
+
+
+    c.stopDrag =
+        function(event) {
+
+            var table =
+                event.currentTarget;
+
+
+            table.classList.remove(
+                'is-dragging'
+            );
+
+        };
+
+
+    /* =========================================================
+       INITIAL FILTER
+       ========================================================= */
+
+    c.clearAssignmentFilters();
+
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================================&#13;
+   MANAGER DASHBOARD&#13;
+   ========================================================= */&#13;
+&#13;
+.manager-dashboard {&#13;
+    display: flex;&#13;
+    width: 100%;&#13;
+    min-height: 100vh;&#13;
+    background: #f5f7f8;&#13;
+    color: #263b39;&#13;
+    font-family: Arial, sans-serif;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SIDEBAR&#13;
+   ========================================================= */&#13;
+&#13;
+.manager-sidebar {&#13;
+    width: 245px;&#13;
+    min-width: 245px;&#13;
+    background: #1E293B;&#13;
+    color: #ffffff;&#13;
+    min-height: 100vh;&#13;
+    padding: 22px 14px;&#13;
+    box-sizing: border-box;&#13;
+    border-right: 1px solid #334155;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-sidebar-brand {&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 12px;&#13;
+    padding: 8px 10px 28px;&#13;
+    border-bottom: 1px solid rgba(255,255,255,0.12);&#13;
+}&#13;
+&#13;
+&#13;
+.manager-brand-icon {&#13;
+    width: 42px;&#13;
+    height: 42px;&#13;
+    border-radius: 50%;&#13;
+    background: #2563EB;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    font-weight: 700;&#13;
+    color: #FFFFFF;&#13;
+    border: 2px solid #60A5FA;&#13;
+    box-shadow: 0 5px 12px rgba(37, 99, 235, 0.30);&#13;
+}&#13;
+&#13;
+&#13;
+.manager-brand-title {&#13;
+    font-size: 16px;&#13;
+    font-weight: 700;&#13;
+    color: #FFFFFF;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-brand-subtitle {&#13;
+    font-size: 11px;&#13;
+    color: #94A3B8;&#13;
+    opacity: 1;&#13;
+    margin-top: 4px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   NAVIGATION&#13;
+   ========================================================= */&#13;
+&#13;
+.manager-navigation {&#13;
+    padding-top: 20px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-nav-item {&#13;
+    width: 100%;&#13;
+    border: none;&#13;
+    background: transparent;&#13;
+    color: #CBD5E1;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 12px;&#13;
+    padding: 13px 14px;&#13;
+    border-radius: 8px;&#13;
+    margin-bottom: 6px;&#13;
+    cursor: pointer;&#13;
+    text-align: left;&#13;
+    font-size: 14px;&#13;
+    transition: 0.2s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-nav-item:hover {&#13;
+    background: #334155;&#13;
+    color: #FFFFFF;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-nav-item.active {&#13;
+    background: #2563EB;&#13;
+    color: #FFFFFF;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-nav-icon {&#13;
+    width: 22px;&#13;
+    text-align: center;&#13;
+    font-size: 17px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   CONTENT&#13;
+   ========================================================= */&#13;
+&#13;
+.manager-content {&#13;
+    flex: 1;&#13;
+    min-width: 0;&#13;
+    padding: 30px;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-page {&#13;
+    width: 100%;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-page-header {&#13;
+    display: flex;&#13;
+    align-items: flex-start;&#13;
+    justify-content: space-between;&#13;
+    gap: 20px;&#13;
+    margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-page-header h1 {&#13;
+    margin: 0;&#13;
+    font-size: 28px;&#13;
+    color: #123c3a;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-page-header p {&#13;
+    margin: 7px 0 0;&#13;
+    color: #6a7977;&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   DOWNLOAD BUTTON&#13;
+   ========================================================= */&#13;
+&#13;
+.manager-download-btn {&#13;
+    border: none;&#13;
+    background: #123c3a;&#13;
+    color: #ffffff;&#13;
+    padding: 11px 17px;&#13;
+    border-radius: 7px;&#13;
+    cursor: pointer;&#13;
+    font-size: 13px;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-download-btn:hover {&#13;
+    background: #0d302e;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-download-btn span {&#13;
+    margin-right: 6px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   KPI&#13;
+   ========================================================= */&#13;
+&#13;
+.manager-kpi-grid {&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(3, 1fr);&#13;
+    gap: 18px;&#13;
+    margin-bottom: 24px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-kpi-card {&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #dce5e1;&#13;
+    border-radius: 10px;&#13;
+    padding: 21px;&#13;
+    display: flex;&#13;
+    gap: 15px;&#13;
+    align-items: center;&#13;
+    box-shadow: 0 2px 8px rgba(18,60,58,0.04);&#13;
+}&#13;
+&#13;
+&#13;
+.manager-kpi-icon {&#13;
+    width: 45px;&#13;
+    height: 45px;&#13;
+    border-radius: 9px;&#13;
+    background: #e8f0ed;&#13;
+    color: #123c3a;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    font-size: 20px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-kpi-label {&#13;
+    font-size: 13px;&#13;
+    color: #667674;&#13;
+    margin-bottom: 4px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-kpi-value {&#13;
+    font-size: 27px;&#13;
+    line-height: 1.1;&#13;
+    font-weight: 700;&#13;
+    color: #123c3a;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-kpi-description {&#13;
+    margin-top: 5px;&#13;
+    font-size: 11px;&#13;
+    color: #8a9694;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SECTION CARD&#13;
+   ========================================================= */&#13;
+&#13;
+.manager-section-card {&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #dce5e1;&#13;
+    border-radius: 10px;&#13;
+    margin-bottom: 24px;&#13;
+    overflow: hidden;&#13;
+    box-shadow: 0 2px 8px rgba(18,60,58,0.04);&#13;
+}&#13;
+&#13;
+&#13;
+.manager-section-header {&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: space-between;&#13;
+    gap: 15px;&#13;
+    padding: 19px 21px;&#13;
+    border-bottom: 1px solid #e5ebe8;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-section-header h2 {&#13;
+    margin: 0;&#13;
+    font-size: 17px;&#13;
+    color: #123c3a;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-section-header p {&#13;
+    margin: 5px 0 0;&#13;
+    color: #788583;&#13;
+    font-size: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-link-btn {&#13;
+    border: none;&#13;
+    background: transparent;&#13;
+    color: #123c3a;&#13;
+    font-weight: 700;&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   TABLE&#13;
+   ========================================================= */&#13;
+&#13;
+.manager-table-wrapper {&#13;
+    width: 100%;&#13;
+    overflow-x: auto;&#13;
+    overflow-y: hidden;&#13;
+    cursor: grab;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-table-wrapper.is-dragging {&#13;
+    cursor: grabbing;&#13;
+    user-select: none;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-table {&#13;
+    border-collapse: collapse;&#13;
+    min-width: 1750px;&#13;
+    width: 100%;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-table th {&#13;
+    background: #f1f5f3;&#13;
+    color: #536563;&#13;
+    font-size: 11px;&#13;
+    font-weight: 700;&#13;
+    text-align: left;&#13;
+    padding: 12px 14px;&#13;
+    white-space: nowrap;&#13;
+    border-bottom: 1px solid #dce5e1;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-table td {&#13;
+    padding: 13px 14px;&#13;
+    border-bottom: 1px solid #edf1ef;&#13;
+    font-size: 12px;&#13;
+    color: #455552;&#13;
+    white-space: nowrap;&#13;
+    vertical-align: middle;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-table tbody tr:hover {&#13;
+    background: #fafcfa;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-open-btn {&#13;
+    border: 1px solid #123c3a;&#13;
+    background: #ffffff;&#13;
+    color: #123c3a;&#13;
+    border-radius: 6px;&#13;
+    padding: 7px 11px;&#13;
+    font-size: 11px;&#13;
+    font-weight: 700;&#13;
+    cursor: pointer;&#13;
+    white-space: nowrap;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-open-btn:hover {&#13;
+    background: #123c3a;&#13;
+    color: #ffffff;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-empty {&#13;
+    text-align: center !important;&#13;
+    padding: 35px !important;&#13;
+    color: #879391 !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FILTERS&#13;
+   ========================================================= */&#13;
+&#13;
+.manager-filter-card {&#13;
+    display: flex;&#13;
+    align-items: flex-end;&#13;
+    gap: 16px;&#13;
+    flex-wrap: wrap;&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #dce5e1;&#13;
+    border-radius: 10px;&#13;
+    padding: 18px;&#13;
+    margin-bottom: 20px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-filter-group {&#13;
+    display: flex;&#13;
+    flex-direction: column;&#13;
+    gap: 6px;&#13;
+    min-width: 210px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-filter-group label {&#13;
+    font-size: 11px;&#13;
+    color: #5f706d;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-filter-group select {&#13;
+    min-width: 210px;&#13;
+    padding: 9px 10px;&#13;
+    border: 1px solid #cfdad6;&#13;
+    border-radius: 6px;&#13;
+    background: #ffffff;&#13;
+    color: #334643;&#13;
+    outline: none;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-filter-group select:focus {&#13;
+    border-color: #123c3a;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-clear-btn {&#13;
+    border: 1px solid #cbd6d2;&#13;
+    background: #ffffff;&#13;
+    color: #536563;&#13;
+    padding: 9px 14px;&#13;
+    border-radius: 6px;&#13;
+    cursor: pointer;&#13;
+    font-size: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-clear-btn:hover {&#13;
+    background: #f2f5f4;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   STAFF PERFORMANCE&#13;
+   ========================================================= */&#13;
+&#13;
+.manager-staff-grid {&#13;
+    padding: 20px;&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(2, 1fr);&#13;
+    gap: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-staff-card {&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 12px;&#13;
+    border: 1px solid #e0e7e4;&#13;
+    border-radius: 8px;&#13;
+    padding: 14px;&#13;
+    background: #fafcfb;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-staff-avatar {&#13;
+    width: 38px;&#13;
+    height: 38px;&#13;
+    border-radius: 50%;&#13;
+    background: #e8f0ed;&#13;
+    color: #123c3a;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-staff-name {&#13;
+    color: #123c3a;&#13;
+    font-weight: 700;&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-staff-role {&#13;
+    color: #7b8986;&#13;
+    font-size: 11px;&#13;
+    margin-top: 3px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   REPORTS&#13;
+   ========================================================= */&#13;
+&#13;
+.manager-report-card {&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #dce5e1;&#13;
+    border-radius: 10px;&#13;
+    margin-bottom: 20px;&#13;
+    padding: 20px;&#13;
+    box-shadow: 0 2px 8px rgba(18,60,58,0.04);&#13;
+}&#13;
+&#13;
+&#13;
+.manager-report-header {&#13;
+    margin-bottom: 20px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-report-header h2 {&#13;
+    margin: 0;&#13;
+    color: #123c3a;&#13;
+    font-size: 17px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-report-header p {&#13;
+    margin: 5px 0 0;&#13;
+    color: #7a8886;&#13;
+    font-size: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-report-list {&#13;
+    display: flex;&#13;
+    flex-direction: column;&#13;
+    gap: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-report-row {&#13;
+    display: grid;&#13;
+    grid-template-columns: 180px 1fr 50px;&#13;
+    align-items: center;&#13;
+    gap: 15px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-report-label {&#13;
+    font-size: 12px;&#13;
+    color: #52625f;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-report-bar-container {&#13;
+    height: 9px;&#13;
+    background: #edf2f0;&#13;
+    border-radius: 20px;&#13;
+    overflow: hidden;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-report-bar {&#13;
+    height: 100%;&#13;
+    background: #123c3a;&#13;
+    border-radius: 20px;&#13;
+    min-width: 2px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-report-count {&#13;
+    text-align: right;&#13;
+    font-size: 12px;&#13;
+    font-weight: 700;&#13;
+    color: #123c3a;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   RECORD FORM&#13;
+   ========================================================= */&#13;
+&#13;
+.manager-record-form {&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #dce5e1;&#13;
+    border-radius: 10px;&#13;
+    margin-top: 25px;&#13;
+    box-shadow: 0 4px 15px rgba(18,60,58,0.06);&#13;
+    overflow: hidden;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-form-header {&#13;
+    display: flex;&#13;
+    justify-content: space-between;&#13;
+    align-items: flex-start;&#13;
+    padding: 21px;&#13;
+    border-bottom: 1px solid #e2e9e6;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-form-header h2 {&#13;
+    margin: 0;&#13;
+    color: #123c3a;&#13;
+    font-size: 19px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-form-header p {&#13;
+    margin: 5px 0 0;&#13;
+    color: #7b8986;&#13;
+    font-size: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-close-btn {&#13;
+    border: none;&#13;
+    background: #f1f4f3;&#13;
+    color: #536563;&#13;
+    width: 34px;&#13;
+    height: 34px;&#13;
+    border-radius: 7px;&#13;
+    font-size: 21px;&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-close-btn:hover {&#13;
+    background: #e5ebe8;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FORM MESSAGES&#13;
+   ========================================================= */&#13;
+&#13;
+.manager-form-error {&#13;
+    margin: 18px 21px 0;&#13;
+    padding: 11px 13px;&#13;
+    background: #fff2f0;&#13;
+    border: 1px solid #f0c7c1;&#13;
+    color: #9a4034;&#13;
+    border-radius: 6px;&#13;
+    font-size: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-form-success {&#13;
+    margin: 18px 21px 0;&#13;
+    padding: 11px 13px;&#13;
+    background: #edf8f2;&#13;
+    border: 1px solid #c7e3d2;&#13;
+    color: #31734b;&#13;
+    border-radius: 6px;&#13;
+    font-size: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FORM GRID&#13;
+   ========================================================= */&#13;
+&#13;
+.manager-form-grid {&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(2, 1fr);&#13;
+    gap: 17px;&#13;
+    padding: 22px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-form-field {&#13;
+    display: flex;&#13;
+    flex-direction: column;&#13;
+    gap: 7px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-form-field-wide {&#13;
+    grid-column: 1 / -1;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-form-field label {&#13;
+    font-size: 11px;&#13;
+    color: #586966;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-form-field input,&#13;
+.manager-form-field select,&#13;
+.manager-form-field textarea {&#13;
+    width: 100%;&#13;
+    box-sizing: border-box;&#13;
+    border: 1px solid #d2dcd8;&#13;
+    border-radius: 6px;&#13;
+    padding: 10px 11px;&#13;
+    font-size: 12px;&#13;
+    color: #344541;&#13;
+    background: #ffffff;&#13;
+    outline: none;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-form-field input:focus,&#13;
+.manager-form-field select:focus,&#13;
+.manager-form-field textarea:focus {&#13;
+    border-color: #123c3a;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-form-field input[readonly],&#13;
+.manager-form-field textarea[readonly] {&#13;
+    background: #f5f7f6;&#13;
+    color: #667571;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-form-field textarea {&#13;
+    min-height: 85px;&#13;
+    resize: vertical;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-required {&#13;
+    color: #b33c2f;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FORM ACTIONS&#13;
+   ========================================================= */&#13;
+&#13;
+.manager-form-actions {&#13;
+    display: flex;&#13;
+    justify-content: flex-end;&#13;
+    gap: 10px;&#13;
+    padding: 18px 21px;&#13;
+    border-top: 1px solid #e2e9e6;&#13;
+    background: #fafcfb;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-cancel-btn {&#13;
+    border: 1px solid #ccd7d3;&#13;
+    background: #ffffff;&#13;
+    color: #53635f;&#13;
+    border-radius: 6px;&#13;
+    padding: 10px 16px;&#13;
+    cursor: pointer;&#13;
+    font-size: 12px;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-save-btn {&#13;
+    border: none;&#13;
+    background: #123c3a;&#13;
+    color: #ffffff;&#13;
+    border-radius: 6px;&#13;
+    padding: 10px 17px;&#13;
+    cursor: pointer;&#13;
+    font-size: 12px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-save-btn:hover {&#13;
+    background: #0d302e;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-save-btn:disabled {&#13;
+    opacity: 0.6;&#13;
+    cursor: not-allowed;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   RESPONSIVE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 1100px) {&#13;
+&#13;
+    .manager-sidebar {&#13;
+        width: 215px;&#13;
+        min-width: 215px;&#13;
+    }&#13;
+&#13;
+    .manager-content {&#13;
+        padding: 22px;&#13;
+    }&#13;
+&#13;
+    .manager-kpi-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 760px) {&#13;
+&#13;
+    .manager-dashboard {&#13;
+        display: block;&#13;
+    }&#13;
+&#13;
+    .manager-sidebar {&#13;
+        width: 100%;&#13;
+        min-width: 100%;&#13;
+        min-height: auto;&#13;
+        border-right: 0;&#13;
+        border-bottom: 1px solid #334155;&#13;
+    }&#13;
+&#13;
+    .manager-navigation {&#13;
+        display: flex;&#13;
+        overflow-x: auto;&#13;
+        gap: 6px;&#13;
+    }&#13;
+&#13;
+    .manager-nav-item {&#13;
+        min-width: max-content;&#13;
+        width: auto;&#13;
+    }&#13;
+&#13;
+    .manager-page-header {&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+    .manager-form-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+    .manager-form-field-wide {&#13;
+        grid-column: auto;&#13;
+    }&#13;
+&#13;
+    .manager-staff-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+    .manager-report-row {&#13;
+        grid-template-columns: 1fr;&#13;
+        gap: 6px;&#13;
+    }&#13;
+&#13;
+    .manager-report-count {&#13;
+        text-align: left;&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>try</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Try</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+
+    /* =========================================================
+       TABLES
+       ========================================================= */
+
+    var taskTable =
+        'x_snc_campus_foo_1_complain_tasks';
+
+    var userGroupMemberTable =
+        'sys_user_grmember';
+
+    var choiceTable =
+        'sys_choice';
+
+    var reportTable =
+        'x_snc_campus_foo_1_food_management_reports';
+
+
+    /* =========================================================
+       GROUP SYS IDS
+       ========================================================= */
+
+    var managerGroup =
+        '9374d15fdd1f03107f44143a6accf88d';
+
+    var staffGroup =
+        '4f04d11fdd1f03107f44143a6accf8c1';
+
+    var adminGroup =
+        '1754d95fdd1f03107f44143a6accf85b';
+
+
+    /* =========================================================
+       DEFAULT DATA
+       ========================================================= */
+
+    data.totalRequests = 0;
+
+    data.resolvedRequests = 0;
+
+    data.pendingRequests = 0;
+
+
+    data.records = {};
+
+
+    data.recentAssignments = [];
+
+    data.myAssignments = [];
+
+    data.history = [];
+
+
+    data.staffPerformance = [];
+
+    data.totalStaff = 0;
+
+    data.assignedRequests = 0;
+
+    data.pendingApprovals = [];
+
+
+    data.topPendingProblems = [];
+
+
+    data.useCaseChoices = [];
+
+    data.priorityChoices = [];
+
+
+    data.saveSuccess = false;
+
+    data.saveError = '';
+
+
+    /* =========================================================
+       REPORT GENERATION DEFAULT DATA
+       ========================================================= */
+
+    data.reportStarted = false;
+
+    data.reportError = '';
+
+    data.reportContextId = '';
+
+    data.reportReady = false;
+
+    data.reportContent = '';
+
+    data.reportNumber = '';
+
+
+    /* =========================================================
+       HELPER
+       ========================================================= */
+
+    function getValue(gr, field) {
+
+        return gr.getValue(field) || '';
+
+    }
+
+
+    function getDisplayValue(gr, field) {
+
+        return gr.getDisplayValue(field) || '';
+
+    }
+
+
+    /* =========================================================
+       LOAD TASK RECORD
+       ========================================================= */
+
+    function addTaskRecord(gr) {
+
+        var sysId =
+            gr.getUniqueValue();
+
+
+        data.records[sysId] = {
+
+            sys_id:
+                sysId,
+
+            number:
+                getDisplayValue(
+                    gr,
+                    'number'
+                ),
+
+            use_case:
+                getValue(
+                    gr,
+                    'use_case'
+                ),
+
+            use_case_display:
+                getDisplayValue(
+                    gr,
+                    'use_case'
+                ),
+
+            current_priority:
+                getValue(
+                    gr,
+                    'current_priority'
+                ),
+
+            current_priority_display:
+                getDisplayValue(
+                    gr,
+                    'current_priority'
+                ),
+
+            student_count:
+                getValue(
+                    gr,
+                    'student_count'
+                ),
+
+            state:
+                getValue(
+                    gr,
+                    'state'
+                ),
+
+            state_display:
+                getDisplayValue(
+                    gr,
+                    'state'
+                ),
+
+            assignment_group:
+                getValue(
+                    gr,
+                    'assignment_group'
+                ),
+
+            assignment_group_display:
+                getDisplayValue(
+                    gr,
+                    'assignment_group'
+                ),
+
+            problem_type:
+                getValue(
+                    gr,
+                    'problem_type'
+                ),
+
+            problem_type_display:
+                getDisplayValue(
+                    gr,
+                    'problem_type'
+                ),
+
+            short_description:
+                getValue(
+                    gr,
+                    'short_description'
+                ),
+
+            approval:
+                getValue(
+                    gr,
+                    'approval'
+                ),
+
+            approval_display:
+                getDisplayValue(
+                    gr,
+                    'approval'
+                ),
+
+            use_case_number:
+                getValue(
+                    gr,
+                    'use_case_number'
+                ),
+
+            mess_hall:
+                getValue(
+                    gr,
+                    'mess_hall'
+                ),
+
+            mess_hall_display:
+                getDisplayValue(
+                    gr,
+                    'mess_hall'
+                ),
+
+            meal_type:
+                getValue(
+                    gr,
+                    'meal_type'
+                ),
+
+            meal_type_display:
+                getDisplayValue(
+                    gr,
+                    'meal_type'
+                ),
+
+            priority_reason:
+                getValue(
+                    gr,
+                    'priority_reason'
+                ),
+
+            recomended_actions:
+                getValue(
+                    gr,
+                    'recomended_actions'
+                ),
+
+            resolution_status:
+                getValue(
+                    gr,
+                    'resolution_status'
+                ),
+
+            resolution_status_display:
+                getDisplayValue(
+                    gr,
+                    'resolution_status'
+                ),
+
+            sys_updated_on:
+                getDisplayValue(
+                    gr,
+                    'sys_updated_on'
+                )
+
+        };
+
+
+        return sysId;
+
+    }
+
+
+    /* =========================================================
+       GET ALL MANAGEMENT TASKS
+       FOR MAIN OVERVIEW KPI
+       ========================================================= */
+
+    var totalGR =
+        new GlideRecord(taskTable);
+
+
+    totalGR.addQuery(
+        'assignment_group',
+        managerGroup
+    );
+
+
+    totalGR.query();
+
+
+    while (totalGR.next()) {
+
+        data.totalRequests++;
+
+
+        var totalSysId =
+            addTaskRecord(
+                totalGR
+            );
+
+
+        /*
+         * Resolved means:
+         * Management Group + Approval = Approved
+         */
+
+        if (
+            getValue(
+                totalGR,
+                'approval'
+            ) == 'approved'
+        ) {
+
+            data.resolvedRequests++;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       PENDING = TOTAL - RESOLVED
+       ========================================================= */
+
+    data.pendingRequests =
+        data.totalRequests -
+        data.resolvedRequests;
+
+
+    if (
+        data.pendingRequests < 0
+    ) {
+
+        data.pendingRequests = 0;
+
+    }
+
+
+    /* =========================================================
+       RECENT ASSIGNMENTS
+       MANAGEMENT GROUP + REQUESTED
+       TOP 5
+       ========================================================= */
+
+    var recentGR =
+        new GlideRecord(taskTable);
+
+
+    recentGR.addQuery(
+        'assignment_group',
+        managerGroup
+    );
+
+    recentGR.addQuery(
+        'approval',
+        'requested'
+    );
+
+
+    recentGR.orderByDesc(
+        'sys_created_on'
+    );
+
+
+    recentGR.setLimit(5);
+
+
+    recentGR.query();
+
+
+    while (recentGR.next()) {
+
+        var recentSysId =
+            addTaskRecord(
+                recentGR
+            );
+
+
+        data.recentAssignments.push(
+            recentSysId
+        );
+
+    }
+
+
+    /* =========================================================
+       MY ASSIGNMENTS
+       MANAGEMENT GROUP + REQUESTED
+       ALL RECORDS
+       ========================================================= */
+
+    var assignmentGR =
+        new GlideRecord(taskTable);
+
+
+    assignmentGR.addQuery(
+        'assignment_group',
+        managerGroup
+    );
+
+    assignmentGR.addQuery(
+        'approval',
+        'requested'
+    );
+
+
+    assignmentGR.orderByDesc(
+        'sys_created_on'
+    );
+
+
+    assignmentGR.query();
+
+
+    while (assignmentGR.next()) {
+
+        var assignmentSysId =
+            addTaskRecord(
+                assignmentGR
+            );
+
+
+        data.myAssignments.push(
+            assignmentSysId
+        );
+
+    }
+
+
+    /* =========================================================
+       HISTORY
+       MANAGEMENT GROUP + APPROVED OR REJECTED
+       ========================================================= */
+
+    var historyGR =
+        new GlideRecord(taskTable);
+
+
+    historyGR.addQuery(
+        'assignment_group',
+        managerGroup
+    );
+
+
+    var historyQuery =
+        historyGR.addQuery(
+            'approval',
+            'approved'
+        );
+
+
+    historyQuery.addOrCondition(
+        'approval',
+        'rejected'
+    );
+
+
+    historyGR.orderByDesc(
+        'sys_updated_on'
+    );
+
+
+    historyGR.query();
+
+
+    while (historyGR.next()) {
+
+        var historySysId =
+            addTaskRecord(
+                historyGR
+            );
+
+
+        data.history.push(
+            historySysId
+        );
+
+    }
+
+
+    /* =========================================================
+       STAFF PERFORMANCE
+       ========================================================= */
+
+    /*
+     * TOTAL STAFF
+     * Active users belonging to Staff Group
+     */
+
+    var staffGR =
+        new GlideRecord(
+            userGroupMemberTable
+        );
+
+
+    staffGR.addQuery(
+        'group',
+        staffGroup
+    );
+
+    staffGR.addQuery(
+        'user.active',
+        true
+    );
+
+
+    staffGR.query();
+
+
+    while (staffGR.next()) {
+
+        data.totalStaff++;
+
+
+        if (
+            data.staffPerformance.length < 5
+        ) {
+
+            data.staffPerformance.push({
+
+                sys_id:
+                    staffGR.user.toString(),
+
+                name:
+                    staffGR.user.getDisplayValue()
+
+            });
+
+        }
+
+    }
+
+
+    /* =========================================================
+       ASSIGNED REQUESTS
+       ALL ACTIVE COMPLAINT TASKS
+       ========================================================= */
+
+    var assignedGR =
+        new GlideRecord(taskTable);
+
+
+    assignedGR.addQuery(
+        'active',
+        true
+    );
+
+
+    assignedGR.query();
+
+
+    while (assignedGR.next()) {
+
+        data.assignedRequests++;
+
+    }
+
+
+    /* =========================================================
+       PENDING APPROVALS
+       STAFF OR ADMIN GROUP + REQUESTED
+       ========================================================= */
+
+    var pendingApprovalGR =
+        new GlideRecord(taskTable);
+
+
+    pendingApprovalGR.addQuery(
+        'assignment_group',
+        'IN',
+        staffGroup + ',' + adminGroup
+    );
+
+
+    pendingApprovalGR.addQuery(
+        'approval',
+        'requested'
+    );
+
+
+    pendingApprovalGR.query();
+
+
+    while (
+        pendingApprovalGR.next()
+    ) {
+
+        data.pendingApprovals++;
+
+
+        /*
+         * Top 10 pending records
+         */
+
+        if (
+            data.topPendingProblems.length < 10
+        ) {
+
+            var pendingSysId =
+                addTaskRecord(
+                    pendingApprovalGR
+                );
+
+
+            data.topPendingProblems.push(
+                pendingSysId
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       USE CASE CHOICES
+       ========================================================= */
+
+    var useCaseGR =
+        new GlideRecord(choiceTable);
+
+
+    useCaseGR.addQuery(
+        'name',
+        taskTable
+    );
+
+    useCaseGR.addQuery(
+        'element',
+        'use_case'
+    );
+
+    useCaseGR.addQuery(
+        'inactive',
+        false
+    );
+
+
+    useCaseGR.orderBy(
+        'sequence'
+    );
+
+
+    useCaseGR.query();
+
+
+    while (useCaseGR.next()) {
+
+        data.useCaseChoices.push({
+
+            value:
+                useCaseGR.getValue(
+                    'value'
+                ),
+
+            label:
+                useCaseGR.getValue(
+                    'label'
+                )
+
+        });
+
+    }
+
+
+    /* =========================================================
+       PRIORITY CHOICES
+       ========================================================= */
+
+    var priorityGR =
+        new GlideRecord(choiceTable);
+
+
+    priorityGR.addQuery(
+        'name',
+        taskTable
+    );
+
+    priorityGR.addQuery(
+        'element',
+        'current_priority'
+    );
+
+    priorityGR.addQuery(
+        'inactive',
+        false
+    );
+
+
+    priorityGR.orderBy(
+        'sequence'
+    );
+
+
+    priorityGR.query();
+
+
+    while (priorityGR.next()) {
+
+        data.priorityChoices.push({
+
+            value:
+                priorityGR.getValue(
+                    'value'
+                ),
+
+            label:
+                priorityGR.getValue(
+                    'label'
+                )
+
+        });
+
+    }
+
+
+    /* =========================================================
+       REPORT DATA
+       ========================================================= */
+
+    data.reportUseCase = [];
+
+    data.reportPriority = [];
+
+    data.reportApproval = [];
+
+    data.reportTime = [];
+
+
+    /* =========================================================
+       REPORT 1
+       REQUESTS BY USE CASE
+       MANAGEMENT GROUP
+       ========================================================= */
+
+    var reportUseCaseGR =
+        new GlideAggregate(
+            taskTable
+        );
+
+
+    reportUseCaseGR.addQuery(
+        'assignment_group',
+        managerGroup
+    );
+
+
+    reportUseCaseGR.addNotNullQuery(
+        'use_case'
+    );
+
+
+    reportUseCaseGR.addAggregate(
+        'COUNT',
+        'use_case'
+    );
+
+
+    reportUseCaseGR.groupBy(
+        'use_case'
+    );
+
+
+    reportUseCaseGR.orderByDesc(
+        'COUNT',
+        'use_case'
+    );
+
+
+    reportUseCaseGR.query();
+
+
+    while (
+        reportUseCaseGR.next()
+    ) {
+
+        data.reportUseCase.push({
+
+            label:
+                reportUseCaseGR.getDisplayValue(
+                    'use_case'
+                ),
+
+            count:
+                parseInt(
+                    reportUseCaseGR.getAggregate(
+                        'COUNT',
+                        'use_case'
+                    ),
+                    10
+                )
+
+        });
+
+    }
+
+
+    /* =========================================================
+       REPORT 2
+       REQUESTS BY PRIORITY
+       MANAGEMENT GROUP
+       ========================================================= */
+
+    var reportPriorityGR =
+        new GlideAggregate(
+            taskTable
+        );
+
+
+    reportPriorityGR.addQuery(
+        'assignment_group',
+        managerGroup
+    );
+
+
+    reportPriorityGR.addNotNullQuery(
+        'current_priority'
+    );
+
+
+    reportPriorityGR.addAggregate(
+        'COUNT',
+        'current_priority'
+    );
+
+
+    reportPriorityGR.groupBy(
+        'current_priority'
+    );
+
+
+    reportPriorityGR.orderByDesc(
+        'COUNT',
+        'current_priority'
+    );
+
+
+    reportPriorityGR.query();
+
+
+    while (
+        reportPriorityGR.next()
+    ) {
+
+        data.reportPriority.push({
+
+            label:
+                reportPriorityGR.getDisplayValue(
+                    'current_priority'
+                ),
+
+            count:
+                parseInt(
+                    reportPriorityGR.getAggregate(
+                        'COUNT',
+                        'current_priority'
+                    ),
+                    10
+                )
+
+        });
+
+    }
+
+
+    /* =========================================================
+       REPORT 3
+       APPROVAL STATUS
+       MANAGEMENT GROUP
+       ========================================================= */
+
+    var reportApprovalGR =
+        new GlideAggregate(
+            taskTable
+        );
+
+
+    reportApprovalGR.addQuery(
+        'assignment_group',
+        managerGroup
+    );
+
+
+    reportApprovalGR.addAggregate(
+        'COUNT',
+        'approval'
+    );
+
+
+    reportApprovalGR.groupBy(
+        'approval'
+    );
+
+
+    reportApprovalGR.query();
+
+
+    while (
+        reportApprovalGR.next()
+    ) {
+
+        data.reportApproval.push({
+
+            label:
+                reportApprovalGR.getDisplayValue(
+                    'approval'
+                ),
+
+            count:
+                parseInt(
+                    reportApprovalGR.getAggregate(
+                        'COUNT',
+                        'approval'
+                    ),
+                    10
+                )
+
+        });
+
+    }
+
+
+    /* =========================================================
+       REPORT 4
+       REQUESTS OVER TIME
+       MANAGEMENT GROUP
+       ========================================================= */
+
+    var reportTimeGR =
+        new GlideAggregate(
+            taskTable
+        );
+
+
+    reportTimeGR.addQuery(
+        'assignment_group',
+        managerGroup
+    );
+
+
+    reportTimeGR.addAggregate(
+        'COUNT'
+    );
+
+
+    reportTimeGR.query();
+
+
+    /*
+     * Keep overall count here.
+     * Detailed time chart can be expanded later.
+     */
+
+    if (
+        reportTimeGR.next()
+    ) {
+
+        data.reportTime.push({
+
+            label:
+                'Total Requests',
+
+            count:
+                parseInt(
+                    reportTimeGR.getAggregate(
+                        'COUNT'
+                    ),
+                    10
+                )
+
+        });
+
+    }
+
+
+    /* =========================================================
+       GENERATE FOOD MANAGEMENT REPORT
+       ========================================================= */
+
+    if (
+        input &&
+        input.action ==
+            'generateFoodManagementReport'
+    ) {
+
+        data.reportStarted = false;
+
+        data.reportError = '';
+
+        data.reportContextId = '';
+
+        try {
+
+            var inputs = {};
+
+
+            var result =
+                sn_fd.FlowAPI.getRunner()
+                    .subflow(
+                        'x_snc_campus_foo_1.generate_food_management_intelligence'
+                    )
+                    .inBackground()
+                    .withInputs(
+                        inputs
+                    )
+                    .run();
+
+
+            data.reportStarted = true;
+
+
+            data.reportContextId =
+                result.getContextId();
+
+
+            gs.info(
+                'Food Management Intelligence report generation started. Context: ' +
+                data.reportContextId
+            );
+
+
+        } catch (ex) {
+
+            data.reportError =
+                'Unable to start Food Management Intelligence: ' +
+                ex.getMessage();
+
+
+            gs.error(
+                'Food Management Intelligence error: ' +
+                ex.getMessage()
+            );
+
+        }
+
+
+        return;
+
+    }
+
+
+    /* =========================================================
+       CHECK FOOD MANAGEMENT REPORT
+       ========================================================= */
+
+    if (
+        input &&
+        input.action ==
+            'checkFoodManagementReport'
+    ) {
+
+        data.reportReady = false;
+
+        data.reportContent = '';
+
+        data.reportNumber = '';
+
+        data.reportError = '';
+
+
+        try {
+
+            var reportGR =
+                new GlideRecord(
+                    reportTable
+                );
+
+
+            /*
+             * Only look for generated reports.
+             */
+
+            reportGR.addQuery(
+                'report_status',
+                'generated'
+            );
+
+
+            /*
+             * Only use the Food Management
+             * Intelligence report.
+             */
+
+            reportGR.addQuery(
+                'report_title',
+                'Food Management Intelligence Report'
+            );
+
+
+            /*
+             * Get the newest generated report.
+             */
+
+            reportGR.orderByDesc(
+                'sys_created_on'
+            );
+
+
+            reportGR.setLimit(1);
+
+
+            reportGR.query();
+
+
+            if (
+                reportGR.next()
+            ) {
+
+                var content =
+                    reportGR.getValue(
+                        'report_content'
+                    );
+
+
+                if (
+                    content &&
+                    content != ''
+                ) {
+
+                    data.reportReady = true;
+
+
+                    data.reportContent =
+                        content;
+
+
+                    data.reportNumber =
+                        reportGR.getDisplayValue(
+                            'number'
+                        );
+
+
+                    gs.info(
+                        'Food Management report ready: ' +
+                        data.reportNumber
+                    );
+
+                } else {
+
+                    data.reportReady = false;
+
+                }
+
+            } else {
+
+                data.reportReady = false;
+
+            }
+
+
+        } catch (ex2) {
+
+            data.reportReady = false;
+
+
+            data.reportError =
+                'Unable to retrieve Food Management report: ' +
+                ex2.getMessage();
+
+
+            gs.error(
+                'Food Management report retrieval error: ' +
+                ex2.getMessage()
+            );
+
+        }
+
+
+        return;
+
+    }
+
+
+    /* =========================================================
+       SAVE RECORD
+       ========================================================= */
+
+    if (
+        input &&
+        input.action == 'saveRecord'
+    ) {
+
+        data.saveSuccess = false;
+
+        data.saveError = '';
+
+
+        if (!input.sys_id) {
+
+            data.saveError =
+                'Record sys_id is missing.';
+
+            return;
+
+        }
+
+
+        if (!input.approval) {
+
+            data.saveError =
+                'Please select an approval status.';
+
+            return;
+
+        }
+
+
+        if (
+            input.approval != 'requested' &&
+            input.approval != 'approved' &&
+            input.approval != 'rejected'
+        ) {
+
+            data.saveError =
+                'Invalid approval status.';
+
+            return;
+
+        }
+
+
+        /*
+         * Notes mandatory for Approved / Rejected
+         */
+
+        if (
+            input.approval == 'approved' ||
+            input.approval == 'rejected'
+        ) {
+
+            if (
+                !input.notes ||
+                input.notes.trim() == ''
+            ) {
+
+                data.saveError =
+                    'Notes are mandatory when approval is Approved or Rejected.';
+
+                return;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           GET EXISTING TASK
+           ===================================================== */
+
+        var updateTask =
+            new GlideRecord(
+                taskTable
+            );
+
+
+        if (
+            !updateTask.get(
+                input.sys_id
+            )
+        ) {
+
+            data.saveError =
+                'The requested task could not be found.';
+
+            return;
+
+        }
+
+
+        /* =====================================================
+           AUTHORIZATION
+           ONLY MANAGEMENT GROUP
+           ===================================================== */
+
+        if (
+            updateTask.getValue(
+                'assignment_group'
+            ) != managerGroup
+        ) {
+
+            data.saveError =
+                'You are not allowed to update this task.';
+
+            return;
+
+        }
+
+
+        /* =====================================================
+           UPDATE EXISTING RECORD
+           ===================================================== */
+
+        updateTask.setValue(
+            'approval',
+            input.approval
+        );
+
+
+        if (
+            input.approval == 'approved' ||
+            input.approval == 'rejected'
+        ) {
+
+            updateTask.setValue(
+                'active',
+                false
+            );
+
+
+            updateTask.setValue(
+                'closed_at',
+                new GlideDateTime()
+            );
+
+
+            updateTask.setValue(
+                'closed_by',
+                gs.getUserID()
+            );
+
+
+            updateTask.setValue(
+                'notes',
+                input.notes
+            );
+
+        }
+
+
+        updateTask.update();
+
+
+        data.saveSuccess = true;
+
+
+        gs.info(
+            'Manager Portal updated Complaint Task: ' +
+            input.sys_id
+        );
+
+    }
+
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-28 04:51:46</sys_created_on>
+        <sys_id>8fbe9bd6b56703107f449220c3ec98e9</sys_id>
+        <sys_mod_count>79</sys_mod_count>
+        <sys_name>Try</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_8fbe9bd6b56703107f449220c3ec98e9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-05 10:04:00</sys_updated_on>
+        <template><![CDATA[<div class="manager-dashboard">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="manager-sidebar">
+
+        <div class="manager-sidebar-brand">
+
+            <div class="manager-brand-icon">
+                MF
+            </div>
+
+            <div>
+                <div class="manager-brand-title">
+                    Manager Portal
+                </div>
+
+                <div class="manager-brand-subtitle">
+                    Campus Food Services
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="manager-navigation">
+
+            <button
+                class="manager-nav-item"
+                ng-class="{'active': c.currentPage === 'overview'}"
+                ng-click="c.changePage('overview')">
+
+                <span class="manager-nav-icon">
+                    ▦
+                </span>
+
+                <span>
+                    Overview
+                </span>
+
+            </button>
+
+
+            <button
+                class="manager-nav-item"
+                ng-class="{'active': c.currentPage === 'assignments'}"
+                ng-click="c.changePage('assignments')">
+
+                <span class="manager-nav-icon">
+                    ✓
+                </span>
+
+                <span>
+                    My Assignments
+                </span>
+
+            </button>
+
+
+            <button
+                class="manager-nav-item"
+                ng-class="{'active': c.currentPage === 'history'}"
+                ng-click="c.changePage('history')">
+
+                <span class="manager-nav-icon">
+                    ↶
+                </span>
+
+                <span>
+                    History
+                </span>
+
+            </button>
+
+
+            <button
+                class="manager-nav-item"
+                ng-class="{'active': c.currentPage === 'staff'}"
+                ng-click="c.changePage('staff')">
+
+                <span class="manager-nav-icon">
+                    ♙
+                </span>
+
+                <span>
+                    Staff Performance
+                </span>
+
+            </button>
+
+
+            <button
+                class="manager-nav-item"
+                ng-class="{'active': c.currentPage === 'reports'}"
+                ng-click="c.changePage('reports')">
+
+                <span class="manager-nav-icon">
+                    ▥
+                </span>
+
+                <span>
+                    Reports
+                </span>
+
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="manager-content">
+
+
+        <!-- =================================================
+             OVERVIEW
+             ================================================= -->
+
+        <section
+            class="manager-page"
+            ng-if="c.currentPage === 'overview'">
+
+            <div class="manager-page-header">
+
+                <div>
+
+                    <h1>
+                        Overview
+                    </h1>
+
+                    <p>
+                        Monitor management requests and recent assignments.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="manager-download-btn"
+                    ng-click="c.generateFoodManagementReport()"
+                    ng-disabled="c.generatingReport">
+
+                    <span ng-if="!c.generatingReport">
+                        ]]>🤖<![CDATA[ Generate Food Management Report
+                    </span>
+
+                    <span ng-if="c.generatingReport">
+                        ⏳ Generating Report...
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <!-- KPI CARDS -->
+
+            <div class="manager-kpi-grid">
+
+
+                <div class="manager-kpi-card">
+
+                    <div class="manager-kpi-icon">
+                        ▣
+                    </div>
+
+                    <div>
+
+                        <div class="manager-kpi-label">
+                            Total Requests
+                        </div>
+
+                        <div class="manager-kpi-value">
+                            {{c.data.totalRequests}}
+                        </div>
+
+                        <div class="manager-kpi-description">
+                            Management Group requests
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="manager-kpi-card">
+
+                    <div class="manager-kpi-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <div class="manager-kpi-label">
+                            Resolved Requests
+                        </div>
+
+                        <div class="manager-kpi-value">
+                            {{c.data.resolvedRequests}}
+                        </div>
+
+                        <div class="manager-kpi-description">
+                            Management approved
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="manager-kpi-card">
+
+                    <div class="manager-kpi-icon">
+                        !
+                    </div>
+
+                    <div>
+
+                        <div class="manager-kpi-label">
+                            Pending Requests
+                        </div>
+
+                        <div class="manager-kpi-value">
+                            {{c.data.pendingRequests}}
+                        </div>
+
+                        <div class="manager-kpi-description">
+                            Total minus resolved
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECENT ASSIGNMENTS -->
+
+            <div class="manager-section-card">
+
+                <div class="manager-section-header">
+
+                    <div>
+
+                        <h2>
+                            Recent Assignments
+                        </h2>
+
+                        <p>
+                            Latest 5 requests awaiting management approval.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="manager-link-btn"
+                        ng-click="c.changePage('assignments')">
+
+                        View All
+
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="manager-table-wrapper"
+                    ng-mousedown="c.startDrag($event)"
+                    ng-mousemove="c.dragMove($event)"
+                    ng-mouseup="c.stopDrag($event)"
+                    ng-mouseleave="c.stopDrag($event)">
+
+                    <table class="manager-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Number</th>
+                                <th>Use Case</th>
+                                <th>Current Priority</th>
+                                <th>Student Count</th>
+                                <th>State</th>
+                                <th>Assignment Group</th>
+                                <th>Problem Type</th>
+                                <th>Short Description</th>
+                                <th>Approval</th>
+                                <th>Use Case Number</th>
+                                <th>Mess Hall</th>
+                                <th>Meal Type</th>
+                                <th>Priority Reason</th>
+                                <th>Recommended Actions</th>
+                                <th>Resolution Status</th>
+                                <th>Updated</th>
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr
+                                ng-repeat="sysId in c.data.recentAssignments">
+
+                                <td>
+                                    {{c.data.records[sysId].number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].current_priority_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].student_count}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].state_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].assignment_group_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].problem_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].short_description}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].approval_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].mess_hall_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].meal_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].priority_reason}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].recomended_actions}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].resolution_status_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].sys_updated_on}}
+                                </td>
+
+                                <td>
+
+                                    <button
+                                        class="manager-open-btn"
+                                        ng-click="c.openRecord(sysId)">
+
+                                        Open Record
+
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                ng-if="c.data.recentAssignments.length === 0">
+
+                                <td
+                                    colspan="17"
+                                    class="manager-empty">
+
+                                    No recent assignments found.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MY ASSIGNMENTS
+             ================================================= -->
+
+        <section
+            class="manager-page"
+            ng-if="c.currentPage === 'assignments'">
+
+            <div class="manager-page-header">
+
+                <div>
+
+                    <h1>
+                        My Assignments
+                    </h1>
+
+                    <p>
+                        All management requests awaiting approval.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+
+            <div class="manager-filter-card">
+
+                <div class="manager-filter-group">
+
+                    <label>
+                        Use Case
+                    </label>
+
+                    <select
+                        ng-model="c.assignmentFilters.useCase"
+                        ng-change="c.applyAssignmentFilters()">
+
+                        <option value="">
+                            All Use Cases
+                        </option>
+
+                        <option
+                            ng-repeat="item in c.data.useCaseChoices"
+                            ng-value="item.value">
+
+                            {{item.label}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="manager-filter-group">
+
+                    <label>
+                        Current Priority
+                    </label>
+
+                    <select
+                        ng-model="c.assignmentFilters.priority"
+                        ng-change="c.applyAssignmentFilters()">
+
+                        <option value="">
+                            All Priorities
+                        </option>
+
+                        <option
+                            ng-repeat="item in c.data.priorityChoices"
+                            ng-value="item.value">
+
+                            {{item.label}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button
+                    class="manager-clear-btn"
+                    ng-click="c.clearAssignmentFilters()">
+
+                    Clear Filters
+
+                </button>
+
+            </div>
+
+
+            <!-- ASSIGNMENT TABLE -->
+
+            <div class="manager-section-card">
+
+                <div
+                    class="manager-table-wrapper"
+                    ng-mousedown="c.startDrag($event)"
+                    ng-mousemove="c.dragMove($event)"
+                    ng-mouseup="c.stopDrag($event)"
+                    ng-mouseleave="c.stopDrag($event)">
+
+                    <table class="manager-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Number</th>
+                                <th>Use Case</th>
+                                <th>Current Priority</th>
+                                <th>Student Count</th>
+                                <th>State</th>
+                                <th>Assignment Group</th>
+                                <th>Problem Type</th>
+                                <th>Short Description</th>
+                                <th>Approval</th>
+                                <th>Use Case Number</th>
+                                <th>Mess Hall</th>
+                                <th>Meal Type</th>
+                                <th>Priority Reason</th>
+                                <th>Recommended Actions</th>
+                                <th>Resolution Status</th>
+                                <th>Updated</th>
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr
+                                ng-repeat="sysId in c.filteredAssignments">
+
+                                <td>
+                                    {{c.data.records[sysId].number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].current_priority_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].student_count}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].state_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].assignment_group_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].problem_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].short_description}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].approval_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].mess_hall_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].meal_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].priority_reason}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].recomended_actions}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].resolution_status_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].sys_updated_on}}
+                                </td>
+
+                                <td>
+
+                                    <button
+                                        class="manager-open-btn"
+                                        ng-click="c.openRecord(sysId)">
+
+                                        Open Record
+
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                ng-if="c.filteredAssignments.length === 0">
+
+                                <td
+                                    colspan="17"
+                                    class="manager-empty">
+
+                                    No assignment records found.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             HISTORY
+             ================================================= -->
+
+        <section
+            class="manager-page"
+            ng-if="c.currentPage === 'history'">
+
+            <div class="manager-page-header">
+
+                <div>
+
+                    <h1>
+                        History
+                    </h1>
+
+                    <p>
+                        Management requests that have been approved or rejected.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="manager-section-card">
+
+                <div
+                    class="manager-table-wrapper"
+                    ng-mousedown="c.startDrag($event)"
+                    ng-mousemove="c.dragMove($event)"
+                    ng-mouseup="c.stopDrag($event)"
+                    ng-mouseleave="c.stopDrag($event)">
+
+                    <table class="manager-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Number</th>
+                                <th>Use Case</th>
+                                <th>Current Priority</th>
+                                <th>Student Count</th>
+                                <th>State</th>
+                                <th>Assignment Group</th>
+                                <th>Problem Type</th>
+                                <th>Short Description</th>
+                                <th>Approval</th>
+                                <th>Use Case Number</th>
+                                <th>Mess Hall</th>
+                                <th>Meal Type</th>
+                                <th>Priority Reason</th>
+                                <th>Recommended Actions</th>
+                                <th>Resolution Status</th>
+                                <th>Updated</th>
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr
+                                ng-repeat="sysId in c.data.history">
+
+                                <td>
+                                    {{c.data.records[sysId].number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].current_priority_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].student_count}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].state_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].assignment_group_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].problem_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].short_description}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].approval_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].mess_hall_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].meal_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].priority_reason}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].recomended_actions}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].resolution_status_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].sys_updated_on}}
+                                </td>
+
+                                <td>
+
+                                    <button
+                                        class="manager-open-btn"
+                                        ng-click="c.openRecord(sysId)">
+
+                                        Open Record
+
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                ng-if="c.data.history.length === 0">
+
+                                <td
+                                    colspan="17"
+                                    class="manager-empty">
+
+                                    No history records found.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             STAFF PERFORMANCE
+             ================================================= -->
+
+        <section
+            class="manager-page"
+            ng-if="c.currentPage === 'staff'">
+
+            <div class="manager-page-header">
+
+                <div>
+
+                    <h1>
+                        Staff Performance
+                    </h1>
+
+                    <p>
+                        Monitor staff workload and pending approvals.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STAFF PERFORMANCE KPIs -->
+
+            <div class="manager-kpi-grid">
+
+
+                <div class="manager-kpi-card">
+
+                    <div class="manager-kpi-icon">
+                        ♙
+                    </div>
+
+                    <div>
+
+                        <div class="manager-kpi-label">
+                            Total Staff
+                        </div>
+
+                        <div class="manager-kpi-value">
+                            {{c.data.totalStaff}}
+                        </div>
+
+                        <div class="manager-kpi-description">
+                            Active staff members
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="manager-kpi-card">
+
+                    <div class="manager-kpi-icon">
+                        ▣
+                    </div>
+
+                    <div>
+
+                        <div class="manager-kpi-label">
+                            Assigned Requests
+                        </div>
+
+                        <div class="manager-kpi-value">
+                            {{c.data.assignedRequests}}
+                        </div>
+
+                        <div class="manager-kpi-description">
+                            Active complaint tasks
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="manager-kpi-card">
+
+                    <div class="manager-kpi-icon">
+                        !
+                    </div>
+
+                    <div>
+
+                        <div class="manager-kpi-label">
+                            Pending Approvals
+                        </div>
+
+                        <div class="manager-kpi-value">
+                            {{c.data.pendingApprovals}}
+                        </div>
+
+                        <div class="manager-kpi-description">
+                            Staff and Admin requests
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STAFF LIST -->
+
+            <div class="manager-section-card">
+
+                <div class="manager-section-header">
+
+                    <div>
+
+                        <h2>
+                            Staff Members
+                        </h2>
+
+                        <p>
+                            Active members of the Hostel Mess Staff Group.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="manager-staff-grid">
+
+                    <div
+                        class="manager-staff-card"
+                        ng-repeat="staff in c.data.staffPerformance">
+
+                        <div class="manager-staff-avatar">
+                            {{staff.name.charAt(0)}}
+                        </div>
+
+                        <div>
+
+                            <div class="manager-staff-name">
+                                {{staff.name}}
+                            </div>
+
+                            <div class="manager-staff-role">
+                                Mess Staff
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="manager-empty"
+                        ng-if="c.data.staffPerformance.length === 0">
+
+                        No active staff members found.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TOP PENDING PROBLEMS -->
+
+            <div class="manager-section-card">
+
+                <div class="manager-section-header">
+
+                    <div>
+
+                        <h2>
+                            Top Pending Problems
+                        </h2>
+
+                        <p>
+                            Staff and Admin requests awaiting approval.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="manager-table-wrapper"
+                    ng-mousedown="c.startDrag($event)"
+                    ng-mousemove="c.dragMove($event)"
+                    ng-mouseup="c.stopDrag($event)"
+                    ng-mouseleave="c.stopDrag($event)">
+
+                    <table class="manager-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Number</th>
+                                <th>Use Case</th>
+                                <th>Current Priority</th>
+                                <th>Student Count</th>
+                                <th>State</th>
+                                <th>Assignment Group</th>
+                                <th>Problem Type</th>
+                                <th>Short Description</th>
+                                <th>Approval</th>
+                                <th>Use Case Number</th>
+                                <th>Mess Hall</th>
+                                <th>Meal Type</th>
+                                <th>Priority Reason</th>
+                                <th>Recommended Actions</th>
+                                <th>Resolution Status</th>
+                                <th>Updated</th>
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr
+                                ng-repeat="sysId in c.data.topPendingProblems">
+
+                                <td>
+                                    {{c.data.records[sysId].number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].current_priority_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].student_count}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].state_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].assignment_group_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].problem_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].short_description}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].approval_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].mess_hall_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].meal_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].priority_reason}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].recomended_actions}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].resolution_status_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].sys_updated_on}}
+                                </td>
+
+                                <td>
+
+                                    <button
+                                        class="manager-open-btn"
+                                        ng-click="c.openRecord(sysId)">
+
+                                        Open Record
+
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                ng-if="c.data.topPendingProblems.length === 0">
+
+                                <td
+                                    colspan="17"
+                                    class="manager-empty">
+
+                                    No pending problems found.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             REPORTS
+             ================================================= -->
+
+        <section
+            class="manager-page"
+            ng-if="c.currentPage === 'reports'">
+
+            <div class="manager-page-header">
+
+                <div>
+
+                    <h1>
+                        Reports
+                    </h1>
+
+                    <p>
+                        Management request analytics and approval insights.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- USE CASE REPORT -->
+
+            <div class="manager-report-card">
+
+                <div class="manager-report-header">
+
+                    <div>
+
+                        <h2>
+                            Requests by Use Case
+                        </h2>
+
+                        <p>
+                            Management Group requests by use case.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="manager-report-list">
+
+                    <div
+                        class="manager-report-row"
+                        ng-repeat="item in c.data.reportUseCase">
+
+                        <div class="manager-report-label">
+                            {{item.label}}
+                        </div>
+
+                        <div class="manager-report-bar-container">
+
+                            <div
+                                class="manager-report-bar"
+                                ng-style="{
+                                    'width':
+                                    c.getReportWidth(
+                                        item.count,
+                                        c.data.reportUseCase
+                                    ) + '%'
+                                }">
+                            </div>
+
+                        </div>
+
+                        <div class="manager-report-count">
+                            {{item.count}}
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="manager-empty"
+                        ng-if="c.data.reportUseCase.length === 0">
+
+                        No report data available.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRIORITY REPORT -->
+
+            <div class="manager-report-card">
+
+                <div class="manager-report-header">
+
+                    <div>
+
+                        <h2>
+                            Requests by Priority
+                        </h2>
+
+                        <p>
+                            Management requests grouped by current priority.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="manager-report-list">
+
+                    <div
+                        class="manager-report-row"
+                        ng-repeat="item in c.data.reportPriority">
+
+                        <div class="manager-report-label">
+                            {{item.label}}
+                        </div>
+
+                        <div class="manager-report-bar-container">
+
+                            <div
+                                class="manager-report-bar"
+                                ng-style="{
+                                    'width':
+                                    c.getReportWidth(
+                                        item.count,
+                                        c.data.reportPriority
+                                    ) + '%'
+                                }">
+                            </div>
+
+                        </div>
+
+                        <div class="manager-report-count">
+                            {{item.count}}
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="manager-empty"
+                        ng-if="c.data.reportPriority.length === 0">
+
+                        No report data available.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- APPROVAL REPORT -->
+
+            <div class="manager-report-card">
+
+                <div class="manager-report-header">
+
+                    <div>
+
+                        <h2>
+                            Approval Status
+                        </h2>
+
+                        <p>
+                            Management approval distribution.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="manager-report-list">
+
+                    <div
+                        class="manager-report-row"
+                        ng-repeat="item in c.data.reportApproval">
+
+                        <div class="manager-report-label">
+                            {{item.label}}
+                        </div>
+
+                        <div class="manager-report-bar-container">
+
+                            <div
+                                class="manager-report-bar"
+                                ng-style="{
+                                    'width':
+                                    c.getReportWidth(
+                                        item.count,
+                                        c.data.reportApproval
+                                    ) + '%'
+                                }">
+                            </div>
+
+                        </div>
+
+                        <div class="manager-report-count">
+                            {{item.count}}
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="manager-empty"
+                        ng-if="c.data.reportApproval.length === 0">
+
+                        No approval report data available.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TIME REPORT -->
+
+            <div class="manager-report-card">
+
+                <div class="manager-report-header">
+
+                    <div>
+
+                        <h2>
+                            Requests Over Time
+                        </h2>
+
+                        <p>
+                            Management request activity.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="manager-report-list">
+
+                    <div
+                        class="manager-report-row"
+                        ng-repeat="item in c.data.reportTime">
+
+                        <div class="manager-report-label">
+                            {{item.label}}
+                        </div>
+
+                        <div class="manager-report-bar-container">
+
+                            <div
+                                class="manager-report-bar"
+                                ng-style="{
+                                    'width':
+                                    c.getReportWidth(
+                                        item.count,
+                                        c.data.reportTime
+                                    ) + '%'
+                                }">
+                            </div>
+
+                        </div>
+
+                        <div class="manager-report-count">
+                            {{item.count}}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             OPEN RECORD FORM
+             ================================================= -->
+
+        <section
+            id="manager-record-form"
+            class="manager-record-form"
+            ng-if="c.showRecordForm">
+
+            <div class="manager-form-header">
+
+                <div>
+
+                    <h2>
+                        Complaint Task
+                    </h2>
+
+                    <p>
+                        Review and process the selected management request.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="manager-close-btn"
+                    ng-click="c.closeRecordForm()">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <div
+                class="manager-form-error"
+                ng-if="c.formError">
+
+                {{c.formError}}
+
+            </div>
+
+
+            <div
+                class="manager-form-success"
+                ng-if="c.formSuccess">
+
+                {{c.formSuccess}}
+
+            </div>
+
+
+            <div class="manager-form-grid">
+
+
+                <!-- NUMBER -->
+
+                <div class="manager-form-field">
+
+                    <label>
+                        Number
+                    </label>
+
+                    <input
+                        type="text"
+                        ng-model="c.selectedRecord.number"
+                        readonly>
+
+                </div>
+
+
+                <!-- USE CASE -->
+
+                <div class="manager-form-field">
+
+                    <label>
+                        Use Case
+                    </label>
+
+                    <input
+                        type="text"
+                        ng-model="c.selectedRecord.use_case_display"
+                        readonly>
+
+                </div>
+
+
+                <!-- CURRENT PRIORITY -->
+
+                <div class="manager-form-field">
+
+                    <label>
+                        Current Priority
+                    </label>
+
+                    <input
+                        type="text"
+                        ng-model="c.selectedRecord.current_priority_display"
+                        readonly>
+
+                </div>
+
+
+                <!-- STUDENT COUNT -->
+
+                <div class="manager-form-field">
+
+                    <label>
+                        Student Count
+                    </label>
+
+                    <input
+                        type="text"
+                        ng-model="c.selectedRecord.student_count"
+                        readonly>
+
+                </div>
+
+
+                <!-- STATE -->
+
+                <div class="manager-form-field">
+
+                    <label>
+                        State
+                    </label>
+
+                    <input
+                        type="text"
+                        ng-model="c.selectedRecord.state_display"
+                        readonly>
+
+                </div>
+
+
+                <!-- ASSIGNMENT GROUP -->
+
+                <div class="manager-form-field">
+
+                    <label>
+                        Assignment Group
+                    </label>
+
+                    <input
+                        type="text"
+                        ng-model="c.selectedRecord.assignment_group_display"
+                        readonly>
+
+                </div>
+
+
+                <!-- PROBLEM TYPE -->
+
+                <div class="manager-form-field">
+
+                    <label>
+                        Problem Type
+                    </label>
+
+                    <input
+                        type="text"
+                        ng-model="c.selectedRecord.problem_type_display"
+                        readonly>
+
+                </div>
+
+
+                <!-- SHORT DESCRIPTION -->
+
+                <div class="manager-form-field manager-form-field-wide">
+
+                    <label>
+                        Short Description
+                    </label>
+
+                    <textarea
+                        ng-model="c.selectedRecord.short_description"
+                        readonly>
+                    </textarea>
+
+                </div>
+
+
+                <!-- APPROVAL -->
+
+                <div class="manager-form-field">
+
+                    <label>
+                        Approval
+                    </label>
+
+                    <select
+                        ng-model="c.selectedRecord.approval"
+                        ng-change="c.approvalChanged()">
+
+                        <option value="requested">
+                            Requested
+                        </option>
+
+                        <option value="approved">
+                            Approved
+                        </option>
+
+                        <option value="rejected">
+                            Rejected
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- USE CASE NUMBER -->
+
+                <div class="manager-form-field">
+
+                    <label>
+                        Use Case Number
+                    </label>
+
+                    <input
+                        type="text"
+                        ng-model="c.selectedRecord.use_case_number"
+                        readonly>
+
+                </div>
+
+
+                <!-- MESS HALL -->
+
+                <div class="manager-form-field">
+
+                    <label>
+                        Mess Hall
+                    </label>
+
+                    <input
+                        type="text"
+                        ng-model="c.selectedRecord.mess_hall_display"
+                        readonly>
+
+                </div>
+
+
+                <!-- MEAL TYPE -->
+
+                <div class="manager-form-field">
+
+                    <label>
+                        Meal Type
+                    </label>
+
+                    <input
+                        type="text"
+                        ng-model="c.selectedRecord.meal_type_display"
+                        readonly>
+
+                </div>
+
+
+                <!-- PRIORITY REASON -->
+
+                <div class="manager-form-field manager-form-field-wide">
+
+                    <label>
+                        Priority Reason
+                    </label>
+
+                    <textarea
+                        ng-model="c.selectedRecord.priority_reason"
+                        readonly>
+                    </textarea>
+
+                </div>
+
+
+                <!-- RECOMMENDED ACTIONS -->
+
+                <div class="manager-form-field manager-form-field-wide">
+
+                    <label>
+                        Recommended Actions
+                    </label>
+
+                    <textarea
+                        ng-model="c.selectedRecord.recomended_actions"
+                        readonly>
+                    </textarea>
+
+                </div>
+
+
+                <!-- RESOLUTION STATUS -->
+
+                <div class="manager-form-field">
+
+                    <label>
+                        Resolution Status
+                    </label>
+
+                    <input
+                        type="text"
+                        ng-model="c.selectedRecord.resolution_status_display"
+                        readonly>
+
+                </div>
+
+
+                <!-- NOTES -->
+
+                <div
+                    class="manager-form-field manager-form-field-wide"
+                    ng-if="c.showNotesField">
+
+                    <label>
+
+                        Notes
+
+                        <span
+                            class="manager-required">
+                            *
+                        </span>
+
+                    </label>
+
+                    <textarea
+                        ng-model="c.selectedRecord.notes"
+                        ng-required="c.notesRequired"
+                        placeholder="Enter notes for this decision...">
+                    </textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- FORM ACTIONS -->
+
+            <div class="manager-form-actions">
+
+                <button
+                    class="manager-cancel-btn"
+                    ng-click="c.closeRecordForm()">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    class="manager-save-btn"
+                    ng-click="c.saveRecord()"
+                    ng-disabled="c.savingRecord">
+
+                    <span
+                        ng-if="!c.savingRecord">
+
+                        Save Record
+
+                    </span>
+
+                    <span
+                        ng-if="c.savingRecord">
+
+                        Saving...
+
+                    </span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

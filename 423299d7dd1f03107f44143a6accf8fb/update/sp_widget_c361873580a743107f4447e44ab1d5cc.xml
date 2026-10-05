@@ -1,0 +1,2342 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================================&#13;
+   MEALCARE — WIDGET CONTENT CSS&#13;
+   Professional Dark Frame Theme&#13;
+   ServiceNow Compatible&#13;
+   HTML unchanged — same class names&#13;
+   Styling only&#13;
+   ========================================================= */&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   1. FOUNDATION&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-hero,&#13;
+.cfa-welcome,&#13;
+.cfa-services,&#13;
+.cfa-about,&#13;
+.cfa-contact {&#13;
+  position: relative;&#13;
+  width: 100%;&#13;
+  color: #64748B;&#13;
+  font-family: "Segoe UI", Arial, sans-serif;&#13;
+  box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.cfa-hero *,&#13;
+.cfa-welcome *,&#13;
+.cfa-services *,&#13;
+.cfa-about *,&#13;
+.cfa-contact *,&#13;
+.cfa-hero *::before,&#13;
+.cfa-welcome *::before,&#13;
+.cfa-services *::before,&#13;
+.cfa-about *::before,&#13;
+.cfa-contact *::before,&#13;
+.cfa-hero *::after,&#13;
+.cfa-welcome *::after,&#13;
+.cfa-services *::after,&#13;
+.cfa-about *::after,&#13;
+.cfa-contact *::after {&#13;
+  box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.cfa-hero a {&#13;
+  text-decoration: none;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   2. SECTION LABEL&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-section-label {&#13;
+  display: inline-flex;&#13;
+  align-items: center;&#13;
+&#13;
+  margin-bottom: 18px;&#13;
+  padding: 7px 16px 7px 12px;&#13;
+&#13;
+  color: #1D4ED8;&#13;
+&#13;
+  background: #EFF6FF;&#13;
+&#13;
+  border: 1px solid #DBEAFE;&#13;
+&#13;
+  border-radius: 999px;&#13;
+&#13;
+  font-size: 13px;&#13;
+  font-weight: 700;&#13;
+}&#13;
+&#13;
+.cfa-section-label::before {&#13;
+  content: "";&#13;
+&#13;
+  width: 8px;&#13;
+  height: 8px;&#13;
+&#13;
+  margin-right: 9px;&#13;
+&#13;
+  background: #2563EB;&#13;
+&#13;
+  border-radius: 50%;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   3. HERO&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-hero {&#13;
+  min-height: 720px;&#13;
+&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+&#13;
+  overflow: hidden;&#13;
+&#13;
+  padding: 115px 0 125px;&#13;
+&#13;
+  background:&#13;
+    radial-gradient(&#13;
+      circle at 85% 18%,&#13;
+      rgba(96, 165, 250, 0.22),&#13;
+      transparent 34%&#13;
+    ),&#13;
+    radial-gradient(&#13;
+      circle at 5% 95%,&#13;
+      rgba(37, 99, 235, 0.16),&#13;
+      transparent 34%&#13;
+    ),&#13;
+    linear-gradient(&#13;
+      140deg,&#13;
+      #0F172A 0%,&#13;
+      #1E293B 55%,&#13;
+      #172554 100%&#13;
+    );&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   4. HERO GRID&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-hero::before {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+  inset: 0;&#13;
+&#13;
+  pointer-events: none;&#13;
+&#13;
+  background-image:&#13;
+    linear-gradient(&#13;
+      rgba(96, 165, 250, 0.045) 1px,&#13;
+      transparent 1px&#13;
+    ),&#13;
+    linear-gradient(&#13;
+      90deg,&#13;
+      rgba(96, 165, 250, 0.045) 1px,&#13;
+      transparent 1px&#13;
+    );&#13;
+&#13;
+  background-size: 48px 48px;&#13;
+&#13;
+  mask-image:&#13;
+    linear-gradient(&#13;
+      to bottom,&#13;
+      #000,&#13;
+      transparent 85%&#13;
+    );&#13;
+&#13;
+  -webkit-mask-image:&#13;
+    linear-gradient(&#13;
+      to bottom,&#13;
+      #000,&#13;
+      transparent 85%&#13;
+    );&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   5. HERO GLASS PANEL&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-hero::after {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+&#13;
+  right: 8%;&#13;
+  top: 50%;&#13;
+&#13;
+  width: 320px;&#13;
+  height: 230px;&#13;
+&#13;
+  transform:&#13;
+    translateY(-50%)&#13;
+    rotate(4deg);&#13;
+&#13;
+  border-radius: 28px;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      145deg,&#13;
+      rgba(255, 255, 255, 0.10),&#13;
+      rgba(96, 165, 250, 0.05)&#13;
+    );&#13;
+&#13;
+  border:&#13;
+    1px solid rgba(255, 255, 255, 0.16);&#13;
+&#13;
+  box-shadow:&#13;
+    0 30px 70px rgba(0, 0, 0, 0.30),&#13;
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);&#13;
+&#13;
+  backdrop-filter: blur(14px);&#13;
+  -webkit-backdrop-filter: blur(14px);&#13;
+&#13;
+  pointer-events: none;&#13;
+&#13;
+  animation:&#13;
+    cfaFloat 7s ease-in-out infinite alternate;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   6. SMALL HERO CARD&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-hero-inner::after {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+&#13;
+  right: -40px;&#13;
+  top: 50%;&#13;
+&#13;
+  width: 170px;&#13;
+  height: 120px;&#13;
+&#13;
+  transform:&#13;
+    translateY(40%)&#13;
+    rotate(-6deg);&#13;
+&#13;
+  border-radius: 22px;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      145deg,&#13;
+      #60A5FA,&#13;
+      #2563EB&#13;
+    );&#13;
+&#13;
+  box-shadow:&#13;
+    0 14px 34px rgba(37, 99, 235, 0.32);&#13;
+&#13;
+  opacity: 0.92;&#13;
+&#13;
+  pointer-events: none;&#13;
+&#13;
+  animation:&#13;
+    cfaFloatTwo 8s ease-in-out infinite alternate;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   7. HERO GLOWS&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-hero-glow {&#13;
+  position: absolute;&#13;
+&#13;
+  border-radius: 50%;&#13;
+&#13;
+  pointer-events: none;&#13;
+&#13;
+  filter: blur(40px);&#13;
+}&#13;
+&#13;
+.cfa-hero-glow-one {&#13;
+  width: 460px;&#13;
+  height: 460px;&#13;
+&#13;
+  right: -160px;&#13;
+  top: -200px;&#13;
+&#13;
+  background:&#13;
+    rgba(37, 99, 235, 0.22);&#13;
+}&#13;
+&#13;
+.cfa-hero-glow-two {&#13;
+  width: 420px;&#13;
+  height: 420px;&#13;
+&#13;
+  left: -200px;&#13;
+  bottom: -240px;&#13;
+&#13;
+  background:&#13;
+    rgba(96, 165, 250, 0.14);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   8. HERO INNER&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-hero-inner {&#13;
+  position: relative;&#13;
+  z-index: 5;&#13;
+&#13;
+  width: 100%;&#13;
+  max-width: 1180px;&#13;
+&#13;
+  margin: 0 auto;&#13;
+&#13;
+  padding: 0 28px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   9. HERO BADGE&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-hero-badge {&#13;
+  display: inline-flex;&#13;
+  align-items: center;&#13;
+&#13;
+  margin-bottom: 26px;&#13;
+&#13;
+  padding: 9px 18px;&#13;
+&#13;
+  color: #93C5FD;&#13;
+&#13;
+  background:&#13;
+    rgba(96, 165, 250, 0.08);&#13;
+&#13;
+  border:&#13;
+    1px solid rgba(96, 165, 250, 0.25);&#13;
+&#13;
+  border-radius: 999px;&#13;
+&#13;
+  backdrop-filter: blur(10px);&#13;
+  -webkit-backdrop-filter: blur(10px);&#13;
+&#13;
+  font-size: 13px;&#13;
+  font-weight: 600;&#13;
+&#13;
+  letter-spacing: 0.3px;&#13;
+}&#13;
+&#13;
+.cfa-hero-badge::before {&#13;
+  content: "";&#13;
+&#13;
+  width: 8px;&#13;
+  height: 8px;&#13;
+&#13;
+  margin-right: 10px;&#13;
+&#13;
+  background: #60A5FA;&#13;
+&#13;
+  border-radius: 50%;&#13;
+&#13;
+  box-shadow:&#13;
+    0 0 0 4px rgba(96, 165, 250, 0.16);&#13;
+&#13;
+  animation:&#13;
+    cfaPulse 2.2s ease-in-out infinite;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   10. HERO HEADING&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-hero h1 {&#13;
+  position: relative;&#13;
+&#13;
+  max-width: 820px;&#13;
+&#13;
+  margin: 0 0 32px;&#13;
+&#13;
+  color: #FFFFFF;&#13;
+&#13;
+  font-size:&#13;
+    clamp(46px, 6vw, 80px);&#13;
+&#13;
+  line-height: 1.02;&#13;
+&#13;
+  letter-spacing: -3px;&#13;
+&#13;
+  font-weight: 800;&#13;
+&#13;
+  text-wrap: balance;&#13;
+}&#13;
+&#13;
+.cfa-hero h1::after {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+&#13;
+  left: 3px;&#13;
+  bottom: -16px;&#13;
+&#13;
+  width: 96px;&#13;
+  height: 5px;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      90deg,&#13;
+      #2563EB,&#13;
+      #60A5FA,&#13;
+      transparent&#13;
+    );&#13;
+&#13;
+  border-radius: 99px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   11. HERO DESCRIPTION&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-hero-inner &gt; p {&#13;
+  max-width: 640px;&#13;
+&#13;
+  margin: 0 0 36px;&#13;
+&#13;
+  color:&#13;
+    rgba(255, 255, 255, 0.76);&#13;
+&#13;
+  font-size: 18px;&#13;
+&#13;
+  line-height: 1.75;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   12. HERO BUTTON&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-hero-btn {&#13;
+  position: relative;&#13;
+&#13;
+  display: inline-flex;&#13;
+&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+&#13;
+  min-height: 56px;&#13;
+&#13;
+  padding: 0 30px;&#13;
+&#13;
+  overflow: hidden;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      135deg,&#13;
+      #2563EB,&#13;
+      #3B82F6&#13;
+    );&#13;
+&#13;
+  color: #FFFFFF;&#13;
+&#13;
+  border-radius: 12px;&#13;
+&#13;
+  box-shadow:&#13;
+    0 14px 34px rgba(37, 99, 235, 0.30);&#13;
+&#13;
+  font-size: 15px;&#13;
+&#13;
+  font-weight: 800;&#13;
+&#13;
+  transition:&#13;
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),&#13;
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);&#13;
+}&#13;
+&#13;
+.cfa-hero-btn::before {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+&#13;
+  top: 0;&#13;
+  left: -120%;&#13;
+&#13;
+  width: 70%;&#13;
+  height: 100%;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      90deg,&#13;
+      transparent,&#13;
+      rgba(255, 255, 255, 0.35),&#13;
+      transparent&#13;
+    );&#13;
+&#13;
+  transform: skewX(-20deg);&#13;
+&#13;
+  transition:&#13;
+    left 0.65s ease;&#13;
+}&#13;
+&#13;
+.cfa-hero-btn:hover::before {&#13;
+  left: 140%;&#13;
+}&#13;
+&#13;
+.cfa-hero-btn:hover {&#13;
+  color: #FFFFFF;&#13;
+&#13;
+  transform:&#13;
+    translateY(-4px);&#13;
+&#13;
+  box-shadow:&#13;
+    0 20px 44px rgba(37, 99, 235, 0.40);&#13;
+}&#13;
+&#13;
+.cfa-hero-btn:active {&#13;
+  transform:&#13;
+    translateY(-1px)&#13;
+    scale(0.98);&#13;
+}&#13;
+&#13;
+.cfa-hero-btn span {&#13;
+  margin-left: 12px;&#13;
+&#13;
+  font-size: 19px;&#13;
+&#13;
+  transition:&#13;
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);&#13;
+}&#13;
+&#13;
+.cfa-hero-btn:hover span {&#13;
+  transform:&#13;
+    translateX(5px);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   13. HERO NOTE&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-hero-note {&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+&#13;
+  margin-top: 26px;&#13;
+&#13;
+  color:&#13;
+    rgba(147, 197, 253, 0.85);&#13;
+&#13;
+  font-size: 13px;&#13;
+&#13;
+  line-height: 1.7;&#13;
+}&#13;
+&#13;
+.cfa-hero-note span {&#13;
+  display: inline-flex;&#13;
+&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+&#13;
+  width: 24px;&#13;
+  height: 24px;&#13;
+&#13;
+  margin-right: 9px;&#13;
+&#13;
+  background:&#13;
+    rgba(37, 99, 235, 0.16);&#13;
+&#13;
+  color: #60A5FA;&#13;
+&#13;
+  border-radius: 50%;&#13;
+&#13;
+  font-weight: 800;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   14. WELCOME&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-welcome {&#13;
+  padding: 105px 0;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      180deg,&#13;
+      #FFFFFF 0%,&#13;
+      #F8FAFC 100%&#13;
+    );&#13;
+}&#13;
+&#13;
+.cfa-welcome-inner {&#13;
+  position: relative;&#13;
+&#13;
+  width: 100%;&#13;
+  max-width: 1180px;&#13;
+&#13;
+  margin: 0 auto;&#13;
+&#13;
+  padding: 0 28px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   15. SECTION HEADINGS&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-welcome h2,&#13;
+.cfa-services h2,&#13;
+.cfa-about h2,&#13;
+.cfa-contact h2 {&#13;
+  color: #0F172A;&#13;
+&#13;
+  font-weight: 800;&#13;
+&#13;
+  letter-spacing: -2px;&#13;
+&#13;
+  line-height: 1.1;&#13;
+}&#13;
+&#13;
+.cfa-welcome h2 {&#13;
+  max-width: 780px;&#13;
+&#13;
+  margin: 0 0 18px;&#13;
+&#13;
+  font-size:&#13;
+    clamp(34px, 4.2vw, 52px);&#13;
+}&#13;
+&#13;
+.cfa-welcome-inner &gt; p {&#13;
+  max-width: 680px;&#13;
+&#13;
+  margin: 0;&#13;
+&#13;
+  color: #64748B;&#13;
+&#13;
+  font-size: 17px;&#13;
+&#13;
+  line-height: 1.8;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   16. WELCOME POINTS&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-welcome-points {&#13;
+  display: grid;&#13;
+&#13;
+  grid-template-columns:&#13;
+    repeat(3, minmax(0, 1fr));&#13;
+&#13;
+  gap: 22px;&#13;
+&#13;
+  margin-top: 52px;&#13;
+}&#13;
+&#13;
+.cfa-welcome-point {&#13;
+  position: relative;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  gap: 18px;&#13;
+&#13;
+  min-height: 170px;&#13;
+&#13;
+  padding: 28px;&#13;
+&#13;
+  overflow: hidden;&#13;
+&#13;
+  background: #FFFFFF;&#13;
+&#13;
+  border:&#13;
+    1px solid #E2E8F0;&#13;
+&#13;
+  border-radius: 16px;&#13;
+&#13;
+  box-shadow:&#13;
+    0 6px 22px rgba(15, 23, 42, 0.06);&#13;
+&#13;
+  transition:&#13;
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),&#13;
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),&#13;
+    border-color 0.35s cubic-bezier(0.22, 1, 0.36, 1);&#13;
+}&#13;
+&#13;
+.cfa-welcome-point::before {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+&#13;
+  left: 0;&#13;
+  top: 0;&#13;
+&#13;
+  width: 100%;&#13;
+  height: 4px;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      90deg,&#13;
+      #2563EB,&#13;
+      #60A5FA&#13;
+    );&#13;
+&#13;
+  transform:&#13;
+    scaleX(0);&#13;
+&#13;
+  transform-origin: left;&#13;
+&#13;
+  transition:&#13;
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);&#13;
+}&#13;
+&#13;
+.cfa-welcome-point:hover {&#13;
+  transform:&#13;
+    translateY(-8px);&#13;
+&#13;
+  border-color:&#13;
+    #BFDBFE;&#13;
+&#13;
+  box-shadow:&#13;
+    0 22px 50px rgba(15, 23, 42, 0.12);&#13;
+}&#13;
+&#13;
+.cfa-welcome-point:hover::before {&#13;
+  transform:&#13;
+    scaleX(1);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   17. WELCOME ICON&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-wp-icon {&#13;
+  flex-shrink: 0;&#13;
+&#13;
+  width: 52px;&#13;
+  height: 52px;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      145deg,&#13;
+      #DBEAFE,&#13;
+      #BFDBFE&#13;
+    );&#13;
+&#13;
+  color: #1D4ED8;&#13;
+&#13;
+  border-radius: 14px;&#13;
+&#13;
+  box-shadow:&#13;
+    0 10px 22px rgba(37, 99, 235, 0.12);&#13;
+&#13;
+  font-size: 12px;&#13;
+&#13;
+  font-weight: 800;&#13;
+}&#13;
+&#13;
+.cfa-welcome-point b {&#13;
+  display: block;&#13;
+&#13;
+  margin-bottom: 8px;&#13;
+&#13;
+  color: #0F172A;&#13;
+&#13;
+  font-size: 17px;&#13;
+&#13;
+  font-weight: 800;&#13;
+}&#13;
+&#13;
+.cfa-welcome-point div &gt; span {&#13;
+  display: block;&#13;
+&#13;
+  color: #64748B;&#13;
+&#13;
+  font-size: 14px;&#13;
+&#13;
+  line-height: 1.7;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   18. SERVICES&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-services {&#13;
+  padding: 105px 0;&#13;
+&#13;
+  background:&#13;
+    radial-gradient(&#13;
+      circle at 92% 8%,&#13;
+      rgba(96, 165, 250, 0.10),&#13;
+      transparent 28%&#13;
+    ),&#13;
+    #F8FAFC;&#13;
+}&#13;
+&#13;
+.cfa-services-header {&#13;
+  width: 100%;&#13;
+  max-width: 1180px;&#13;
+&#13;
+  margin: 0 auto 50px;&#13;
+&#13;
+  padding: 0 28px;&#13;
+}&#13;
+&#13;
+.cfa-services-header h2 {&#13;
+  max-width: 800px;&#13;
+&#13;
+  margin: 0 0 18px;&#13;
+&#13;
+  font-size:&#13;
+    clamp(34px, 4.2vw, 52px);&#13;
+}&#13;
+&#13;
+.cfa-services-header p {&#13;
+  max-width: 660px;&#13;
+&#13;
+  margin: 0;&#13;
+&#13;
+  color: #64748B;&#13;
+&#13;
+  font-size: 17px;&#13;
+&#13;
+  line-height: 1.8;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   19. SERVICES GRID&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-services-grid {&#13;
+  width: 100%;&#13;
+  max-width: 1180px;&#13;
+&#13;
+  margin: 0 auto;&#13;
+&#13;
+  padding: 0 28px;&#13;
+&#13;
+  display: grid;&#13;
+&#13;
+  grid-template-columns:&#13;
+    repeat(4, minmax(0, 1fr));&#13;
+&#13;
+  gap: 22px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   20. SERVICE CARD&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-service-card {&#13;
+  position: relative;&#13;
+&#13;
+  min-height: 290px;&#13;
+&#13;
+  display: flex;&#13;
+  flex-direction: column;&#13;
+&#13;
+  padding: 28px 25px;&#13;
+&#13;
+  overflow: hidden;&#13;
+&#13;
+  background: #FFFFFF;&#13;
+&#13;
+  border:&#13;
+    1px solid #E2E8F0;&#13;
+&#13;
+  border-radius: 16px;&#13;
+&#13;
+  box-shadow:&#13;
+    0 6px 22px rgba(15, 23, 42, 0.06);&#13;
+&#13;
+  transition:&#13;
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),&#13;
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),&#13;
+    border-color 0.35s cubic-bezier(0.22, 1, 0.36, 1);&#13;
+}&#13;
+&#13;
+.cfa-service-card::before {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+&#13;
+  left: 0;&#13;
+  top: 0;&#13;
+&#13;
+  width: 100%;&#13;
+  height: 4px;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      90deg,&#13;
+      #2563EB,&#13;
+      #60A5FA&#13;
+    );&#13;
+&#13;
+  transform:&#13;
+    scaleX(0);&#13;
+&#13;
+  transform-origin: left;&#13;
+&#13;
+  transition:&#13;
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);&#13;
+}&#13;
+&#13;
+.cfa-service-card::after {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+&#13;
+  right: -50px;&#13;
+  bottom: -50px;&#13;
+&#13;
+  width: 140px;&#13;
+  height: 140px;&#13;
+&#13;
+  background:&#13;
+    radial-gradient(&#13;
+      circle,&#13;
+      rgba(96, 165, 250, 0.12),&#13;
+      transparent 68%&#13;
+    );&#13;
+&#13;
+  border-radius: 50%;&#13;
+&#13;
+  transition:&#13;
+    transform 0.45s ease;&#13;
+}&#13;
+&#13;
+.cfa-service-card:hover {&#13;
+  transform:&#13;
+    translateY(-9px);&#13;
+&#13;
+  border-color:&#13;
+    #BFDBFE;&#13;
+&#13;
+  box-shadow:&#13;
+    0 22px 50px rgba(15, 23, 42, 0.12);&#13;
+}&#13;
+&#13;
+.cfa-service-card:hover::before {&#13;
+  transform:&#13;
+    scaleX(1);&#13;
+}&#13;
+&#13;
+.cfa-service-card:hover::after {&#13;
+  transform:&#13;
+    scale(1.4);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   21. SERVICE ICON&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-service-icon {&#13;
+  position: relative;&#13;
+&#13;
+  width: 54px;&#13;
+  height: 54px;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+&#13;
+  margin-bottom: 26px;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      145deg,&#13;
+      #DBEAFE,&#13;
+      #BFDBFE&#13;
+    );&#13;
+&#13;
+  color: #1D4ED8;&#13;
+&#13;
+  border-radius: 14px;&#13;
+&#13;
+  box-shadow:&#13;
+    0 10px 24px rgba(37, 99, 235, 0.12);&#13;
+&#13;
+  font-size: 12px;&#13;
+&#13;
+  font-weight: 800;&#13;
+&#13;
+  transition:&#13;
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);&#13;
+}&#13;
+&#13;
+.cfa-service-card:hover .cfa-service-icon {&#13;
+  transform:&#13;
+    translateY(-3px)&#13;
+    rotate(-4deg);&#13;
+}&#13;
+&#13;
+.cfa-service-card h4 {&#13;
+  margin: 0 0 11px;&#13;
+&#13;
+  color: #0F172A;&#13;
+&#13;
+  font-size: 18px;&#13;
+&#13;
+  line-height: 1.3;&#13;
+&#13;
+  font-weight: 800;&#13;
+&#13;
+  letter-spacing: -0.2px;&#13;
+}&#13;
+&#13;
+.cfa-service-card p {&#13;
+  position: relative;&#13;
+  z-index: 1;&#13;
+&#13;
+  margin: 0;&#13;
+&#13;
+  color: #64748B;&#13;
+&#13;
+  font-size: 14px;&#13;
+&#13;
+  line-height: 1.75;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   22. ABOUT&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-about {&#13;
+  padding: 105px 0;&#13;
+&#13;
+  overflow: hidden;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      140deg,&#13;
+      #1E293B 0%,&#13;
+      #0F172A 100%&#13;
+    );&#13;
+}&#13;
+&#13;
+.cfa-about::before {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+&#13;
+  right: -170px;&#13;
+  top: -190px;&#13;
+&#13;
+  width: 460px;&#13;
+  height: 460px;&#13;
+&#13;
+  border-radius: 50%;&#13;
+&#13;
+  border:&#13;
+    1px solid rgba(96, 165, 250, 0.20);&#13;
+&#13;
+  box-shadow:&#13;
+    0 0 0 50px rgba(96, 165, 250, 0.05),&#13;
+    0 0 0 100px rgba(96, 165, 250, 0.03);&#13;
+&#13;
+  pointer-events: none;&#13;
+}&#13;
+&#13;
+.cfa-about-inner {&#13;
+  position: relative;&#13;
+  z-index: 2;&#13;
+&#13;
+  width: 100%;&#13;
+  max-width: 1180px;&#13;
+&#13;
+  margin: 0 auto;&#13;
+&#13;
+  padding: 0 28px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   23. ABOUT LABEL&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-about .cfa-section-label {&#13;
+  color: #93C5FD;&#13;
+&#13;
+  background:&#13;
+    rgba(96, 165, 250, 0.10);&#13;
+&#13;
+  border-color:&#13;
+    rgba(96, 165, 250, 0.20);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   24. ABOUT HEADING&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-about h2 {&#13;
+  max-width: 820px;&#13;
+&#13;
+  margin: 0 0 18px;&#13;
+&#13;
+  color: #FFFFFF;&#13;
+&#13;
+  font-size:&#13;
+    clamp(34px, 4.2vw, 52px);&#13;
+}&#13;
+&#13;
+.cfa-about-inner &gt; p {&#13;
+  max-width: 740px;&#13;
+&#13;
+  margin: 0;&#13;
+&#13;
+  color:&#13;
+    #CBD5E1;&#13;
+&#13;
+  font-size: 17px;&#13;
+&#13;
+  line-height: 1.8;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   25. TEAM GRID&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-team-grid {&#13;
+  display: grid;&#13;
+&#13;
+  grid-template-columns:&#13;
+    repeat(4, minmax(0, 1fr));&#13;
+&#13;
+  gap: 22px;&#13;
+&#13;
+  margin-top: 52px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   26. TEAM CARD&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-team-card {&#13;
+  position: relative;&#13;
+&#13;
+  min-height: 210px;&#13;
+&#13;
+  padding: 26px 22px;&#13;
+&#13;
+  background:&#13;
+    rgba(255, 255, 255, 0.06);&#13;
+&#13;
+  border:&#13;
+    1px solid rgba(255, 255, 255, 0.10);&#13;
+&#13;
+  border-radius: 16px;&#13;
+&#13;
+  box-shadow:&#13;
+    0 14px 36px rgba(0, 0, 0, 0.18);&#13;
+&#13;
+  backdrop-filter: blur(12px);&#13;
+  -webkit-backdrop-filter: blur(12px);&#13;
+&#13;
+  transition:&#13;
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),&#13;
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),&#13;
+    background 0.35s cubic-bezier(0.22, 1, 0.36, 1);&#13;
+}&#13;
+&#13;
+.cfa-team-card:hover {&#13;
+  transform:&#13;
+    translateY(-8px);&#13;
+&#13;
+  background:&#13;
+    rgba(255, 255, 255, 0.10);&#13;
+&#13;
+  box-shadow:&#13;
+    0 26px 54px rgba(0, 0, 0, 0.28);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   27. TEAM AVATAR&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-team-avatar {&#13;
+  width: 56px;&#13;
+  height: 56px;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+&#13;
+  margin-bottom: 20px;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      145deg,&#13;
+      #2563EB,&#13;
+      #1D4ED8&#13;
+    );&#13;
+&#13;
+  color: #FFFFFF;&#13;
+&#13;
+  border-radius: 50%;&#13;
+&#13;
+  box-shadow:&#13;
+    0 10px 22px rgba(37, 99, 235, 0.25);&#13;
+&#13;
+  font-size: 13px;&#13;
+&#13;
+  font-weight: 800;&#13;
+&#13;
+  transition:&#13;
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);&#13;
+}&#13;
+&#13;
+.cfa-team-card:hover .cfa-team-avatar {&#13;
+  transform:&#13;
+    translateY(-3px)&#13;
+    rotate(4deg);&#13;
+}&#13;
+&#13;
+.cfa-team-card b {&#13;
+  display: block;&#13;
+&#13;
+  margin-bottom: 7px;&#13;
+&#13;
+  color: #FFFFFF;&#13;
+&#13;
+  font-size: 16px;&#13;
+&#13;
+  font-weight: 800;&#13;
+}&#13;
+&#13;
+.cfa-team-card span {&#13;
+  display: block;&#13;
+&#13;
+  color: #CBD5E1;&#13;
+&#13;
+  font-size: 13px;&#13;
+&#13;
+  line-height: 1.65;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   28. COLLEGE&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-college {&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  flex-wrap: wrap;&#13;
+&#13;
+  gap: 8px;&#13;
+&#13;
+  margin-top: 36px !important;&#13;
+&#13;
+  color: #FFFFFF !important;&#13;
+&#13;
+  font-size: 14px !important;&#13;
+&#13;
+  font-weight: 700;&#13;
+}&#13;
+&#13;
+.cfa-college span {&#13;
+  color: #93C5FD;&#13;
+&#13;
+  font-size: 16px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   29. CONTACT&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-contact {&#13;
+  padding: 105px 0;&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      180deg,&#13;
+      #FFFFFF,&#13;
+      #F8FAFC&#13;
+    );&#13;
+}&#13;
+&#13;
+.cfa-contact-inner {&#13;
+  width: 100%;&#13;
+  max-width: 1180px;&#13;
+&#13;
+  margin: 0 auto;&#13;
+&#13;
+  padding: 0 28px;&#13;
+}&#13;
+&#13;
+.cfa-contact h2 {&#13;
+  margin: 0 0 16px;&#13;
+&#13;
+  font-size:&#13;
+    clamp(34px, 4vw, 50px);&#13;
+}&#13;
+&#13;
+.cfa-contact-intro {&#13;
+  max-width: 660px;&#13;
+&#13;
+  margin: 0;&#13;
+&#13;
+  color: #64748B;&#13;
+&#13;
+  font-size: 17px;&#13;
+&#13;
+  line-height: 1.8;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   30. CONTACT GRID&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-contact-grid {&#13;
+  display: grid;&#13;
+&#13;
+  grid-template-columns:&#13;
+    repeat(3, minmax(0, 1fr));&#13;
+&#13;
+  gap: 22px;&#13;
+&#13;
+  margin-top: 50px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   31. CONTACT CARD&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-contact-card {&#13;
+  position: relative;&#13;
+&#13;
+  min-height: 170px;&#13;
+&#13;
+  padding: 28px 26px;&#13;
+&#13;
+  background: #FFFFFF;&#13;
+&#13;
+  border:&#13;
+    1px solid #E2E8F0;&#13;
+&#13;
+  border-left:&#13;
+    5px solid #2563EB;&#13;
+&#13;
+  border-radius: 16px;&#13;
+&#13;
+  box-shadow:&#13;
+    0 6px 22px rgba(15, 23, 42, 0.06);&#13;
+&#13;
+  transition:&#13;
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),&#13;
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),&#13;
+    border-left-color 0.35s cubic-bezier(0.22, 1, 0.36, 1);&#13;
+}&#13;
+&#13;
+.cfa-contact-card:hover {&#13;
+  transform:&#13;
+    translateY(-7px);&#13;
+&#13;
+  border-left-color:&#13;
+    #1D4ED8;&#13;
+&#13;
+  box-shadow:&#13;
+    0 22px 50px rgba(15, 23, 42, 0.12);&#13;
+}&#13;
+&#13;
+.cfa-contact-card b {&#13;
+  display: block;&#13;
+&#13;
+  margin-bottom: 8px;&#13;
+&#13;
+  color: #0F172A;&#13;
+&#13;
+  font-size: 16px;&#13;
+&#13;
+  font-weight: 800;&#13;
+}&#13;
+&#13;
+.cfa-contact-card span {&#13;
+  display: block;&#13;
+&#13;
+  color: #64748B;&#13;
+&#13;
+  font-size: 14px;&#13;
+&#13;
+  line-height: 1.75;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   32. ANIMATIONS&#13;
+   ========================================================= */&#13;
+&#13;
+@keyframes cfaFloat {&#13;
+  from {&#13;
+    transform:&#13;
+      translateY(-50%)&#13;
+      rotate(4deg);&#13;
+  }&#13;
+&#13;
+  to {&#13;
+    transform:&#13;
+      translateY(calc(-50% - 14px))&#13;
+      rotate(2deg);&#13;
+  }&#13;
+}&#13;
+&#13;
+@keyframes cfaFloatTwo {&#13;
+  from {&#13;
+    transform:&#13;
+      translateY(40%)&#13;
+      rotate(-6deg);&#13;
+  }&#13;
+&#13;
+  to {&#13;
+    transform:&#13;
+      translateY(28%)&#13;
+      rotate(-3deg);&#13;
+  }&#13;
+}&#13;
+&#13;
+@keyframes cfaPulse {&#13;
+  0%,&#13;
+  100% {&#13;
+    box-shadow:&#13;
+      0 0 0 4px rgba(96, 165, 250, 0.16);&#13;
+  }&#13;
+&#13;
+  50% {&#13;
+    box-shadow:&#13;
+      0 0 0 9px rgba(96, 165, 250, 0.04);&#13;
+  }&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   33. LARGE DESKTOP&#13;
+   ========================================================= */&#13;
+&#13;
+@media (min-width: 1200px) {&#13;
+&#13;
+  .cfa-hero {&#13;
+    min-height: 740px;&#13;
+&#13;
+    padding-top: 125px;&#13;
+    padding-bottom: 130px;&#13;
+  }&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   34. DESKTOP / TABLET&#13;
+   ========================================================= */&#13;
+&#13;
+@media (min-width: 992px) and (max-width: 1199px) {&#13;
+&#13;
+  .cfa-hero-inner,&#13;
+  .cfa-welcome-inner,&#13;
+  .cfa-services-header,&#13;
+  .cfa-services-grid,&#13;
+  .cfa-about-inner,&#13;
+  .cfa-contact-inner {&#13;
+    max-width: 1080px;&#13;
+  }&#13;
+&#13;
+  .cfa-services-grid {&#13;
+    grid-template-columns:&#13;
+      repeat(3, minmax(0, 1fr));&#13;
+  }&#13;
+&#13;
+  .cfa-team-grid {&#13;
+    grid-template-columns:&#13;
+      repeat(2, minmax(0, 1fr));&#13;
+  }&#13;
+&#13;
+  .cfa-hero::after {&#13;
+    right: 2%;&#13;
+&#13;
+    opacity: 0.55;&#13;
+  }&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   35. TABLET&#13;
+   ========================================================= */&#13;
+&#13;
+@media (min-width: 768px) and (max-width: 991px) {&#13;
+&#13;
+  .cfa-hero-inner,&#13;
+  .cfa-welcome-inner,&#13;
+  .cfa-services-header,&#13;
+  .cfa-services-grid,&#13;
+  .cfa-about-inner,&#13;
+  .cfa-contact-inner {&#13;
+    padding-left: 24px;&#13;
+    padding-right: 24px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero {&#13;
+    min-height: 640px;&#13;
+&#13;
+    padding: 90px 0 100px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero h1 {&#13;
+    max-width: 680px;&#13;
+&#13;
+    font-size: 60px;&#13;
+&#13;
+    letter-spacing: -2.6px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero::after,&#13;
+  .cfa-hero-inner::after {&#13;
+    opacity: 0.25;&#13;
+  }&#13;
+&#13;
+  .cfa-welcome,&#13;
+  .cfa-services,&#13;
+  .cfa-about,&#13;
+  .cfa-contact {&#13;
+    padding: 85px 0;&#13;
+  }&#13;
+&#13;
+  .cfa-welcome-points,&#13;
+  .cfa-services-grid,&#13;
+  .cfa-team-grid,&#13;
+  .cfa-contact-grid {&#13;
+    grid-template-columns:&#13;
+      repeat(2, minmax(0, 1fr));&#13;
+  }&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   36. MOBILE TABLET&#13;
+   ========================================================= */&#13;
+&#13;
+@media (min-width: 576px) and (max-width: 767px) {&#13;
+&#13;
+  .cfa-hero-inner,&#13;
+  .cfa-welcome-inner,&#13;
+  .cfa-services-header,&#13;
+  .cfa-services-grid,&#13;
+  .cfa-about-inner,&#13;
+  .cfa-contact-inner {&#13;
+    padding-left: 22px;&#13;
+    padding-right: 22px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero {&#13;
+    min-height: auto;&#13;
+&#13;
+    padding: 80px 0 90px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero h1 {&#13;
+    font-size: 52px;&#13;
+&#13;
+    letter-spacing: -2.3px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero-inner &gt; p {&#13;
+    font-size: 16px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero::after,&#13;
+  .cfa-hero-inner::after {&#13;
+    display: none;&#13;
+  }&#13;
+&#13;
+  .cfa-welcome,&#13;
+  .cfa-services,&#13;
+  .cfa-about,&#13;
+  .cfa-contact {&#13;
+    padding: 75px 0;&#13;
+  }&#13;
+&#13;
+  .cfa-welcome-points,&#13;
+  .cfa-services-grid,&#13;
+  .cfa-team-grid,&#13;
+  .cfa-contact-grid {&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   37. MOBILE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 575px) {&#13;
+&#13;
+  .cfa-hero-inner,&#13;
+  .cfa-welcome-inner,&#13;
+  .cfa-services-header,&#13;
+  .cfa-services-grid,&#13;
+  .cfa-about-inner,&#13;
+  .cfa-contact-inner {&#13;
+    padding-left: 18px;&#13;
+    padding-right: 18px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero {&#13;
+    min-height: auto;&#13;
+&#13;
+    padding: 72px 0 80px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero::after,&#13;
+  .cfa-hero-inner::after {&#13;
+    display: none;&#13;
+  }&#13;
+&#13;
+  .cfa-hero-badge {&#13;
+    margin-bottom: 20px;&#13;
+&#13;
+    font-size: 12px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero h1 {&#13;
+    max-width: 100%;&#13;
+&#13;
+    margin-bottom: 28px;&#13;
+&#13;
+    font-size: 40px;&#13;
+&#13;
+    letter-spacing: -1.8px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero h1::after {&#13;
+    width: 66px;&#13;
+&#13;
+    height: 4px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero-inner &gt; p {&#13;
+    font-size: 15px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero-btn {&#13;
+    width: 100%;&#13;
+  }&#13;
+&#13;
+  .cfa-hero-note {&#13;
+    font-size: 12px;&#13;
+&#13;
+    flex-wrap: wrap;&#13;
+  }&#13;
+&#13;
+  .cfa-welcome,&#13;
+  .cfa-services,&#13;
+  .cfa-about,&#13;
+  .cfa-contact {&#13;
+    padding: 70px 0;&#13;
+  }&#13;
+&#13;
+  .cfa-welcome h2,&#13;
+  .cfa-services h2,&#13;
+  .cfa-about h2,&#13;
+  .cfa-contact h2 {&#13;
+    font-size: 32px;&#13;
+&#13;
+    letter-spacing: -1.3px;&#13;
+  }&#13;
+&#13;
+  .cfa-welcome-points,&#13;
+  .cfa-services-grid,&#13;
+  .cfa-team-grid,&#13;
+  .cfa-contact-grid {&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+&#13;
+  .cfa-welcome-point,&#13;
+  .cfa-service-card,&#13;
+  .cfa-team-card {&#13;
+    min-height: auto;&#13;
+&#13;
+    padding: 24px;&#13;
+  }&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   38. SMALL MOBILE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 399px) {&#13;
+&#13;
+  .cfa-hero-inner,&#13;
+  .cfa-welcome-inner,&#13;
+  .cfa-services-header,&#13;
+  .cfa-services-grid,&#13;
+  .cfa-about-inner,&#13;
+  .cfa-contact-inner {&#13;
+    padding-left: 15px;&#13;
+    padding-right: 15px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero {&#13;
+    padding: 62px 0 70px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero h1 {&#13;
+    font-size: 35px;&#13;
+&#13;
+    letter-spacing: -1.5px;&#13;
+  }&#13;
+&#13;
+  .cfa-welcome h2,&#13;
+  .cfa-services h2,&#13;
+  .cfa-about h2,&#13;
+  .cfa-contact h2 {&#13;
+    font-size: 28px;&#13;
+  }&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   39. REDUCED MOTION&#13;
+   ========================================================= */&#13;
+&#13;
+@media (prefers-reduced-motion: reduce) {&#13;
+&#13;
+  .cfa-hero *,&#13;
+  .cfa-welcome *,&#13;
+  .cfa-services *,&#13;
+  .cfa-about *,&#13;
+  .cfa-contact *,&#13;
+  .cfa-hero::after,&#13;
+  .cfa-hero-inner::after {&#13;
+    animation: none !important;&#13;
+&#13;
+    transition: none !important;&#13;
+  }&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>food_services_landing_four_sections</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>food_services_landing_four_sections</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    // Native Service Portal login URL
+    data.loginUrl = '/sp?id=food_service_login_page';
+
+    // Current year for footer
+    data.year = new GlideDateTime().getYearLocalTime();
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 13:31:26</sys_created_on>
+        <sys_id>c361873580a743107f4447e44ab1d5cc</sys_id>
+        <sys_mod_count>24</sys_mod_count>
+        <sys_name>food_services_landing_four_sections</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_c361873580a743107f4447e44ab1d5cc</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-05 06:59:47</sys_updated_on>
+        <template><![CDATA[<!-- =========================================================
+     MEALCARE - CONTENT WIDGET
+     ========================================================= -->
+
+<!-- =========================================================
+     HERO
+     ========================================================= -->
+
+<section id="home" class="cfa-hero">
+
+  <div class="cfa-hero-glow cfa-hero-glow-one"></div>
+
+  <div class="cfa-hero-glow cfa-hero-glow-two"></div>
+
+  <div class="cfa-hero-inner">
+
+    <div class="cfa-hero-badge">
+      Smart Campus Food Services
+    </div>
+
+    <h1>
+      Better Meals.<br>
+      Better Care.<br>
+      Better Campus.
+    </h1>
+
+    <p>
+      MealCare brings campus food support into one simple place.
+      Report a food concern, request meal support, and stay connected
+      with the team taking care of your dining experience.
+    </p>
+
+    <a href="{{c.data.loginUrl}}" class="cfa-hero-btn">
+      Get Started
+      <span>→</span>
+    </a>
+
+    <div class="cfa-hero-note">
+      <span>✓</span>
+      Simple support &nbsp;•&nbsp;
+      Faster response &nbsp;•&nbsp;
+      Better food experiences
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     WELCOME
+     ========================================================= -->
+
+<section class="cfa-welcome">
+
+  <div class="cfa-welcome-inner">
+
+    <span class="cfa-section-label">
+      WHY MEALCARE
+    </span>
+
+    <h2>
+      Good food should come with good care.
+    </h2>
+
+    <p>
+      Whether it's a food quality concern, a dietary need, or feedback
+      about today's meal, MealCare gives students one clear place to
+      ask for support, follow their requests, and share their experience.
+    </p>
+
+    <div class="cfa-welcome-points">
+
+      <div class="cfa-welcome-point">
+
+        <span class="cfa-wp-icon">
+          01
+        </span>
+
+        <div>
+
+          <b>
+            Quick Support
+          </b>
+
+          <span>
+            Your request reaches the right team automatically.
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="cfa-welcome-point">
+
+        <span class="cfa-wp-icon">
+          02
+        </span>
+
+        <div>
+
+          <b>
+            Clear Progress
+          </b>
+
+          <span>
+            Follow your request from submission to resolution.
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="cfa-welcome-point">
+
+        <span class="cfa-wp-icon">
+          03
+        </span>
+
+        <div>
+
+          <b>
+            Your Voice Matters
+          </b>
+
+          <span>
+            Share feedback and help make campus dining better.
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     SERVICES
+     ========================================================= -->
+
+<section id="services" class="cfa-services">
+
+  <div class="cfa-services-header">
+
+    <span class="cfa-section-label">
+      FOOD SUPPORT
+    </span>
+
+    <h2>
+      How can we help with your meal?
+    </h2>
+
+    <p>
+      From everyday meal requests to food safety concerns,
+      choose the support you need.
+    </p>
+
+  </div>
+
+  <div class="cfa-services-grid">
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        01
+      </div>
+
+      <h4>
+        Food Quality Concern
+      </h4>
+
+      <p>
+        Report undercooked, stale, spoiled, or poor-quality food.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        02
+      </div>
+
+      <h4>
+        Meal Not Available
+      </h4>
+
+      <p>
+        Let the food team know when a listed meal is unavailable.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        03
+      </div>
+
+      <h4>
+        Food Hygiene
+      </h4>
+
+      <p>
+        Report cleanliness or hygiene concerns around food service.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        04
+      </div>
+
+      <h4>
+        Special Diet Support
+      </h4>
+
+      <p>
+        Request support for vegetarian, vegan, halal, or other dietary needs.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        05
+      </div>
+
+      <h4>
+        Allergy Management
+      </h4>
+
+      <p>
+        Request allergen-aware meal handling and support.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        06
+      </div>
+
+      <h4>
+        Menu Feedback
+      </h4>
+
+      <p>
+        Share your thoughts about taste, variety, and menu options.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        07
+      </div>
+
+      <h4>
+        Reserve a Meal
+      </h4>
+
+      <p>
+        Request a meal reservation or pre-book your meal in advance.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        08
+      </div>
+
+      <h4>
+        Missed Meal Support
+      </h4>
+
+      <p>
+        Request assistance when classes or exams cause you to miss a meal.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        09
+      </div>
+
+      <h4>
+        Food Waste Reporting
+      </h4>
+
+      <p>
+        Help identify unnecessary food waste and support better planning.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        10
+      </div>
+
+      <h4>
+        Emergency Food Support
+      </h4>
+
+      <p>
+        Request food assistance during emergencies or unexpected late arrivals.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        11
+      </div>
+
+      <h4>
+        Mess Billing Support
+      </h4>
+
+      <p>
+        Raise concerns about meal charges or hostel mess fees.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        12
+      </div>
+
+      <h4>
+        Smart Menu Suggestions
+      </h4>
+
+      <p>
+        Explore personalized meal suggestions based on your needs.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     ABOUT
+     ========================================================= -->
+
+<section id="about" class="cfa-about">
+
+  <div class="cfa-about-inner">
+
+    <span class="cfa-section-label">
+      ABOUT MEALCARE
+    </span>
+
+    <h2>
+      Built to make campus food support simpler.
+    </h2>
+
+    <p>
+      Team Tech Titans built MealCare to give students one simple
+      place to report food-related concerns and request support,
+      while helping hostel staff use an AI-assisted system to
+      classify, prioritize, and resolve requests more efficiently.
+    </p>
+
+    <div class="cfa-team-grid">
+
+      <div class="cfa-team-card">
+
+        <div class="cfa-team-avatar">
+          VP
+        </div>
+
+        <b>
+          V. Pavan Kumar
+        </b>
+
+        <span>
+          Team Lead & App Architect
+        </span>
+
+      </div>
+
+
+      <div class="cfa-team-card">
+
+        <div class="cfa-team-avatar">
+          SS
+        </div>
+
+        <b>
+          S. Sameera
+        </b>
+
+        <span>
+          Flow & Automation Developer
+        </span>
+
+      </div>
+
+
+      <div class="cfa-team-card">
+
+        <div class="cfa-team-avatar">
+          YM
+        </div>
+
+        <b>
+          Y. Madhusudhan Reddy
+        </b>
+
+        <span>
+          AI & Virtual Agent Developer
+        </span>
+
+      </div>
+
+
+      <div class="cfa-team-card">
+
+        <div class="cfa-team-avatar">
+          BA
+        </div>
+
+        <b>
+          B. Anjali
+        </b>
+
+        <span>
+          QA & Analytics
+        </span>
+
+      </div>
+
+    </div>
+
+    <p class="cfa-college">
+      K.S.R.M. College of Engineering
+      <span>•</span>
+      LTM HackNow India
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     CONTACT
+     ========================================================= -->
+
+<section id="contact" class="cfa-contact">
+
+  <div class="cfa-contact-inner">
+
+    <span class="cfa-section-label">
+      WE'RE HERE TO HELP
+    </span>
+
+    <h2>
+      Need a little help?
+    </h2>
+
+    <p class="cfa-contact-intro">
+      Reach out to the campus food service team whenever you need support.
+    </p>
+
+    <div class="cfa-contact-grid">
+
+      <div class="cfa-contact-card">
+
+        <div class="cfa-contact-icon">
+          Email
+        </div>
+
+        <b>
+          Email Support
+        </b>
+
+        <span>
+          foodservices@ksrmce.ac.in
+        </span>
+
+      </div>
+
+
+      <div class="cfa-contact-card">
+
+        <div class="cfa-contact-icon">
+          Call
+        </div>
+
+        <b>
+          Hostel Office
+        </b>
+
+        <span>
+          +91 98765 43210
+        </span>
+
+      </div>
+
+
+      <div class="cfa-contact-card">
+
+        <div class="cfa-contact-icon">
+          Visit
+        </div>
+
+        <b>
+          Campus Location
+        </b>
+
+        <span>
+          K.S.R.M. College of Engineering,
+          Kadapa, Andhra Pradesh
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>]]></template>
+    </sp_widget>
+</record_update>

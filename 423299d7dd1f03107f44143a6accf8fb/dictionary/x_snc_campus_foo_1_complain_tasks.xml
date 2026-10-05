@@ -9,7 +9,7 @@
         <element choice="1" choice_field="meal_type" choice_table="x_snc_campus_foo_1_food_complaint" label="Meal Type" mandatory="true" max_length="40" name="meal_type" type="choice">
             <choice/>
         </element>
-        <element choice="1" label="Resolution Status" mandatory="true" max_length="40" name="resolution_status" type="choice">
+        <element choice="1" label="Resolution Status" max_length="40" name="resolution_status" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Resolved" value="Solved"/>
                 <element inactive_on_update="false" label="Not Resolved" value="Not Solved"/>

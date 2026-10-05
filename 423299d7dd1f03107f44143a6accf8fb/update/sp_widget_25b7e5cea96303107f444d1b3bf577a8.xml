@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($location) {
+    var c = this;
+
+    c.toggleView = function(row) {
+        row.expanded = !row.expanded;
+    };
+
+    c.goToFeedback = function(row) {
+        $location.path('/student_feedback').search('ticket', row.sysId);
+    };
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================================&#13;
+   MEALCARE — STUDENT DASHBOARD SIDEBAR&#13;
+   Professional Dark Frame Theme&#13;
+   Styling only — HTML / JS unchanged&#13;
+   ========================================================= */&#13;
+&#13;
+/* Main Student Sidebar */&#13;
+&#13;
+.student-sidebar {&#13;
+  background: #1E293B !important;&#13;
+  color: #F8FAFC;&#13;
+  border-right: 1px solid #334155;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   STUDENT ROLE ICON&#13;
+   ========================================================= */&#13;
+&#13;
+.student-sidebar .sidebar-icon,&#13;
+.student-sidebar .role-icon,&#13;
+.student-sidebar .student-icon {&#13;
+  width: 42px;&#13;
+  height: 42px;&#13;
+&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+&#13;
+  background: #2563EB;&#13;
+  color: #FFFFFF;&#13;
+&#13;
+  border-radius: 50%;&#13;
+&#13;
+  font-size: 18px;&#13;
+  font-weight: 700;&#13;
+&#13;
+  border: 2px solid #60A5FA;&#13;
+&#13;
+  box-shadow:&#13;
+    0 6px 16px rgba(37, 99, 235, 0.30);&#13;
+&#13;
+  flex-shrink: 0;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SIDEBAR ROLE / PORTAL TEXT&#13;
+   ========================================================= */&#13;
+&#13;
+.student-sidebar .sidebar-title,&#13;
+.student-sidebar .role-name,&#13;
+.student-sidebar .portal-title {&#13;
+  color: #FFFFFF;&#13;
+}&#13;
+&#13;
+.student-sidebar .sidebar-subtitle,&#13;
+.student-sidebar .role-label,&#13;
+.student-sidebar .portal-subtitle {&#13;
+  color: #94A3B8;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SIDEBAR NAVIGATION&#13;
+   ========================================================= */&#13;
+&#13;
+.student-sidebar a,&#13;
+.student-sidebar button {&#13;
+  color: #CBD5E1;&#13;
+}&#13;
+&#13;
+.student-sidebar a:hover,&#13;
+.student-sidebar button:hover {&#13;
+  background: #334155;&#13;
+  color: #FFFFFF;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   ACTIVE SIDEBAR ITEM&#13;
+   ========================================================= */&#13;
+&#13;
+.student-sidebar .active,&#13;
+.student-sidebar .active-section,&#13;
+.student-sidebar a.active {&#13;
+  background: #2563EB;&#13;
+  color: #FFFFFF;&#13;
+&#13;
+  border-radius: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SIDEBAR ICONS&#13;
+   ========================================================= */&#13;
+&#13;
+.student-sidebar .nav-icon,&#13;
+.student-sidebar .menu-icon {&#13;
+  color: #94A3B8;&#13;
+}&#13;
+&#13;
+.student-sidebar .active .nav-icon,&#13;
+.student-sidebar .active .menu-icon {&#13;
+  color: #FFFFFF;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   MOBILE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 767px) {&#13;
+&#13;
+  .student-sidebar .sidebar-icon,&#13;
+  .student-sidebar .role-icon,&#13;
+  .student-sidebar .student-icon {&#13;
+    width: 38px;&#13;
+    height: 38px;&#13;
+    font-size: 16px;&#13;
+  }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>food_service_student_dashboard_welcome</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Food Service Student Dashboard Welcome</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    var user = gs.getUser();
+    data.userName = user.getDisplayName();
+
+    // Priority choice value → CSS class (matches real choice values: 1=Critical, 2=High, 3=Medium, 4=Low)
+    var priorityClassMap = {'1':'critical', '2':'high', '3':'medium', '4':'low'};
+
+    var fc = new GlideRecord('x_snc_campus_foo_1_food_complaint');
+    fc.addQuery('student.user', gs.getUserID());
+    fc.orderByDesc('opened_at');
+    fc.query();
+
+    data.requests = [];
+    var total = 0, active = 0, resolved = 0, feedbackEligible = 0;
+
+    while (fc.next()) {
+        total++;
+
+        var state = fc.state.toString();
+        if (state == 'resolved') {
+            resolved++;
+        } else {
+            active++;
+        }
+
+        var isFbEligible = (fc.feedback_eligible == true);
+        if (isFbEligible) {
+            feedbackEligible++;
+        }
+
+        data.requests.push({
+            sysId: fc.getUniqueValue(),
+            number: fc.number.toString(),
+            useCase: fc.use_case.getDisplayValue(),
+            messHall: fc.mess_hall.getDisplayValue(),
+            mealType: fc.meal_type.getDisplayValue(),
+            priority: fc.priority.getDisplayValue() || 'Not set',
+            priorityClass: priorityClassMap[fc.priority.toString()] || 'medium',
+            state: fc.state.getDisplayValue(),
+            stateClass: state,
+            openedAt: fc.opened_at.getDisplayValue(),
+            description: fc.description.toString(),
+            resolutionNotes: fc.resolution_notes ? fc.resolution_notes.toString() : '',
+            feedbackEligible: isFbEligible,
+            expanded: false
+        });
+    }
+
+    data.kpi = {
+        total: total,
+        active: active,
+        resolved: resolved,
+        feedbackEligible: feedbackEligible
+    };
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 01:34:09</sys_created_on>
+        <sys_id>25b7e5cea96303107f444d1b3bf577a8</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Food Service Student Dashboard Welcome</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_25b7e5cea96303107f444d1b3bf577a8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-05 07:13:46</sys_updated_on>
+        <template><![CDATA[<!-- =========================================================
+     WIDGET: Food Services Student Dashboard (Welcome Page)
+     Contains: Hero banner, 4 KPI cards, My Requests table
+     with row-level quick actions (View / Give Feedback).
+     ========================================================= -->
+<div class="cfa-dash">
+
+  <!-- Hero -->
+  <div class="cfa-hero">
+    <h3>Welcome, {{c.data.userName}}</h3>
+    <p>Track your requests and give feedback once resolved.</p>
+  </div>
+
+  <!-- KPI cards -->
+  <div class="cfa-kpi-grid">
+    <div class="cfa-kpi">
+      <span class="cfa-kpi-ic">]]>🎫<![CDATA[</span>
+      <div>
+        <div class="cfa-kpi-num" style="color:#2563eb">{{c.data.kpi.total}}</div>
+        <div class="cfa-kpi-lbl">Requests raised</div>
+      </div>
+    </div>
+    <div class="cfa-kpi">
+      <span class="cfa-kpi-ic">⏳</span>
+      <div>
+        <div class="cfa-kpi-num" style="color:#d97706">{{c.data.kpi.active}}</div>
+        <div class="cfa-kpi-lbl">Active</div>
+      </div>
+    </div>
+    <div class="cfa-kpi">
+      <span class="cfa-kpi-ic">✅</span>
+      <div>
+        <div class="cfa-kpi-num" style="color:#16a34a">{{c.data.kpi.resolved}}</div>
+        <div class="cfa-kpi-lbl">Resolved</div>
+      </div>
+    </div>
+    <div class="cfa-kpi">
+      <span class="cfa-kpi-ic">⭐</span>
+      <div>
+        <div class="cfa-kpi-num" style="color:#0d9488">{{c.data.kpi.feedbackEligible}}</div>
+        <div class="cfa-kpi-lbl">Awaiting feedback</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- My Requests -->
+  <div class="cfa-card">
+    <h4>My requests</h4>
+
+    <div ng-if="!c.data.requests.length" class="cfa-empty">
+      No requests yet. Use "Raise a Request" to report your first issue.
+    </div>
+
+    <table class="cfa-tbl" ng-if="c.data.requests.length">
+      <tr>
+        <th>Ticket</th><th>Use case</th><th>Mess hall</th><th>Priority</th><th>State</th><th>Action</th>
+      </tr>
+
+      <tr ng-repeat-start="r in c.data.requests">
+        <td><b>{{r.number}}</b><br><span class="cfa-muted">{{r.openedAt}}</span></td>
+        <td>{{r.useCase}}</td>
+        <td>{{r.messHall}}</td>
+        <td><span class="cfa-badge" ng-class="'cfa-b-' + r.priorityClass">{{r.priority}}</span></td>
+        <td><span class="cfa-badge" ng-class="'cfa-s-' + r.stateClass">{{r.state}}</span></td>
+        <td class="cfa-actions">
+          <button class="cfa-btn-sm" ng-click="c.toggleView(r)">{{r.expanded ? 'Hide' : 'View'}}</button>
+          <button class="cfa-btn-sm cfa-btn-fb" ng-if="r.feedbackEligible" ng-click="c.goToFeedback(r)">Give feedback</button>
+        </td>
+      </tr>
+      <tr ng-repeat-end ng-if="r.expanded" class="cfa-detail-row">
+        <td colspan="6">
+          <div class="cfa-detail-box">
+            <div><b>Description:</b> {{r.description}}</div>
+            <div><b>Meal type:</b> {{r.mealType}}</div>
+            <div ng-if="r.resolutionNotes"><b>Resolution notes:</b> {{r.resolutionNotes}}</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

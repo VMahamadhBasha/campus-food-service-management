@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sn_aia_version">
+    <sn_aia_version action="INSERT_OR_UPDATE">
+        <condition/>
+        <instructions>1. Receive a request to generate the latest Food Management Intelligence report.
+
+2. Use the Food Management Intelligence Agent to analyze the current campus food-service application data.
+
+3. The agent must retrieve the latest available data using the Food Complaint Analytics, Food Base Problem Analytics, and Food Complaint Task Analytics tools.
+
+4. Analyze the retrieved data across complaints, food base problems, operational tasks, mess halls, meal types, use cases, problem types, priorities, states, assignment groups, approval status, affected students, and AI analysis results.
+
+5. Identify significant patterns, recurring issues, student impact, operational workload, and management insights only when supported by the retrieved data.
+
+6. Generate evidence-based recommended management actions using only the available application data.
+
+7. Return the completed management analysis as a structured JSON object that can be consumed directly by the requesting application.
+
+8. The JSON response must contain the report summary, analytical breakdowns, student impact, patterns, management insights, and recommended actions.
+
+9. Do not invent records, counts, trends, causes, priorities, student impact, or recommendations.
+
+10. If information is unavailable or Not specified, represent it as unavailable or Not specified.
+
+11. Always use the latest data retrieved during the current execution.
+
+12. Do not use previous report results or hard-coded values.</instructions>
+        <state>published</state>
+        <sys_class_name>sn_aia_version</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 05:50:58</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>898fb583c8a703107f44b32b644b2991</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>V1</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sn_aia_version_898fb583c8a703107f44b32b644b2991</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-02 15:54:57</sys_updated_on>
+        <target_id>78273543c86703107f44b32b644b2931</target_id>
+        <target_table>sn_aia_usecase</target_table>
+        <version_name>V1</version_name>
+        <version_number>1</version_number>
+    </sn_aia_version>
+</record_update>

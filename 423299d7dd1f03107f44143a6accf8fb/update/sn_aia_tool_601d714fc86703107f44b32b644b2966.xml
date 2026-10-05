@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sn_aia_tool">
+    <sn_aia_tool action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description>Retrieves and analyzes campus food-service data from the application for management reporting. Use this tool to obtain structured information about food complaints, including complaint counts and breakdowns by Use Case, Mess Hall, Meal Type, Problem Type, and other available complaint fields. Return only data retrieved from the application and do not invent missing information.</description>
+        <input_schema>[]</input_schema>
+        <name>Get Food Management Analytics</name>
+        <record_type>custom</record_type>
+        <script><![CDATA[(function(inputs) {
+
+    var result = {
+        total_complaints: 0,
+        by_use_case: {},
+        by_mess_hall: {},
+        by_meal_type: {},
+        by_problem_type: {}
+    };
+
+    var gr = new GlideRecord('x_snc_campus_foo_1_food_complaint');
+    gr.query();
+
+    while (gr.next()) {
+
+        result.total_complaints++;
+
+        var useCase = gr.getDisplayValue('use_case') || 'Not specified';
+        var messHall = gr.getDisplayValue('mess_hall') || 'Not specified';
+        var mealType = gr.getDisplayValue('meal_type') || 'Not specified';
+        var problemType = gr.getValue('problem_type') || 'Not specified';
+
+        if (!result.by_use_case[useCase])
+            result.by_use_case[useCase] = 0;
+        result.by_use_case[useCase]++;
+
+        if (!result.by_mess_hall[messHall])
+            result.by_mess_hall[messHall] = 0;
+        result.by_mess_hall[messHall]++;
+
+        if (!result.by_meal_type[mealType])
+            result.by_meal_type[mealType] = 0;
+        result.by_meal_type[mealType]++;
+
+        if (!result.by_problem_type[problemType])
+            result.by_problem_type[problemType] = 0;
+        result.by_problem_type[problemType]++;
+    }
+
+    return {
+        analytics_data: JSON.stringify(result)
+    };
+
+})(inputs);]]></script>
+        <sys_class_name>sn_aia_tool</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 05:40:16</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>601d714fc86703107f44b32b644b2966</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Get Food Management Analytics</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sn_aia_tool_601d714fc86703107f44b32b644b2966</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 05:40:16</sys_updated_on>
+        <target_document/>
+        <target_document_table>sn_aia_tool</target_document_table>
+        <type>script</type>
+    </sn_aia_tool>
+</record_update>

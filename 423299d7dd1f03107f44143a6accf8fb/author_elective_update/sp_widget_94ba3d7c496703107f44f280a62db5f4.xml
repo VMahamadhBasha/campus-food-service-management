@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+
+    var c = this;
+
+    c.submitComplaint = function() {
+
+        if (!c.data.complaint_type ||
+            !c.data.mess_hall ||
+            !c.data.meal ||
+            !c.data.description) {
+
+            alert("Please fill all required fields.");
+            return;
+        }
+
+        c.server.update().then(function(response) {
+
+            if (response.data.message) {
+                c.data.message = response.data.message;
+            }
+
+        });
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.cfsa-complaint {&#13;
+    max-width: 650px;&#13;
+    margin: 20px auto;&#13;
+    background: #ffffff;&#13;
+    border-radius: 12px;&#13;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);&#13;
+    overflow: hidden;&#13;
+}&#13;
+&#13;
+.complaint-header {&#13;
+    background: #337ab7;&#13;
+    color: white;&#13;
+    padding: 22px;&#13;
+    text-align: center;&#13;
+}&#13;
+&#13;
+.complaint-header h2 {&#13;
+    margin: 0 0 8px;&#13;
+    font-size: 24px;&#13;
+}&#13;
+&#13;
+.complaint-header p {&#13;
+    margin: 0;&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+.complaint-body {&#13;
+    padding: 25px;&#13;
+}&#13;
+&#13;
+.form-group {&#13;
+    margin-bottom: 18px;&#13;
+}&#13;
+&#13;
+.form-group label {&#13;
+    display: block;&#13;
+    font-weight: bold;&#13;
+    margin-bottom: 7px;&#13;
+}&#13;
+&#13;
+.form-control {&#13;
+    width: 100%;&#13;
+    border: 1px solid #cccccc;&#13;
+    border-radius: 6px;&#13;
+    padding: 10px;&#13;
+}&#13;
+&#13;
+textarea.form-control {&#13;
+    resize: vertical;&#13;
+}&#13;
+&#13;
+.btn-primary {&#13;
+    width: 100%;&#13;
+    padding: 12px;&#13;
+    border: none;&#13;
+    border-radius: 6px;&#13;
+    background: #337ab7;&#13;
+    color: white;&#13;
+    font-size: 16px;&#13;
+    font-weight: bold;&#13;
+}&#13;
+&#13;
+.btn-primary:hover {&#13;
+    background: #286090;&#13;
+}&#13;
+&#13;
+.alert {&#13;
+    margin-top: 15px;&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>Widget for reporting campus food complaints</description>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>campus_food_complaint</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Campus Food Complaint</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    if (input && input.action == "submit") {
+
+        var gr = new GlideRecord("u_food_complaint");
+
+        gr.initialize();
+
+        gr.u_complaint_type = input.complaint_type;
+        gr.u_mess_hall = input.mess_hall;
+        gr.u_meal = input.meal;
+        gr.u_description = input.description;
+
+        gr.insert();
+
+        data.message = "Complaint submitted successfully!";
+
+    }
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-23 05:44:30</sys_created_on>
+        <sys_id>94ba3d7c496703107f44f280a62db5f4</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Campus Food Complaint</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_94ba3d7c496703107f44f280a62db5f4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-23 05:49:54</sys_updated_on>
+        <template><![CDATA[<div class="cfsa-complaint">
+
+  <div class="complaint-header">
+    <h2>]]>🍽<![CDATA[️ Campus Food Complaint</h2>
+    <p>Report any food-related issue</p>
+  </div>
+
+  <div class="complaint-body">
+
+    <div class="form-group">
+      <label>Complaint Type</label>
+      <select class="form-control"
+              ng-model="c.data.complaint_type">
+        <option value="">Select Complaint Type</option>
+        <option value="Stale Food">Stale Food</option>
+        <option value="Poor Food Quality">Poor Food Quality</option>
+        <option value="Bad Taste">Bad Taste</option>
+        <option value="Food Hygiene Issue">Food Hygiene Issue</option>
+        <option value="Food Quantity Issue">Food Quantity Issue</option>
+        <option value="Late Food Service">Late Food Service</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Mess Hall</label>
+      <select class="form-control"
+              ng-model="c.data.mess_hall">
+        <option value="">Select Mess Hall</option>
+        <option value="Mess Hall A">Mess Hall A</option>
+        <option value="Mess Hall B">Mess Hall B</option>
+        <option value="Mess Hall C">Mess Hall C</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Meal</label>
+      <select class="form-control"
+              ng-model="c.data.meal">
+        <option value="">Select Meal</option>
+        <option value="Breakfast">Breakfast</option>
+        <option value="Lunch">Lunch</option>
+        <option value="Snacks">Snacks</option>
+        <option value="Dinner">Dinner</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Complaint Description</label>
+      <textarea class="form-control"
+                rows="4"
+                ng-model="c.data.description"
+                placeholder="Describe your complaint">
+      </textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Food Photo</label>
+      <input type="file"
+             class="form-control"
+             accept="image/*">
+      <small>Upload a photo of the food issue</small>
+    </div>
+
+    <button class="btn btn-primary"
+            ng-click="c.submitComplaint()">
+      Submit Complaint
+    </button>
+
+    <div class="alert alert-success"
+         ng-if="c.data.message">
+      {{c.data.message}}
+    </div>
+
+  </div>
+
+</div>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>sp_widget_94ba3d7c496703107f44f280a62db5f4</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller = function() {
+
+    var c = this;
+
+    c.submitComplaint = function() {
+
+        if (!c.data.complaint_type ||
+            !c.data.mess_hall ||
+            !c.data.meal ||
+            !c.data.description) {
+
+            alert("Please fill all required fields.");
+            return;
+        }
+
+        c.server.update().then(function(response) {
+
+            if (response.data.message) {
+                c.data.message = response.data.message;
+            }
+
+        });
+    };
+
+};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;.cfsa-complaint {&amp;#13;
+    max-width: 650px;&amp;#13;
+    margin: 20px auto;&amp;#13;
+    background: #ffffff;&amp;#13;
+    border-radius: 12px;&amp;#13;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);&amp;#13;
+    overflow: hidden;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.complaint-header {&amp;#13;
+    background: #337ab7;&amp;#13;
+    color: white;&amp;#13;
+    padding: 22px;&amp;#13;
+    text-align: center;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.complaint-header h2 {&amp;#13;
+    margin: 0 0 8px;&amp;#13;
+    font-size: 24px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.complaint-header p {&amp;#13;
+    margin: 0;&amp;#13;
+    font-size: 14px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.complaint-body {&amp;#13;
+    padding: 25px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.form-group {&amp;#13;
+    margin-bottom: 18px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.form-group label {&amp;#13;
+    display: block;&amp;#13;
+    font-weight: bold;&amp;#13;
+    margin-bottom: 7px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.form-control {&amp;#13;
+    width: 100%;&amp;#13;
+    border: 1px solid #cccccc;&amp;#13;
+    border-radius: 6px;&amp;#13;
+    padding: 10px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+textarea.form-control {&amp;#13;
+    resize: vertical;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.btn-primary {&amp;#13;
+    width: 100%;&amp;#13;
+    padding: 12px;&amp;#13;
+    border: none;&amp;#13;
+    border-radius: 6px;&amp;#13;
+    background: #337ab7;&amp;#13;
+    color: white;&amp;#13;
+    font-size: 16px;&amp;#13;
+    font-weight: bold;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.btn-primary:hover {&amp;#13;
+    background: #286090;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.alert {&amp;#13;
+    margin-top: 15px;&amp;#13;
+}&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description&gt;Widget for reporting campus food complaints&lt;/description&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;campus_food_complaint&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]&gt;&lt;/link&gt;&lt;name&gt;Campus Food Complaint&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;false&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+
+    if (input &amp;&amp; input.action == "submit") {
+
+        var gr = new GlideRecord("u_food_complaint");
+
+        gr.initialize();
+
+        gr.u_complaint_type = input.complaint_type;
+        gr.u_mess_hall = input.mess_hall;
+        gr.u_meal = input.meal;
+        gr.u_description = input.description;
+
+        gr.insert();
+
+        data.message = "Complaint submitted successfully!";
+
+    }
+
+})();]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-09-23 05:44:30&lt;/sys_created_on&gt;&lt;sys_id&gt;94ba3d7c496703107f44f280a62db5f4&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;Campus Food Complaint&lt;/sys_name&gt;&lt;sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Campus Food Services Assistant"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_94ba3d7c496703107f44f280a62db5f4&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-09-23 05:49:54&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div class="cfsa-complaint"&gt;
+
+  &lt;div class="complaint-header"&gt;
+    &lt;h2&gt;]]&gt;🍽&lt;![CDATA[️ Campus Food Complaint&lt;/h2&gt;
+    &lt;p&gt;Report any food-related issue&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;div class="complaint-body"&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;label&gt;Complaint Type&lt;/label&gt;
+      &lt;select class="form-control"
+              ng-model="c.data.complaint_type"&gt;
+        &lt;option value=""&gt;Select Complaint Type&lt;/option&gt;
+        &lt;option value="Stale Food"&gt;Stale Food&lt;/option&gt;
+        &lt;option value="Poor Food Quality"&gt;Poor Food Quality&lt;/option&gt;
+        &lt;option value="Bad Taste"&gt;Bad Taste&lt;/option&gt;
+        &lt;option value="Food Hygiene Issue"&gt;Food Hygiene Issue&lt;/option&gt;
+        &lt;option value="Food Quantity Issue"&gt;Food Quantity Issue&lt;/option&gt;
+        &lt;option value="Late Food Service"&gt;Late Food Service&lt;/option&gt;
+        &lt;option value="Other"&gt;Other&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;label&gt;Mess Hall&lt;/label&gt;
+      &lt;select class="form-control"
+              ng-model="c.data.mess_hall"&gt;
+        &lt;option value=""&gt;Select Mess Hall&lt;/option&gt;
+        &lt;option value="Mess Hall A"&gt;Mess Hall A&lt;/option&gt;
+        &lt;option value="Mess Hall B"&gt;Mess Hall B&lt;/option&gt;
+        &lt;option value="Mess Hall C"&gt;Mess Hall C&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;label&gt;Meal&lt;/label&gt;
+      &lt;select class="form-control"
+              ng-model="c.data.meal"&gt;
+        &lt;option value=""&gt;Select Meal&lt;/option&gt;
+        &lt;option value="Breakfast"&gt;Breakfast&lt;/option&gt;
+        &lt;option value="Lunch"&gt;Lunch&lt;/option&gt;
+        &lt;option value="Snacks"&gt;Snacks&lt;/option&gt;
+        &lt;option value="Dinner"&gt;Dinner&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;label&gt;Complaint Description&lt;/label&gt;
+      &lt;textarea class="form-control"
+                rows="4"
+                ng-model="c.data.description"
+                placeholder="Describe your complaint"&gt;
+      &lt;/textarea&gt;
+    &lt;/div&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;label&gt;Food Photo&lt;/label&gt;
+      &lt;input type="file"
+             class="form-control"
+             accept="image/*"&gt;
+      &lt;small&gt;Upload a photo of the food issue&lt;/small&gt;
+    &lt;/div&gt;
+
+    &lt;button class="btn btn-primary"
+            ng-click="c.submitComplaint()"&gt;
+      Submit Complaint
+    &lt;/button&gt;
+
+    &lt;div class="alert alert-success"
+         ng-if="c.data.message"&gt;
+      {{c.data.message}}
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>124567400</payload_hash>
+        <record_name>Campus Food Complaint</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-23 05:49:54</sys_created_on>
+        <sys_id>512c317049a703107f44f280a62db522</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0ccd03c850000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-23 05:49:54</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>512c3170c9a703103ca8b8e5922ca121</update_guid>
+        <update_guid_history>512c3170c9a703103ca8b8e5922ca121:124567400,96eaf1bcb66703106cc650aecae8d26a:1347170328</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Campus Food Complaint">30c672fd802743107f4447e44ab1d5be</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 12:39:55</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>10cd03038ef14360818a9490a4854c84</sys_id>
+        <sys_metadata>94ba3d7c496703107f44f280a62db5f4</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Campus Food Complaint</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>sp_widget_94ba3d7c496703107f44f280a62db5f4</sys_update_name>
+        <sys_update_version display_value="sp_widget_94ba3d7c496703107f44f280a62db5f4">512c317049a703107f44f280a62db522</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 12:39:55</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

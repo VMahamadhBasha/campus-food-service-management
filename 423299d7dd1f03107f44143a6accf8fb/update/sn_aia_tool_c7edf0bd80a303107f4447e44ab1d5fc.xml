@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sn_aia_tool">
+    <sn_aia_tool action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description>Retrieves a Food Base Problem record from the Campus Food Services Assistant table using its Food Base Problem Number and returns the record details required for analysis.</description>
+        <input_schema>[{"name":"food_base_problem_number","description":"The Food Base Problem Number, for example FBP0001054.","mandatory":true}]</input_schema>
+        <name>Get Food Base Problem</name>
+        <record_type>custom</record_type>
+        <script><![CDATA[(function execute(inputs) {
+    var result = {
+        found: false,
+        number: "",
+        use_case: "",
+        problem_type: "",
+        student_count: 0,
+        meal_type: "",
+        mess_hall: "",
+        description: "",
+        state: ""
+    };
+
+    var gr = new GlideRecord('x_snc_campus_foo_1_food_base_problem');
+
+    if (!gr.get('number', inputs.food_base_problem_number)) {
+        return JSON.stringify(result);
+    }
+
+    result.found = true;
+
+    result.number = gr.getValue('number');
+
+    result.use_case = gr.getValue('use_case');
+    if (result.use_case)
+        result.use_case = gr.getDisplayValue('use_case');
+
+    result.problem_type = gr.getValue('problem_type');
+    if (result.problem_type)
+        result.problem_type = gr.getDisplayValue('problem_type');
+
+    result.student_count =
+        parseInt(gr.getValue('student_count'), 10) || 0;
+
+    result.meal_type = gr.getValue('meal_type');
+    if (result.meal_type)
+        result.meal_type = gr.getDisplayValue('meal_type');
+
+    result.mess_hall = gr.getValue('mess_hall');
+    if (result.mess_hall)
+        result.mess_hall = gr.getDisplayValue('mess_hall');
+
+    result.description = gr.getValue('description');
+
+    result.state = gr.getValue('state');
+    if (result.state)
+        result.state = gr.getDisplayValue('state');
+
+    return JSON.stringify(result);
+
+})(inputs);]]></script>
+        <sys_class_name>sn_aia_tool</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 03:51:58</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>c7edf0bd80a303107f4447e44ab1d5fc</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Get Food Base Problem</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sn_aia_tool_c7edf0bd80a303107f4447e44ab1d5fc</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 04:17:47</sys_updated_on>
+        <target_document/>
+        <target_document_table>sn_aia_tool</target_document_table>
+        <type>script</type>
+    </sn_aia_tool>
+</record_update>

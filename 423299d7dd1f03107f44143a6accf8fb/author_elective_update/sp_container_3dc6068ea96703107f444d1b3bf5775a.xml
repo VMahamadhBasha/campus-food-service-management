@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_container">
+    <sp_container action="DELETE">
+        <aria_label/>
+        <background_color/>
+        <background_image/>
+        <background_style>default</background_style>
+        <bootstrap_alt>false</bootstrap_alt>
+        <class_name/>
+        <container_class_name/>
+        <name>Food Services Staff Dashboard - Container 2</name>
+        <order>2</order>
+        <semantic_tag/>
+        <sp_page display_value="food_services_staff_dashboard">2286ca4ea96703107f444d1b3bf57762</sp_page>
+        <subheader>false</subheader>
+        <sys_class_name>sp_container</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 03:48:46</sys_created_on>
+        <sys_id>3dc6068ea96703107f444d1b3bf5775a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Food Services Staff Dashboard - Container 2</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_container_3dc6068ea96703107f444d1b3bf5775a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-27 03:48:46</sys_updated_on>
+        <title/>
+        <width>container</width>
+    </sp_container>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>sp_container_3dc6068ea96703107f444d1b3bf5775a</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_container"><sp_container action="INSERT_OR_UPDATE"><aria_label/><background_color/><background_image/><background_style>default</background_style><bootstrap_alt>false</bootstrap_alt><class_name/><container_class_name/><name>Food Services Staff Dashboard - Container 2</name><order>2</order><semantic_tag/><sp_page display_value="food_services_staff_dashboard">2286ca4ea96703107f444d1b3bf57762</sp_page><subheader>false</subheader><sys_class_name>sp_container</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-09-27 03:48:46</sys_created_on><sys_id>3dc6068ea96703107f444d1b3bf5775a</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Food Services Staff Dashboard - Container 2</sys_name><sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package><sys_policy/><sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope><sys_update_name>sp_container_3dc6068ea96703107f444d1b3bf5775a</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-09-27 03:48:46</sys_updated_on><title/><width>container</width></sp_container></record_update>]]></payload>
+        <payload_hash>743987949</payload_hash>
+        <record_name>Food Services Staff Dashboard - Container 2</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 03:48:46</sys_created_on>
+        <sys_id>31c6068ea96703107f444d1b3bf5775d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0e0fac5910000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-27 03:48:46</sys_updated_on>
+        <type>Container</type>
+        <update_guid>35c6068e74670310150615fa054cd75c</update_guid>
+        <update_guid_history>35c6068e74670310150615fa054cd75c:743987949</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Food Services Staff Dashboard - Container 2">8fc6468ea96703107f444d1b3bf5772a</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 03:48:50</sys_created_on>
+        <sys_db_object display_value="" name="sp_container">sp_container</sys_db_object>
+        <sys_id>0dc679aa87144c9083ed77d62f87be90</sys_id>
+        <sys_metadata>3dc6068ea96703107f444d1b3bf5775a</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Food Services Staff Dashboard - Container 2</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>sp_container_3dc6068ea96703107f444d1b3bf5775a</sys_update_name>
+        <sys_update_version display_value="sp_container_3dc6068ea96703107f444d1b3bf5775a">31c6068ea96703107f444d1b3bf5775d</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-27 03:48:50</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

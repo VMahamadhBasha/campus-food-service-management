@@ -1,0 +1,2193 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================================&#13;
+   CAMPUS FOOD SERVICES ASSISTANT&#13;
+   SKY BLUE + DEEP BLUE MODERN THEME&#13;
+   ========================================================= */&#13;
+&#13;
+* {&#13;
+  box-sizing: border-box;&#13;
+}&#13;
+&#13;
+html {&#13;
+  scroll-behavior: smooth;&#13;
+}&#13;
+&#13;
+body {&#13;
+  margin: 0;&#13;
+  font-family: "Segoe UI", Arial, sans-serif;&#13;
+  background: #f0f9ff;&#13;
+  color: #0f172a;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   HERO&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-hero {&#13;
+  position: relative;&#13;
+  overflow: hidden;&#13;
+  background:&#13;
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,.18), transparent 25%),&#13;
+    radial-gradient(circle at 85% 80%, rgba(125,211,252,.25), transparent 30%),&#13;
+    linear-gradient(&#13;
+      135deg,&#13;
+      #0284c7 0%,&#13;
+      #0369a1 45%,&#13;
+      #172554 100%&#13;
+    );&#13;
+&#13;
+  background-size: 200% 200%;&#13;
+  color: #ffffff;&#13;
+  padding: 105px 24px;&#13;
+  text-align: center;&#13;
+&#13;
+  animation: cfa-gradient 10s ease infinite;&#13;
+}&#13;
+&#13;
+.cfa-hero::before,&#13;
+.cfa-hero::after {&#13;
+  content: "";&#13;
+  position: absolute;&#13;
+  border-radius: 50%;&#13;
+  pointer-events: none;&#13;
+}&#13;
+&#13;
+.cfa-hero::before {&#13;
+  width: 350px;&#13;
+  height: 350px;&#13;
+  top: -170px;&#13;
+  left: -100px;&#13;
+  background: rgba(186,230,253,.18);&#13;
+  animation: cfa-float 7s ease-in-out infinite;&#13;
+}&#13;
+&#13;
+.cfa-hero::after {&#13;
+  width: 430px;&#13;
+  height: 430px;&#13;
+  right: -180px;&#13;
+  bottom: -230px;&#13;
+  background: rgba(125,211,252,.14);&#13;
+  animation: cfa-float 9s ease-in-out infinite reverse;&#13;
+}&#13;
+&#13;
+.cfa-hero-inner {&#13;
+  position: relative;&#13;
+  z-index: 2;&#13;
+  max-width: 780px;&#13;
+  margin: 0 auto;&#13;
+  animation: cfa-fade-up .8s ease both;&#13;
+}&#13;
+&#13;
+.cfa-hero h1 {&#13;
+  font-size: 40px;&#13;
+  margin: 0 0 18px;&#13;
+  font-weight: 800;&#13;
+  letter-spacing: -.8px;&#13;
+  text-shadow: 0 4px 20px rgba(0,0,0,.18);&#13;
+}&#13;
+&#13;
+.cfa-hero p {&#13;
+  max-width: 700px;&#13;
+  margin: 0 auto 32px;&#13;
+  font-size: 16px;&#13;
+  line-height: 1.8;&#13;
+  color: #e0f2fe;&#13;
+}&#13;
+&#13;
+.cfa-hero-btn {&#13;
+  display: inline-block;&#13;
+  background: #ffffff;&#13;
+  color: #075985;&#13;
+  padding: 14px 32px;&#13;
+  border-radius: 10px;&#13;
+  font-size: 14px;&#13;
+  font-weight: 800;&#13;
+  text-decoration: none;&#13;
+&#13;
+  box-shadow: 0 10px 30px rgba(0,0,0,.20);&#13;
+&#13;
+  transition:&#13;
+    transform .25s ease,&#13;
+    box-shadow .25s ease,&#13;
+    background .25s ease;&#13;
+}&#13;
+&#13;
+.cfa-hero-btn:hover {&#13;
+  background: #e0f2fe;&#13;
+  color: #0369a1;&#13;
+  transform: translateY(-4px);&#13;
+  box-shadow: 0 15px 35px rgba(0,0,0,.25);&#13;
+  text-decoration: none;&#13;
+}&#13;
+&#13;
+.cfa-hero-btn:active {&#13;
+  transform: translateY(-1px);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   WELCOME&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-welcome {&#13;
+  padding: 75px 24px;&#13;
+  background: linear-gradient(&#13;
+    180deg,&#13;
+    #ffffff 0%,&#13;
+    #f0f9ff 100%&#13;
+  );&#13;
+}&#13;
+&#13;
+.cfa-welcome-inner {&#13;
+  max-width: 900px;&#13;
+  margin: 0 auto;&#13;
+  text-align: center;&#13;
+}&#13;
+&#13;
+.cfa-welcome-inner h2 {&#13;
+  margin: 0 0 15px;&#13;
+  font-size: 28px;&#13;
+  font-weight: 800;&#13;
+  color: #0c4a6e;&#13;
+}&#13;
+&#13;
+.cfa-welcome-inner &gt; p {&#13;
+  max-width: 760px;&#13;
+  margin: 0 auto 40px;&#13;
+  color: #475569;&#13;
+  font-size: 14px;&#13;
+  line-height: 1.8;&#13;
+}&#13;
+&#13;
+.cfa-welcome-points {&#13;
+  display: grid;&#13;
+  grid-template-columns: repeat(3, 1fr);&#13;
+  gap: 20px;&#13;
+  text-align: left;&#13;
+}&#13;
+&#13;
+.cfa-welcome-point {&#13;
+  display: flex;&#13;
+  gap: 14px;&#13;
+  align-items: flex-start;&#13;
+&#13;
+  padding: 22px;&#13;
+&#13;
+  background: rgba(255,255,255,.85);&#13;
+  border: 1px solid #bae6fd;&#13;
+  border-radius: 15px;&#13;
+&#13;
+  box-shadow: 0 8px 25px rgba(2,132,199,.07);&#13;
+&#13;
+  transition:&#13;
+    transform .25s ease,&#13;
+    box-shadow .25s ease,&#13;
+    border-color .25s ease;&#13;
+}&#13;
+&#13;
+.cfa-welcome-point:hover {&#13;
+  transform: translateY(-6px);&#13;
+  border-color: #38bdf8;&#13;
+  box-shadow: 0 15px 35px rgba(2,132,199,.14);&#13;
+}&#13;
+&#13;
+.cfa-wp-icon {&#13;
+  width: 42px;&#13;
+  height: 42px;&#13;
+&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+&#13;
+  flex-shrink: 0;&#13;
+&#13;
+  background: #e0f2fe;&#13;
+  border-radius: 12px;&#13;
+&#13;
+  font-size: 21px;&#13;
+&#13;
+  transition: transform .3s ease;&#13;
+}&#13;
+&#13;
+.cfa-welcome-point:hover .cfa-wp-icon {&#13;
+  transform: scale(1.12) rotate(-5deg);&#13;
+}&#13;
+&#13;
+.cfa-welcome-point b {&#13;
+  display: block;&#13;
+  margin-bottom: 5px;&#13;
+&#13;
+  color: #0c4a6e;&#13;
+  font-size: 14px;&#13;
+  font-weight: 800;&#13;
+}&#13;
+&#13;
+.cfa-welcome-point span {&#13;
+  color: #64748b;&#13;
+  font-size: 12px;&#13;
+  line-height: 1.6;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SERVICES&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-services {&#13;
+  max-width: 1150px;&#13;
+  margin: 0 auto;&#13;
+  padding: 80px 24px;&#13;
+}&#13;
+&#13;
+.cfa-services h2 {&#13;
+  margin: 0 0 42px;&#13;
+&#13;
+  text-align: center;&#13;
+&#13;
+  font-size: 29px;&#13;
+  font-weight: 800;&#13;
+&#13;
+  color: #0c4a6e;&#13;
+}&#13;
+&#13;
+.cfa-services h2::after {&#13;
+  content: "";&#13;
+&#13;
+  display: block;&#13;
+&#13;
+  width: 65px;&#13;
+  height: 4px;&#13;
+&#13;
+  margin: 13px auto 0;&#13;
+&#13;
+  border-radius: 10px;&#13;
+&#13;
+  background: linear-gradient(&#13;
+    90deg,&#13;
+    #38bdf8,&#13;
+    #0284c7&#13;
+  );&#13;
+}&#13;
+&#13;
+.cfa-services-grid {&#13;
+  display: grid;&#13;
+  grid-template-columns: repeat(4, 1fr);&#13;
+  gap: 20px;&#13;
+}&#13;
+&#13;
+.cfa-service-card {&#13;
+  position: relative;&#13;
+  overflow: hidden;&#13;
+&#13;
+  min-height: 180px;&#13;
+&#13;
+  background: #ffffff;&#13;
+&#13;
+  border: 1px solid #bae6fd;&#13;
+  border-radius: 16px;&#13;
+&#13;
+  padding: 23px;&#13;
+&#13;
+  box-shadow: 0 7px 20px rgba(2,132,199,.06);&#13;
+&#13;
+  transition:&#13;
+    transform .3s ease,&#13;
+    box-shadow .3s ease,&#13;
+    border-color .3s ease;&#13;
+}&#13;
+&#13;
+.cfa-service-card::before {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+&#13;
+  top: 0;&#13;
+  left: 0;&#13;
+&#13;
+  width: 100%;&#13;
+  height: 4px;&#13;
+&#13;
+  background: linear-gradient(&#13;
+    90deg,&#13;
+    #38bdf8,&#13;
+    #0284c7,&#13;
+    #1e3a8a&#13;
+  );&#13;
+&#13;
+  transform: scaleX(0);&#13;
+  transform-origin: left;&#13;
+&#13;
+  transition: transform .35s ease;&#13;
+}&#13;
+&#13;
+.cfa-service-card:hover {&#13;
+  transform: translateY(-8px);&#13;
+&#13;
+  border-color: #38bdf8;&#13;
+&#13;
+  box-shadow:&#13;
+    0 18px 38px rgba(2,132,199,.15);&#13;
+}&#13;
+&#13;
+.cfa-service-card:hover::before {&#13;
+  transform: scaleX(1);&#13;
+}&#13;
+&#13;
+.cfa-service-icon {&#13;
+  width: 48px;&#13;
+  height: 48px;&#13;
+&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+&#13;
+  margin-bottom: 14px;&#13;
+&#13;
+  border-radius: 13px;&#13;
+&#13;
+  background: linear-gradient(&#13;
+    135deg,&#13;
+    #e0f2fe,&#13;
+    #bae6fd&#13;
+  );&#13;
+&#13;
+  font-size: 25px;&#13;
+&#13;
+  transition:&#13;
+    transform .3s ease,&#13;
+    box-shadow .3s ease;&#13;
+}&#13;
+&#13;
+.cfa-service-card:hover .cfa-service-icon {&#13;
+  transform: scale(1.12) rotate(-3deg);&#13;
+&#13;
+  box-shadow:&#13;
+    0 8px 18px rgba(14,165,233,.18);&#13;
+}&#13;
+&#13;
+.cfa-service-card h4 {&#13;
+  margin: 0 0 8px;&#13;
+&#13;
+  color: #0c4a6e;&#13;
+&#13;
+  font-size: 14px;&#13;
+  font-weight: 800;&#13;
+  line-height: 1.4;&#13;
+}&#13;
+&#13;
+.cfa-service-card p {&#13;
+  margin: 0;&#13;
+&#13;
+  color: #64748b;&#13;
+&#13;
+  font-size: 12px;&#13;
+  line-height: 1.6;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   ABOUT&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-about {&#13;
+  position: relative;&#13;
+  overflow: hidden;&#13;
+&#13;
+  padding: 80px 24px;&#13;
+&#13;
+  background:&#13;
+    radial-gradient(&#13;
+      circle at 90% 20%,&#13;
+      rgba(56,189,248,.15),&#13;
+      transparent 25%&#13;
+    ),&#13;
+    linear-gradient(&#13;
+      135deg,&#13;
+      #e0f2fe,&#13;
+      #f0f9ff&#13;
+    );&#13;
+}&#13;
+&#13;
+.cfa-about-inner {&#13;
+  position: relative;&#13;
+  z-index: 2;&#13;
+&#13;
+  max-width: 900px;&#13;
+  margin: 0 auto;&#13;
+&#13;
+  text-align: center;&#13;
+}&#13;
+&#13;
+.cfa-about h2 {&#13;
+  margin: 0 0 17px;&#13;
+&#13;
+  color: #0c4a6e;&#13;
+&#13;
+  font-size: 29px;&#13;
+  font-weight: 800;&#13;
+}&#13;
+&#13;
+.cfa-about p {&#13;
+  margin: 0 auto 32px;&#13;
+&#13;
+  max-width: 780px;&#13;
+&#13;
+  color: #475569;&#13;
+&#13;
+  font-size: 14px;&#13;
+  line-height: 1.8;&#13;
+}&#13;
+&#13;
+.cfa-team-grid {&#13;
+  display: grid;&#13;
+  grid-template-columns: repeat(4, 1fr);&#13;
+  gap: 16px;&#13;
+&#13;
+  margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+.cfa-team-card {&#13;
+  padding: 21px 15px;&#13;
+&#13;
+  background: rgba(255,255,255,.9);&#13;
+&#13;
+  border: 1px solid #bae6fd;&#13;
+  border-radius: 14px;&#13;
+&#13;
+  display: flex;&#13;
+  flex-direction: column;&#13;
+  gap: 6px;&#13;
+&#13;
+  box-shadow: 0 7px 20px rgba(2,132,199,.07);&#13;
+&#13;
+  transition:&#13;
+    transform .25s ease,&#13;
+    box-shadow .25s ease;&#13;
+}&#13;
+&#13;
+.cfa-team-card:hover {&#13;
+  transform: translateY(-6px);&#13;
+&#13;
+  box-shadow:&#13;
+    0 15px 30px rgba(2,132,199,.13);&#13;
+}&#13;
+&#13;
+.cfa-team-card b {&#13;
+  color: #0c4a6e;&#13;
+&#13;
+  font-size: 13.5px;&#13;
+  font-weight: 800;&#13;
+}&#13;
+&#13;
+.cfa-team-card span {&#13;
+  color: #64748b;&#13;
+&#13;
+  font-size: 11.5px;&#13;
+  line-height: 1.5;&#13;
+}&#13;
+&#13;
+.cfa-college {&#13;
+  color: #0369a1 !important;&#13;
+&#13;
+  font-size: 12.5px !important;&#13;
+  font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   CONTACT&#13;
+   ========================================================= */&#13;
+&#13;
+.cfa-contact {&#13;
+  padding: 80px 24px;&#13;
+&#13;
+  background: #ffffff;&#13;
+}&#13;
+&#13;
+.cfa-contact-inner {&#13;
+  max-width: 950px;&#13;
+  margin: 0 auto;&#13;
+&#13;
+  text-align: center;&#13;
+}&#13;
+&#13;
+.cfa-contact h2 {&#13;
+  margin: 0 0 35px;&#13;
+&#13;
+  color: #0c4a6e;&#13;
+&#13;
+  font-size: 29px;&#13;
+  font-weight: 800;&#13;
+}&#13;
+&#13;
+.cfa-contact h2::after {&#13;
+  content: "";&#13;
+&#13;
+  display: block;&#13;
+&#13;
+  width: 55px;&#13;
+  height: 4px;&#13;
+&#13;
+  margin: 12px auto 0;&#13;
+&#13;
+  border-radius: 10px;&#13;
+&#13;
+  background: linear-gradient(&#13;
+    90deg,&#13;
+    #38bdf8,&#13;
+    #0284c7&#13;
+  );&#13;
+}&#13;
+&#13;
+.cfa-contact-grid {&#13;
+  display: grid;&#13;
+  grid-template-columns: repeat(3, 1fr);&#13;
+  gap: 20px;&#13;
+}&#13;
+&#13;
+.cfa-contact-card {&#13;
+  padding: 28px 20px;&#13;
+&#13;
+  background: linear-gradient(&#13;
+    180deg,&#13;
+    #ffffff,&#13;
+    #f0f9ff&#13;
+  );&#13;
+&#13;
+  border: 1px solid #bae6fd;&#13;
+  border-radius: 16px;&#13;
+&#13;
+  box-shadow: 0 8px 24px rgba(2,132,199,.07);&#13;
+&#13;
+  transition:&#13;
+    transform .25s ease,&#13;
+    box-shadow .25s ease,&#13;
+    border-color .25s ease;&#13;
+}&#13;
+&#13;
+.cfa-contact-card:hover {&#13;
+  transform: translateY(-7px);&#13;
+&#13;
+  border-color: #38bdf8;&#13;
+&#13;
+  box-shadow:&#13;
+    0 16px 32px rgba(2,132,199,.14);&#13;
+}&#13;
+&#13;
+.cfa-contact-icon {&#13;
+  width: 52px;&#13;
+  height: 52px;&#13;
+&#13;
+  margin: 0 auto 13px;&#13;
+&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+&#13;
+  background: linear-gradient(&#13;
+    135deg,&#13;
+    #e0f2fe,&#13;
+    #bae6fd&#13;
+  );&#13;
+&#13;
+  border-radius: 14px;&#13;
+&#13;
+  font-size: 25px;&#13;
+}&#13;
+&#13;
+.cfa-contact-card b {&#13;
+  display: block;&#13;
+&#13;
+  margin-bottom: 6px;&#13;
+&#13;
+  color: #0c4a6e;&#13;
+&#13;
+  font-size: 14px;&#13;
+  font-weight: 800;&#13;
+}&#13;
+&#13;
+.cfa-contact-card span {&#13;
+  color: #64748b;&#13;
+&#13;
+  font-size: 12px;&#13;
+  line-height: 1.6;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FOOTER&#13;
+   ========================================================= */&#13;
+&#13;
+.cfs-footer {&#13;
+  position: relative;&#13;
+&#13;
+  overflow: hidden;&#13;
+&#13;
+  background:&#13;
+    radial-gradient(&#13;
+      circle at 85% 20%,&#13;
+      rgba(56,189,248,.16),&#13;
+      transparent 28%&#13;
+    ),&#13;
+    linear-gradient(&#13;
+      135deg,&#13;
+      #082f49 0%,&#13;
+      #075985 45%,&#13;
+      #172554 100%&#13;
+    );&#13;
+&#13;
+  color: #ffffff;&#13;
+&#13;
+  padding-top: 58px;&#13;
+}&#13;
+&#13;
+.cfs-footer::before {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+&#13;
+  width: 300px;&#13;
+  height: 300px;&#13;
+&#13;
+  top: -180px;&#13;
+  right: -80px;&#13;
+&#13;
+  border-radius: 50%;&#13;
+&#13;
+  background: rgba(125,211,252,.08);&#13;
+&#13;
+  pointer-events: none;&#13;
+}&#13;
+&#13;
+.cfs-footer::after {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+&#13;
+  width: 230px;&#13;
+  height: 230px;&#13;
+&#13;
+  bottom: -150px;&#13;
+  left: -70px;&#13;
+&#13;
+  border-radius: 50%;&#13;
+&#13;
+  background: rgba(56,189,248,.07);&#13;
+&#13;
+  pointer-events: none;&#13;
+}&#13;
+&#13;
+.footer-container {&#13;
+  position: relative;&#13;
+  z-index: 2;&#13;
+&#13;
+  max-width: 1200px;&#13;
+&#13;
+  margin: 0 auto;&#13;
+&#13;
+  padding: 0 30px 48px;&#13;
+&#13;
+  display: grid;&#13;
+&#13;
+  grid-template-columns: 2fr 1fr 1fr;&#13;
+&#13;
+  gap: 70px;&#13;
+}&#13;
+&#13;
+&#13;
+/* FOOTER BRAND */&#13;
+&#13;
+.footer-brand {&#13;
+  max-width: 420px;&#13;
+}&#13;
+&#13;
+.footer-brand h3 {&#13;
+  margin: 0 0 14px;&#13;
+&#13;
+  color: #ffffff;&#13;
+&#13;
+  font-size: 23px;&#13;
+  font-weight: 800;&#13;
+&#13;
+  letter-spacing: -.4px;&#13;
+}&#13;
+&#13;
+.footer-brand h3::after {&#13;
+  content: "";&#13;
+&#13;
+  display: block;&#13;
+&#13;
+  width: 50px;&#13;
+  height: 4px;&#13;
+&#13;
+  margin-top: 11px;&#13;
+&#13;
+  border-radius: 10px;&#13;
+&#13;
+  background: #38bdf8;&#13;
+}&#13;
+&#13;
+.footer-brand p {&#13;
+  margin: 18px 0 0;&#13;
+&#13;
+  max-width: 360px;&#13;
+&#13;
+  color: #bae6fd;&#13;
+&#13;
+  font-size: 13.5px;&#13;
+  line-height: 1.8;&#13;
+}&#13;
+&#13;
+&#13;
+/* FOOTER COLUMNS */&#13;
+&#13;
+.footer-column {&#13;
+  display: flex;&#13;
+&#13;
+  flex-direction: column;&#13;
+&#13;
+  align-items: flex-start;&#13;
+&#13;
+  gap: 13px;&#13;
+}&#13;
+&#13;
+.footer-column h4 {&#13;
+  margin: 0 0 8px;&#13;
+&#13;
+  color: #ffffff;&#13;
+&#13;
+  font-size: 15px;&#13;
+  font-weight: 800;&#13;
+}&#13;
+&#13;
+.footer-column h4::after {&#13;
+  content: "";&#13;
+&#13;
+  display: block;&#13;
+&#13;
+  width: 28px;&#13;
+  height: 3px;&#13;
+&#13;
+  margin-top: 7px;&#13;
+&#13;
+  border-radius: 10px;&#13;
+&#13;
+  background: #38bdf8;&#13;
+}&#13;
+&#13;
+.footer-column a {&#13;
+  position: relative;&#13;
+&#13;
+  color: #bae6fd;&#13;
+&#13;
+  text-decoration: none;&#13;
+&#13;
+  font-size: 13.5px;&#13;
+&#13;
+  transition:&#13;
+    color .25s ease,&#13;
+    transform .25s ease;&#13;
+}&#13;
+&#13;
+.footer-column a::before {&#13;
+  content: "›";&#13;
+&#13;
+  display: inline-block;&#13;
+&#13;
+  margin-right: 7px;&#13;
+&#13;
+  color: #38bdf8;&#13;
+&#13;
+  font-size: 17px;&#13;
+&#13;
+  transition: transform .25s ease;&#13;
+}&#13;
+&#13;
+.footer-column a:hover {&#13;
+  color: #ffffff;&#13;
+&#13;
+  transform: translateX(5px);&#13;
+&#13;
+  text-decoration: none;&#13;
+}&#13;
+&#13;
+.footer-column a:hover::before {&#13;
+  transform: translateX(3px);&#13;
+}&#13;
+&#13;
+&#13;
+/* FOOTER BOTTOM */&#13;
+&#13;
+.footer-bottom {&#13;
+  position: relative;&#13;
+  z-index: 2;&#13;
+&#13;
+  max-width: 1200px;&#13;
+&#13;
+  margin: 0 auto;&#13;
+&#13;
+  padding: 21px 30px;&#13;
+&#13;
+  border-top: 1px solid rgba(186,230,253,.18);&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: space-between;&#13;
+&#13;
+  gap: 20px;&#13;
+&#13;
+  color: #7dd3fc;&#13;
+&#13;
+  font-size: 11.5px;&#13;
+&#13;
+  line-height: 1.5;&#13;
+}&#13;
+&#13;
+.footer-bottom span:first-child {&#13;
+  color: #bae6fd;&#13;
+}&#13;
+&#13;
+.footer-bottom span:last-child {&#13;
+  color: #7dd3fc;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FOOTER FOCUS&#13;
+   ========================================================= */&#13;
+&#13;
+.footer-column a:focus {&#13;
+  outline: 2px solid #38bdf8;&#13;
+&#13;
+  outline-offset: 4px;&#13;
+&#13;
+  border-radius: 3px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   ANIMATIONS&#13;
+   ========================================================= */&#13;
+&#13;
+@keyframes cfa-fade-up {&#13;
+&#13;
+  from {&#13;
+    opacity: 0;&#13;
+    transform: translateY(25px);&#13;
+  }&#13;
+&#13;
+  to {&#13;
+    opacity: 1;&#13;
+    transform: translateY(0);&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+@keyframes cfa-gradient {&#13;
+&#13;
+  0% {&#13;
+    background-position: 0% 50%;&#13;
+  }&#13;
+&#13;
+  50% {&#13;
+    background-position: 100% 50%;&#13;
+  }&#13;
+&#13;
+  100% {&#13;
+    background-position: 0% 50%;&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+@keyframes cfa-float {&#13;
+&#13;
+  0%,&#13;
+  100% {&#13;
+    transform: translateY(0) scale(1);&#13;
+  }&#13;
+&#13;
+  50% {&#13;
+    transform: translateY(-20px) scale(1.05);&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   RESPONSIVE - TABLET&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 950px) {&#13;
+&#13;
+  .cfa-services-grid {&#13;
+    grid-template-columns: repeat(3, 1fr);&#13;
+  }&#13;
+&#13;
+  .cfa-team-grid {&#13;
+    grid-template-columns: repeat(2, 1fr);&#13;
+  }&#13;
+&#13;
+  .footer-container {&#13;
+    grid-template-columns: 1.5fr 1fr 1fr;&#13;
+&#13;
+    gap: 40px;&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   RESPONSIVE - MOBILE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 700px) {&#13;
+&#13;
+  .cfa-hero {&#13;
+    padding: 80px 20px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero h1 {&#13;
+    font-size: 30px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero p {&#13;
+    font-size: 14px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .cfa-welcome,&#13;
+  .cfa-services,&#13;
+  .cfa-about,&#13;
+  .cfa-contact {&#13;
+    padding: 60px 20px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .cfa-welcome-points {&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+&#13;
+&#13;
+  .cfa-services-grid {&#13;
+    grid-template-columns: repeat(2, 1fr);&#13;
+  }&#13;
+&#13;
+&#13;
+  .cfa-contact-grid {&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+&#13;
+&#13;
+  .footer-container {&#13;
+    grid-template-columns: 1fr;&#13;
+&#13;
+    gap: 35px;&#13;
+&#13;
+    padding:&#13;
+      0 24px&#13;
+      38px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .footer-brand {&#13;
+    max-width: 100%;&#13;
+  }&#13;
+&#13;
+&#13;
+  .footer-bottom {&#13;
+    padding:&#13;
+      18px 24px;&#13;
+&#13;
+    flex-direction: column;&#13;
+&#13;
+    align-items: flex-start;&#13;
+&#13;
+    gap: 6px;&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SMALL MOBILE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 450px) {&#13;
+&#13;
+  .cfa-hero h1 {&#13;
+    font-size: 26px;&#13;
+  }&#13;
+&#13;
+  .cfa-services-grid {&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+&#13;
+  .cfa-team-grid {&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+&#13;
+  .footer-container {&#13;
+    padding-left: 18px;&#13;
+    padding-right: 18px;&#13;
+  }&#13;
+&#13;
+  .footer-bottom {&#13;
+    padding-left: 18px;&#13;
+    padding-right: 18px;&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   REDUCED MOTION&#13;
+   ========================================================= */&#13;
+&#13;
+@media (prefers-reduced-motion: reduce) {&#13;
+&#13;
+  .cfa-hero,&#13;
+  .cfa-hero::before,&#13;
+  .cfa-hero::after,&#13;
+  .cfa-hero-inner {&#13;
+    animation: none;&#13;
+  }&#13;
+&#13;
+  .cfa-service-card,&#13;
+  .cfa-team-card,&#13;
+  .cfa-contact-card,&#13;
+  .cfa-welcome-point,&#13;
+  .cfa-hero-btn,&#13;
+  .footer-column a,&#13;
+  .footer-column a::before {&#13;
+    transition: none;&#13;
+  }&#13;
+&#13;
+}&#13;
+/* =========================================================&#13;
+   FOOTER&#13;
+   ========================================================= */&#13;
+&#13;
+.cfs-footer {&#13;
+  position: relative;&#13;
+&#13;
+  overflow: hidden;&#13;
+&#13;
+  background:&#13;
+    radial-gradient(&#13;
+      circle at 85% 20%,&#13;
+      rgba(56,189,248,.16),&#13;
+      transparent 28%&#13;
+    ),&#13;
+    linear-gradient(&#13;
+      135deg,&#13;
+      #082f49 0%,&#13;
+      #075985 45%,&#13;
+      #172554 100%&#13;
+    );&#13;
+&#13;
+  color: #ffffff;&#13;
+&#13;
+  padding-top: 58px;&#13;
+}&#13;
+&#13;
+.cfs-footer::before {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+&#13;
+  width: 300px;&#13;
+  height: 300px;&#13;
+&#13;
+  top: -180px;&#13;
+  right: -80px;&#13;
+&#13;
+  border-radius: 50%;&#13;
+&#13;
+  background: rgba(125,211,252,.08);&#13;
+&#13;
+  pointer-events: none;&#13;
+}&#13;
+&#13;
+.cfs-footer::after {&#13;
+  content: "";&#13;
+&#13;
+  position: absolute;&#13;
+&#13;
+  width: 230px;&#13;
+  height: 230px;&#13;
+&#13;
+  bottom: -150px;&#13;
+  left: -70px;&#13;
+&#13;
+  border-radius: 50%;&#13;
+&#13;
+  background: rgba(56,189,248,.07);&#13;
+&#13;
+  pointer-events: none;&#13;
+}&#13;
+&#13;
+.footer-container {&#13;
+  position: relative;&#13;
+  z-index: 2;&#13;
+&#13;
+  max-width: 1200px;&#13;
+&#13;
+  margin: 0 auto;&#13;
+&#13;
+  padding: 0 30px 48px;&#13;
+&#13;
+  display: grid;&#13;
+&#13;
+  grid-template-columns: 2fr 1fr 1fr;&#13;
+&#13;
+  gap: 70px;&#13;
+}&#13;
+&#13;
+&#13;
+/* FOOTER BRAND */&#13;
+&#13;
+.footer-brand {&#13;
+  max-width: 420px;&#13;
+}&#13;
+&#13;
+.footer-brand h3 {&#13;
+  margin: 0 0 14px;&#13;
+&#13;
+  color: #ffffff;&#13;
+&#13;
+  font-size: 23px;&#13;
+  font-weight: 800;&#13;
+&#13;
+  letter-spacing: -.4px;&#13;
+}&#13;
+&#13;
+.footer-brand h3::after {&#13;
+  content: "";&#13;
+&#13;
+  display: block;&#13;
+&#13;
+  width: 50px;&#13;
+  height: 4px;&#13;
+&#13;
+  margin-top: 11px;&#13;
+&#13;
+  border-radius: 10px;&#13;
+&#13;
+  background: #38bdf8;&#13;
+}&#13;
+&#13;
+.footer-brand p {&#13;
+  margin: 18px 0 0;&#13;
+&#13;
+  max-width: 360px;&#13;
+&#13;
+  color: #bae6fd;&#13;
+&#13;
+  font-size: 13.5px;&#13;
+  line-height: 1.8;&#13;
+}&#13;
+&#13;
+&#13;
+/* FOOTER COLUMNS */&#13;
+&#13;
+.footer-column {&#13;
+  display: flex;&#13;
+&#13;
+  flex-direction: column;&#13;
+&#13;
+  align-items: flex-start;&#13;
+&#13;
+  gap: 13px;&#13;
+}&#13;
+&#13;
+.footer-column h4 {&#13;
+  margin: 0 0 8px;&#13;
+&#13;
+  color: #ffffff;&#13;
+&#13;
+  font-size: 15px;&#13;
+  font-weight: 800;&#13;
+}&#13;
+&#13;
+.footer-column h4::after {&#13;
+  content: "";&#13;
+&#13;
+  display: block;&#13;
+&#13;
+  width: 28px;&#13;
+  height: 3px;&#13;
+&#13;
+  margin-top: 7px;&#13;
+&#13;
+  border-radius: 10px;&#13;
+&#13;
+  background: #38bdf8;&#13;
+}&#13;
+&#13;
+.footer-column a {&#13;
+  position: relative;&#13;
+&#13;
+  color: #bae6fd;&#13;
+&#13;
+  text-decoration: none;&#13;
+&#13;
+  font-size: 13.5px;&#13;
+&#13;
+  transition:&#13;
+    color .25s ease,&#13;
+    transform .25s ease;&#13;
+}&#13;
+&#13;
+.footer-column a::before {&#13;
+  content: "›";&#13;
+&#13;
+  display: inline-block;&#13;
+&#13;
+  margin-right: 7px;&#13;
+&#13;
+  color: #38bdf8;&#13;
+&#13;
+  font-size: 17px;&#13;
+&#13;
+  transition: transform .25s ease;&#13;
+}&#13;
+&#13;
+.footer-column a:hover {&#13;
+  color: #ffffff;&#13;
+&#13;
+  transform: translateX(5px);&#13;
+&#13;
+  text-decoration: none;&#13;
+}&#13;
+&#13;
+.footer-column a:hover::before {&#13;
+  transform: translateX(3px);&#13;
+}&#13;
+&#13;
+&#13;
+/* FOOTER BOTTOM */&#13;
+&#13;
+.footer-bottom {&#13;
+  position: relative;&#13;
+  z-index: 2;&#13;
+&#13;
+  max-width: 1200px;&#13;
+&#13;
+  margin: 0 auto;&#13;
+&#13;
+  padding: 21px 30px;&#13;
+&#13;
+  border-top: 1px solid rgba(186,230,253,.18);&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: space-between;&#13;
+&#13;
+  gap: 20px;&#13;
+&#13;
+  color: #7dd3fc;&#13;
+&#13;
+  font-size: 11.5px;&#13;
+&#13;
+  line-height: 1.5;&#13;
+}&#13;
+&#13;
+.footer-bottom span:first-child {&#13;
+  color: #bae6fd;&#13;
+}&#13;
+&#13;
+.footer-bottom span:last-child {&#13;
+  color: #7dd3fc;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FOOTER FOCUS&#13;
+   ========================================================= */&#13;
+&#13;
+.footer-column a:focus {&#13;
+  outline: 2px solid #38bdf8;&#13;
+&#13;
+  outline-offset: 4px;&#13;
+&#13;
+  border-radius: 3px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   ANIMATIONS&#13;
+   ========================================================= */&#13;
+&#13;
+@keyframes cfa-fade-up {&#13;
+&#13;
+  from {&#13;
+    opacity: 0;&#13;
+    transform: translateY(25px);&#13;
+  }&#13;
+&#13;
+  to {&#13;
+    opacity: 1;&#13;
+    transform: translateY(0);&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+@keyframes cfa-gradient {&#13;
+&#13;
+  0% {&#13;
+    background-position: 0% 50%;&#13;
+  }&#13;
+&#13;
+  50% {&#13;
+    background-position: 100% 50%;&#13;
+  }&#13;
+&#13;
+  100% {&#13;
+    background-position: 0% 50%;&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+@keyframes cfa-float {&#13;
+&#13;
+  0%,&#13;
+  100% {&#13;
+    transform: translateY(0) scale(1);&#13;
+  }&#13;
+&#13;
+  50% {&#13;
+    transform: translateY(-20px) scale(1.05);&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   RESPONSIVE - TABLET&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 950px) {&#13;
+&#13;
+  .cfa-services-grid {&#13;
+    grid-template-columns: repeat(3, 1fr);&#13;
+  }&#13;
+&#13;
+  .cfa-team-grid {&#13;
+    grid-template-columns: repeat(2, 1fr);&#13;
+  }&#13;
+&#13;
+  .footer-container {&#13;
+    grid-template-columns: 1.5fr 1fr 1fr;&#13;
+&#13;
+    gap: 40px;&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   RESPONSIVE - MOBILE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 700px) {&#13;
+&#13;
+  .cfa-hero {&#13;
+    padding: 80px 20px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero h1 {&#13;
+    font-size: 30px;&#13;
+  }&#13;
+&#13;
+  .cfa-hero p {&#13;
+    font-size: 14px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .cfa-welcome,&#13;
+  .cfa-services,&#13;
+  .cfa-about,&#13;
+  .cfa-contact {&#13;
+    padding: 60px 20px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .cfa-welcome-points {&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+&#13;
+&#13;
+  .cfa-services-grid {&#13;
+    grid-template-columns: repeat(2, 1fr);&#13;
+  }&#13;
+&#13;
+&#13;
+  .cfa-contact-grid {&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+&#13;
+&#13;
+  .footer-container {&#13;
+    grid-template-columns: 1fr;&#13;
+&#13;
+    gap: 35px;&#13;
+&#13;
+    padding:&#13;
+      0 24px&#13;
+      38px;&#13;
+  }&#13;
+&#13;
+&#13;
+  .footer-brand {&#13;
+    max-width: 100%;&#13;
+  }&#13;
+&#13;
+&#13;
+  .footer-bottom {&#13;
+    padding:&#13;
+      18px 24px;&#13;
+&#13;
+    flex-direction: column;&#13;
+&#13;
+    align-items: flex-start;&#13;
+&#13;
+    gap: 6px;&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SMALL MOBILE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 450px) {&#13;
+&#13;
+  .cfa-hero h1 {&#13;
+    font-size: 26px;&#13;
+  }&#13;
+&#13;
+  .cfa-services-grid {&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+&#13;
+  .cfa-team-grid {&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+&#13;
+  .footer-container {&#13;
+    padding-left: 18px;&#13;
+    padding-right: 18px;&#13;
+  }&#13;
+&#13;
+  .footer-bottom {&#13;
+    padding-left: 18px;&#13;
+    padding-right: 18px;&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   REDUCED MOTION&#13;
+   ========================================================= */&#13;
+&#13;
+@media (prefers-reduced-motion: reduce) {&#13;
+&#13;
+  .cfa-hero,&#13;
+  .cfa-hero::before,&#13;
+  .cfa-hero::after,&#13;
+  .cfa-hero-inner {&#13;
+    animation: none;&#13;
+  }&#13;
+&#13;
+  .cfa-service-card,&#13;
+  .cfa-team-card,&#13;
+  .cfa-contact-card,&#13;
+  .cfa-welcome-point,&#13;
+  .cfa-hero-btn,&#13;
+  .footer-column a,&#13;
+  .footer-column a::before {&#13;
+    transition: none;&#13;
+  }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>food_service_footer_content</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Food Service Footer Content</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-01 08:47:18</sys_created_on>
+        <sys_id>cf21f3d78ceb03107f442c4fb55dc2e7</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Food Service Footer Content</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_cf21f3d78ceb03107f442c4fb55dc2e7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-01 09:34:43</sys_updated_on>
+        <template><![CDATA[```html
+<!-- ==========================================
+     HOME / HERO
+     ========================================== -->
+
+<section id="home" class="cfa-hero">
+
+  <div class="cfa-hero-inner">
+
+    <h1>
+      Campus Food Services Assistant
+    </h1>
+
+    <p>
+      AI-Powered Smart Hostel Food Management for K.S.R.M. College of Engineering.
+      Report issues, request meals, and track resolutions — all in one place.
+    </p>
+
+    <a href="{{c.data.loginUrl}}" class="cfa-hero-btn">
+      Get Started
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- ==========================================
+     WELCOME
+     ========================================== -->
+
+<section class="cfa-welcome">
+
+  <div class="cfa-welcome-inner">
+
+    <h2>
+      Welcome to your campus dining companion
+    </h2>
+
+    <p>
+      Whether it's a food quality issue, a dietary need, or feedback on today's menu —
+      this is the one place hostel students go to report it, track it, and get it resolved.
+    </p>
+
+
+    <div class="cfa-welcome-points">
+
+      <div class="cfa-welcome-point">
+
+        <span class="cfa-wp-icon">
+          ⚡
+        </span>
+
+        <div>
+
+          <b>
+            Fast routing
+          </b>
+
+          <span>
+            Requests reach the right team automatically.
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="cfa-welcome-point">
+
+        <span class="cfa-wp-icon">
+          ]]>🔍
+<![CDATA[        </span>
+
+        <div>
+
+          <b>
+            Full visibility
+          </b>
+
+          <span>
+            Track every request from submission to resolution.
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="cfa-welcome-point">
+
+        <span class="cfa-wp-icon">
+          ⭐
+        </span>
+
+        <div>
+
+          <b>
+            Your voice matters
+          </b>
+
+          <span>
+            Rate the resolution and help improve mess service.
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ==========================================
+     SERVICES / 12 USE CASES
+     ========================================== -->
+
+<section id="services" class="cfa-services">
+
+  <h2>
+    What you can report or request
+  </h2>
+
+
+  <div class="cfa-services-grid">
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        ]]>🍽<![CDATA[️
+      </div>
+
+      <h4>
+        Food Quality Complaint
+      </h4>
+
+      <p>
+        Report undercooked, stale, or poor-quality food.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        ]]>🚫
+<![CDATA[      </div>
+
+      <h4>
+        Meal Not Available
+      </h4>
+
+      <p>
+        Menu item unavailable during serving hours.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        ]]>🧼
+<![CDATA[      </div>
+
+      <h4>
+        Food Hygiene Issue
+      </h4>
+
+      <p>
+        Cleanliness concerns in dining or prep areas.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        ]]>🥗
+<![CDATA[      </div>
+
+      <h4>
+        Special Diet Request
+      </h4>
+
+      <p>
+        Vegetarian, vegan, halal, or medical diet needs.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        ⚠️
+      </div>
+
+      <h4>
+        Allergy Management Request
+      </h4>
+
+      <p>
+        Request allergen-aware meal handling.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        ]]>💬
+<![CDATA[      </div>
+
+      <h4>
+        Food Menu Feedback
+      </h4>
+
+      <p>
+        Share feedback on taste, variety, and menu options.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        ]]>📅
+<![CDATA[      </div>
+
+      <h4>
+        Meal Reservation / Pre-Booking
+      </h4>
+
+      <p>
+        Reserve a meal slot in advance.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        ⏰
+      </div>
+
+      <h4>
+        Missed Meal Request
+      </h4>
+
+      <p>
+        Missed a meal due to class or exam schedule.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        ♻️
+      </div>
+
+      <h4>
+        Food Wastage Reporting
+      </h4>
+
+      <p>
+        Flag excess food waste for corrective action.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        ]]>🚨
+<![CDATA[      </div>
+
+      <h4>
+        Emergency Food Assistance
+      </h4>
+
+      <p>
+        Request food support during emergencies or late arrivals.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        ]]>🧾
+<![CDATA[      </div>
+
+      <h4>
+        Hostel Mess Billing Issue
+      </h4>
+
+      <p>
+        Dispute meal charges or mess fees.
+      </p>
+
+    </div>
+
+
+    <div class="cfa-service-card">
+
+      <div class="cfa-service-icon">
+        ]]>🤖
+<![CDATA[      </div>
+
+      <h4>
+        Smart Menu Recommendation
+      </h4>
+
+      <p>
+        Get personalized meal suggestions.
+      </p>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+<!-- ==========================================
+     ABOUT
+     ========================================== -->
+
+<section id="about" class="cfa-about">
+
+  <div class="cfa-about-inner">
+
+    <h2>
+      About the project
+    </h2>
+
+    <p>
+      Team Tech Titans built the Campus Food Services Assistant to give students
+      one simple place to report food-related issues, and to give hostel staff
+      an AI-assisted system to classify, prioritize, and resolve them faster.
+    </p>
+
+
+    <div class="cfa-team-grid">
+
+
+      <div class="cfa-team-card">
+
+        <b>
+          V. Pavan Kumar
+        </b>
+
+        <span>
+          Team Lead & App Architect
+        </span>
+
+      </div>
+
+
+      <div class="cfa-team-card">
+
+        <b>
+          S. Sameera
+        </b>
+
+        <span>
+          Flow & Automation Developer
+        </span>
+
+      </div>
+
+
+      <div class="cfa-team-card">
+
+        <b>
+          Y. Madhusudhan Reddy
+        </b>
+
+        <span>
+          AI & Virtual Agent Developer
+        </span>
+
+      </div>
+
+
+      <div class="cfa-team-card">
+
+        <b>
+          B. Anjali
+        </b>
+
+        <span>
+          QA & Analytics
+        </span>
+
+      </div>
+
+
+    </div>
+
+
+    <p class="cfa-college">
+      K.S.R.M. College of Engineering — LTM HackNow India
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- ==========================================
+     CONTACT / HELP
+     ========================================== -->
+
+<section id="contact" class="cfa-contact">
+
+  <div class="cfa-contact-inner">
+
+    <h2>
+      Need help?
+    </h2>
+
+
+    <div class="cfa-contact-grid">
+
+
+      <div class="cfa-contact-card">
+
+        <div class="cfa-contact-icon">
+          ]]>📧
+<![CDATA[        </div>
+
+        <b>
+          Email support
+        </b>
+
+        <span>
+          foodservices@ksrmce.ac.in
+        </span>
+
+      </div>
+
+
+      <div class="cfa-contact-card">
+
+        <div class="cfa-contact-icon">
+          ☎️
+        </div>
+
+        <b>
+          Hostel office
+        </b>
+
+        <span>
+          +91 98765 43210
+        </span>
+
+      </div>
+
+
+      <div class="cfa-contact-card">
+
+        <div class="cfa-contact-icon">
+          ]]>📍
+<![CDATA[        </div>
+
+        <b>
+          Campus location
+        </b>
+
+        <span>
+          K.S.R.M. College of Engineering, Kadapa, Andhra Pradesh
+        </span>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ==========================================
+     NEW FOOTER
+     ========================================== -->
+
+<footer class="cfs-footer">
+
+
+  <div class="footer-container">
+
+
+    <!-- BRAND -->
+
+    <div class="footer-brand">
+
+      <h3>
+        Campus Food Services
+      </h3>
+
+      <p>
+        Making campus food services
+        easier, faster and more transparent.
+      </p>
+
+    </div>
+
+
+    <!-- QUICK LINKS -->
+
+    <div class="footer-column">
+
+      <h4>
+        Quick Links
+      </h4>
+
+
+      <!-- CLICKABLE: HOME -->
+
+      <a href="#home">
+        Home
+      </a>
+
+
+      <!-- CLICKABLE: SERVICES / 12 USE CASES -->
+
+      <a href="#services">
+        Services
+      </a>
+
+
+      <!-- CLICKABLE: ABOUT -->
+
+      <a href="#about">
+        About
+      </a>
+
+
+    </div>
+
+
+    <!-- SUPPORT -->
+
+    <div class="footer-column">
+
+      <h4>
+        Support
+      </h4>
+
+
+      <!-- CLICKABLE: HELP -->
+
+      <a href="#contact">
+        Help
+      </a>
+
+
+      <!-- CLICKABLE: FEEDBACK -->
+
+      <a href="#contact">
+        Feedback
+      </a>
+
+
+      <!-- CLICKABLE: CONTACT -->
+
+      <a href="#contact">
+        Contact
+      </a>
+
+
+    </div>
+
+
+  </div>
+
+
+  <!-- FOOTER BOTTOM -->
+
+  <div class="footer-bottom">
+
+    <span>
+      © {{c.data.year}} Campus Food Services Assistant
+    </span>
+
+    <span>
+      All rights reserved.
+    </span>
+
+  </div>
+
+
+</footer>
+
+
+<!-- ==========================================
+     SMOOTH SCROLL
+     ========================================== -->
+
+<style>
+
+html {
+  scroll-behavior: smooth;
+}
+
+#home,
+#services,
+#about,
+#contact {
+  scroll-margin-top: 75px;
+}
+
+</style>
+```
+]]></template>
+    </sp_widget>
+</record_update>

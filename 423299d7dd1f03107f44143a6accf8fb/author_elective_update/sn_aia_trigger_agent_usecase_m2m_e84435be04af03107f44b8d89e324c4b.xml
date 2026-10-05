@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sn_aia_trigger_agent_usecase_m2m">
+    <sn_aia_trigger_agent_usecase_m2m action="DELETE">
+        <active>false</active>
+        <objective_template><![CDATA[Automatically launch the Food Base Problem Priority Agent when a Food Base Problem record is created or updated and has a Use Case. The agent receives the Food Base Problem record number, retrieves the Food Base Problem details, matches the Use Case with the Use Case Priority table, and returns the configured Base Priority and Priority Reason.]]></objective_template>
+        <related_resource_record>be219d21112703107f44be1983f83811</related_resource_record>
+        <related_resource_table>sn_aia_agent</related_resource_table>
+        <sys_class_name>sn_aia_trigger_agent_usecase_m2m</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 10:23:17</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>e84435be04af03107f44b8d89e324c4b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_overrides/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sn_aia_trigger_agent_usecase_m2m_e84435be04af03107f44b8d89e324c4b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 10:23:17</sys_updated_on>
+        <trigger_configuration display_value="x_snc_campus_foo_1_food_base_problem">2844f1be04af03107f44b8d89e324ce4</trigger_configuration>
+    </sn_aia_trigger_agent_usecase_m2m>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>sn_aia_trigger_agent_usecase_m2m_e84435be04af03107f44b8d89e324c4b</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sn_aia_trigger_agent_usecase_m2m"&gt;&lt;sn_aia_trigger_agent_usecase_m2m action="INSERT_OR_UPDATE"&gt;&lt;active&gt;false&lt;/active&gt;&lt;objective_template&gt;&lt;![CDATA[Automatically launch the Food Base Problem Priority Agent when a Food Base Problem record is created or updated and has a Use Case. The agent receives the Food Base Problem record number, retrieves the Food Base Problem details, matches the Use Case with the Use Case Priority table, and returns the configured Base Priority and Priority Reason.]]&gt;&lt;/objective_template&gt;&lt;related_resource_record&gt;be219d21112703107f44be1983f83811&lt;/related_resource_record&gt;&lt;related_resource_table&gt;sn_aia_agent&lt;/related_resource_table&gt;&lt;sys_class_name&gt;sn_aia_trigger_agent_usecase_m2m&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-09-29 10:23:17&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_id&gt;e84435be04af03107f44b8d89e324c4b&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name/&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Campus Food Services Assistant"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_scope&gt;&lt;sys_update_name&gt;sn_aia_trigger_agent_usecase_m2m_e84435be04af03107f44b8d89e324c4b&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-09-29 10:23:17&lt;/sys_updated_on&gt;&lt;trigger_configuration display_value="x_snc_campus_foo_1_food_base_problem"&gt;2844f1be04af03107f44b8d89e324ce4&lt;/trigger_configuration&gt;&lt;/sn_aia_trigger_agent_usecase_m2m&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-193481850</payload_hash>
+        <record_name/>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 10:23:17</sys_created_on>
+        <sys_id>a04435be04af03107f44b8d89e324c4f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0ecb0aee90000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 10:23:17</sys_updated_on>
+        <type>Trigger M2M</type>
+        <update_guid>a44435be8caf031019414c181a1b094e</update_guid>
+        <update_guid_history>a44435be8caf031019414c181a1b094e:-193481850</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="">5454b5be04af03107f44b8d89e324c66</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 10:23:32</sys_created_on>
+        <sys_db_object display_value="" name="sn_aia_trigger_agent_usecase_m2m">sn_aia_trigger_agent_usecase_m2m</sys_db_object>
+        <sys_id>487a0ade9aed4e949cf5bb80f7f97f59</sys_id>
+        <sys_metadata>e84435be04af03107f44b8d89e324c4b</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>sn_aia_trigger_agent_usecase_m2m_e84435be04af03107f44b8d89e324c4b</sys_update_name>
+        <sys_update_version display_value="sn_aia_trigger_agent_usecase_m2m_e84435be04af03107f44b8d89e324c4b">a04435be04af03107f44b8d89e324c4f</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 10:23:32</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

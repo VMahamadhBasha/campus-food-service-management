@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_design_topic">
+    <sys_cb_design_topic action="INSERT_OR_UPDATE">
+        <compiled_topic display_value="_PRVW__6eccc24e33054e60980a65c8250db94a">a6a90bd78c2703107f442c4fb55dc2f3</compiled_topic>
+        <design_definition>{"type":"FlowTopic","triggers":[{"type":"Trigger","name":"9b0484aad4164a94a5b19ae113bb11f6","triggerType":"request","applicability":{"type":"Applicability","mode":"script","value":"true"},"id":"9b0484aad4164a94a5b19ae113bb11f6"}],"goals":[{"name":"primary","trigger_id":"9b0484aad4164a94a5b19ae113bb11f6","nodes":[{"type":"StartGoal","goal_id":"primary","greeting_msg":{"type":"String","mode":"string","value":""},"id":"03b3dcc189384ce0a7130c6943ff164b","name":"Start","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","confirmation_msg":{"type":"String","mode":"string","value":""},"id":"615f51650f3949fda06c040506a8869e","name":"End","expert_mode":false},{"type":"TextOutputPrompt","value":[{"type":"String","mode":"string","value":"gs.getMessageLang(\"va:topic:e3f68f538c2703107f442c4fb55dc29e:node:ac23f400f4fe485b84f86b5af131f7f6:field:0\", vaContext.getRequesterLang())"}],"request_feedback":true,"isCollapsible":true,"id":"ac23f400f4fe485b84f86b5af131f7f6","name":"Welcome_Admin","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"secure":false},{"type":"LibraryCall","library_topic_name":"Data Collector","library_topic_id":"4c19933e4322211006650464dbb8f22d","library_topic_is_template":false,"parameter-mappings":[{"parameter-name":"definition","value":{"type":"String","mode":"script","value":"(function execute() {\n        var config = {\n            configuration: {\"purpose\":\"{{0}}\",\"inputs\":[{\"name\":\"admin_menu\",\"type\":\"choice\",\"discoverable\":false,\"description\":\"{{4}}\",\"skipMode\":\"'simple'\",\"skipCondition\":\"\\\"\\\"\",\"helpText\":\"false\",\"choices\":[{\"value\":\"view_all\",\"label\":\"View All Complaints\"},{\"value\":\"search_complaint\",\"label\":\"Search Complaint\"},{\"value\":\"update_complaint\",\"label\":\"Update Complaint\"},{\"value\":\"cancel_complaint\",\"label\":\"Cancel Complaint\"},{\"value\":\"manage_groups\",\"label\":\"Manage Assignment Groups\"},{\"value\":\"view_students\",\"label\":\"View All Students\"},{\"value\":\"view_staff\",\"label\":\"View All Staff\"},{\"value\":\"system_statistics\",\"label\":\"System Statistics\"},{\"value\":\"recent_activity\",\"label\":\"Recent Activity\"}],\"applicability\":\"\",\"validation\":\"\"}],\"instructions\":\"{{1}}\",\"advanced_parameters\":\"{{2}}\",\"callingTask\":\"{{3}}\",\"confirm_summary\":false,\"slots\":[],\"applicability\":\"\",\"classificationOverrides\":[]}\n        };\n        return JSON.stringify(config);\n    })()"},"metadata":{"type":"String","list":false,"items":[],"use_items":false}},{"parameter-name":"inputs","metadata":{"type":"String","list":true,"items":[{"type":"String","mode":"string","value":"Collect user input"},{"type":"String","mode":"string","value":""},{"type":"String","mode":"string","value":""},{"type":"String","mode":"script","value":"(function() { return vaSystem.getConversationTaskId()})()"},{"type":"String","mode":"string","value":"\"Please select an administrative operation:\""}],"use_items":true}}],"return-value-mappings":[{"main_topic_variable_namespace":"vaInputs","library_topic_return_parameter_name":"outputs","main_topic_mapped_variable_name":"ai_data_collector_11a7521185b74c7d81f0cdb7c9cff886_output"}],"header_card_fields":[],"input_parameters_mode":"dynamic","output_parameters_mode":"dynamic","id":"11a7521185b74c7d81f0cdb7c9cff886","name":"Admin_Menu","goal_id":"primary","expert_mode":false,"variableIds":["cbd5fe1d6f514a168b34fc9d95dd1387"]},{"type":"Decision","name":"Admin_Decision","branches":[{"type":"Branch","label":"Always","expression":{"type":"Applicability","mode":"query","value":""},"id":"3ee2b62984a84794887b8e055d70a120","name":"Always","expert_mode":false},{"type":"Branch","label":"Always","expression":{"type":"Applicability","mode":"query","value":""},"id":"bc97686e1c584211afaf1814a794ddef","name":"Always","expert_mode":false},{"type":"Branch","label":"View All","expression":{"type":"Applicability","mode":"query","value":"admin_menu=view_all"},"id":"971c2b3ad8ad442e929f351fca8c4f7d","name":"View All","expert_mode":false},{"type":"Branch","label":"Always","expression":{"type":"Applicability","mode":"query","value":""},"id":"4348a361941c42558dd2e493553a32ea","name":"Always","expert_mode":false},{"type":"Branch","label":"Always","expression":{"type":"Applicability","mode":"query","value":""},"id":"714d36502afb4411bd957cfa5fb78451","name":"Always","expert_mode":false},{"type":"Branch","label":"Always","expression":{"type":"Applicability","mode":"query","value":""},"id":"17293076d89c42a8bf32a7b976e16120","name":"Always","expert_mode":false},{"type":"Branch","label":"Always","expression":{"type":"Applicability","mode":"query","value":""},"id":"62ae1671220448f3b0a421f9309beaae","name":"Always","expert_mode":false},{"type":"Branch","label":"Always","expression":{"type":"Applicability","mode":"query","value":""},"id":"31632b5074d545e19703c5c89134fe3f","name":"Always","expert_mode":false},{"type":"Branch","label":"Always","expression":{"type":"Applicability","mode":"query","value":""},"id":"c035934719ad43f08efcd6a6f7f8042a","name":"Always","expert_mode":false}],"id":"aa7e46d481b0412aa7c408f1bd00ffe5","goal_id":"primary","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","id":"53b4cb1edda24368b16c2f9f0ba009b9","name":"ImplicitEnd__8a02161758b2420c8accdc227945ddaf","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","id":"596401489e164808a861ef0f2a980d63","name":"ImplicitEnd__a609598c18ad4bd4bc57dd22ccad5da1","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","id":"10a3b56a97ad4197bb091e16d43e8596","name":"ImplicitEnd__1c08dca81eab4b14b81871f70cba604c","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","id":"c6a83c4a28e845f88e8ed45c46bff9f6","name":"ImplicitEnd__a1611cf2cce5432594570a560e207281","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","id":"ad1657344eac461f886a6bb00f2e2e66","name":"ImplicitEnd__33cb3c987baf4192880952154879dc6f","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","id":"3519b3267948479fa09306ae6ead4c39","name":"ImplicitEnd__4588caa68fa04cc9b0dbb4c71394ceef","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","id":"5e436119e0a846e080fb53e3c6b48f98","name":"ImplicitEnd__c80d22b91596495a98a589811cd61b9f","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","id":"16e19b1a5eda466da313f36a57926361","name":"ImplicitEnd__96202d812d1e47bca4532667d4cf7f23","expert_mode":false},{"type":"ScriptedAction","script":"(function execute() {\n                    var mappings = {\"admin_menu\":\"admin_menu\",\"ai_data_collector_11a7521185b74c7d81f0cdb7c9cff886_output\":\"ai_data_collector_11a7521185b74c7d81f0cdb7c9cff886_output\"};\n                    var output = JSON.parse(vaInputs['ai_data_collector_11a7521185b74c7d81f0cdb7c9cff886_output']);\n                    var variables = {\"user\":{\"category\":\"vaInputs\",\"id\":\"current-user\",\"label\":\"User\",\"name\":\"user\",\"table\":\"sys_user\",\"varType\":\"reference\"},\"ai_data_collector_11a7521185b74c7d81f0cdb7c9cff886_output\":{\"id\":\"6f48afe6807942a68a2ec0b94f345043\",\"name\":\"ai_data_collector_11a7521185b74c7d81f0cdb7c9cff886_output\",\"label\":\"Ai_data_collector_11a7521185b74c7d81f0cdb7c9cff886_output\",\"isReferenceable\":false,\"varType\":\"string\",\"category\":\"vaInputs\",\"metadata\":{\"libraryMappingType\":\"output\"}},\"admin_menu\":{\"id\":\"cbd5fe1d6f514a168b34fc9d95dd1387\",\"varType\":\"choice\",\"category\":\"vaInputs\",\"label\":\"Admin_Menu\",\"name\":\"admin_menu\",\"choices\":[{\"label\":\"View All Complaints\",\"value\":\"view_all\"},{\"label\":\"Search Complaint\",\"value\":\"search_complaint\",\"checked\":true,\"meta\":{}},{\"label\":\"Update Complaint\",\"value\":\"update_complaint\",\"checked\":true,\"meta\":{}},{\"label\":\"Cancel Complaint\",\"value\":\"cancel_complaint\",\"checked\":true,\"meta\":{}},{\"label\":\"Manage Assignment Groups\",\"value\":\"manage_groups\"},{\"label\":\"View All Students\",\"value\":\"view_students\",\"checked\":true,\"meta\":{}},{\"label\":\"View All Staff\",\"value\":\"view_staff\",\"checked\":true,\"meta\":{}},{\"label\":\"System Statistics\",\"value\":\"system_statistics\",\"checked\":true,\"meta\":{}},{\"label\":\"Recent Activity\",\"value\":\"recent_activity\",\"checked\":true,\"meta\":{}}],\"mode\":\"\",\"table\":\"\",\"aiInput\":true,\"inputId\":0,\"nodeId\":\"11a7521185b74c7d81f0cdb7c9cff886\",\"isHidden\":false}}\n                    Object.keys(output).forEach(function(key) {\n                        var mappedKey = mappings[key];\n                        if (!vaInputs[mappedKey]) {vaInputs.initialize(mappedKey);}\n                        var isMultiSelect = variables[mappedKey] &amp;&amp; variables[mappedKey].varType === 'array.reference';\n                        if (isMultiSelect) {vaInputs[mappedKey] = output[key] ? JSON.parse(output[key]) : '';}\n                        else {vaInputs[mappedKey] = output[key];}\n                    });\n                })()","id":"43df63c4c76a4c9ebb7b96f8b983448a","name":"11a7521185b74c7d81f0cdb7c9cff886_ai_data_collector_output_handler","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false}],"edges":[{"type":"Edge","source_node_id":"03b3dcc189384ce0a7130c6943ff164b","target_node_id":"ac23f400f4fe485b84f86b5af131f7f6","id":"ad024fa7b3fb4ff8883bcf305fe6122a"},{"type":"Edge","source_node_id":"ac23f400f4fe485b84f86b5af131f7f6","target_node_id":"11a7521185b74c7d81f0cdb7c9cff886","id":"21f4876b8d4547398c9f0c7bb0b9b661"},{"type":"Edge","source_node_id":"11a7521185b74c7d81f0cdb7c9cff886","target_node_id":"43df63c4c76a4c9ebb7b96f8b983448a","id":"b7880f6ba2f3442cbf4e29e44fa7c857"},{"type":"Edge","source_node_id":"43df63c4c76a4c9ebb7b96f8b983448a","target_node_id":"aa7e46d481b0412aa7c408f1bd00ffe5","id":"c015c3ca81ff40e38793d703de8d2529"},{"type":"Edge","source_node_id":"aa7e46d481b0412aa7c408f1bd00ffe5","target_node_id":"615f51650f3949fda06c040506a8869e","branch_id":"3ee2b62984a84794887b8e055d70a120","id":"d5d1864943b74f7e916d10a33b9ffb37","name":"3ee2b62984a84794887b8e055d70a120"},{"type":"Edge","source_node_id":"aa7e46d481b0412aa7c408f1bd00ffe5","target_node_id":"53b4cb1edda24368b16c2f9f0ba009b9","branch_id":"bc97686e1c584211afaf1814a794ddef","id":"5b4d5a9f1fb24b7ca07faeee3bfe50dd","name":"bc97686e1c584211afaf1814a794ddef"},{"type":"Edge","source_node_id":"aa7e46d481b0412aa7c408f1bd00ffe5","target_node_id":"596401489e164808a861ef0f2a980d63","branch_id":"971c2b3ad8ad442e929f351fca8c4f7d","id":"bf3e86757bab44e8bbb6a18ddb2e6c0e","name":"971c2b3ad8ad442e929f351fca8c4f7d"},{"type":"Edge","source_node_id":"aa7e46d481b0412aa7c408f1bd00ffe5","target_node_id":"10a3b56a97ad4197bb091e16d43e8596","branch_id":"4348a361941c42558dd2e493553a32ea","id":"b8cda2cd5b2f4fc39411ec98d637f950","name":"4348a361941c42558dd2e493553a32ea"},{"type":"Edge","source_node_id":"aa7e46d481b0412aa7c408f1bd00ffe5","target_node_id":"c6a83c4a28e845f88e8ed45c46bff9f6","branch_id":"714d36502afb4411bd957cfa5fb78451","id":"9d547e6258254d62a837cf0d4dc1d236","name":"714d36502afb4411bd957cfa5fb78451"},{"type":"Edge","source_node_id":"aa7e46d481b0412aa7c408f1bd00ffe5","target_node_id":"ad1657344eac461f886a6bb00f2e2e66","branch_id":"17293076d89c42a8bf32a7b976e16120","id":"deb9a6aa9df14db1944b5ce2343d19f2","name":"17293076d89c42a8bf32a7b976e16120"},{"type":"Edge","source_node_id":"aa7e46d481b0412aa7c408f1bd00ffe5","target_node_id":"3519b3267948479fa09306ae6ead4c39","branch_id":"62ae1671220448f3b0a421f9309beaae","id":"b74cd2f88b3c421693574163b84188ab","name":"62ae1671220448f3b0a421f9309beaae"},{"type":"Edge","source_node_id":"aa7e46d481b0412aa7c408f1bd00ffe5","target_node_id":"5e436119e0a846e080fb53e3c6b48f98","branch_id":"31632b5074d545e19703c5c89134fe3f","id":"7bca13de2b32406da7d0f253887582ba","name":"31632b5074d545e19703c5c89134fe3f"},{"type":"Edge","source_node_id":"aa7e46d481b0412aa7c408f1bd00ffe5","target_node_id":"16e19b1a5eda466da313f36a57926361","branch_id":"c035934719ad43f08efcd6a6f7f8042a","id":"f432dcb21aea47c5980d974758a5690b","name":"c035934719ad43f08efcd6a6f7f8042a"}],"id":"primary"}],"script_variables":[],"glide_variables":[{"type":"Reference","table":"sys_user","auto_select":false,"id":"current-user","name":"user","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false},{"type":"String","name":"ai_data_collector_11a7521185b74c7d81f0cdb7c9cff886_output","list":false,"id":"6f48afe6807942a68a2ec0b94f345043","formatType":"text","metadata":{"libraryMappingType":"output"},"secure":false,"sensitive":false,"aiInput":false},{"type":"Choice","choices":[{"name":"View All Complaints","element":"view_all"},{"name":"Search Complaint","element":"search_complaint"},{"name":"Update Complaint","element":"update_complaint"},{"name":"Cancel Complaint","element":"cancel_complaint"},{"name":"Manage Assignment Groups","element":"manage_groups"},{"name":"View All Students","element":"view_students"},{"name":"View All Staff","element":"view_staff"},{"name":"System Statistics","element":"system_statistics"},{"name":"Recent Activity","element":"recent_activity"}],"id":"cbd5fe1d6f514a168b34fc9d95dd1387","name":"admin_menu","description":"","formatType":"text","secure":false,"sensitive":false,"aiInput":true,"list":false,"translation":true,"label":"Admin_Menu"}],"applicability":{"type":"Applicability","mode":"script","value":"true"},"roles":["x_snc_campus_foo_1.admin"],"scope":"423299d7dd1f03107f44143a6accf8fb","domain":"global","topic_type":"STANDARD","channels":[],"dialog_acts_enabled":false,"id":"e3f68f538c2703107f442c4fb55dc29e","name":"_PRVW__6eccc24e33054e60980a65c8250db94a","key_phrases":[],"nlu_provider":"","nlu_model":"","nlu_model_label":"","nlu_intent":"","nlu_intent_label":"","flexible_conversation_switching":false,"autopilot_topic":false,"design_categories":[],"triggerable_by_notification":false,"description":"Helps CFMS administrators manage campus food service complaints, users, assignments, records, system monitoring, and overall food service operations.","model_type":"llm","foundational":false,"modify_confirmation_enabled":false,"context_profiles":["b51fa936046f03107f44b8d89e324c99"],"title":"CFMS Admin Assistant","library":false,"readOnly":false,"nluMapping":"[]"}</design_definition>
+        <design_topic_id>e3f68f538c2703107f442c4fb55dc29e</design_topic_id>
+        <graph>{
+  "graph_api_version": "1.0.82",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "03b3dcc189384ce0a7130c6943ff164b": {
+          "id": "03b3dcc189384ce0a7130c6943ff164b",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "615f51650f3949fda06c040506a8869e": {
+          "id": "615f51650f3949fda06c040506a8869e",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "ac23f400f4fe485b84f86b5af131f7f6": {
+          "id": "ac23f400f4fe485b84f86b5af131f7f6",
+          "stepType": "TextOutput",
+          "name": "Welcome_Admin",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "👋 Welcome to the Campus Food Management System."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "I'm your Admin Assistant. I can help you manage complaints, users, assignments, records, and monitor overall campus food service operations."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "Please select an option below to continue."
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "_key": "242a95fc65f7486f90515c19a0d866c8"
+            }
+          ],
+          "isCollapsible": true,
+          "requestFeedback": true,
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "11a7521185b74c7d81f0cdb7c9cff886": {
+          "id": "11a7521185b74c7d81f0cdb7c9cff886",
+          "stepType": "StandaloneAIChoicePrompt",
+          "name": "Admin_Menu",
+          "purpose": {
+            "value": "",
+            "mode": "simple"
+          },
+          "instructions": {
+            "value": "",
+            "mode": "simple"
+          },
+          "inputs": [
+            {
+              "itemId": "7f04d5dafd1c4873b5bb85d3175e45f2",
+              "displayName": "Admin_Menu",
+              "name": "admin_menu",
+              "description": "",
+              "discoverable": false,
+              "dynamicDescription": {
+                "value": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Please select an administrative operation:"
+                      }
+                    ]
+                  }
+                ],
+                "mode": "simple"
+              },
+              "type": "choice",
+              "variableId": "cbd5fe1d6f514a168b34fc9d95dd1387",
+              "choices": [
+                {
+                  "label": "View All Complaints",
+                  "value": "view_all"
+                },
+                {
+                  "label": "Search Complaint",
+                  "value": "search_complaint",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Update Complaint",
+                  "value": "update_complaint",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Cancel Complaint",
+                  "value": "cancel_complaint",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Manage Assignment Groups",
+                  "value": "manage_groups"
+                },
+                {
+                  "label": "View All Students",
+                  "value": "view_students",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "View All Staff",
+                  "value": "view_staff",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "System Statistics",
+                  "value": "system_statistics",
+                  "checked": true,
+                  "meta": {}
+                },
+                {
+                  "label": "Recent Activity",
+                  "value": "recent_activity",
+                  "checked": true,
+                  "meta": {}
+                }
+              ],
+              "mode": "",
+              "script": "",
+              "condition": {
+                "value": "",
+                "mode": "glide_query"
+              },
+              "stepType": "ChoicePrompt",
+              "enforcePrompt": false,
+              "helpText": false,
+              "skippable": {
+                "value": "",
+                "mode": "query"
+              },
+              "applicability": {
+                "value": "",
+                "mode": "query"
+              },
+              "promptMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "helpTextMessage": {
+                "value": "",
+                "mode": "simple"
+              },
+              "inputType": {
+                "format": "Text",
+                "script": ""
+              },
+              "isMultipleSelect": false,
+              "validation": "",
+              "autoSelect": true,
+              "hasCardHeader": false,
+              "cardMetadata": {
+                "mode": "card",
+                "metadataScript": "",
+                "cardTemplate": "",
+                "cardFields": {},
+                "cardDefinition": {}
+              }
+            }
+          ],
+          "outputs": [],
+          "advanced_parameters": "",
+          "confirmSummary": false,
+          "useSlots": false,
+          "slots": "",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "hiddenVariableIds": [
+            "6f48afe6807942a68a2ec0b94f345043"
+          ],
+          "hiddenVariableNames": [
+            "ai_data_collector_11a7521185b74c7d81f0cdb7c9cff886_output"
+          ],
+          "classificationEnabled": false,
+          "classificationOverrides": [],
+          "standalone": true,
+          "variableIds": [
+            "cbd5fe1d6f514a168b34fc9d95dd1387"
+          ]
+        },
+        "aa7e46d481b0412aa7c408f1bd00ffe5": {
+          "id": "aa7e46d481b0412aa7c408f1bd00ffe5",
+          "stepType": "Decision",
+          "name": "Admin_Decision"
+        },
+        "53b4cb1edda24368b16c2f9f0ba009b9": {
+          "id": "53b4cb1edda24368b16c2f9f0ba009b9",
+          "stepType": "ImplicitEnd"
+        },
+        "596401489e164808a861ef0f2a980d63": {
+          "id": "596401489e164808a861ef0f2a980d63",
+          "stepType": "ImplicitEnd"
+        },
+        "10a3b56a97ad4197bb091e16d43e8596": {
+          "id": "10a3b56a97ad4197bb091e16d43e8596",
+          "stepType": "ImplicitEnd"
+        },
+        "c6a83c4a28e845f88e8ed45c46bff9f6": {
+          "id": "c6a83c4a28e845f88e8ed45c46bff9f6",
+          "stepType": "ImplicitEnd"
+        },
+        "ad1657344eac461f886a6bb00f2e2e66": {
+          "id": "ad1657344eac461f886a6bb00f2e2e66",
+          "stepType": "ImplicitEnd"
+        },
+        "3519b3267948479fa09306ae6ead4c39": {
+          "id": "3519b3267948479fa09306ae6ead4c39",
+          "stepType": "ImplicitEnd"
+        },
+        "5e436119e0a846e080fb53e3c6b48f98": {
+          "id": "5e436119e0a846e080fb53e3c6b48f98",
+          "stepType": "ImplicitEnd"
+        },
+        "16e19b1a5eda466da313f36a57926361": {
+          "id": "16e19b1a5eda466da313f36a57926361",
+          "stepType": "ImplicitEnd"
+        }
+      },
+      "edges": [
+        {
+          "id": "ad024fa7b3fb4ff8883bcf305fe6122a",
+          "edgeType": "Edge",
+          "source": "03b3dcc189384ce0a7130c6943ff164b",
+          "target": "ac23f400f4fe485b84f86b5af131f7f6",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "21f4876b8d4547398c9f0c7bb0b9b661",
+          "edgeType": "Edge",
+          "source": "ac23f400f4fe485b84f86b5af131f7f6",
+          "target": "11a7521185b74c7d81f0cdb7c9cff886",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "5dba6b23bdb94b18af17e98b8cd424c2",
+          "edgeType": "Edge",
+          "source": "11a7521185b74c7d81f0cdb7c9cff886",
+          "target": "aa7e46d481b0412aa7c408f1bd00ffe5",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "d5d1864943b74f7e916d10a33b9ffb37",
+          "edgeType": "Branch",
+          "source": "aa7e46d481b0412aa7c408f1bd00ffe5",
+          "target": "615f51650f3949fda06c040506a8869e",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "",
+            "mode": "query"
+          },
+          "label": "Always"
+        },
+        {
+          "id": "5b4d5a9f1fb24b7ca07faeee3bfe50dd",
+          "edgeType": "Branch",
+          "source": "aa7e46d481b0412aa7c408f1bd00ffe5",
+          "target": "53b4cb1edda24368b16c2f9f0ba009b9",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "query",
+            "value": ""
+          },
+          "label": "Always"
+        },
+        {
+          "id": "bf3e86757bab44e8bbb6a18ddb2e6c0e",
+          "edgeType": "Branch",
+          "source": "aa7e46d481b0412aa7c408f1bd00ffe5",
+          "target": "596401489e164808a861ef0f2a980d63",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.admin_menu=view_all",
+            "mode": "query"
+          },
+          "label": "View All"
+        },
+        {
+          "id": "b8cda2cd5b2f4fc39411ec98d637f950",
+          "edgeType": "Branch",
+          "source": "aa7e46d481b0412aa7c408f1bd00ffe5",
+          "target": "10a3b56a97ad4197bb091e16d43e8596",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "query",
+            "value": ""
+          },
+          "label": "Always"
+        },
+        {
+          "id": "9d547e6258254d62a837cf0d4dc1d236",
+          "edgeType": "Branch",
+          "source": "aa7e46d481b0412aa7c408f1bd00ffe5",
+          "target": "c6a83c4a28e845f88e8ed45c46bff9f6",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "query",
+            "value": ""
+          },
+          "label": "Always"
+        },
+        {
+          "id": "deb9a6aa9df14db1944b5ce2343d19f2",
+          "edgeType": "Branch",
+          "source": "aa7e46d481b0412aa7c408f1bd00ffe5",
+          "target": "ad1657344eac461f886a6bb00f2e2e66",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "query",
+            "value": ""
+          },
+          "label": "Always"
+        },
+        {
+          "id": "b74cd2f88b3c421693574163b84188ab",
+          "edgeType": "Branch",
+          "source": "aa7e46d481b0412aa7c408f1bd00ffe5",
+          "target": "3519b3267948479fa09306ae6ead4c39",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "query",
+            "value": ""
+          },
+          "label": "Always"
+        },
+        {
+          "id": "7bca13de2b32406da7d0f253887582ba",
+          "edgeType": "Branch",
+          "source": "aa7e46d481b0412aa7c408f1bd00ffe5",
+          "target": "5e436119e0a846e080fb53e3c6b48f98",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "query",
+            "value": ""
+          },
+          "label": "Always"
+        },
+        {
+          "id": "f432dcb21aea47c5980d974758a5690b",
+          "edgeType": "Branch",
+          "source": "aa7e46d481b0412aa7c408f1bd00ffe5",
+          "target": "16e19b1a5eda466da313f36a57926361",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "query",
+            "value": ""
+          },
+          "label": "Always"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "6f48afe6807942a68a2ec0b94f345043": {
+      "id": "6f48afe6807942a68a2ec0b94f345043",
+      "name": "ai_data_collector_11a7521185b74c7d81f0cdb7c9cff886_output",
+      "label": "Ai_data_collector_11a7521185b74c7d81f0cdb7c9cff886_output",
+      "isReferenceable": false,
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "output"
+      }
+    },
+    "cbd5fe1d6f514a168b34fc9d95dd1387": {
+      "id": "cbd5fe1d6f514a168b34fc9d95dd1387",
+      "varType": "choice",
+      "category": "vaInputs",
+      "label": "Admin_Menu",
+      "name": "admin_menu",
+      "choices": [
+        {
+          "label": "View All Complaints",
+          "value": "view_all"
+        },
+        {
+          "label": "Search Complaint",
+          "value": "search_complaint",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Update Complaint",
+          "value": "update_complaint",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Cancel Complaint",
+          "value": "cancel_complaint",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Manage Assignment Groups",
+          "value": "manage_groups"
+        },
+        {
+          "label": "View All Students",
+          "value": "view_students",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "View All Staff",
+          "value": "view_staff",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "System Statistics",
+          "value": "system_statistics",
+          "checked": true,
+          "meta": {}
+        },
+        {
+          "label": "Recent Activity",
+          "value": "recent_activity",
+          "checked": true,
+          "meta": {}
+        }
+      ],
+      "mode": "",
+      "table": "",
+      "aiInput": true,
+      "inputId": 0,
+      "nodeId": "11a7521185b74c7d81f0cdb7c9cff886",
+      "isHidden": false
+    }
+  }
+}</graph>
+        <name>_PRVW__6eccc24e33054e60980a65c8250db94a</name>
+        <sys_class_name>sys_cb_design_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-01 05:53:24</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>eaa90bd78c2703107f442c4fb55dc2f7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>FlowTopic</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_cb_design_topic_eaa90bd78c2703107f442c4fb55dc2f7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-01 05:53:24</sys_updated_on>
+        <type>FlowTopic</type>
+    </sys_cb_design_topic>
+</record_update>

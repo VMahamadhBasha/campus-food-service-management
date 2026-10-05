@@ -1,0 +1,3587 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+
+    var c = this;
+
+
+    /*
+     * =========================================
+     * DASHBOARD
+     * =========================================
+     */
+
+    c.dashboard = function() {
+
+        window.location.href =
+            "?id=cfms_student";
+
+    };
+
+
+    /*
+     * =========================================
+     * RAISE REQUEST
+     * =========================================
+     */
+
+    c.raiseRequest = function() {
+
+        window.location.href =
+            "?id=cfms_raise";
+
+    };
+
+
+    /*
+     * =========================================
+     * MY REQUESTS
+     * =========================================
+     */
+
+    c.myRequests = function() {
+
+        window.location.href =
+            "?id=cfms_requests";
+
+    };
+
+
+    /*
+     * =========================================
+     * FEEDBACK
+     * =========================================
+     */
+
+    c.feedback = function() {
+
+        window.location.href =
+            "?id=cfms_feedback";
+
+    };
+
+
+    /*
+     * =========================================
+     * LOGOUT
+     * =========================================
+     */
+
+    c.logout = function() {
+
+        window.location.href =
+            "/logout.do";
+
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================&#13;
+   CFMS STUDENT DASHBOARD&#13;
+   ========================================= */&#13;
+&#13;
+.cfms-student-page {&#13;
+    min-height: 100vh;&#13;
+&#13;
+    background: #f0fbfc;&#13;
+&#13;
+    color: #263238;&#13;
+&#13;
+    font-family:&#13;
+        "Segoe UI",&#13;
+        Tahoma,&#13;
+        Geneva,&#13;
+        Verdana,&#13;
+        sans-serif;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   HEADER&#13;
+   ========================================= */&#13;
+&#13;
+.student-header {&#13;
+    height: 72px;&#13;
+&#13;
+    background: #00acc1;&#13;
+&#13;
+    color: white;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: space-between;&#13;
+&#13;
+    padding: 0 35px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+&#13;
+.student-brand {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+.brand-icon {&#13;
+    width: 43px;&#13;
+    height: 43px;&#13;
+&#13;
+    border-radius: 9px;&#13;
+&#13;
+    background: white;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 22px;&#13;
+}&#13;
+&#13;
+&#13;
+.student-brand h2 {&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 23px;&#13;
+&#13;
+    line-height: 1.1;&#13;
+}&#13;
+&#13;
+&#13;
+.student-brand span {&#13;
+    font-size: 11px;&#13;
+&#13;
+    opacity: 0.9;&#13;
+}&#13;
+&#13;
+&#13;
+/* USER */&#13;
+&#13;
+.student-user {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+.user-avatar {&#13;
+    width: 38px;&#13;
+    height: 38px;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: white;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+}&#13;
+&#13;
+&#13;
+.user-info {&#13;
+    display: flex;&#13;
+&#13;
+    flex-direction: column;&#13;
+}&#13;
+&#13;
+&#13;
+.user-info strong {&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+.user-info span {&#13;
+    font-size: 11px;&#13;
+&#13;
+    opacity: 0.85;&#13;
+}&#13;
+&#13;
+&#13;
+.logout-btn {&#13;
+    margin-left: 15px;&#13;
+&#13;
+    padding: 8px 13px;&#13;
+&#13;
+    border: 1px solid rgba(255,255,255,0.7);&#13;
+&#13;
+    background: transparent;&#13;
+&#13;
+    color: white;&#13;
+&#13;
+    border-radius: 6px;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+.logout-btn:hover {&#13;
+    background: white;&#13;
+&#13;
+    color: #00acc1;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   LAYOUT&#13;
+   ========================================= */&#13;
+&#13;
+.student-layout {&#13;
+    display: flex;&#13;
+&#13;
+    min-height: calc(100vh - 72px);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   SIDEBAR&#13;
+   ========================================= */&#13;
+&#13;
+.student-sidebar {&#13;
+    width: 235px;&#13;
+&#13;
+    flex-shrink: 0;&#13;
+&#13;
+    background: white;&#13;
+&#13;
+    border-right: 1px solid #dceff1;&#13;
+&#13;
+    padding: 25px 15px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-title {&#13;
+    padding: 0 12px 15px;&#13;
+&#13;
+    color: #78909c;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    letter-spacing: 1px;&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-item {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 13px;&#13;
+&#13;
+    padding: 13px 14px;&#13;
+&#13;
+    margin-bottom: 5px;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    color: #546e7a !important;&#13;
+&#13;
+    text-decoration: none !important;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    transition: 0.2s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-item i {&#13;
+    width: 20px;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+    font-size: 17px;&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-item:hover {&#13;
+    background: #e0f7fa;&#13;
+&#13;
+    color: #00acc1 !important;&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-item.active {&#13;
+    background: #e0f7fa;&#13;
+&#13;
+    color: #00acc1 !important;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+.sidebar-divider {&#13;
+    height: 1px;&#13;
+&#13;
+    background: #e5eeee;&#13;
+&#13;
+    margin: 20px 10px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   MAIN CONTENT&#13;
+   ========================================= */&#13;
+&#13;
+.student-content {&#13;
+    flex: 1;&#13;
+&#13;
+    padding: 35px 45px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    max-width: 1400px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   WELCOME&#13;
+   ========================================= */&#13;
+&#13;
+.welcome-section {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: space-between;&#13;
+&#13;
+    margin-bottom: 30px;&#13;
+}&#13;
+&#13;
+&#13;
+.page-label {&#13;
+    color: #00acc1;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    letter-spacing: 1px;&#13;
+}&#13;
+&#13;
+&#13;
+.welcome-section h1 {&#13;
+    margin: 7px 0;&#13;
+&#13;
+    font-size: 31px;&#13;
+&#13;
+    color: #263238;&#13;
+}&#13;
+&#13;
+&#13;
+.welcome-section p {&#13;
+    margin: 0;&#13;
+&#13;
+    color: #607d8b;&#13;
+&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+.quick-request-btn {&#13;
+    background: #00acc1;&#13;
+&#13;
+    color: white;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    padding: 13px 20px;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+.quick-request-btn:hover {&#13;
+    background: #008fa1;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   STATISTICS&#13;
+   ========================================= */&#13;
+&#13;
+.stats-container {&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns:&#13;
+        repeat(4, 1fr);&#13;
+&#13;
+    gap: 18px;&#13;
+&#13;
+    margin-bottom: 35px;&#13;
+}&#13;
+&#13;
+&#13;
+.stat-card {&#13;
+    background: white;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    padding: 20px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 15px;&#13;
+&#13;
+    box-shadow:&#13;
+        0 3px 15px rgba(0,0,0,0.05);&#13;
+&#13;
+    border: 1px solid #e3f1f3;&#13;
+}&#13;
+&#13;
+&#13;
+.stat-icon {&#13;
+    width: 50px;&#13;
+    height: 50px;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 21px;&#13;
+}&#13;
+&#13;
+&#13;
+.stat-icon.teal {&#13;
+    background: #e0f7fa;&#13;
+&#13;
+    color: #00acc1;&#13;
+}&#13;
+&#13;
+&#13;
+.stat-icon.blue {&#13;
+    background: #e3f2fd;&#13;
+&#13;
+    color: #1976d2;&#13;
+}&#13;
+&#13;
+&#13;
+.stat-icon.green {&#13;
+    background: #e8f5e9;&#13;
+&#13;
+    color: #43a047;&#13;
+}&#13;
+&#13;
+&#13;
+.stat-icon.orange {&#13;
+    background: #fff3e0;&#13;
+&#13;
+    color: #fb8c00;&#13;
+}&#13;
+&#13;
+&#13;
+.stat-details {&#13;
+    display: flex;&#13;
+&#13;
+    flex-direction: column;&#13;
+&#13;
+    gap: 4px;&#13;
+}&#13;
+&#13;
+&#13;
+.stat-details span {&#13;
+    color: #78909c;&#13;
+&#13;
+    font-size: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+.stat-details strong {&#13;
+    color: #263238;&#13;
+&#13;
+    font-size: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   DASHBOARD SECTIONS&#13;
+   ========================================= */&#13;
+&#13;
+.dashboard-section {&#13;
+    margin-bottom: 35px;&#13;
+}&#13;
+&#13;
+&#13;
+.section-heading {&#13;
+    display: flex;&#13;
+&#13;
+    justify-content: space-between;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    margin-bottom: 18px;&#13;
+}&#13;
+&#13;
+&#13;
+.section-heading h2 {&#13;
+    margin: 0 0 5px;&#13;
+&#13;
+    font-size: 21px;&#13;
+&#13;
+    color: #263238;&#13;
+}&#13;
+&#13;
+&#13;
+.section-heading p {&#13;
+    margin: 0;&#13;
+&#13;
+    color: #78909c;&#13;
+&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   ACTION CARDS&#13;
+   ========================================= */&#13;
+&#13;
+.action-grid {&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns:&#13;
+        repeat(3, 1fr);&#13;
+&#13;
+    gap: 20px;&#13;
+}&#13;
+&#13;
+&#13;
+.action-card {&#13;
+    background: white;&#13;
+&#13;
+    padding: 25px;&#13;
+&#13;
+    border-radius: 13px;&#13;
+&#13;
+    border: 1px solid #e1eff1;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    transition: all 0.25s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.action-card:hover {&#13;
+    transform: translateY(-5px);&#13;
+&#13;
+    box-shadow:&#13;
+        0 10px 25px rgba(0,0,0,0.08);&#13;
+&#13;
+    border-color: #b2ebf2;&#13;
+}&#13;
+&#13;
+&#13;
+.action-icon {&#13;
+    width: 48px;&#13;
+    height: 48px;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 20px;&#13;
+&#13;
+    margin-bottom: 15px;&#13;
+}&#13;
+&#13;
+&#13;
+.teal-bg {&#13;
+    background: #e0f7fa;&#13;
+&#13;
+    color: #00acc1;&#13;
+}&#13;
+&#13;
+&#13;
+.blue-bg {&#13;
+    background: #e3f2fd;&#13;
+&#13;
+    color: #1976d2;&#13;
+}&#13;
+&#13;
+&#13;
+.orange-bg {&#13;
+    background: #fff3e0;&#13;
+&#13;
+    color: #fb8c00;&#13;
+}&#13;
+&#13;
+&#13;
+.action-card h3 {&#13;
+    margin: 0 0 8px;&#13;
+&#13;
+    color: #263238;&#13;
+&#13;
+    font-size: 17px;&#13;
+}&#13;
+&#13;
+&#13;
+.action-card p {&#13;
+    margin: 0 0 17px;&#13;
+&#13;
+    color: #607d8b;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    line-height: 1.6;&#13;
+}&#13;
+&#13;
+&#13;
+.action-link {&#13;
+    color: #00acc1;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   VIEW ALL&#13;
+   ========================================= */&#13;
+&#13;
+.view-all-btn {&#13;
+    border: none;&#13;
+&#13;
+    background: transparent;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   EMPTY STATE&#13;
+   ========================================= */&#13;
+&#13;
+.empty-state {&#13;
+    background: white;&#13;
+&#13;
+    border-radius: 13px;&#13;
+&#13;
+    padding: 45px 20px;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+    border: 1px solid #e1eff1;&#13;
+}&#13;
+&#13;
+&#13;
+.empty-icon {&#13;
+    width: 60px;&#13;
+    height: 60px;&#13;
+&#13;
+    margin: 0 auto 15px;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: #e0f7fa;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+.empty-state h3 {&#13;
+    margin: 0 0 7px;&#13;
+&#13;
+    color: #263238;&#13;
+}&#13;
+&#13;
+&#13;
+.empty-state p {&#13;
+    color: #78909c;&#13;
+&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+.empty-btn {&#13;
+    margin-top: 10px;&#13;
+&#13;
+    padding: 10px 17px;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    background: #00acc1;&#13;
+&#13;
+    color: white;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   REQUEST LIST&#13;
+   ========================================= */&#13;
+&#13;
+.request-list {&#13;
+    background: white;&#13;
+&#13;
+    border-radius: 13px;&#13;
+&#13;
+    border: 1px solid #e1eff1;&#13;
+&#13;
+    overflow: hidden;&#13;
+}&#13;
+&#13;
+&#13;
+.request-row {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: space-between;&#13;
+&#13;
+    padding: 17px 20px;&#13;
+&#13;
+    border-bottom: 1px solid #edf4f5;&#13;
+}&#13;
+&#13;
+&#13;
+.request-row:last-child {&#13;
+    border-bottom: none;&#13;
+}&#13;
+&#13;
+&#13;
+.request-main {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+.request-icon {&#13;
+    width: 40px;&#13;
+    height: 40px;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    background: #e0f7fa;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+}&#13;
+&#13;
+&#13;
+.request-main h4 {&#13;
+    margin: 0 0 3px;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    color: #263238;&#13;
+}&#13;
+&#13;
+&#13;
+.request-main p {&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    color: #78909c;&#13;
+}&#13;
+&#13;
+&#13;
+.status-badge {&#13;
+    padding: 6px 10px;&#13;
+&#13;
+    border-radius: 20px;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    background: #e0f7fa;&#13;
+&#13;
+    color: #008fa1;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   HELP&#13;
+   ========================================= */&#13;
+&#13;
+.help-card {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 20px;&#13;
+&#13;
+    padding: 22px;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    background: #4dd0e1;&#13;
+&#13;
+    margin-bottom: 20px;&#13;
+}&#13;
+&#13;
+&#13;
+.help-icon {&#13;
+    width: 45px;&#13;
+    height: 45px;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: white;&#13;
+&#13;
+    color: #00acc1;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    flex-shrink: 0;&#13;
+}&#13;
+&#13;
+&#13;
+.help-content {&#13;
+    flex: 1;&#13;
+}&#13;
+&#13;
+&#13;
+.help-content h3 {&#13;
+    margin: 0 0 5px;&#13;
+&#13;
+    color: #263238;&#13;
+}&#13;
+&#13;
+&#13;
+.help-content p {&#13;
+    margin: 0;&#13;
+&#13;
+    color: #37474f;&#13;
+&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+.help-btn {&#13;
+    background: #00acc1;&#13;
+&#13;
+    color: white;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    padding: 10px 17px;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   RESPONSIVE&#13;
+   ========================================= */&#13;
+&#13;
+@media (max-width: 1100px) {&#13;
+&#13;
+    .stats-container {&#13;
+        grid-template-columns:&#13;
+            repeat(2, 1fr);&#13;
+    }&#13;
+&#13;
+    .action-grid {&#13;
+        grid-template-columns:&#13;
+            repeat(2, 1fr);&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 800px) {&#13;
+&#13;
+    .student-sidebar {&#13;
+        width: 70px;&#13;
+&#13;
+        padding: 20px 8px;&#13;
+    }&#13;
+&#13;
+    .sidebar-title,&#13;
+    .sidebar-item span {&#13;
+        display: none;&#13;
+    }&#13;
+&#13;
+    .sidebar-item {&#13;
+        justify-content: center;&#13;
+    }&#13;
+&#13;
+    .student-content {&#13;
+        padding: 25px;&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+    .student-header {&#13;
+        height: auto;&#13;
+&#13;
+        padding: 15px 18px;&#13;
+    }&#13;
+&#13;
+    .student-brand span,&#13;
+    .user-info {&#13;
+        display: none;&#13;
+    }&#13;
+&#13;
+    .logout-btn {&#13;
+        margin-left: 5px;&#13;
+    }&#13;
+&#13;
+    .welcome-section {&#13;
+        flex-direction: column;&#13;
+&#13;
+        align-items: flex-start;&#13;
+&#13;
+        gap: 20px;&#13;
+    }&#13;
+&#13;
+    .stats-container,&#13;
+    .action-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+    .student-content {&#13;
+        padding: 20px 15px;&#13;
+    }&#13;
+&#13;
+    .help-card {&#13;
+        flex-direction: column;&#13;
+&#13;
+        text-align: center;&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>cfms_student_dashboard</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>CFMS Student Dashboard</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    /*
+     * =========================================
+     * DEFAULT DATA
+     * =========================================
+     */
+
+    data.userName = gs.getUserDisplayName();
+
+    data.totalRequests = 0;
+
+    data.activeRequests = 0;
+
+    data.resolvedRequests = 0;
+
+    data.feedbackCount = 0;
+
+    data.recentRequests = [];
+
+
+    /*
+     * =========================================
+     * SECURITY CHECK
+     * =========================================
+     */
+
+    if (!gs.isLoggedIn()) {
+
+        data.redirect = "cfms_login";
+
+        return;
+
+    }
+
+
+    /*
+     * =========================================
+     * STUDENT ROLE CHECK
+     * =========================================
+     */
+
+    if (!gs.hasRole("cfms_student") &&
+        !gs.hasRole("admin")) {
+
+        data.redirect = "cfms_home";
+
+        return;
+
+    }
+
+
+    /*
+     * =========================================
+     * STUDENT REQUESTS
+     *
+     * Recommended table:
+     * incident
+     *
+     * caller_id = logged-in student
+     * =========================================
+     */
+
+    var requestGR = new GlideRecord("incident");
+
+    requestGR.addQuery(
+        "caller_id",
+        gs.getUserID()
+    );
+
+    requestGR.orderByDesc("sys_created_on");
+
+    requestGR.query();
+
+
+    while (requestGR.next()) {
+
+        data.totalRequests++;
+
+
+        /*
+         * Resolved
+         */
+
+        if (requestGR.state == 6 ||
+            requestGR.state == 7) {
+
+            data.resolvedRequests++;
+
+        } else {
+
+            data.activeRequests++;
+
+        }
+
+
+        /*
+         * Recent 5 requests
+         */
+
+        if (data.recentRequests.length < 5) {
+
+            var stateText =
+                requestGR.getDisplayValue("state");
+
+            var statusClass =
+                "status-active";
+
+
+            if (requestGR.state == 6 ||
+                requestGR.state == 7) {
+
+                statusClass =
+                    "status-resolved";
+
+            }
+
+
+            data.recentRequests.push({
+
+                number:
+                    requestGR.getValue("number"),
+
+                short_description:
+                    requestGR.getValue(
+                        "short_description"
+                    ),
+
+                state:
+                    stateText,
+
+                statusClass:
+                    statusClass
+
+            });
+
+        }
+
+    }
+
+
+    /*
+     * =========================================
+     * FEEDBACK COUNT
+     *
+     * Recommended custom table:
+     * u_cfms_feedback
+     * =========================================
+     */
+
+    if (GlideTableDescriptor
+        .isValid("u_cfms_feedback")) {
+
+        var feedbackGR =
+            new GlideRecord(
+                "u_cfms_feedback"
+            );
+
+        feedbackGR.addQuery(
+            "u_student",
+            gs.getUserID()
+        );
+
+        feedbackGR.query();
+
+        data.feedbackCount =
+            feedbackGR.getRowCount();
+
+    }
+
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 10:11:37</sys_created_on>
+        <sys_id>c9a14459a02f03107f4432329b8a15b6</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>CFMS Student Dashboard</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_c9a14459a02f03107f4432329b8a15b6</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 10:22:03</sys_updated_on>
+        <template><![CDATA[<div class="cfms-student-page">
+
+    <!-- =====================================
+         TOP HEADER
+         ===================================== -->
+
+    <header class="student-header">
+
+        <div class="student-brand">
+
+            <div class="brand-icon">
+                <i class="fa fa-cutlery"></i>
+            </div>
+
+            <div>
+                <h2>CFMS</h2>
+                <span>Campus Food Management System</span>
+            </div>
+
+        </div>
+
+
+        <div class="student-user">
+
+            <div class="user-avatar">
+                <i class="fa fa-user"></i>
+            </div>
+
+            <div class="user-info">
+
+                <strong>
+                    {{c.data.userName}}
+                </strong>
+
+                <span>
+                    Student
+                </span>
+
+            </div>
+
+            <button
+                class="logout-btn"
+                ng-click="c.logout()">
+
+                <i class="fa fa-sign-out"></i>
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================
+         MAIN LAYOUT
+         ===================================== -->
+
+    <div class="student-layout">
+
+
+        <!-- =================================
+             SIDEBAR
+             ================================= -->
+
+        <aside class="student-sidebar">
+
+            <div class="sidebar-title">
+                STUDENT MENU
+            </div>
+
+
+            <!-- Dashboard -->
+
+            <a
+                class="sidebar-item active"
+                ng-click="c.dashboard()">
+
+                <i class="fa fa-dashboard"></i>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <!-- Raise Request -->
+
+            <a
+                class="sidebar-item"
+                ng-click="c.raiseRequest()">
+
+                <i class="fa fa-plus-circle"></i>
+
+                <span>
+                    Raise a Request
+                </span>
+
+            </a>
+
+
+            <!-- My Requests -->
+
+            <a
+                class="sidebar-item"
+                ng-click="c.myRequests()">
+
+                <i class="fa fa-list-alt"></i>
+
+                <span>
+                    My Requests
+                </span>
+
+            </a>
+
+
+            <!-- Feedback -->
+
+            <a
+                class="sidebar-item"
+                ng-click="c.feedback()">
+
+                <i class="fa fa-comment"></i>
+
+                <span>
+                    Feedback
+                </span>
+
+            </a>
+
+
+            <div class="sidebar-divider"></div>
+
+
+            <!-- Help -->
+
+            <a
+                class="sidebar-item"
+                href="#help">
+
+                <i class="fa fa-question-circle"></i>
+
+                <span>
+                    Help
+                </span>
+
+            </a>
+
+        </aside>
+
+
+        <!-- =================================
+             MAIN CONTENT
+             ================================= -->
+
+        <main class="student-content">
+
+
+            <!-- PAGE TITLE -->
+
+            <div class="welcome-section">
+
+                <div>
+
+                    <span class="page-label">
+                        STUDENT DASHBOARD
+                    </span>
+
+                    <h1>
+                        Welcome,
+                        {{c.data.userName}}
+                    </h1>
+
+                    <p>
+                        Manage your campus food requests
+                        and track your dining experience.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="quick-request-btn"
+                    ng-click="c.raiseRequest()">
+
+                    <i class="fa fa-plus"></i>
+
+                    Raise Request
+
+                </button>
+
+            </div>
+
+
+            <!-- =================================
+                 STATISTICS
+                 ================================= -->
+
+            <div class="stats-container">
+
+
+                <!-- TOTAL REQUESTS -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon teal">
+                        <i class="fa fa-file-text"></i>
+                    </div>
+
+                    <div class="stat-details">
+
+                        <span>
+                            Total Requests
+                        </span>
+
+                        <strong>
+                            {{c.data.totalRequests}}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIVE REQUESTS -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        <i class="fa fa-clock-o"></i>
+                    </div>
+
+                    <div class="stat-details">
+
+                        <span>
+                            Active Requests
+                        </span>
+
+                        <strong>
+                            {{c.data.activeRequests}}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RESOLVED -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        <i class="fa fa-check-circle"></i>
+                    </div>
+
+                    <div class="stat-details">
+
+                        <span>
+                            Resolved
+                        </span>
+
+                        <strong>
+                            {{c.data.resolvedRequests}}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FEEDBACK -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        <i class="fa fa-star"></i>
+                    </div>
+
+                    <div class="stat-details">
+
+                        <span>
+                            Feedback Given
+                        </span>
+
+                        <strong>
+                            {{c.data.feedbackCount}}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 QUICK ACTIONS
+                 ================================= -->
+
+            <section class="dashboard-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <h2>
+                            Quick Actions
+                        </h2>
+
+                        <p>
+                            Frequently used student services
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="action-grid">
+
+
+                    <!-- RAISE REQUEST -->
+
+                    <div
+                        class="action-card"
+                        ng-click="c.raiseRequest()">
+
+                        <div class="action-icon teal-bg">
+
+                            <i class="fa fa-plus"></i>
+
+                        </div>
+
+                        <h3>
+                            Raise a Request
+                        </h3>
+
+                        <p>
+                            Report food quality,
+                            hygiene or dining issues.
+                        </p>
+
+                        <span class="action-link">
+                            Create Request
+                            <i class="fa fa-arrow-right"></i>
+                        </span>
+
+                    </div>
+
+
+                    <!-- MY REQUESTS -->
+
+                    <div
+                        class="action-card"
+                        ng-click="c.myRequests()">
+
+                        <div class="action-icon blue-bg">
+
+                            <i class="fa fa-list"></i>
+
+                        </div>
+
+                        <h3>
+                            My Requests
+                        </h3>
+
+                        <p>
+                            View and track all your
+                            submitted requests.
+                        </p>
+
+                        <span class="action-link">
+                            View Requests
+                            <i class="fa fa-arrow-right"></i>
+                        </span>
+
+                    </div>
+
+
+                    <!-- FEEDBACK -->
+
+                    <div
+                        class="action-card"
+                        ng-click="c.feedback()">
+
+                        <div class="action-icon orange-bg">
+
+                            <i class="fa fa-star"></i>
+
+                        </div>
+
+                        <h3>
+                            Give Feedback
+                        </h3>
+
+                        <p>
+                            Share your experience
+                            and help improve food services.
+                        </p>
+
+                        <span class="action-link">
+                            Give Feedback
+                            <i class="fa fa-arrow-right"></i>
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 RECENT REQUESTS
+                 ================================= -->
+
+            <section class="dashboard-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <h2>
+                            Recent Requests
+                        </h2>
+
+                        <p>
+                            Your latest food service requests
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="view-all-btn"
+                        ng-click="c.myRequests()">
+
+                        View All
+
+                        <i class="fa fa-arrow-right"></i>
+
+                    </button>
+
+                </div>
+
+
+                <!-- EMPTY -->
+
+                <div
+                    class="empty-state"
+                    ng-if="!c.data.recentRequests.length">
+
+                    <div class="empty-icon">
+
+                        <i class="fa fa-inbox"></i>
+
+                    </div>
+
+                    <h3>
+                        No requests yet
+                    </h3>
+
+                    <p>
+                        You haven't raised any food-related
+                        requests yet.
+                    </p>
+
+                    <button
+                        class="empty-btn"
+                        ng-click="c.raiseRequest()">
+
+                        Raise Your First Request
+
+                    </button>
+
+                </div>
+
+
+                <!-- REQUEST LIST -->
+
+                <div
+                    class="request-list"
+                    ng-if="c.data.recentRequests.length">
+
+                    <div
+                        class="request-row"
+                        ng-repeat="request in c.data.recentRequests">
+
+                        <div class="request-main">
+
+                            <div class="request-icon">
+
+                                <i class="fa fa-file-text"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h4>
+                                    {{request.number}}
+                                </h4>
+
+                                <p>
+                                    {{request.short_description}}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="request-status">
+
+                            <span
+                                class="status-badge"
+                                ng-class="request.statusClass">
+
+                                {{request.state}}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 HELP
+                 ================================= -->
+
+            <section
+                id="help"
+                class="help-card">
+
+                <div class="help-icon">
+
+                    <i class="fa fa-question"></i>
+
+                </div>
+
+                <div class="help-content">
+
+                    <h3>
+                        Need Help?
+                    </h3>
+
+                    <p>
+                        If you have an issue with your
+                        campus food service, raise a request
+                        and our team will assist you.
+                    </p>
+
+                </div>
+
+                <button
+                    ng-click="c.raiseRequest()"
+                    class="help-btn">
+
+                    Raise Request
+
+                </button>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+</div>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>sp_widget_c9a14459a02f03107f4432329b8a15b6</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller = function() {
+
+    var c = this;
+
+
+    /*
+     * =========================================
+     * DASHBOARD
+     * =========================================
+     */
+
+    c.dashboard = function() {
+
+        window.location.href =
+            "?id=cfms_student";
+
+    };
+
+
+    /*
+     * =========================================
+     * RAISE REQUEST
+     * =========================================
+     */
+
+    c.raiseRequest = function() {
+
+        window.location.href =
+            "?id=cfms_raise";
+
+    };
+
+
+    /*
+     * =========================================
+     * MY REQUESTS
+     * =========================================
+     */
+
+    c.myRequests = function() {
+
+        window.location.href =
+            "?id=cfms_requests";
+
+    };
+
+
+    /*
+     * =========================================
+     * FEEDBACK
+     * =========================================
+     */
+
+    c.feedback = function() {
+
+        window.location.href =
+            "?id=cfms_feedback";
+
+    };
+
+
+    /*
+     * =========================================
+     * LOGOUT
+     * =========================================
+     */
+
+    c.logout = function() {
+
+        window.location.href =
+            "/logout.do";
+
+    };
+
+};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;/* =========================================&amp;#13;
+   CFMS STUDENT DASHBOARD&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.cfms-student-page {&amp;#13;
+    min-height: 100vh;&amp;#13;
+&amp;#13;
+    background: #f0fbfc;&amp;#13;
+&amp;#13;
+    color: #263238;&amp;#13;
+&amp;#13;
+    font-family:&amp;#13;
+        "Segoe UI",&amp;#13;
+        Tahoma,&amp;#13;
+        Geneva,&amp;#13;
+        Verdana,&amp;#13;
+        sans-serif;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   HEADER&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.student-header {&amp;#13;
+    height: 72px;&amp;#13;
+&amp;#13;
+    background: #00acc1;&amp;#13;
+&amp;#13;
+    color: white;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: space-between;&amp;#13;
+&amp;#13;
+    padding: 0 35px;&amp;#13;
+&amp;#13;
+    box-sizing: border-box;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.student-brand {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 12px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.brand-icon {&amp;#13;
+    width: 43px;&amp;#13;
+    height: 43px;&amp;#13;
+&amp;#13;
+    border-radius: 9px;&amp;#13;
+&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    font-size: 22px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.student-brand h2 {&amp;#13;
+    margin: 0;&amp;#13;
+&amp;#13;
+    font-size: 23px;&amp;#13;
+&amp;#13;
+    line-height: 1.1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.student-brand span {&amp;#13;
+    font-size: 11px;&amp;#13;
+&amp;#13;
+    opacity: 0.9;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* USER */&amp;#13;
+&amp;#13;
+.student-user {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 10px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.user-avatar {&amp;#13;
+    width: 38px;&amp;#13;
+    height: 38px;&amp;#13;
+&amp;#13;
+    border-radius: 50%;&amp;#13;
+&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.user-info {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    flex-direction: column;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.user-info strong {&amp;#13;
+    font-size: 14px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.user-info span {&amp;#13;
+    font-size: 11px;&amp;#13;
+&amp;#13;
+    opacity: 0.85;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.logout-btn {&amp;#13;
+    margin-left: 15px;&amp;#13;
+&amp;#13;
+    padding: 8px 13px;&amp;#13;
+&amp;#13;
+    border: 1px solid rgba(255,255,255,0.7);&amp;#13;
+&amp;#13;
+    background: transparent;&amp;#13;
+&amp;#13;
+    color: white;&amp;#13;
+&amp;#13;
+    border-radius: 6px;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.logout-btn:hover {&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   LAYOUT&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.student-layout {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    min-height: calc(100vh - 72px);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   SIDEBAR&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.student-sidebar {&amp;#13;
+    width: 235px;&amp;#13;
+&amp;#13;
+    flex-shrink: 0;&amp;#13;
+&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    border-right: 1px solid #dceff1;&amp;#13;
+&amp;#13;
+    padding: 25px 15px;&amp;#13;
+&amp;#13;
+    box-sizing: border-box;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.sidebar-title {&amp;#13;
+    padding: 0 12px 15px;&amp;#13;
+&amp;#13;
+    color: #78909c;&amp;#13;
+&amp;#13;
+    font-size: 11px;&amp;#13;
+&amp;#13;
+    font-weight: 700;&amp;#13;
+&amp;#13;
+    letter-spacing: 1px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.sidebar-item {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 13px;&amp;#13;
+&amp;#13;
+    padding: 13px 14px;&amp;#13;
+&amp;#13;
+    margin-bottom: 5px;&amp;#13;
+&amp;#13;
+    border-radius: 8px;&amp;#13;
+&amp;#13;
+    color: #546e7a !important;&amp;#13;
+&amp;#13;
+    text-decoration: none !important;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+&amp;#13;
+    transition: 0.2s ease;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.sidebar-item i {&amp;#13;
+    width: 20px;&amp;#13;
+&amp;#13;
+    text-align: center;&amp;#13;
+&amp;#13;
+    font-size: 17px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.sidebar-item:hover {&amp;#13;
+    background: #e0f7fa;&amp;#13;
+&amp;#13;
+    color: #00acc1 !important;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.sidebar-item.active {&amp;#13;
+    background: #e0f7fa;&amp;#13;
+&amp;#13;
+    color: #00acc1 !important;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.sidebar-divider {&amp;#13;
+    height: 1px;&amp;#13;
+&amp;#13;
+    background: #e5eeee;&amp;#13;
+&amp;#13;
+    margin: 20px 10px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   MAIN CONTENT&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.student-content {&amp;#13;
+    flex: 1;&amp;#13;
+&amp;#13;
+    padding: 35px 45px;&amp;#13;
+&amp;#13;
+    box-sizing: border-box;&amp;#13;
+&amp;#13;
+    max-width: 1400px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   WELCOME&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.welcome-section {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: space-between;&amp;#13;
+&amp;#13;
+    margin-bottom: 30px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.page-label {&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    font-size: 11px;&amp;#13;
+&amp;#13;
+    font-weight: 700;&amp;#13;
+&amp;#13;
+    letter-spacing: 1px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.welcome-section h1 {&amp;#13;
+    margin: 7px 0;&amp;#13;
+&amp;#13;
+    font-size: 31px;&amp;#13;
+&amp;#13;
+    color: #263238;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.welcome-section p {&amp;#13;
+    margin: 0;&amp;#13;
+&amp;#13;
+    color: #607d8b;&amp;#13;
+&amp;#13;
+    font-size: 14px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.quick-request-btn {&amp;#13;
+    background: #00acc1;&amp;#13;
+&amp;#13;
+    color: white;&amp;#13;
+&amp;#13;
+    border: none;&amp;#13;
+&amp;#13;
+    border-radius: 8px;&amp;#13;
+&amp;#13;
+    padding: 13px 20px;&amp;#13;
+&amp;#13;
+    font-size: 14px;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.quick-request-btn:hover {&amp;#13;
+    background: #008fa1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   STATISTICS&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.stats-container {&amp;#13;
+    display: grid;&amp;#13;
+&amp;#13;
+    grid-template-columns:&amp;#13;
+        repeat(4, 1fr);&amp;#13;
+&amp;#13;
+    gap: 18px;&amp;#13;
+&amp;#13;
+    margin-bottom: 35px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.stat-card {&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    border-radius: 12px;&amp;#13;
+&amp;#13;
+    padding: 20px;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 15px;&amp;#13;
+&amp;#13;
+    box-shadow:&amp;#13;
+        0 3px 15px rgba(0,0,0,0.05);&amp;#13;
+&amp;#13;
+    border: 1px solid #e3f1f3;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.stat-icon {&amp;#13;
+    width: 50px;&amp;#13;
+    height: 50px;&amp;#13;
+&amp;#13;
+    border-radius: 10px;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    font-size: 21px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.stat-icon.teal {&amp;#13;
+    background: #e0f7fa;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.stat-icon.blue {&amp;#13;
+    background: #e3f2fd;&amp;#13;
+&amp;#13;
+    color: #1976d2;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.stat-icon.green {&amp;#13;
+    background: #e8f5e9;&amp;#13;
+&amp;#13;
+    color: #43a047;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.stat-icon.orange {&amp;#13;
+    background: #fff3e0;&amp;#13;
+&amp;#13;
+    color: #fb8c00;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.stat-details {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    flex-direction: column;&amp;#13;
+&amp;#13;
+    gap: 4px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.stat-details span {&amp;#13;
+    color: #78909c;&amp;#13;
+&amp;#13;
+    font-size: 12px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.stat-details strong {&amp;#13;
+    color: #263238;&amp;#13;
+&amp;#13;
+    font-size: 25px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   DASHBOARD SECTIONS&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.dashboard-section {&amp;#13;
+    margin-bottom: 35px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.section-heading {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    justify-content: space-between;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    margin-bottom: 18px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.section-heading h2 {&amp;#13;
+    margin: 0 0 5px;&amp;#13;
+&amp;#13;
+    font-size: 21px;&amp;#13;
+&amp;#13;
+    color: #263238;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.section-heading p {&amp;#13;
+    margin: 0;&amp;#13;
+&amp;#13;
+    color: #78909c;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   ACTION CARDS&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.action-grid {&amp;#13;
+    display: grid;&amp;#13;
+&amp;#13;
+    grid-template-columns:&amp;#13;
+        repeat(3, 1fr);&amp;#13;
+&amp;#13;
+    gap: 20px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.action-card {&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    padding: 25px;&amp;#13;
+&amp;#13;
+    border-radius: 13px;&amp;#13;
+&amp;#13;
+    border: 1px solid #e1eff1;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+&amp;#13;
+    transition: all 0.25s ease;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.action-card:hover {&amp;#13;
+    transform: translateY(-5px);&amp;#13;
+&amp;#13;
+    box-shadow:&amp;#13;
+        0 10px 25px rgba(0,0,0,0.08);&amp;#13;
+&amp;#13;
+    border-color: #b2ebf2;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.action-icon {&amp;#13;
+    width: 48px;&amp;#13;
+    height: 48px;&amp;#13;
+&amp;#13;
+    border-radius: 10px;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    font-size: 20px;&amp;#13;
+&amp;#13;
+    margin-bottom: 15px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.teal-bg {&amp;#13;
+    background: #e0f7fa;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.blue-bg {&amp;#13;
+    background: #e3f2fd;&amp;#13;
+&amp;#13;
+    color: #1976d2;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.orange-bg {&amp;#13;
+    background: #fff3e0;&amp;#13;
+&amp;#13;
+    color: #fb8c00;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.action-card h3 {&amp;#13;
+    margin: 0 0 8px;&amp;#13;
+&amp;#13;
+    color: #263238;&amp;#13;
+&amp;#13;
+    font-size: 17px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.action-card p {&amp;#13;
+    margin: 0 0 17px;&amp;#13;
+&amp;#13;
+    color: #607d8b;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+&amp;#13;
+    line-height: 1.6;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.action-link {&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   VIEW ALL&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.view-all-btn {&amp;#13;
+    border: none;&amp;#13;
+&amp;#13;
+    background: transparent;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   EMPTY STATE&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.empty-state {&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    border-radius: 13px;&amp;#13;
+&amp;#13;
+    padding: 45px 20px;&amp;#13;
+&amp;#13;
+    text-align: center;&amp;#13;
+&amp;#13;
+    border: 1px solid #e1eff1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.empty-icon {&amp;#13;
+    width: 60px;&amp;#13;
+    height: 60px;&amp;#13;
+&amp;#13;
+    margin: 0 auto 15px;&amp;#13;
+&amp;#13;
+    border-radius: 50%;&amp;#13;
+&amp;#13;
+    background: #e0f7fa;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    font-size: 25px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.empty-state h3 {&amp;#13;
+    margin: 0 0 7px;&amp;#13;
+&amp;#13;
+    color: #263238;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.empty-state p {&amp;#13;
+    color: #78909c;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.empty-btn {&amp;#13;
+    margin-top: 10px;&amp;#13;
+&amp;#13;
+    padding: 10px 17px;&amp;#13;
+&amp;#13;
+    border: none;&amp;#13;
+&amp;#13;
+    border-radius: 7px;&amp;#13;
+&amp;#13;
+    background: #00acc1;&amp;#13;
+&amp;#13;
+    color: white;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   REQUEST LIST&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.request-list {&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    border-radius: 13px;&amp;#13;
+&amp;#13;
+    border: 1px solid #e1eff1;&amp;#13;
+&amp;#13;
+    overflow: hidden;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-row {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: space-between;&amp;#13;
+&amp;#13;
+    padding: 17px 20px;&amp;#13;
+&amp;#13;
+    border-bottom: 1px solid #edf4f5;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-row:last-child {&amp;#13;
+    border-bottom: none;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-main {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 13px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-icon {&amp;#13;
+    width: 40px;&amp;#13;
+    height: 40px;&amp;#13;
+&amp;#13;
+    border-radius: 8px;&amp;#13;
+&amp;#13;
+    background: #e0f7fa;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-main h4 {&amp;#13;
+    margin: 0 0 3px;&amp;#13;
+&amp;#13;
+    font-size: 14px;&amp;#13;
+&amp;#13;
+    color: #263238;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-main p {&amp;#13;
+    margin: 0;&amp;#13;
+&amp;#13;
+    font-size: 12px;&amp;#13;
+&amp;#13;
+    color: #78909c;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.status-badge {&amp;#13;
+    padding: 6px 10px;&amp;#13;
+&amp;#13;
+    border-radius: 20px;&amp;#13;
+&amp;#13;
+    font-size: 11px;&amp;#13;
+&amp;#13;
+    background: #e0f7fa;&amp;#13;
+&amp;#13;
+    color: #008fa1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   HELP&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.help-card {&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    gap: 20px;&amp;#13;
+&amp;#13;
+    padding: 22px;&amp;#13;
+&amp;#13;
+    border-radius: 12px;&amp;#13;
+&amp;#13;
+    background: #4dd0e1;&amp;#13;
+&amp;#13;
+    margin-bottom: 20px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.help-icon {&amp;#13;
+    width: 45px;&amp;#13;
+    height: 45px;&amp;#13;
+&amp;#13;
+    border-radius: 50%;&amp;#13;
+&amp;#13;
+    background: white;&amp;#13;
+&amp;#13;
+    color: #00acc1;&amp;#13;
+&amp;#13;
+    display: flex;&amp;#13;
+&amp;#13;
+    align-items: center;&amp;#13;
+&amp;#13;
+    justify-content: center;&amp;#13;
+&amp;#13;
+    flex-shrink: 0;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.help-content {&amp;#13;
+    flex: 1;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.help-content h3 {&amp;#13;
+    margin: 0 0 5px;&amp;#13;
+&amp;#13;
+    color: #263238;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.help-content p {&amp;#13;
+    margin: 0;&amp;#13;
+&amp;#13;
+    color: #37474f;&amp;#13;
+&amp;#13;
+    font-size: 13px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.help-btn {&amp;#13;
+    background: #00acc1;&amp;#13;
+&amp;#13;
+    color: white;&amp;#13;
+&amp;#13;
+    border: none;&amp;#13;
+&amp;#13;
+    padding: 10px 17px;&amp;#13;
+&amp;#13;
+    border-radius: 7px;&amp;#13;
+&amp;#13;
+    cursor: pointer;&amp;#13;
+&amp;#13;
+    font-weight: 600;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   RESPONSIVE&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+@media (max-width: 1100px) {&amp;#13;
+&amp;#13;
+    .stats-container {&amp;#13;
+        grid-template-columns:&amp;#13;
+            repeat(2, 1fr);&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .action-grid {&amp;#13;
+        grid-template-columns:&amp;#13;
+            repeat(2, 1fr);&amp;#13;
+    }&amp;#13;
+&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+@media (max-width: 800px) {&amp;#13;
+&amp;#13;
+    .student-sidebar {&amp;#13;
+        width: 70px;&amp;#13;
+&amp;#13;
+        padding: 20px 8px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .sidebar-title,&amp;#13;
+    .sidebar-item span {&amp;#13;
+        display: none;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .sidebar-item {&amp;#13;
+        justify-content: center;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .student-content {&amp;#13;
+        padding: 25px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+@media (max-width: 600px) {&amp;#13;
+&amp;#13;
+    .student-header {&amp;#13;
+        height: auto;&amp;#13;
+&amp;#13;
+        padding: 15px 18px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .student-brand span,&amp;#13;
+    .user-info {&amp;#13;
+        display: none;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .logout-btn {&amp;#13;
+        margin-left: 5px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .welcome-section {&amp;#13;
+        flex-direction: column;&amp;#13;
+&amp;#13;
+        align-items: flex-start;&amp;#13;
+&amp;#13;
+        gap: 20px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .stats-container,&amp;#13;
+    .action-grid {&amp;#13;
+        grid-template-columns: 1fr;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .student-content {&amp;#13;
+        padding: 20px 15px;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+    .help-card {&amp;#13;
+        flex-direction: column;&amp;#13;
+&amp;#13;
+        text-align: center;&amp;#13;
+    }&amp;#13;
+&amp;#13;
+}&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;cfms_student_dashboard&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {  }]]&gt;&lt;/link&gt;&lt;name&gt;CFMS Student Dashboard&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;false&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+
+    /*
+     * =========================================
+     * DEFAULT DATA
+     * =========================================
+     */
+
+    data.userName = gs.getUserDisplayName();
+
+    data.totalRequests = 0;
+
+    data.activeRequests = 0;
+
+    data.resolvedRequests = 0;
+
+    data.feedbackCount = 0;
+
+    data.recentRequests = [];
+
+
+    /*
+     * =========================================
+     * SECURITY CHECK
+     * =========================================
+     */
+
+    if (!gs.isLoggedIn()) {
+
+        data.redirect = "cfms_login";
+
+        return;
+
+    }
+
+
+    /*
+     * =========================================
+     * STUDENT ROLE CHECK
+     * =========================================
+     */
+
+    if (!gs.hasRole("cfms_student") &amp;&amp;
+        !gs.hasRole("admin")) {
+
+        data.redirect = "cfms_home";
+
+        return;
+
+    }
+
+
+    /*
+     * =========================================
+     * STUDENT REQUESTS
+     *
+     * Recommended table:
+     * incident
+     *
+     * caller_id = logged-in student
+     * =========================================
+     */
+
+    var requestGR = new GlideRecord("incident");
+
+    requestGR.addQuery(
+        "caller_id",
+        gs.getUserID()
+    );
+
+    requestGR.orderByDesc("sys_created_on");
+
+    requestGR.query();
+
+
+    while (requestGR.next()) {
+
+        data.totalRequests++;
+
+
+        /*
+         * Resolved
+         */
+
+        if (requestGR.state == 6 ||
+            requestGR.state == 7) {
+
+            data.resolvedRequests++;
+
+        } else {
+
+            data.activeRequests++;
+
+        }
+
+
+        /*
+         * Recent 5 requests
+         */
+
+        if (data.recentRequests.length &lt; 5) {
+
+            var stateText =
+                requestGR.getDisplayValue("state");
+
+            var statusClass =
+                "status-active";
+
+
+            if (requestGR.state == 6 ||
+                requestGR.state == 7) {
+
+                statusClass =
+                    "status-resolved";
+
+            }
+
+
+            data.recentRequests.push({
+
+                number:
+                    requestGR.getValue("number"),
+
+                short_description:
+                    requestGR.getValue(
+                        "short_description"
+                    ),
+
+                state:
+                    stateText,
+
+                statusClass:
+                    statusClass
+
+            });
+
+        }
+
+    }
+
+
+    /*
+     * =========================================
+     * FEEDBACK COUNT
+     *
+     * Recommended custom table:
+     * u_cfms_feedback
+     * =========================================
+     */
+
+    if (GlideTableDescriptor
+        .isValid("u_cfms_feedback")) {
+
+        var feedbackGR =
+            new GlideRecord(
+                "u_cfms_feedback"
+            );
+
+        feedbackGR.addQuery(
+            "u_student",
+            gs.getUserID()
+        );
+
+        feedbackGR.query();
+
+        data.feedbackCount =
+            feedbackGR.getRowCount();
+
+    }
+
+
+})();]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-09-24 10:11:37&lt;/sys_created_on&gt;&lt;sys_id&gt;c9a14459a02f03107f4432329b8a15b6&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;CFMS Student Dashboard&lt;/sys_name&gt;&lt;sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Campus Food Services Assistant"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_c9a14459a02f03107f4432329b8a15b6&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-09-24 10:22:03&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div class="cfms-student-page"&gt;
+
+    &lt;!-- =====================================
+         TOP HEADER
+         ===================================== --&gt;
+
+    &lt;header class="student-header"&gt;
+
+        &lt;div class="student-brand"&gt;
+
+            &lt;div class="brand-icon"&gt;
+                &lt;i class="fa fa-cutlery"&gt;&lt;/i&gt;
+            &lt;/div&gt;
+
+            &lt;div&gt;
+                &lt;h2&gt;CFMS&lt;/h2&gt;
+                &lt;span&gt;Campus Food Management System&lt;/span&gt;
+            &lt;/div&gt;
+
+        &lt;/div&gt;
+
+
+        &lt;div class="student-user"&gt;
+
+            &lt;div class="user-avatar"&gt;
+                &lt;i class="fa fa-user"&gt;&lt;/i&gt;
+            &lt;/div&gt;
+
+            &lt;div class="user-info"&gt;
+
+                &lt;strong&gt;
+                    {{c.data.userName}}
+                &lt;/strong&gt;
+
+                &lt;span&gt;
+                    Student
+                &lt;/span&gt;
+
+            &lt;/div&gt;
+
+            &lt;button
+                class="logout-btn"
+                ng-click="c.logout()"&gt;
+
+                &lt;i class="fa fa-sign-out"&gt;&lt;/i&gt;
+
+                Logout
+
+            &lt;/button&gt;
+
+        &lt;/div&gt;
+
+    &lt;/header&gt;
+
+
+    &lt;!-- =====================================
+         MAIN LAYOUT
+         ===================================== --&gt;
+
+    &lt;div class="student-layout"&gt;
+
+
+        &lt;!-- =================================
+             SIDEBAR
+             ================================= --&gt;
+
+        &lt;aside class="student-sidebar"&gt;
+
+            &lt;div class="sidebar-title"&gt;
+                STUDENT MENU
+            &lt;/div&gt;
+
+
+            &lt;!-- Dashboard --&gt;
+
+            &lt;a
+                class="sidebar-item active"
+                ng-click="c.dashboard()"&gt;
+
+                &lt;i class="fa fa-dashboard"&gt;&lt;/i&gt;
+
+                &lt;span&gt;
+                    Dashboard
+                &lt;/span&gt;
+
+            &lt;/a&gt;
+
+
+            &lt;!-- Raise Request --&gt;
+
+            &lt;a
+                class="sidebar-item"
+                ng-click="c.raiseRequest()"&gt;
+
+                &lt;i class="fa fa-plus-circle"&gt;&lt;/i&gt;
+
+                &lt;span&gt;
+                    Raise a Request
+                &lt;/span&gt;
+
+            &lt;/a&gt;
+
+
+            &lt;!-- My Requests --&gt;
+
+            &lt;a
+                class="sidebar-item"
+                ng-click="c.myRequests()"&gt;
+
+                &lt;i class="fa fa-list-alt"&gt;&lt;/i&gt;
+
+                &lt;span&gt;
+                    My Requests
+                &lt;/span&gt;
+
+            &lt;/a&gt;
+
+
+            &lt;!-- Feedback --&gt;
+
+            &lt;a
+                class="sidebar-item"
+                ng-click="c.feedback()"&gt;
+
+                &lt;i class="fa fa-comment"&gt;&lt;/i&gt;
+
+                &lt;span&gt;
+                    Feedback
+                &lt;/span&gt;
+
+            &lt;/a&gt;
+
+
+            &lt;div class="sidebar-divider"&gt;&lt;/div&gt;
+
+
+            &lt;!-- Help --&gt;
+
+            &lt;a
+                class="sidebar-item"
+                href="#help"&gt;
+
+                &lt;i class="fa fa-question-circle"&gt;&lt;/i&gt;
+
+                &lt;span&gt;
+                    Help
+                &lt;/span&gt;
+
+            &lt;/a&gt;
+
+        &lt;/aside&gt;
+
+
+        &lt;!-- =================================
+             MAIN CONTENT
+             ================================= --&gt;
+
+        &lt;main class="student-content"&gt;
+
+
+            &lt;!-- PAGE TITLE --&gt;
+
+            &lt;div class="welcome-section"&gt;
+
+                &lt;div&gt;
+
+                    &lt;span class="page-label"&gt;
+                        STUDENT DASHBOARD
+                    &lt;/span&gt;
+
+                    &lt;h1&gt;
+                        Welcome,
+                        {{c.data.userName}}
+                    &lt;/h1&gt;
+
+                    &lt;p&gt;
+                        Manage your campus food requests
+                        and track your dining experience.
+                    &lt;/p&gt;
+
+                &lt;/div&gt;
+
+
+                &lt;button
+                    class="quick-request-btn"
+                    ng-click="c.raiseRequest()"&gt;
+
+                    &lt;i class="fa fa-plus"&gt;&lt;/i&gt;
+
+                    Raise Request
+
+                &lt;/button&gt;
+
+            &lt;/div&gt;
+
+
+            &lt;!-- =================================
+                 STATISTICS
+                 ================================= --&gt;
+
+            &lt;div class="stats-container"&gt;
+
+
+                &lt;!-- TOTAL REQUESTS --&gt;
+
+                &lt;div class="stat-card"&gt;
+
+                    &lt;div class="stat-icon teal"&gt;
+                        &lt;i class="fa fa-file-text"&gt;&lt;/i&gt;
+                    &lt;/div&gt;
+
+                    &lt;div class="stat-details"&gt;
+
+                        &lt;span&gt;
+                            Total Requests
+                        &lt;/span&gt;
+
+                        &lt;strong&gt;
+                            {{c.data.totalRequests}}
+                        &lt;/strong&gt;
+
+                    &lt;/div&gt;
+
+                &lt;/div&gt;
+
+
+                &lt;!-- ACTIVE REQUESTS --&gt;
+
+                &lt;div class="stat-card"&gt;
+
+                    &lt;div class="stat-icon blue"&gt;
+                        &lt;i class="fa fa-clock-o"&gt;&lt;/i&gt;
+                    &lt;/div&gt;
+
+                    &lt;div class="stat-details"&gt;
+
+                        &lt;span&gt;
+                            Active Requests
+                        &lt;/span&gt;
+
+                        &lt;strong&gt;
+                            {{c.data.activeRequests}}
+                        &lt;/strong&gt;
+
+                    &lt;/div&gt;
+
+                &lt;/div&gt;
+
+
+                &lt;!-- RESOLVED --&gt;
+
+                &lt;div class="stat-card"&gt;
+
+                    &lt;div class="stat-icon green"&gt;
+                        &lt;i class="fa fa-check-circle"&gt;&lt;/i&gt;
+                    &lt;/div&gt;
+
+                    &lt;div class="stat-details"&gt;
+
+                        &lt;span&gt;
+                            Resolved
+                        &lt;/span&gt;
+
+                        &lt;strong&gt;
+                            {{c.data.resolvedRequests}}
+                        &lt;/strong&gt;
+
+                    &lt;/div&gt;
+
+                &lt;/div&gt;
+
+
+                &lt;!-- FEEDBACK --&gt;
+
+                &lt;div class="stat-card"&gt;
+
+                    &lt;div class="stat-icon orange"&gt;
+                        &lt;i class="fa fa-star"&gt;&lt;/i&gt;
+                    &lt;/div&gt;
+
+                    &lt;div class="stat-details"&gt;
+
+                        &lt;span&gt;
+                            Feedback Given
+                        &lt;/span&gt;
+
+                        &lt;strong&gt;
+                            {{c.data.feedbackCount}}
+                        &lt;/strong&gt;
+
+                    &lt;/div&gt;
+
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+
+
+            &lt;!-- =================================
+                 QUICK ACTIONS
+                 ================================= --&gt;
+
+            &lt;section class="dashboard-section"&gt;
+
+                &lt;div class="section-heading"&gt;
+
+                    &lt;div&gt;
+
+                        &lt;h2&gt;
+                            Quick Actions
+                        &lt;/h2&gt;
+
+                        &lt;p&gt;
+                            Frequently used student services
+                        &lt;/p&gt;
+
+                    &lt;/div&gt;
+
+                &lt;/div&gt;
+
+
+                &lt;div class="action-grid"&gt;
+
+
+                    &lt;!-- RAISE REQUEST --&gt;
+
+                    &lt;div
+                        class="action-card"
+                        ng-click="c.raiseRequest()"&gt;
+
+                        &lt;div class="action-icon teal-bg"&gt;
+
+                            &lt;i class="fa fa-plus"&gt;&lt;/i&gt;
+
+                        &lt;/div&gt;
+
+                        &lt;h3&gt;
+                            Raise a Request
+                        &lt;/h3&gt;
+
+                        &lt;p&gt;
+                            Report food quality,
+                            hygiene or dining issues.
+                        &lt;/p&gt;
+
+                        &lt;span class="action-link"&gt;
+                            Create Request
+                            &lt;i class="fa fa-arrow-right"&gt;&lt;/i&gt;
+                        &lt;/span&gt;
+
+                    &lt;/div&gt;
+
+
+                    &lt;!-- MY REQUESTS --&gt;
+
+                    &lt;div
+                        class="action-card"
+                        ng-click="c.myRequests()"&gt;
+
+                        &lt;div class="action-icon blue-bg"&gt;
+
+                            &lt;i class="fa fa-list"&gt;&lt;/i&gt;
+
+                        &lt;/div&gt;
+
+                        &lt;h3&gt;
+                            My Requests
+                        &lt;/h3&gt;
+
+                        &lt;p&gt;
+                            View and track all your
+                            submitted requests.
+                        &lt;/p&gt;
+
+                        &lt;span class="action-link"&gt;
+                            View Requests
+                            &lt;i class="fa fa-arrow-right"&gt;&lt;/i&gt;
+                        &lt;/span&gt;
+
+                    &lt;/div&gt;
+
+
+                    &lt;!-- FEEDBACK --&gt;
+
+                    &lt;div
+                        class="action-card"
+                        ng-click="c.feedback()"&gt;
+
+                        &lt;div class="action-icon orange-bg"&gt;
+
+                            &lt;i class="fa fa-star"&gt;&lt;/i&gt;
+
+                        &lt;/div&gt;
+
+                        &lt;h3&gt;
+                            Give Feedback
+                        &lt;/h3&gt;
+
+                        &lt;p&gt;
+                            Share your experience
+                            and help improve food services.
+                        &lt;/p&gt;
+
+                        &lt;span class="action-link"&gt;
+                            Give Feedback
+                            &lt;i class="fa fa-arrow-right"&gt;&lt;/i&gt;
+                        &lt;/span&gt;
+
+                    &lt;/div&gt;
+
+                &lt;/div&gt;
+
+            &lt;/section&gt;
+
+
+            &lt;!-- =================================
+                 RECENT REQUESTS
+                 ================================= --&gt;
+
+            &lt;section class="dashboard-section"&gt;
+
+                &lt;div class="section-heading"&gt;
+
+                    &lt;div&gt;
+
+                        &lt;h2&gt;
+                            Recent Requests
+                        &lt;/h2&gt;
+
+                        &lt;p&gt;
+                            Your latest food service requests
+                        &lt;/p&gt;
+
+                    &lt;/div&gt;
+
+
+                    &lt;button
+                        class="view-all-btn"
+                        ng-click="c.myRequests()"&gt;
+
+                        View All
+
+                        &lt;i class="fa fa-arrow-right"&gt;&lt;/i&gt;
+
+                    &lt;/button&gt;
+
+                &lt;/div&gt;
+
+
+                &lt;!-- EMPTY --&gt;
+
+                &lt;div
+                    class="empty-state"
+                    ng-if="!c.data.recentRequests.length"&gt;
+
+                    &lt;div class="empty-icon"&gt;
+
+                        &lt;i class="fa fa-inbox"&gt;&lt;/i&gt;
+
+                    &lt;/div&gt;
+
+                    &lt;h3&gt;
+                        No requests yet
+                    &lt;/h3&gt;
+
+                    &lt;p&gt;
+                        You haven't raised any food-related
+                        requests yet.
+                    &lt;/p&gt;
+
+                    &lt;button
+                        class="empty-btn"
+                        ng-click="c.raiseRequest()"&gt;
+
+                        Raise Your First Request
+
+                    &lt;/button&gt;
+
+                &lt;/div&gt;
+
+
+                &lt;!-- REQUEST LIST --&gt;
+
+                &lt;div
+                    class="request-list"
+                    ng-if="c.data.recentRequests.length"&gt;
+
+                    &lt;div
+                        class="request-row"
+                        ng-repeat="request in c.data.recentRequests"&gt;
+
+                        &lt;div class="request-main"&gt;
+
+                            &lt;div class="request-icon"&gt;
+
+                                &lt;i class="fa fa-file-text"&gt;&lt;/i&gt;
+
+                            &lt;/div&gt;
+
+                            &lt;div&gt;
+
+                                &lt;h4&gt;
+                                    {{request.number}}
+                                &lt;/h4&gt;
+
+                                &lt;p&gt;
+                                    {{request.short_description}}
+                                &lt;/p&gt;
+
+                            &lt;/div&gt;
+
+                        &lt;/div&gt;
+
+
+                        &lt;div class="request-status"&gt;
+
+                            &lt;span
+                                class="status-badge"
+                                ng-class="request.statusClass"&gt;
+
+                                {{request.state}}
+
+                            &lt;/span&gt;
+
+                        &lt;/div&gt;
+
+                    &lt;/div&gt;
+
+                &lt;/div&gt;
+
+            &lt;/section&gt;
+
+
+            &lt;!-- =================================
+                 HELP
+                 ================================= --&gt;
+
+            &lt;section
+                id="help"
+                class="help-card"&gt;
+
+                &lt;div class="help-icon"&gt;
+
+                    &lt;i class="fa fa-question"&gt;&lt;/i&gt;
+
+                &lt;/div&gt;
+
+                &lt;div class="help-content"&gt;
+
+                    &lt;h3&gt;
+                        Need Help?
+                    &lt;/h3&gt;
+
+                    &lt;p&gt;
+                        If you have an issue with your
+                        campus food service, raise a request
+                        and our team will assist you.
+                    &lt;/p&gt;
+
+                &lt;/div&gt;
+
+                &lt;button
+                    ng-click="c.raiseRequest()"
+                    class="help-btn"&gt;
+
+                    Raise Request
+
+                &lt;/button&gt;
+
+            &lt;/section&gt;
+
+
+        &lt;/main&gt;
+
+    &lt;/div&gt;
+
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>262728336</payload_hash>
+        <record_name>CFMS Student Dashboard</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 10:22:03</sys_created_on>
+        <sys_id>7104485da02f03107f4432329b8a15e8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0d2efc19f0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 10:22:03</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>7104485d792f0310731cbdc7eb68e2e7</update_guid>
+        <update_guid_history>7104485d792f0310731cbdc7eb68e2e7:262728336,49a14459982f03103bc2cbbcbed411b8:-1554518049</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="CFMS Student Dashboard">a2b632fd802743107f4447e44ab1d578</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 12:39:46</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>0b6fab6e7eee4d84839f6dc361b78390</sys_id>
+        <sys_metadata>c9a14459a02f03107f4432329b8a15b6</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>CFMS Student Dashboard</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>sp_widget_c9a14459a02f03107f4432329b8a15b6</sys_update_name>
+        <sys_update_version display_value="sp_widget_c9a14459a02f03107f4432329b8a15b6">7104485da02f03107f4432329b8a15e8</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 12:39:46</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

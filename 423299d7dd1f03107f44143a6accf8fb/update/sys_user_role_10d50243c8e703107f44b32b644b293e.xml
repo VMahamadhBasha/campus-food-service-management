@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_user_role">
+    <sys_user_role action="INSERT_OR_UPDATE">
+        <assignable_by/>
+        <can_delegate>true</can_delegate>
+        <description/>
+        <elevated_privilege>false</elevated_privilege>
+        <federated_id>mh3NycXMXy0Ou1ujFMPfAi1Trv3uW6wUbfs1+Tjafpw=</federated_id>
+        <grantable>true</grantable>
+        <includes_roles/>
+        <name>x_snc_campus_foo_1.campus_login_session_user</name>
+        <scoped_admin>false</scoped_admin>
+        <suffix>campus_login_session_user</suffix>
+        <sys_class_name>sys_user_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 06:18:29</sys_created_on>
+        <sys_id>10d50243c8e703107f44b32b644b293e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_snc_campus_foo_1.campus_login_session_user</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sys_user_role_10d50243c8e703107f44b32b644b293e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 06:18:29</sys_updated_on>
+    </sys_user_role>
+</record_update>

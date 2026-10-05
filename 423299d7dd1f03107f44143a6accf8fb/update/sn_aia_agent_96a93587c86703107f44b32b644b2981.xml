@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sn_aia_agent">
+    <sn_aia_agent action="INSERT_OR_UPDATE">
+        <advanced_mode>false</advanced_mode>
+        <agent_type>internal</agent_type>
+        <applicability_script><![CDATA[/** 
+ * Function to process inputs related to ServiceNow change request operations 
+ * 
+ * @param {Object} inputs - The input parameters object 
+ * @param {string} inputs.objective - The purpose or goal of the operation 
+ * @param {string} inputs.execution_plan_id - Unique identifier for the execution plan 
+ * @param {Object} inputs.context - Context information about the ServiceNow change request 
+ * @param {string} inputs.context.url - The URL of the change request in Service Operations Workspace 
+ * @param {string} inputs.context.table - The ServiceNow table name (e.g., 'change_request') 
+ * @param {string} inputs.context.record_sys_id - The sys ID of the record 
+ * @param {string} inputs.context.route - The route type (e.g., 'record') 
+ * @param {string} inputs.context.additional_context - Additional contextual information in JSON format 
+ * @param {string} inputs.context.experience - The UI experience name (e.g., 'Service Operations Workspace') 
+ * @param {string} inputs.context.number - The request number 
+ * @param {string} inputs.context.portal - The portal ID 
+ * @param {string} inputs.context.device_type - The device type from which the experience is accessed, e.g.'mweb' 
+ * @param {string} inputs.context.deployment_id - The unique identifier for the assistant deployment 
+ * @param {string} inputs.context.assistant_type - The type of assistant, e.g., 'nava' 
+ * 
+ * @returns {boolean} Returns true/false 
+ */
+(function(inputs) {
+    /** const { objective, execution_plan_id, context } = inputs; 
+    return context.table == 'incident' ; */
+    return false;
+})(inputs);]]></applicability_script>
+        <channel>nap_and_va</channel>
+        <compiled_handbook/>
+        <condition/>
+        <context_processing_script><![CDATA[/*
+ * Available Variables:
+ * - task: The task provided to agent to solve either by orchestrator or user(incase of only agent execution i.e agent is invoked as seperate entity instead from a workflow).
+ * - user_utterance: The user utterance provided. and task = user_utterance in case of individual agent execution.
+ * - agent_id: The agent id.
+ * - context: An object that carries additional contextual information for the agent.
+ *          It always includes a "pageContext" and may include a "triggerContext",
+ *          depending on how and from where the agent is invoked.
+ *
+ *          Behavior by invocation type:
+ *          ---------------------------------
+ *          - When invoked via the startAiAgentConversation API:
+ *                If a "contextMemory" parameter is provided in the API request,
+ *                it will be available here as the "triggerContext".
+ *                The "pageContext" is always present in this call, regardless
+ *                of whether the agent is executed individually or as part of a use case.
+ *                Example:
+ *                    {
+ *                        pageContext: { ... },
+ *                        triggerContext: { ... } // Derived from contextMemory (if passed)
+ *                    }
+ *
+ *          - When invoked as part of a use case or workflow:
+ *                The "pageContext" and "triggerContext" objects available here
+ *                may have been *modified* by the use case’s context processing script.
+ *                This means the use case may alter, extend, or overwrite values
+ *                from the original "pageContext" or "triggerContext"
+ *                before the context reaches the agent.
+ *                If the use case was originally triggered via the API,
+ *                the initial "triggerContext" is still derived from the
+ *                "contextMemory" parameter, but its contents may have been updated
+ *                by the use case logic.
+ *
+ *          - When executed directly (standalone agent execution):
+ *                The "pageContext" will always be present (default or empty),
+ *                and the "triggerContext" will only be populated if explicitly
+ *                passed through the API call.
+ * Return an modified context like: { pageContext : {},triggerContext:{} }
+ */
+(function(task, user_utterance, agent_id, context) {
+    return {
+        pageContext : context?.pageContext,
+		triggerContext : context?.triggerContext
+    };
+})(task,user_utterance, agent_id, context);]]></context_processing_script>
+        <description>The Food Management Intelligence Agent is designed to support campus food-service managers by analyzing current food complaint, problem, and task analytics. It combines data from multiple sources, examines operational workload, identifies patterns, and generates a comprehensive management intelligence report. The agent’s audience is campus food-service managers seeking actionable, data-backed insights for operational improvement.</description>
+        <extends/>
+        <extension_configuration/>
+        <external_agent_configuration/>
+        <inputs>{}</inputs>
+        <instructions>1. Retrieve and parse analytics from Get Food Management Analytics, Food Base Problem Analytics, and Food Complaint Task Analytics.
+
+2. Combine and analyze data across Mess Halls, Meal Types, Use Cases, Problem Types, Priorities, States, Assignment Groups, Approval Status, affected students, and AI analysis results.
+
+3. Identify operational workload and classify tasks as open, closed complete, or closed incomplete based on explicit state values.
+
+4. Detect significant patterns only when supported by multiple records or aggregate data.
+
+5. Generate concise, evidence-based management insights and practical recommendations strictly from the current analytics.
+
+6. Populate every report field dynamically, using actual categories and counts from analytics tools.
+
+7. Validate the report for completeness, accuracy, and adherence to required structure before saving.
+
+8. Use the Create Food Management Report tool to save exactly one complete management report per manager request. Set Report Title to "Food Management Intelligence Report" and Report Content to the complete final JSON returned by the agent.
+
+9. Return the final management report as a valid JSON object, directly parseable by the frontend application.</instructions>
+        <internal_name>global.x_snc_campus_foo_1.Food Management Intelligence Agent</internal_name>
+        <name>Food Management Intelligence Agent</name>
+        <outputs>""</outputs>
+        <parent/>
+        <post_processing_message/>
+        <processing_message/>
+        <proficiency>- Expertly interprets and manages campus food service intelligence, focusing on complaint analysis, operational workload, and actionable insights for mess halls, meal types, use cases, problem types, priorities, states, assignment groups, approvals, affected students, and AI analysis. The agent's domain expertise ensures comprehensive oversight and evidence-based recommendations for campus food service operations.
+- Retrieves and analyzes campus food-service complaint data, including complaint counts and detailed breakdowns by Use Case, Mess Hall, Meal Type, Problem Type, and other available fields. This capability allows the agent to generate accurate, evidence-based management reports and identify complaint trends for targeted interventions.
+- Analyzes Food Base Problem records to identify root causes, affected student counts, problem types, priorities, states, and recommended actions. The agent leverages knowledge insights and related articles to inform management decisions and improve food service quality, ensuring that recommendations are strictly based on retrieved analytics.
+- Monitors and analyzes Food Complaint Task records, tracking task counts, priorities, states, assignment groups, approvals, and affected students. The agent classifies tasks as open, closed complete, or closed incomplete, enabling precise workload assessment and operational performance evaluation.
+- Integrates and synthesizes analytics from complaint, base problem, and task records to identify operational workload, classify tasks, detect significant patterns, and generate concise, evidence-based management insights and practical recommendations. The agent ensures that all report fields are dynamically populated using actual categories and counts from analytics tools.
+- Validates and saves a single, complete management report per request, ensuring accuracy, completeness, and strict adherence to the required JSON structure. The agent sets the report title and content dynamically, guaranteeing that the final report is directly parseable and actionable for campus food service managers.</proficiency>
+        <record_type>custom</record_type>
+        <required_translations>[]</required_translations>
+        <research>false</research>
+        <role>You are the Food Management Intelligence Agent for Campus Food Services Assistant.
+
+Use these three tools:
+1. Get Food Management Analytics
+2. Food Base Problem Analytics
+3. Food Complaint Task Analytics
+
+Retrieve all three results and use only their data. Do not invent, assume, modify, or remove values. Analyze complaints, food base problems, tasks, mess halls, meal types, use cases, problem types, priorities, states, assignment groups, approvals, affected students, and AI analysis.
+
+After all three tools finish, combine their COMPLETE results into ONE valid JSON object.
+
+Required structure:
+{
+  "report_title": "Food Management Intelligence Report",
+  "analytics_data": {},
+  "food_base_problem_analytics": {},
+  "food_complaint_task_analytics": {}
+}
+
+Put the complete Get Food Management Analytics result in "analytics_data".
+Put the complete Food Base Problem Analytics result in "food_base_problem_analytics".
+Put the complete Food Complaint Task Analytics result in "food_complaint_task_analytics".
+
+Return ONLY the single JSON object. Do not return separate JSON objects, explanations, Markdown, or code fences. Preserve every field and value returned by the tools.</role>
+        <root_agent_id/>
+        <source_id/>
+        <strategy display_value="ReAct">f0bff21f9f13c6108f431597d90a1c74</strategy>
+        <sys_class_name>sn_aia_agent</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 05:30:24</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>96a93587c86703107f44b32b644b2981</sys_id>
+        <sys_mod_count>25</sys_mod_count>
+        <sys_name>Food Management Intelligence Agent</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sn_aia_agent_96a93587c86703107f44b32b644b2981</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-05 06:44:52</sys_updated_on>
+    </sn_aia_agent>
+</record_update>

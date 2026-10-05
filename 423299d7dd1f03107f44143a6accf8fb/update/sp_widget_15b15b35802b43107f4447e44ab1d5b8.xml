@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($scope) {
+
+    var c = this;
+
+
+    // Default section
+    c.activeSection = 'dashboard';
+
+
+    // Sidebar navigation
+    c.selectSection = function(section) {
+
+        c.activeSection = section;
+
+    };
+
+
+    // Submit feedback
+    c.submitFeedback = function(feedback) {
+
+
+        // Check required fields
+        if (!feedback.overall_rating ||
+            !feedback.resolution_satisfaction ||
+            !feedback.feedback_comments) {
+
+            alert("Please fill all feedback fields.");
+
+            return;
+        }
+
+
+        // Send data to Server Script
+        c.server.get({
+
+            action: "saveFeedback",
+
+            sys_id: feedback.sys_id,
+
+            overall_rating:
+                feedback.overall_rating,
+
+            resolution_satisfaction:
+                feedback.resolution_satisfaction,
+
+            feedback_comments:
+                feedback.feedback_comments
+
+        }).then(function(response) {
+
+
+            if (response.data.success) {
+
+                // Refresh the feedback records
+                c.data.feedbacks =
+                    response.data.feedbacks;
+
+                alert(
+                    "Feedback submitted successfully!"
+                );
+
+            } else {
+
+                alert(
+                    response.data.message ||
+                    "Unable to submit feedback."
+                );
+
+            }
+
+        });
+
+    };
+
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.student-dashboard {&#13;
+  min-height: 100vh;&#13;
+  background: #f5f7fb;&#13;
+  font-family: Arial, sans-serif;&#13;
+}&#13;
+&#13;
+&#13;
+/* Header */&#13;
+&#13;
+.top-header {&#13;
+  height: 70px;&#13;
+  background: white;&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: space-between;&#13;
+  padding: 0 30px;&#13;
+  border-bottom: 1px solid #e5e7eb;&#13;
+}&#13;
+&#13;
+.brand {&#13;
+  font-size: 22px;&#13;
+  font-weight: bold;&#13;
+}&#13;
+&#13;
+.student-info {&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  gap: 12px;&#13;
+  font-weight: 600;&#13;
+}&#13;
+&#13;
+.role-badge {&#13;
+  background: #e8f0ff;&#13;
+  color: #2563eb;&#13;
+  padding: 5px 10px;&#13;
+  border-radius: 20px;&#13;
+  font-size: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+/* Body */&#13;
+&#13;
+.dashboard-body {&#13;
+  display: flex;&#13;
+  min-height: calc(100vh - 70px);&#13;
+}&#13;
+&#13;
+&#13;
+/* Sidebar */&#13;
+&#13;
+.sidebar {&#13;
+  width: 240px;&#13;
+  background: white;&#13;
+  border-right: 1px solid #e5e7eb;&#13;
+  display: flex;&#13;
+  flex-direction: column;&#13;
+  justify-content: space-between;&#13;
+}&#13;
+&#13;
+.sidebar-menu {&#13;
+  padding: 20px 15px;&#13;
+}&#13;
+&#13;
+.menu-item {&#13;
+  padding: 13px 15px;&#13;
+  margin-bottom: 8px;&#13;
+  border-radius: 8px;&#13;
+  cursor: pointer;&#13;
+}&#13;
+&#13;
+.menu-item:hover {&#13;
+  background: #f1f5f9;&#13;
+}&#13;
+&#13;
+.menu-item.active {&#13;
+  background: #e8f0ff;&#13;
+  color: #2563eb;&#13;
+  font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+/* Bottom user section */&#13;
+&#13;
+.sidebar-bottom {&#13;
+  padding: 20px;&#13;
+  border-top: 1px solid #e5e7eb;&#13;
+}&#13;
+&#13;
+.user-name {&#13;
+  font-weight: 600;&#13;
+}&#13;
+&#13;
+.user-role {&#13;
+  font-size: 13px;&#13;
+  color: #6b7280;&#13;
+  margin-top: 4px;&#13;
+}&#13;
+&#13;
+.logout-btn {&#13;
+  width: 100%;&#13;
+  margin-top: 15px;&#13;
+  padding: 9px;&#13;
+  border: 1px solid #ddd;&#13;
+  background: white;&#13;
+  border-radius: 7px;&#13;
+  cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+/* Main Content */&#13;
+&#13;
+.main-content {&#13;
+  flex: 1;&#13;
+  padding: 35px;&#13;
+}&#13;
+&#13;
+.main-content h1 {&#13;
+  margin-top: 0;&#13;
+  font-size: 28px;&#13;
+}&#13;
+&#13;
+.welcome-text {&#13;
+  color: #6b7280;&#13;
+}&#13;
+.kpi-grid {&#13;
+  display: grid;&#13;
+  grid-template-columns: repeat(4, 1fr);&#13;
+  gap: 20px;&#13;
+  margin-top: 30px;&#13;
+}&#13;
+&#13;
+.kpi-card {&#13;
+  background: white;&#13;
+  padding: 22px;&#13;
+  border-radius: 12px;&#13;
+  border: 1px solid #e5e7eb;&#13;
+}&#13;
+&#13;
+.kpi-icon {&#13;
+  font-size: 24px;&#13;
+}&#13;
+&#13;
+.kpi-number {&#13;
+  font-size: 30px;&#13;
+  font-weight: bold;&#13;
+  margin-top: 10px;&#13;
+}&#13;
+&#13;
+.kpi-title {&#13;
+  color: #6b7280;&#13;
+  margin-top: 5px;&#13;
+  font-size: 14px;&#13;
+}&#13;
+.requests-section {&#13;
+  background: white;&#13;
+  margin-top: 30px;&#13;
+  padding: 25px;&#13;
+  border-radius: 12px;&#13;
+  border: 1px solid #e5e7eb;&#13;
+}&#13;
+&#13;
+.section-header {&#13;
+  display: flex;&#13;
+  justify-content: space-between;&#13;
+  align-items: center;&#13;
+  margin-bottom: 20px;&#13;
+}&#13;
+&#13;
+.section-header h2 {&#13;
+  margin: 0;&#13;
+  font-size: 20px;&#13;
+}&#13;
+&#13;
+.section-header p {&#13;
+  margin-top: 5px;&#13;
+  color: #6b7280;&#13;
+  font-size: 14px;&#13;
+}&#13;
+&#13;
+.view-all-btn {&#13;
+  padding: 9px 16px;&#13;
+  border: 1px solid #d1d5db;&#13;
+  background: white;&#13;
+  border-radius: 7px;&#13;
+  cursor: pointer;&#13;
+}&#13;
+&#13;
+.requests-table-container {&#13;
+  overflow-x: auto;&#13;
+}&#13;
+&#13;
+.requests-table {&#13;
+  width: 100%;&#13;
+  border-collapse: collapse;&#13;
+}&#13;
+&#13;
+.requests-table th {&#13;
+  text-align: left;&#13;
+  padding: 14px;&#13;
+  background: #f8fafc;&#13;
+  color: #6b7280;&#13;
+  font-size: 13px;&#13;
+}&#13;
+&#13;
+.requests-table td {&#13;
+  padding: 15px 14px;&#13;
+  border-top: 1px solid #e5e7eb;&#13;
+  font-size: 14px;&#13;
+}&#13;
+&#13;
+.priority,&#13;
+.status {&#13;
+  padding: 5px 10px;&#13;
+  border-radius: 15px;&#13;
+  font-size: 12px;&#13;
+  font-weight: 600;&#13;
+}&#13;
+&#13;
+.priority.high {&#13;
+  background: #fee2e2;&#13;
+  color: #b91c1c;&#13;
+}&#13;
+&#13;
+.priority.medium {&#13;
+  background: #fef3c7;&#13;
+  color: #92400e;&#13;
+}&#13;
+&#13;
+.status.resolved {&#13;
+  background: #dcfce7;&#13;
+  color: #166534;&#13;
+}&#13;
+&#13;
+.status.new {&#13;
+  background: #dbeafe;&#13;
+  color: #1d4ed8;&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>student_dashboard_shell</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Student Dashboard Shell</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.feedbacks = [];
+
+    data.success = false;
+
+    data.message = "";
+
+
+    /*
+     * ==========================================
+     * SAVE EXISTING FEEDBACK
+     * ==========================================
+     */
+
+    if (input && input.action == "saveFeedback") {
+
+
+        var feedbackGR = new GlideRecord(
+            'x_snc_campus_foo_1_food_complaint_feedbacks'
+        );
+
+
+        /*
+         * Find the existing feedback record
+         * using its sys_id
+         */
+
+        if (feedbackGR.get(input.sys_id)) {
+
+
+            /*
+             * SECURITY CHECK
+             *
+             * Make sure the feedback belongs
+             * to the currently logged-in student.
+             */
+
+            if (
+                feedbackGR.getValue('student')
+                ==
+                gs.getUserID()
+            ) {
+
+
+                /*
+                 * Update ONLY these 3 fields
+                 */
+
+                feedbackGR.setValue(
+                    'overall_rating',
+                    input.overall_rating
+                );
+
+
+                feedbackGR.setValue(
+                    'resolution_satisfaction',
+                    input.resolution_satisfaction
+                );
+
+
+                feedbackGR.setValue(
+                    'feedback_comments',
+                    input.feedback_comments
+                );
+
+
+                /*
+                 * Save existing record
+                 */
+
+                feedbackGR.update();
+
+
+                data.success = true;
+
+                data.message =
+                    "Feedback submitted successfully.";
+
+
+            } else {
+
+
+                data.success = false;
+
+                data.message =
+                    "You cannot update this feedback.";
+
+            }
+
+
+        } else {
+
+
+            data.success = false;
+
+            data.message =
+                "Feedback record not found.";
+
+        }
+
+    }
+
+
+    /*
+     * ==========================================
+     * LOAD FEEDBACK RECORDS
+     * ==========================================
+     */
+
+    var gr = new GlideRecord(
+        'x_snc_campus_foo_1_food_complaint_feedbacks'
+    );
+
+
+    /*
+     * Get only feedback records
+     * belonging to logged-in student
+     */
+
+    gr.addQuery(
+        'student',
+        gs.getUserID()
+    );
+
+
+    gr.orderByDesc('sys_created_on');
+
+    gr.query();
+
+
+    while (gr.next()) {
+
+
+        data.feedbacks.push({
+
+            /*
+             * Unique record ID
+             */
+            sys_id:
+                gr.getUniqueValue(),
+
+
+            /*
+             * Feedback Number
+             */
+            number:
+                gr.getValue('number'),
+
+
+            /*
+             * Existing request information
+             */
+            food_complaint:
+                gr.getDisplayValue(
+                    'food_complaint'
+                ),
+
+
+            use_case:
+                gr.getDisplayValue(
+                    'use_case'
+                ),
+
+
+            mess_hall:
+                gr.getDisplayValue(
+                    'mess_hall'
+                ),
+
+
+            meal_type:
+                gr.getDisplayValue(
+                    'meal_type'
+                ),
+
+
+            problem_type:
+                gr.getValue(
+                    'problem_type'
+                ),
+
+
+            /*
+             * Student feedback fields
+             */
+            overall_rating:
+                gr.getValue(
+                    'overall_rating'
+                ),
+
+
+            resolution_satisfaction:
+                gr.getValue(
+                    'resolution_satisfaction'
+                ),
+
+
+            feedback_comments:
+                gr.getValue(
+                    'feedback_comments'
+                )
+
+        });
+
+    }
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 14:37:50</sys_created_on>
+        <sys_id>15b15b35802b43107f4447e44ab1d5b8</sys_id>
+        <sys_mod_count>18</sys_mod_count>
+        <sys_name>Student Dashboard Shell</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_15b15b35802b43107f4447e44ab1d5b8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 16:55:20</sys_updated_on>
+        <template><![CDATA[<div class="student-dashboard">
+
+  <!-- Header -->
+  <div class="top-header">
+    <div class="brand">
+      ]]>🍳<![CDATA[ CampusFood AI
+    </div>
+
+    <div class="student-info">
+      Rahul Sharma
+      <span class="role-badge">STUDENT</span>
+    </div>
+  </div>
+
+
+  <!-- Dashboard Body -->
+  <div class="dashboard-body">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+      <div class="sidebar-menu">
+
+        <div class="menu-item active">
+          ]]>🏠<![CDATA[ Dashboard
+        </div>
+
+        <div class="menu-item">
+          ]]>🎫<![CDATA[ Raise Ticket
+        </div>
+
+        <div class="menu-item">
+          ]]>📄<![CDATA[ My Requests
+        </div>
+
+        <div class="menu-item">
+          ⭐ Feedback
+        </div>
+
+      </div>
+
+
+      <!-- User section -->
+      <div class="sidebar-bottom">
+
+        <div class="user-name">
+          Rahul Sharma
+        </div>
+
+        <div class="user-role">
+          Student
+        </div>
+
+        <button class="logout-btn">
+          Logout
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+      <h1>Welcome back, Rahul ]]>👋<![CDATA[</h1>
+
+      <p class="welcome-text">
+        Manage your food service requests and track their progress.
+      </p>
+
+      <!-- Content will be added here later -->
+      <div class="kpi-grid">
+
+  <div class="kpi-card">
+    <div class="kpi-icon">]]>🎫<![CDATA[</div>
+    <div class="kpi-number">3</div>
+    <div class="kpi-title">Tickets Raised</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-icon">⏳</div>
+    <div class="kpi-number">1</div>
+    <div class="kpi-title">Active Tickets</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-icon">✅</div>
+    <div class="kpi-number">2</div>
+    <div class="kpi-title">Resolved Tickets</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-icon">⭐</div>
+    <div class="kpi-number">1</div>
+    <div class="kpi-title">Feedback Given</div>
+  </div>
+
+</div>
+      <!-- Recent Requests -->
+
+<div class="requests-section">
+
+  <div class="section-header">
+    <div>
+      <h2>Recent Requests</h2>
+      <p>View your latest food service requests.</p>
+    </div>
+
+    <button class="view-all-btn">
+      View All
+    </button>
+  </div>
+
+
+  <div class="requests-table-container">
+
+    <table class="requests-table">
+
+      <thead>
+        <tr>
+          <th>Ticket</th>
+          <th>Issue</th>
+          <th>Priority</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>FC-001</td>
+          <td>Food Quality</td>
+          <td>
+            <span class="priority high">High</span>
+          </td>
+          <td>
+            <span class="status resolved">Resolved</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td>FC-006</td>
+          <td>Meal Not Available</td>
+          <td>
+            <span class="priority medium">Medium</span>
+          </td>
+          <td>
+            <span class="status new">New</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td>FC-009</td>
+          <td>Food Wastage</td>
+          <td>
+            <span class="priority medium">Medium</span>
+          </td>
+          <td>
+            <span class="status new">New</span>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+    </div>
+
+  </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

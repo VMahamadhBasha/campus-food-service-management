@@ -1,0 +1,3593 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function($scope) {
+
+    var c = this;
+
+
+    /* ==========================================
+       PAGE
+       ========================================== */
+
+    c.currentPage =
+        'overview';
+
+
+    /* ==========================================
+       RECORD FORM
+       ========================================== */
+
+    c.showRecordForm =
+        false;
+
+    c.selectedRecord =
+        null;
+
+    c.savingRecord =
+        false;
+
+    c.formError =
+        '';
+
+    c.formSuccess =
+        '';
+
+    c.notesVisible =
+        false;
+
+    c.notesRequired =
+        false;
+
+
+    /* ==========================================
+       FILTER OPTIONS
+       ========================================== */
+
+    c.useCaseOptions =
+        c.data.filterOptions &&
+        c.data.filterOptions.useCases
+            ? c.data.filterOptions.useCases
+            : [];
+
+    c.priorityOptions =
+        c.data.filterOptions &&
+        c.data.filterOptions.priorities
+            ? c.data.filterOptions.priorities
+            : [];
+
+
+    c.assignmentFilters = {
+
+        use_case:
+            '',
+
+        current_priority:
+            ''
+    };
+
+
+    c.filteredAssignmentIds =
+        angular.copy(
+            c.data.myAssignmentIds || []
+        );
+
+
+    /* ==========================================
+       CHANGE PAGE
+       ========================================== */
+
+    c.changePage = function(page) {
+
+        c.currentPage =
+            page;
+
+        c.closeRecordForm();
+    };
+
+
+    /* ==========================================
+       FILTER ASSIGNED TASKS
+       ========================================== */
+
+    c.applyAssignmentFilters =
+        function() {
+
+            var filtered = [];
+
+            var ids =
+                c.data.myAssignmentIds ||
+                [];
+
+            var selectedUseCase =
+                String(
+                    c.assignmentFilters.use_case ||
+                    ''
+                ).trim();
+
+            var selectedPriority =
+                String(
+                    c.assignmentFilters.current_priority ||
+                    ''
+                ).trim();
+
+
+            for (
+                var i = 0;
+                i < ids.length;
+                i++
+            ) {
+
+                var sysId =
+                    ids[i];
+
+                var record =
+                    c.data.records[
+                        sysId
+                    ];
+
+
+                if (!record) {
+
+                    continue;
+                }
+
+
+                /* --------------------------------
+                   Use Case
+                   -------------------------------- */
+
+                var useCaseMatch =
+                    true;
+
+                if (
+                    selectedUseCase !== ''
+                ) {
+
+                    var recordUseCase =
+                        String(
+                            record.use_case ||
+                            ''
+                        ).trim();
+
+                    var recordUseCaseDisplay =
+                        String(
+                            record.use_case_display ||
+                            ''
+                        ).trim();
+
+
+                    useCaseMatch =
+                        recordUseCase ===
+                            selectedUseCase ||
+                        recordUseCaseDisplay ===
+                            selectedUseCase;
+                }
+
+
+                /* --------------------------------
+                   Priority
+                   -------------------------------- */
+
+                var priorityMatch =
+                    true;
+
+                if (
+                    selectedPriority !== ''
+                ) {
+
+                    var recordPriority =
+                        String(
+                            record.current_priority ||
+                            ''
+                        ).trim();
+
+                    var recordPriorityDisplay =
+                        String(
+                            record.current_priority_display ||
+                            ''
+                        ).trim();
+
+
+                    priorityMatch =
+                        recordPriority ===
+                            selectedPriority ||
+                        recordPriorityDisplay ===
+                            selectedPriority;
+                }
+
+
+                if (
+                    useCaseMatch &&
+                    priorityMatch
+                ) {
+
+                    filtered.push(
+                        sysId
+                    );
+                }
+            }
+
+
+            c.filteredAssignmentIds =
+                filtered;
+        };
+
+
+    /* ==========================================
+       CLEAR FILTERS
+       ========================================== */
+
+    c.clearAssignmentFilters =
+        function() {
+
+            c.assignmentFilters.use_case =
+                '';
+
+            c.assignmentFilters.current_priority =
+                '';
+
+            c.filteredAssignmentIds =
+                angular.copy(
+                    c.data.myAssignmentIds ||
+                    []
+                );
+        };
+
+
+    /* ==========================================
+       OPEN RECORD
+       ========================================== */
+
+    c.openRecord =
+        function(sysId) {
+
+            c.formError =
+                '';
+
+            c.formSuccess =
+                '';
+
+            c.selectedRecord =
+                null;
+
+
+            var record =
+                c.data.records[
+                    sysId
+                ];
+
+
+            if (!record) {
+
+                c.formError =
+                    'The selected task could not be found.';
+
+                return;
+            }
+
+
+            c.selectedRecord =
+                angular.copy(
+                    record
+                );
+
+
+            if (
+                !c.selectedRecord.approval
+            ) {
+
+                c.selectedRecord.approval =
+                    'requested';
+            }
+
+
+            c.selectedRecord.approval =
+                String(
+                    c.selectedRecord.approval
+                ).toLowerCase();
+
+
+            c.updateNotesVisibility();
+
+            c.showRecordForm =
+                true;
+        };
+
+
+    /* ==========================================
+       ACCEPT BUTTON
+       ========================================== */
+
+    c.acceptRecord =
+        function(sysId) {
+
+            c.formError =
+                '';
+
+            c.formSuccess =
+                '';
+
+
+            var record =
+                c.data.records[
+                    sysId
+                ];
+
+
+            if (!record) {
+
+                c.formError =
+                    'The selected task could not be found.';
+
+                return;
+            }
+
+
+            c.selectedRecord =
+                angular.copy(
+                    record
+                );
+
+
+            c.selectedRecord.approval =
+                'approved';
+
+
+            c.updateNotesVisibility();
+
+            c.showRecordForm =
+                true;
+        };
+
+
+    /* ==========================================
+       CLOSE FORM
+       ========================================== */
+
+    c.closeRecordForm =
+        function() {
+
+            c.showRecordForm =
+                false;
+
+            c.selectedRecord =
+                null;
+
+            c.formError =
+                '';
+
+            c.formSuccess =
+                '';
+
+            c.savingRecord =
+                false;
+
+            c.notesVisible =
+                false;
+
+            c.notesRequired =
+                false;
+        };
+
+
+    /* ==========================================
+       NOTES VISIBILITY
+       ========================================== */
+
+    c.updateNotesVisibility =
+        function() {
+
+            if (!c.selectedRecord) {
+
+                c.notesVisible =
+                    false;
+
+                c.notesRequired =
+                    false;
+
+                return;
+            }
+
+
+            var approval =
+                String(
+                    c.selectedRecord.approval ||
+                    ''
+                ).toLowerCase();
+
+
+            if (
+                approval === 'requested'
+            ) {
+
+                c.notesVisible =
+                    false;
+
+                c.notesRequired =
+                    false;
+
+            } else {
+
+                /*
+                 * Approved and Rejected
+                 * both require notes.
+                 */
+
+                c.notesVisible =
+                    true;
+
+                c.notesRequired =
+                    true;
+            }
+        };
+
+
+    /* ==========================================
+       SAVE RECORD
+       ========================================== */
+
+    c.saveRecord =
+        function() {
+
+            c.formError =
+                '';
+
+            c.formSuccess =
+                '';
+
+
+            if (
+                !c.selectedRecord ||
+                !c.selectedRecord.sys_id
+            ) {
+
+                c.formError =
+                    'No task selected.';
+
+                return;
+            }
+
+
+            var approval =
+                String(
+                    c.selectedRecord.approval ||
+                    ''
+                ).toLowerCase();
+
+
+            var notes =
+                String(
+                    c.selectedRecord.notes ||
+                    ''
+                );
+
+
+            if (
+                approval !== 'requested' &&
+                approval !== 'approved' &&
+                approval !== 'rejected'
+            ) {
+
+                c.formError =
+                    'Please select a valid approval status.';
+
+                return;
+            }
+
+
+            /*
+             * Notes mandatory for
+             * Approved and Rejected.
+             */
+
+            if (
+                (
+                    approval === 'approved' ||
+                    approval === 'rejected'
+                ) &&
+                notes.trim() === ''
+            ) {
+
+                c.formError =
+                    'Notes are required when the approval is Approved or Rejected.';
+
+                return;
+            }
+
+
+            c.savingRecord =
+                true;
+
+
+            c.server.get({
+
+                action:
+                    'saveRecord',
+
+                sys_id:
+                    c.selectedRecord.sys_id,
+
+                approval:
+                    approval,
+
+                notes:
+                    notes
+
+            }).then(
+
+                function(response) {
+
+                    if (
+                        response.data &&
+                        response.data.saveError
+                    ) {
+
+                        c.formError =
+                            response.data.saveError;
+
+                        c.savingRecord =
+                            false;
+
+                        return;
+                    }
+
+
+                    if (
+                        response.data
+                    ) {
+
+                        angular.extend(
+                            c.data,
+                            response.data
+                        );
+                    }
+
+
+                    c.useCaseOptions =
+                        c.data.filterOptions &&
+                        c.data.filterOptions.useCases
+                            ? c.data.filterOptions.useCases
+                            : [];
+
+
+                    c.priorityOptions =
+                        c.data.filterOptions &&
+                        c.data.filterOptions.priorities
+                            ? c.data.filterOptions.priorities
+                            : [];
+
+
+                    c.filteredAssignmentIds =
+                        angular.copy(
+                            c.data.myAssignmentIds ||
+                            []
+                        );
+
+
+                    c.applyAssignmentFilters();
+
+
+                    if (
+                        response.data &&
+                        response.data.saveSuccess
+                    ) {
+
+                        c.formSuccess =
+                            'Task updated successfully.';
+
+                        setTimeout(
+                            function() {
+
+                                $scope.$apply(
+                                    function() {
+
+                                        c.closeRecordForm();
+
+                                    }
+                                );
+
+                            },
+                            700
+                        );
+                    }
+
+
+                    c.savingRecord =
+                        false;
+                },
+
+
+                function() {
+
+                    c.formError =
+                        'Unable to update the task. Please try again.';
+
+                    c.savingRecord =
+                        false;
+                }
+            );
+        };
+
+
+    /* ==========================================
+       REPORT BAR WIDTH
+       ========================================== */
+
+    c.getBarWidth =
+        function(value, list) {
+
+            var current =
+                parseInt(
+                    value,
+                    10
+                ) || 0;
+
+            var maximum =
+                0;
+
+
+            if (
+                list &&
+                list.length
+            ) {
+
+                for (
+                    var i = 0;
+                    i < list.length;
+                    i++
+                ) {
+
+                    var count =
+                        parseInt(
+                            list[i].count,
+                            10
+                        ) || 0;
+
+
+                    if (
+                        count > maximum
+                    ) {
+
+                        maximum =
+                            count;
+                    }
+                }
+            }
+
+
+            if (
+                maximum === 0
+            ) {
+
+                return '0%';
+            }
+
+
+            return (
+                (
+                    current /
+                    maximum
+                ) * 100
+            ) + '%';
+        };
+
+
+    /* ==========================================
+       HORIZONTAL TABLE DRAG
+       ========================================== */
+
+    setTimeout(
+        function() {
+
+            var adminTable =
+                document.getElementById(
+                    'adminAssignmentScroll'
+                );
+
+
+            if (!adminTable) {
+
+                return;
+            }
+
+
+            var dragging =
+                false;
+
+            var startX =
+                0;
+
+            var startScroll =
+                0;
+
+
+            adminTable.addEventListener(
+                'mousedown',
+                function(event) {
+
+                    dragging =
+                        true;
+
+                    startX =
+                        event.pageX -
+                        adminTable.offsetLeft;
+
+                    startScroll =
+                        adminTable.scrollLeft;
+                }
+            );
+
+
+            adminTable.addEventListener(
+                'mouseleave',
+                function() {
+
+                    dragging =
+                        false;
+                }
+            );
+
+
+            adminTable.addEventListener(
+                'mouseup',
+                function() {
+
+                    dragging =
+                        false;
+                }
+            );
+
+
+            adminTable.addEventListener(
+                'mousemove',
+                function(event) {
+
+                    if (!dragging) {
+
+                        return;
+                    }
+
+
+                    event.preventDefault();
+
+
+                    var x =
+                        event.pageX -
+                        adminTable.offsetLeft;
+
+
+                    var distance =
+                        (
+                            x -
+                            startX
+                        ) * 1.2;
+
+
+                    adminTable.scrollLeft =
+                        startScroll -
+                        distance;
+                }
+            );
+
+        },
+        500
+    );
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* ==========================================&#13;
+   ADMIN DASHBOARD&#13;
+   ========================================== */&#13;
+&#13;
+.admin-dashboard {&#13;
+    display: flex;&#13;
+    min-height: 100vh;&#13;
+    background: #f5f7f8;&#13;
+    color: #243238;&#13;
+    font-family: Arial, Helvetica, sans-serif;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   SIDEBAR&#13;
+   ========================================== */&#13;
+&#13;
+.admin-sidebar {&#13;
+    width: 240px;&#13;
+    min-width: 240px;&#13;
+    background: #1E293B;&#13;
+    border-right: 1px solid #334155;&#13;
+    padding: 22px 16px;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.admin-brand {&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 12px;&#13;
+    padding: 6px 8px 26px;&#13;
+}&#13;
+&#13;
+.admin-brand-icon {&#13;
+    width: 38px;&#13;
+    height: 38px;&#13;
+    border-radius: 50%;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    background: #2563EB;&#13;
+    color: #FFFFFF;&#13;
+    font-size: 18px;&#13;
+    font-weight: 700;&#13;
+    border: 2px solid #60A5FA;&#13;
+    box-shadow: 0 5px 12px rgba(37, 99, 235, 0.30);&#13;
+}&#13;
+&#13;
+.admin-brand-title {&#13;
+    font-size: 16px;&#13;
+    font-weight: 700;&#13;
+    color: #FFFFFF;&#13;
+}&#13;
+&#13;
+.admin-brand-subtitle {&#13;
+    margin-top: 3px;&#13;
+    font-size: 12px;&#13;
+    color: #94A3B8;&#13;
+}&#13;
+&#13;
+.admin-navigation {&#13;
+    display: flex;&#13;
+    flex-direction: column;&#13;
+    gap: 6px;&#13;
+}&#13;
+&#13;
+.admin-nav-item {&#13;
+    width: 100%;&#13;
+    min-height: 44px;&#13;
+    padding: 0 13px;&#13;
+    border: 0;&#13;
+    border-radius: 8px;&#13;
+    background: transparent;&#13;
+    color: #CBD5E1;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 12px;&#13;
+    text-align: left;&#13;
+    cursor: pointer;&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+.admin-nav-item:hover {&#13;
+    background: #334155;&#13;
+    color: #FFFFFF;&#13;
+}&#13;
+&#13;
+.admin-nav-item.active {&#13;
+    background: #2563EB;&#13;
+    color: #FFFFFF;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.admin-nav-icon {&#13;
+    width: 20px;&#13;
+    text-align: center;&#13;
+    font-size: 17px;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   CONTENT&#13;
+   ========================================== */&#13;
+&#13;
+.admin-content {&#13;
+    flex: 1;&#13;
+    min-width: 0;&#13;
+    padding: 30px;&#13;
+    overflow-x: hidden;&#13;
+}&#13;
+&#13;
+.admin-page {&#13;
+    width: 100%;&#13;
+}&#13;
+&#13;
+.admin-page-header {&#13;
+    display: flex;&#13;
+    justify-content: space-between;&#13;
+    align-items: flex-start;&#13;
+    margin-bottom: 24px;&#13;
+}&#13;
+&#13;
+.admin-page-header h1 {&#13;
+    margin: 0;&#13;
+    font-size: 27px;&#13;
+    color: #123c3a;&#13;
+}&#13;
+&#13;
+.admin-page-header p {&#13;
+    margin: 7px 0 0;&#13;
+    color: #6d7977;&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   KPI&#13;
+   ========================================== */&#13;
+&#13;
+.admin-kpi-grid {&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(3, 1fr);&#13;
+    gap: 18px;&#13;
+    margin-bottom: 22px;&#13;
+}&#13;
+&#13;
+.admin-kpi-card {&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #dfe5e7;&#13;
+    border-radius: 12px;&#13;
+    padding: 21px;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.admin-kpi-label {&#13;
+    font-size: 13px;&#13;
+    color: #697674;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.admin-kpi-value {&#13;
+    margin-top: 8px;&#13;
+    font-size: 30px;&#13;
+    font-weight: 700;&#13;
+    color: #123c3a;&#13;
+}&#13;
+&#13;
+.admin-kpi-caption {&#13;
+    margin-top: 5px;&#13;
+    font-size: 12px;&#13;
+    color: #8a9492;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   SECTION CARD&#13;
+   ========================================== */&#13;
+&#13;
+.admin-section-card {&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #dfe5e7;&#13;
+    border-radius: 12px;&#13;
+    overflow: hidden;&#13;
+    margin-bottom: 22px;&#13;
+}&#13;
+&#13;
+.admin-section-header {&#13;
+    padding: 19px 21px;&#13;
+    border-bottom: 1px solid #e5e9ea;&#13;
+    display: flex;&#13;
+    justify-content: space-between;&#13;
+    align-items: center;&#13;
+    gap: 15px;&#13;
+}&#13;
+&#13;
+.admin-section-header h2 {&#13;
+    margin: 0;&#13;
+    font-size: 18px;&#13;
+    color: #123c3a;&#13;
+}&#13;
+&#13;
+.admin-section-header p {&#13;
+    margin: 5px 0 0;&#13;
+    color: #7a8583;&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+.admin-link-button {&#13;
+    border: 0;&#13;
+    background: transparent;&#13;
+    color: #123c3a;&#13;
+    font-weight: 600;&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+.admin-link-button:hover {&#13;
+    text-decoration: underline;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   FILTERS&#13;
+   ========================================== */&#13;
+&#13;
+.admin-filter-card {&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #dfe5e7;&#13;
+    border-radius: 12px;&#13;
+    margin-bottom: 22px;&#13;
+    padding: 20px;&#13;
+}&#13;
+&#13;
+.admin-filter-header {&#13;
+    display: flex;&#13;
+    justify-content: space-between;&#13;
+    align-items: center;&#13;
+    margin-bottom: 18px;&#13;
+}&#13;
+&#13;
+.admin-filter-header h3 {&#13;
+    margin: 0;&#13;
+    color: #123c3a;&#13;
+    font-size: 16px;&#13;
+}&#13;
+&#13;
+.admin-filter-header span {&#13;
+    display: block;&#13;
+    margin-top: 4px;&#13;
+    color: #7a8583;&#13;
+    font-size: 12px;&#13;
+}&#13;
+&#13;
+.admin-filter-grid {&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(2, minmax(200px, 1fr));&#13;
+    gap: 16px;&#13;
+}&#13;
+&#13;
+.admin-filter-field label,&#13;
+.admin-form-field label {&#13;
+    display: block;&#13;
+    margin-bottom: 7px;&#13;
+    font-size: 12px;&#13;
+    font-weight: 600;&#13;
+    color: #4d5a58;&#13;
+}&#13;
+&#13;
+.admin-select {&#13;
+    width: 100%;&#13;
+    height: 40px;&#13;
+    padding: 0 11px;&#13;
+    border: 1px solid #ccd5d3;&#13;
+    border-radius: 7px;&#13;
+    background: #ffffff;&#13;
+    color: #273533;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.admin-select:focus {&#13;
+    outline: none;&#13;
+    border-color: #123c3a;&#13;
+}&#13;
+&#13;
+.admin-clear-button {&#13;
+    border: 1px solid #ccd5d3;&#13;
+    border-radius: 7px;&#13;
+    background: #ffffff;&#13;
+    padding: 8px 13px;&#13;
+    color: #53615f;&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+.admin-clear-button:hover {&#13;
+    background: #f3f6f5;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   TABLE&#13;
+   ========================================== */&#13;
+&#13;
+.admin-table-scroll {&#13;
+    width: 100%;&#13;
+    overflow-x: auto;&#13;
+    overflow-y: hidden;&#13;
+    cursor: grab;&#13;
+}&#13;
+&#13;
+.admin-table-scroll:active {&#13;
+    cursor: grabbing;&#13;
+}&#13;
+&#13;
+.admin-wide-table {&#13;
+    max-height: 650px;&#13;
+    overflow: auto;&#13;
+}&#13;
+&#13;
+.admin-task-table {&#13;
+    width: max-content;&#13;
+    min-width: 100%;&#13;
+    border-collapse: collapse;&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+.admin-task-table th {&#13;
+    position: sticky;&#13;
+    top: 0;&#13;
+    z-index: 2;&#13;
+    background: #f1f5f4;&#13;
+    color: #43514f;&#13;
+    font-size: 11px;&#13;
+    font-weight: 700;&#13;
+    text-align: left;&#13;
+    white-space: nowrap;&#13;
+    padding: 12px 13px;&#13;
+    border-bottom: 1px solid #d9e0de;&#13;
+}&#13;
+&#13;
+.admin-task-table td {&#13;
+    padding: 12px 13px;&#13;
+    border-bottom: 1px solid #e7ebeb;&#13;
+    color: #465350;&#13;
+    vertical-align: top;&#13;
+    max-width: 260px;&#13;
+    line-height: 1.45;&#13;
+}&#13;
+&#13;
+.admin-task-table tbody tr:hover {&#13;
+    background: #fafcfc;&#13;
+}&#13;
+&#13;
+.admin-action-cell {&#13;
+    min-width: 150px;&#13;
+    white-space: nowrap;&#13;
+}&#13;
+&#13;
+.admin-empty-cell {&#13;
+    text-align: center !important;&#13;
+    padding: 35px !important;&#13;
+    color: #8a9593 !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   ACTION BUTTONS&#13;
+   ========================================== */&#13;
+&#13;
+.admin-open-button,&#13;
+.admin-accept-button {&#13;
+    border: 0;&#13;
+    border-radius: 6px;&#13;
+    padding: 7px 11px;&#13;
+    font-size: 12px;&#13;
+    font-weight: 600;&#13;
+    cursor: pointer;&#13;
+    margin-right: 5px;&#13;
+}&#13;
+&#13;
+.admin-open-button {&#13;
+    background: #e8f0ed;&#13;
+    color: #123c3a;&#13;
+}&#13;
+&#13;
+.admin-open-button:hover {&#13;
+    background: #dce8e4;&#13;
+}&#13;
+&#13;
+.admin-accept-button {&#13;
+    background: #123c3a;&#13;
+    color: #ffffff;&#13;
+}&#13;
+&#13;
+.admin-accept-button:hover {&#13;
+    opacity: 0.9;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   REPORTS&#13;
+   ========================================== */&#13;
+&#13;
+.admin-report-grid {&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(2, 1fr);&#13;
+    gap: 20px;&#13;
+}&#13;
+&#13;
+.admin-report-card {&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #dfe5e7;&#13;
+    border-radius: 12px;&#13;
+    padding: 20px;&#13;
+}&#13;
+&#13;
+.admin-report-card h3 {&#13;
+    margin: 0 0 18px;&#13;
+    color: #123c3a;&#13;
+    font-size: 16px;&#13;
+}&#13;
+&#13;
+.admin-report-row {&#13;
+    display: grid;&#13;
+    grid-template-columns: 160px 1fr 35px;&#13;
+    align-items: center;&#13;
+    gap: 10px;&#13;
+    margin-bottom: 13px;&#13;
+}&#13;
+&#13;
+.admin-report-label {&#13;
+    font-size: 12px;&#13;
+    color: #53615f;&#13;
+    overflow: hidden;&#13;
+    text-overflow: ellipsis;&#13;
+    white-space: nowrap;&#13;
+}&#13;
+&#13;
+.admin-report-track {&#13;
+    height: 8px;&#13;
+    border-radius: 20px;&#13;
+    background: #e9eeec;&#13;
+    overflow: hidden;&#13;
+}&#13;
+&#13;
+.admin-report-bar {&#13;
+    height: 100%;&#13;
+    border-radius: 20px;&#13;
+    background: #123c3a;&#13;
+}&#13;
+&#13;
+.admin-report-count {&#13;
+    font-size: 12px;&#13;
+    font-weight: 700;&#13;
+    text-align: right;&#13;
+    color: #123c3a;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   MODAL&#13;
+   ========================================== */&#13;
+&#13;
+.admin-modal-overlay {&#13;
+    position: fixed;&#13;
+    inset: 0;&#13;
+    z-index: 1000;&#13;
+    background: rgba(20, 31, 30, 0.55);&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    padding: 25px;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.admin-modal {&#13;
+    width: min(1050px, 100%);&#13;
+    max-height: 92vh;&#13;
+    background: #ffffff;&#13;
+    border-radius: 14px;&#13;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.18);&#13;
+    display: flex;&#13;
+    flex-direction: column;&#13;
+    overflow: hidden;&#13;
+}&#13;
+&#13;
+.admin-modal-header {&#13;
+    padding: 20px 24px;&#13;
+    border-bottom: 1px solid #e1e7e5;&#13;
+    display: flex;&#13;
+    justify-content: space-between;&#13;
+    align-items: flex-start;&#13;
+}&#13;
+&#13;
+.admin-modal-header h2 {&#13;
+    margin: 0;&#13;
+    color: #123c3a;&#13;
+    font-size: 20px;&#13;
+}&#13;
+&#13;
+.admin-modal-header p {&#13;
+    margin: 5px 0 0;&#13;
+    color: #7a8583;&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+.admin-modal-close {&#13;
+    width: 34px;&#13;
+    height: 34px;&#13;
+    border: 0;&#13;
+    border-radius: 7px;&#13;
+    background: #f2f5f4;&#13;
+    color: #53615f;&#13;
+    font-size: 22px;&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+.admin-modal-close:hover {&#13;
+    background: #e8eeec;&#13;
+}&#13;
+&#13;
+.admin-modal-body {&#13;
+    padding: 24px;&#13;
+    overflow-y: auto;&#13;
+}&#13;
+&#13;
+.admin-form-section {&#13;
+    margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+.admin-form-section:last-child {&#13;
+    margin-bottom: 0;&#13;
+}&#13;
+&#13;
+.admin-form-section-title {&#13;
+    margin-bottom: 15px;&#13;
+    padding-bottom: 9px;&#13;
+    border-bottom: 1px solid #e5e9e8;&#13;
+    color: #123c3a;&#13;
+    font-size: 14px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.admin-form-grid {&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(2, minmax(0, 1fr));&#13;
+    gap: 16px;&#13;
+}&#13;
+&#13;
+.admin-form-field {&#13;
+    min-width: 0;&#13;
+}&#13;
+&#13;
+.admin-form-field input,&#13;
+.admin-form-field textarea,&#13;
+.admin-form-field select {&#13;
+    width: 100%;&#13;
+    box-sizing: border-box;&#13;
+    border: 1px solid #ccd5d3;&#13;
+    border-radius: 7px;&#13;
+    background: #ffffff;&#13;
+    color: #283633;&#13;
+    font-size: 13px;&#13;
+    padding: 10px 11px;&#13;
+}&#13;
+&#13;
+.admin-form-field input {&#13;
+    height: 40px;&#13;
+}&#13;
+&#13;
+.admin-form-field textarea {&#13;
+    min-height: 95px;&#13;
+    resize: vertical;&#13;
+    line-height: 1.5;&#13;
+}&#13;
+&#13;
+.admin-form-field input[readonly],&#13;
+.admin-form-field textarea[readonly] {&#13;
+    background: #f5f7f7;&#13;
+    color: #5d6967;&#13;
+}&#13;
+&#13;
+.admin-form-field select:focus,&#13;
+.admin-form-field textarea:focus {&#13;
+    outline: none;&#13;
+    border-color: #123c3a;&#13;
+}&#13;
+&#13;
+.admin-full-field {&#13;
+    grid-column: 1 / -1;&#13;
+}&#13;
+&#13;
+.admin-approval-select {&#13;
+    background: #ffffff;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.admin-notes {&#13;
+    min-height: 120px !important;&#13;
+}&#13;
+&#13;
+.admin-required {&#13;
+    color: #b52b2b;&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+.admin-field-help {&#13;
+    display: block;&#13;
+    margin-top: 6px;&#13;
+    color: #7b8785;&#13;
+    font-size: 11px;&#13;
+}&#13;
+&#13;
+.admin-modal-footer {&#13;
+    padding: 16px 24px;&#13;
+    border-top: 1px solid #e1e7e5;&#13;
+    display: flex;&#13;
+    justify-content: flex-end;&#13;
+    gap: 10px;&#13;
+}&#13;
+&#13;
+.admin-cancel-button,&#13;
+.admin-save-button {&#13;
+    min-width: 110px;&#13;
+    height: 40px;&#13;
+    padding: 0 16px;&#13;
+    border-radius: 7px;&#13;
+    font-size: 13px;&#13;
+    font-weight: 600;&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+.admin-cancel-button {&#13;
+    border: 1px solid #ccd5d3;&#13;
+    background: #ffffff;&#13;
+    color: #53615f;&#13;
+}&#13;
+&#13;
+.admin-cancel-button:hover {&#13;
+    background: #f4f6f5;&#13;
+}&#13;
+&#13;
+.admin-save-button {&#13;
+    border: 0;&#13;
+    background: #123c3a;&#13;
+    color: #ffffff;&#13;
+}&#13;
+&#13;
+.admin-save-button:hover {&#13;
+    opacity: 0.92;&#13;
+}&#13;
+&#13;
+.admin-save-button:disabled,&#13;
+.admin-cancel-button:disabled {&#13;
+    opacity: 0.6;&#13;
+    cursor: not-allowed;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   FORM MESSAGES&#13;
+   ========================================== */&#13;
+&#13;
+.admin-form-message {&#13;
+    margin: 16px 24px 0;&#13;
+    padding: 11px 13px;&#13;
+    border-radius: 7px;&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+.admin-error {&#13;
+    background: #fff1f1;&#13;
+    border: 1px solid #efcccc;&#13;
+    color: #a22c2c;&#13;
+}&#13;
+&#13;
+.admin-success {&#13;
+    background: #eef8f2;&#13;
+    border: 1px solid #cce5d5;&#13;
+    color: #2f6f45;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   RESPONSIVE&#13;
+   ========================================== */&#13;
+&#13;
+@media (max-width: 900px) {&#13;
+&#13;
+    .admin-sidebar {&#13;
+        width: 200px;&#13;
+        min-width: 200px;&#13;
+    }&#13;
+&#13;
+    .admin-content {&#13;
+        padding: 20px;&#13;
+    }&#13;
+&#13;
+    .admin-kpi-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+    .admin-report-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 700px) {&#13;
+&#13;
+    .admin-dashboard {&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+    .admin-sidebar {&#13;
+        width: 100%;&#13;
+        min-width: 100%;&#13;
+        border-right: 0;&#13;
+        border-bottom: 1px solid #334155;&#13;
+    }&#13;
+&#13;
+    .admin-navigation {&#13;
+        flex-direction: row;&#13;
+        overflow-x: auto;&#13;
+    }&#13;
+&#13;
+    .admin-nav-item {&#13;
+        min-width: max-content;&#13;
+    }&#13;
+&#13;
+    .admin-content {&#13;
+        padding: 15px;&#13;
+    }&#13;
+&#13;
+    .admin-filter-grid,&#13;
+    .admin-form-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+    .admin-full-field {&#13;
+        grid-column: auto;&#13;
+    }&#13;
+&#13;
+    .admin-modal-overlay {&#13;
+        padding: 10px;&#13;
+    }&#13;
+&#13;
+    .admin-modal {&#13;
+        max-height: 96vh;&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>food_service_admin_dashboard_widget</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Food  Service Admin Dashboard Widget</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    /* ==========================================
+       DEFAULT DATA
+       ========================================== */
+
+    data.totalRequests = 0;
+    data.pendingProblems = 0;
+    data.resolvedRequests = 0;
+
+    data.records = {};
+
+    data.myAssignmentIds = [];
+    data.recentAssignmentIds = [];
+    data.historyIds = [];
+
+    data.filterOptions = {
+        useCases: [],
+        priorities: []
+    };
+
+    data.reports = {
+        useCase: [],
+        priority: [],
+        approval: [],
+        overTime: []
+    };
+
+    data.saveSuccess = false;
+    data.saveError = '';
+
+
+    /* ==========================================
+       TABLES / ADMIN GROUP
+       ========================================== */
+
+    var adminGroup =
+        '1754d95bdd1f03107f44143a6accf85b';
+
+    var taskTable =
+        'x_snc_campus_foo_1_complain_tasks';
+
+    var complaintTable =
+        'x_snc_campus_foo_1_food_complaint';
+
+
+    /* ==========================================
+       SAVE EXISTING TASK
+       ========================================== */
+
+    if (
+        input &&
+        input.action === 'saveRecord' &&
+        input.sys_id
+    ) {
+
+        var updateTask =
+            new GlideRecord(taskTable);
+
+        if (!updateTask.get(input.sys_id)) {
+
+            data.saveError =
+                'The selected task could not be found.';
+
+        } else if (
+            updateTask.getValue('assignment_group') !==
+            adminGroup
+        ) {
+
+            data.saveError =
+                'You are not allowed to update this task.';
+
+        } else {
+
+            var newApproval =
+                String(
+                    input.approval || ''
+                ).toLowerCase();
+
+            var newNotes =
+                String(
+                    input.notes || ''
+                );
+
+
+            /* ======================================
+               VALIDATE APPROVAL
+               ====================================== */
+
+            if (
+                newApproval !== 'requested' &&
+                newApproval !== 'approved' &&
+                newApproval !== 'rejected'
+            ) {
+
+                data.saveError =
+                    'Please select a valid approval status.';
+
+            }
+
+
+            /* ======================================
+               NOTES REQUIRED FOR APPROVED / REJECTED
+               ====================================== */
+
+            else if (
+                (
+                    newApproval === 'approved' ||
+                    newApproval === 'rejected'
+                ) &&
+                newNotes.trim() === ''
+            ) {
+
+                data.saveError =
+                    'Notes are required when the approval is Approved or Rejected.';
+
+            }
+
+
+            /* ======================================
+               UPDATE RECORD
+               
+               ADMIN ONLY UPDATES:
+               1. Approval
+               2. Notes
+
+               FLOW HANDLES:
+               - Assignment Group
+               - State
+               - Active
+               - Closed At
+               - Closed By
+               - Manager Assignment
+               ====================================== */
+
+            else {
+
+                updateTask.setValue(
+                    'approval',
+                    newApproval
+                );
+
+                updateTask.setValue(
+                    'notes',
+                    newNotes
+                );
+
+                updateTask.update();
+
+                data.saveSuccess = true;
+            }
+        }
+    }
+
+
+    /* ==========================================
+       KPI - TOTAL REQUESTS
+       ========================================== */
+
+    var totalGA =
+        new GlideAggregate(complaintTable);
+
+    totalGA.addAggregate('COUNT');
+    totalGA.query();
+
+    if (totalGA.next()) {
+
+        data.totalRequests =
+            parseInt(
+                totalGA.getAggregate('COUNT'),
+                10
+            ) || 0;
+    }
+
+
+    /* ==========================================
+       KPI - RESOLVED REQUESTS
+       ========================================== */
+
+    var resolvedGA =
+        new GlideAggregate(complaintTable);
+
+    resolvedGA.addQuery(
+        'state',
+        'resolved'
+    );
+
+    resolvedGA.addAggregate('COUNT');
+    resolvedGA.query();
+
+    if (resolvedGA.next()) {
+
+        data.resolvedRequests =
+            parseInt(
+                resolvedGA.getAggregate('COUNT'),
+                10
+            ) || 0;
+    }
+
+
+    /* ==========================================
+       KPI - PENDING PROBLEMS
+       ========================================== */
+
+    var pendingGA =
+        new GlideAggregate(taskTable);
+
+    pendingGA.addQuery(
+        'approval',
+        'requested'
+    );
+
+    pendingGA.addAggregate('COUNT');
+    pendingGA.query();
+
+    if (pendingGA.next()) {
+
+        data.pendingProblems =
+            parseInt(
+                pendingGA.getAggregate('COUNT'),
+                10
+            ) || 0;
+    }
+
+
+    /* ==========================================
+       USE CASE FILTER OPTIONS
+       ========================================== */
+
+    var useCaseChoice =
+        new GlideRecord('sys_choice');
+
+    useCaseChoice.addQuery(
+        'name',
+        taskTable
+    );
+
+    useCaseChoice.addQuery(
+        'element',
+        'use_case'
+    );
+
+    useCaseChoice.addQuery(
+        'inactive',
+        false
+    );
+
+    useCaseChoice.orderBy('sequence');
+    useCaseChoice.query();
+
+    while (useCaseChoice.next()) {
+
+        data.filterOptions.useCases.push({
+
+            value:
+                useCaseChoice.getValue('value'),
+
+            label:
+                useCaseChoice.getValue('label')
+        });
+    }
+
+
+    /* ==========================================
+       PRIORITY FILTER OPTIONS
+       ========================================== */
+
+    var priorityChoice =
+        new GlideRecord('sys_choice');
+
+    priorityChoice.addQuery(
+        'name',
+        taskTable
+    );
+
+    priorityChoice.addQuery(
+        'element',
+        'current_priority'
+    );
+
+    priorityChoice.addQuery(
+        'inactive',
+        false
+    );
+
+    priorityChoice.orderBy('sequence');
+    priorityChoice.query();
+
+    while (priorityChoice.next()) {
+
+        data.filterOptions.priorities.push({
+
+            value:
+                priorityChoice.getValue('value'),
+
+            label:
+                priorityChoice.getValue('label')
+        });
+    }
+
+
+    /* ==========================================
+       LOAD TASK RECORDS
+       ========================================== */
+
+    var taskGR =
+        new GlideRecord(taskTable);
+
+    taskGR.orderByDesc('sys_created_on');
+    taskGR.query();
+
+    while (taskGR.next()) {
+
+        var sysId =
+            taskGR.getUniqueValue();
+
+
+        /* --------------------------------------
+           Safe field helper
+           -------------------------------------- */
+
+        function getValue(fieldName) {
+
+            if (
+                taskGR.isValidField(fieldName)
+            ) {
+
+                return taskGR.getValue(
+                    fieldName
+                ) || '';
+
+            }
+
+            return '';
+        }
+
+
+        function getDisplay(fieldName) {
+
+            if (
+                taskGR.isValidField(fieldName)
+            ) {
+
+                return taskGR.getDisplayValue(
+                    fieldName
+                ) || '';
+
+            }
+
+            return '';
+        }
+
+
+        /* --------------------------------------
+           Store record
+           -------------------------------------- */
+
+        data.records[sysId] = {
+
+            sys_id:
+                sysId,
+
+            number:
+                getValue('number'),
+
+            use_case:
+                getValue('use_case'),
+
+            use_case_display:
+                getDisplay('use_case'),
+
+            current_priority:
+                getValue('current_priority'),
+
+            current_priority_display:
+                getDisplay('current_priority'),
+
+            student_count:
+                parseInt(
+                    getValue('student_count'),
+                    10
+                ) || 0,
+
+            state:
+                getValue('state'),
+
+            state_display:
+                getDisplay('state'),
+
+            assignment_group:
+                getValue('assignment_group'),
+
+            assignment_group_display:
+                getDisplay('assignment_group'),
+
+            problem_type:
+                getValue('problem_type'),
+
+            problem_type_display:
+                getDisplay('problem_type'),
+
+            short_description:
+                getValue('short_description'),
+
+            approval:
+                getValue('approval'),
+
+            approval_display:
+                getDisplay('approval'),
+
+            use_case_number:
+                getValue('use_case_number'),
+
+            mess_hall:
+                getValue('mess_hall'),
+
+            mess_hall_display:
+                getDisplay('mess_hall'),
+
+            meal_type:
+                getValue('meal_type'),
+
+            meal_type_display:
+                getDisplay('meal_type'),
+
+            priority_reason:
+                getValue('priority_reason'),
+
+            recomended_actions:
+                getValue('recomended_actions'),
+
+            resolution_status:
+                getValue('resolution_status'),
+
+            resolution_status_display:
+                getDisplay('resolution_status'),
+
+            notes:
+                getValue('notes'),
+
+            updated:
+                getValue('sys_updated_on'),
+
+            updated_display:
+                getDisplay('sys_updated_on')
+        };
+
+
+        /* ======================================
+           ASSIGNED TASKS
+           ====================================== */
+
+        if (
+            getValue('assignment_group') ===
+                adminGroup &&
+            getValue('approval') ===
+                'requested'
+        ) {
+
+            data.myAssignmentIds.push(
+                sysId
+            );
+        }
+
+
+        /* ======================================
+           TASK HISTORY
+           ====================================== */
+
+        if (
+            getValue('assignment_group') ===
+                adminGroup &&
+            (
+                getValue('approval') ===
+                    'approved' ||
+                getValue('approval') ===
+                    'rejected'
+            )
+        ) {
+
+            data.historyIds.push(
+                sysId
+            );
+        }
+    }
+
+
+    /* ==========================================
+       RECENT ASSIGNED TASKS
+       ========================================== */
+
+    for (
+        var recentIndex = 0;
+        recentIndex <
+            data.myAssignmentIds.length &&
+        recentIndex < 5;
+        recentIndex++
+    ) {
+
+        data.recentAssignmentIds.push(
+            data.myAssignmentIds[
+                recentIndex
+            ]
+        );
+    }
+
+
+    /* ==========================================
+       REPORT - USE CASE
+       ========================================== */
+
+    var useCaseReport =
+        new GlideAggregate(taskTable);
+
+    useCaseReport.addAggregate(
+        'COUNT'
+    );
+
+    useCaseReport.groupBy(
+        'use_case'
+    );
+
+    useCaseReport.query();
+
+    while (useCaseReport.next()) {
+
+        data.reports.useCase.push({
+
+            value:
+                useCaseReport.getValue(
+                    'use_case'
+                ),
+
+            label:
+                useCaseReport.getDisplayValue(
+                    'use_case'
+                ) || 'Not specified',
+
+            count:
+                parseInt(
+                    useCaseReport.getAggregate(
+                        'COUNT'
+                    ),
+                    10
+                ) || 0
+        });
+    }
+
+
+    /* ==========================================
+       REPORT - PRIORITY
+       ========================================== */
+
+    var priorityReport =
+        new GlideAggregate(taskTable);
+
+    priorityReport.addAggregate(
+        'COUNT'
+    );
+
+    priorityReport.groupBy(
+        'current_priority'
+    );
+
+    priorityReport.query();
+
+    while (priorityReport.next()) {
+
+        data.reports.priority.push({
+
+            value:
+                priorityReport.getValue(
+                    'current_priority'
+                ),
+
+            label:
+                priorityReport.getDisplayValue(
+                    'current_priority'
+                ) || 'Not specified',
+
+            count:
+                parseInt(
+                    priorityReport.getAggregate(
+                        'COUNT'
+                    ),
+                    10
+                ) || 0
+        });
+    }
+
+
+    /* ==========================================
+       REPORT - APPROVAL
+       ========================================== */
+
+    var approvalReport =
+        new GlideAggregate(taskTable);
+
+    approvalReport.addAggregate(
+        'COUNT'
+    );
+
+    approvalReport.groupBy(
+        'approval'
+    );
+
+    approvalReport.query();
+
+    while (approvalReport.next()) {
+
+        data.reports.approval.push({
+
+            value:
+                approvalReport.getValue(
+                    'approval'
+                ),
+
+            label:
+                approvalReport.getDisplayValue(
+                    'approval'
+                ) || 'Not specified',
+
+            count:
+                parseInt(
+                    approvalReport.getAggregate(
+                        'COUNT'
+                    ),
+                    10
+                ) || 0
+        });
+    }
+
+
+    /* ==========================================
+       REPORT - OVER TIME
+       ========================================== */
+
+    var timeReport =
+        new GlideAggregate(taskTable);
+
+    timeReport.addAggregate(
+        'COUNT'
+    );
+
+    timeReport.addTrend(
+        'sys_created_on',
+        'month'
+    );
+
+    timeReport.query();
+
+    while (timeReport.next()) {
+
+        data.reports.overTime.push({
+
+            label:
+                timeReport.getValue(
+                    'timeref'
+                ),
+
+            count:
+                parseInt(
+                    timeReport.getAggregate(
+                        'COUNT'
+                    ),
+                    10
+                ) || 0
+        });
+    }
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 04:15:34</sys_created_on>
+        <sys_id>dbdcca8aa9a703107f444d1b3bf5778c</sys_id>
+        <sys_mod_count>23</sys_mod_count>
+        <sys_name>Food  Service Admin Dashboard Widget</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_dbdcca8aa9a703107f444d1b3bf5778c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-05 07:25:48</sys_updated_on>
+        <template><![CDATA[<div class="admin-dashboard">
+
+    <!-- ==========================================
+         SIDEBAR
+         ========================================== -->
+
+    <aside class="admin-sidebar">
+
+        <div class="admin-brand">
+            <div class="admin-brand-icon">
+                A
+            </div>
+
+            <div>
+                <div class="admin-brand-title">
+                    Admin Portal
+                </div>
+
+                <div class="admin-brand-subtitle">
+                    Operations
+                </div>
+            </div>
+        </div>
+
+
+        <nav class="admin-navigation">
+
+            <button
+                class="admin-nav-item"
+                ng-class="{'active': c.currentPage === 'overview'}"
+                ng-click="c.changePage('overview')">
+
+                <span class="admin-nav-icon">⌂</span>
+                <span>Overview</span>
+
+            </button>
+
+
+            <button
+                class="admin-nav-item"
+                ng-class="{'active': c.currentPage === 'assigned'}"
+                ng-click="c.changePage('assigned')">
+
+                <span class="admin-nav-icon">▣</span>
+                <span>Assigned Tasks</span>
+
+            </button>
+
+
+            <button
+                class="admin-nav-item"
+                ng-class="{'active': c.currentPage === 'history'}"
+                ng-click="c.changePage('history')">
+
+                <span class="admin-nav-icon">↺</span>
+                <span>Task History</span>
+
+            </button>
+
+
+            <button
+                class="admin-nav-item"
+                ng-class="{'active': c.currentPage === 'reports'}"
+                ng-click="c.changePage('reports')">
+
+                <span class="admin-nav-icon">▥</span>
+                <span>Reports</span>
+
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- ==========================================
+         MAIN CONTENT
+         ========================================== -->
+
+    <main class="admin-content">
+
+
+        <!-- ======================================
+             OVERVIEW
+             ====================================== -->
+
+        <section
+            class="admin-page"
+            ng-if="c.currentPage === 'overview'">
+
+            <div class="admin-page-header">
+
+                <div>
+
+                    <h1>
+                        Admin Overview
+                    </h1>
+
+                    <p>
+                        Monitor and manage assigned food complaint tasks.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- KPI CARDS -->
+
+            <div class="admin-kpi-grid">
+
+                <div class="admin-kpi-card">
+
+                    <div class="admin-kpi-label">
+                        Total Requests
+                    </div>
+
+                    <div class="admin-kpi-value">
+                        {{c.data.totalRequests}}
+                    </div>
+
+                    <div class="admin-kpi-caption">
+                        Food complaint requests
+                    </div>
+
+                </div>
+
+
+                <div class="admin-kpi-card">
+
+                    <div class="admin-kpi-label">
+                        Pending Problems
+                    </div>
+
+                    <div class="admin-kpi-value">
+                        {{c.data.pendingProblems}}
+                    </div>
+
+                    <div class="admin-kpi-caption">
+                        Tasks awaiting action
+                    </div>
+
+                </div>
+
+
+                <div class="admin-kpi-card">
+
+                    <div class="admin-kpi-label">
+                        Resolved Requests
+                    </div>
+
+                    <div class="admin-kpi-value">
+                        {{c.data.resolvedRequests}}
+                    </div>
+
+                    <div class="admin-kpi-caption">
+                        Resolved complaints
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECENT TASKS -->
+
+            <div class="admin-section-card">
+
+                <div class="admin-section-header">
+
+                    <div>
+
+                        <h2>
+                            Recent Assigned Tasks
+                        </h2>
+
+                        <p>
+                            Latest tasks assigned to the Admin team.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="admin-link-button"
+                        ng-click="c.changePage('assigned')">
+
+                        View All
+
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="admin-table-scroll"
+                    id="adminRecentScroll">
+
+                    <table class="admin-task-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Action</th>
+                                <th>Number</th>
+                                <th>Use Case</th>
+                                <th>Current Priority</th>
+                                <th>Student Count</th>
+                                <th>State</th>
+                                <th>Assignment Group</th>
+                                <th>Problem Type</th>
+                                <th>Short Description</th>
+                                <th>Approval</th>
+                                <th>Use Case Number</th>
+                                <th>Mess Hall</th>
+                                <th>Meal Type</th>
+                                <th>Priority Reason</th>
+                                <th>Recommended Actions</th>
+                                <th>Resolution Status</th>
+                                <th>Updated</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr
+                                ng-repeat="sysId in c.data.recentAssignmentIds">
+
+                                <td class="admin-action-cell">
+
+                                    <button
+                                        class="admin-open-button"
+                                        ng-click="c.openRecord(sysId)">
+
+                                        Open
+
+                                    </button>
+
+
+                                    <button
+                                        class="admin-accept-button"
+                                        ng-click="c.acceptRecord(sysId)">
+
+                                        Accept
+
+                                    </button>
+
+                                </td>
+
+
+                                <td>
+                                    {{c.data.records[sysId].number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].current_priority_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].student_count}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].state_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].assignment_group_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].problem_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].short_description}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].approval_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].mess_hall_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].meal_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].priority_reason}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].recomended_actions}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].resolution_status_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].updated_display}}
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                ng-if="!c.data.recentAssignmentIds.length">
+
+                                <td
+                                    colspan="17"
+                                    class="admin-empty-cell">
+
+                                    No recent assigned tasks found.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             ASSIGNED TASKS
+             ====================================== -->
+
+        <section
+            class="admin-page"
+            ng-if="c.currentPage === 'assigned'">
+
+            <div class="admin-page-header">
+
+                <div>
+
+                    <h1>
+                        Assigned Tasks
+                    </h1>
+
+                    <p>
+                        Review and process food complaint tasks assigned to the Admin team.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+
+            <div class="admin-filter-card">
+
+                <div class="admin-filter-header">
+
+                    <div>
+
+                        <h3>
+                            Task Filters
+                        </h3>
+
+                        <span>
+                            Filter the currently assigned tasks.
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        class="admin-clear-button"
+                        ng-click="c.clearAssignmentFilters()">
+
+                        Clear Filters
+
+                    </button>
+
+                </div>
+
+
+                <div class="admin-filter-grid">
+
+                    <div class="admin-filter-field">
+
+                        <label>
+                            Use Case
+                        </label>
+
+                        <select
+                            ng-model="c.assignmentFilters.use_case"
+                            ng-change="c.applyAssignmentFilters()"
+                            class="admin-select">
+
+                            <option value="">
+                                All Use Cases
+                            </option>
+
+                            <option
+                                ng-repeat="item in c.useCaseOptions"
+                                ng-value="item.value">
+
+                                {{item.label}}
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="admin-filter-field">
+
+                        <label>
+                            Current Priority
+                        </label>
+
+                        <select
+                            ng-model="c.assignmentFilters.current_priority"
+                            ng-change="c.applyAssignmentFilters()"
+                            class="admin-select">
+
+                            <option value="">
+                                All Priorities
+                            </option>
+
+                            <option
+                                ng-repeat="item in c.priorityOptions"
+                                ng-value="item.value">
+
+                                {{item.label}}
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TASK TABLE -->
+
+            <div class="admin-section-card">
+
+                <div class="admin-section-header">
+
+                    <div>
+
+                        <h2>
+                            Current Assigned Tasks
+                        </h2>
+
+                        <p>
+                            {{c.filteredAssignmentIds.length}} task(s) found
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="admin-table-scroll admin-wide-table"
+                    id="adminAssignmentScroll">
+
+                    <table class="admin-task-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Action</th>
+                                <th>Number</th>
+                                <th>Use Case</th>
+                                <th>Current Priority</th>
+                                <th>Student Count</th>
+                                <th>State</th>
+                                <th>Assignment Group</th>
+                                <th>Problem Type</th>
+                                <th>Short Description</th>
+                                <th>Approval</th>
+                                <th>Use Case Number</th>
+                                <th>Mess Hall</th>
+                                <th>Meal Type</th>
+                                <th>Priority Reason</th>
+                                <th>Recommended Actions</th>
+                                <th>Resolution Status</th>
+                                <th>Updated</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr
+                                ng-repeat="sysId in c.filteredAssignmentIds">
+
+                                <td class="admin-action-cell">
+
+                                    <button
+                                        class="admin-open-button"
+                                        ng-click="c.openRecord(sysId)">
+
+                                        Open
+
+                                    </button>
+
+
+                                    <button
+                                        class="admin-accept-button"
+                                        ng-click="c.acceptRecord(sysId)">
+
+                                        Accept
+
+                                    </button>
+
+                                </td>
+
+
+                                <td>
+                                    {{c.data.records[sysId].number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].current_priority_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].student_count}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].state_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].assignment_group_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].problem_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].short_description}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].approval_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].mess_hall_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].meal_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].priority_reason}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].recomended_actions}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].resolution_status_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].updated_display}}
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                ng-if="!c.filteredAssignmentIds.length">
+
+                                <td
+                                    colspan="17"
+                                    class="admin-empty-cell">
+
+                                    No assigned tasks match the selected filters.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             HISTORY
+             ====================================== -->
+
+        <section
+            class="admin-page"
+            ng-if="c.currentPage === 'history'">
+
+            <div class="admin-page-header">
+
+                <div>
+
+                    <h1>
+                        Task History
+                    </h1>
+
+                    <p>
+                        Previously processed tasks assigned to the Admin team.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-section-card">
+
+                <div class="admin-section-header">
+
+                    <div>
+
+                        <h2>
+                            Processed Tasks
+                        </h2>
+
+                        <p>
+                            Approved and rejected task records.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-table-scroll admin-wide-table">
+
+                    <table class="admin-task-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Action</th>
+                                <th>Number</th>
+                                <th>Use Case</th>
+                                <th>Current Priority</th>
+                                <th>Student Count</th>
+                                <th>State</th>
+                                <th>Assignment Group</th>
+                                <th>Problem Type</th>
+                                <th>Short Description</th>
+                                <th>Approval</th>
+                                <th>Use Case Number</th>
+                                <th>Mess Hall</th>
+                                <th>Meal Type</th>
+                                <th>Priority Reason</th>
+                                <th>Recommended Actions</th>
+                                <th>Resolution Status</th>
+                                <th>Updated</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr
+                                ng-repeat="sysId in c.data.historyIds">
+
+                                <td>
+
+                                    <button
+                                        class="admin-open-button"
+                                        ng-click="c.openRecord(sysId)">
+
+                                        Open
+
+                                    </button>
+
+                                </td>
+
+
+                                <td>
+                                    {{c.data.records[sysId].number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].current_priority_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].student_count}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].state_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].assignment_group_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].problem_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].short_description}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].approval_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].use_case_number}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].mess_hall_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].meal_type_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].priority_reason}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].recomended_actions}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].resolution_status_display}}
+                                </td>
+
+                                <td>
+                                    {{c.data.records[sysId].updated_display}}
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                ng-if="!c.data.historyIds.length">
+
+                                <td
+                                    colspan="17"
+                                    class="admin-empty-cell">
+
+                                    No task history found.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             REPORTS
+             ====================================== -->
+
+        <section
+            class="admin-page"
+            ng-if="c.currentPage === 'reports'">
+
+            <div class="admin-page-header">
+
+                <div>
+
+                    <h1>
+                        Reports
+                    </h1>
+
+                    <p>
+                        Operational insights from food complaint tasks.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-report-grid">
+
+                <div class="admin-report-card">
+
+                    <h3>
+                        Requests by Use Case
+                    </h3>
+
+                    <div
+                        class="admin-report-row"
+                        ng-repeat="item in c.data.reports.useCase">
+
+                        <div class="admin-report-label">
+                            {{item.label}}
+                        </div>
+
+                        <div class="admin-report-track">
+
+                            <div
+                                class="admin-report-bar"
+                                ng-style="{
+                                    'width': c.getBarWidth(
+                                        item.count,
+                                        c.data.reports.useCase
+                                    )
+                                }">
+                            </div>
+
+                        </div>
+
+                        <div class="admin-report-count">
+                            {{item.count}}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-report-card">
+
+                    <h3>
+                        Requests by Priority
+                    </h3>
+
+                    <div
+                        class="admin-report-row"
+                        ng-repeat="item in c.data.reports.priority">
+
+                        <div class="admin-report-label">
+                            {{item.label}}
+                        </div>
+
+                        <div class="admin-report-track">
+
+                            <div
+                                class="admin-report-bar"
+                                ng-style="{
+                                    'width': c.getBarWidth(
+                                        item.count,
+                                        c.data.reports.priority
+                                    )
+                                }">
+                            </div>
+
+                        </div>
+
+                        <div class="admin-report-count">
+                            {{item.count}}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-report-card">
+
+                    <h3>
+                        Approval Status
+                    </h3>
+
+                    <div
+                        class="admin-report-row"
+                        ng-repeat="item in c.data.reports.approval">
+
+                        <div class="admin-report-label">
+                            {{item.label}}
+                        </div>
+
+                        <div class="admin-report-track">
+
+                            <div
+                                class="admin-report-bar"
+                                ng-style="{
+                                    'width': c.getBarWidth(
+                                        item.count,
+                                        c.data.reports.approval
+                                    )
+                                }">
+                            </div>
+
+                        </div>
+
+                        <div class="admin-report-count">
+                            {{item.count}}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ==========================================
+         OPEN RECORD FORM
+         ========================================== -->
+
+    <div
+        class="admin-modal-overlay"
+        ng-if="c.showRecordForm">
+
+        <div class="admin-modal">
+
+
+            <!-- HEADER -->
+
+            <div class="admin-modal-header">
+
+                <div>
+
+                    <h2>
+                        Task Review
+                    </h2>
+
+                    <p>
+                        Review and update the selected complaint task.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="admin-modal-close"
+                    ng-click="c.closeRecordForm()">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <!-- ERROR -->
+
+            <div
+                class="admin-form-message admin-error"
+                ng-if="c.formError">
+
+                {{c.formError}}
+
+            </div>
+
+
+            <!-- SUCCESS -->
+
+            <div
+                class="admin-form-message admin-success"
+                ng-if="c.formSuccess">
+
+                {{c.formSuccess}}
+
+            </div>
+
+
+            <!-- FORM -->
+
+            <div
+                class="admin-modal-body"
+                ng-if="c.selectedRecord">
+
+
+                <div class="admin-form-section">
+
+                    <div class="admin-form-section-title">
+                        Task Information
+                    </div>
+
+
+                    <div class="admin-form-grid">
+
+
+                        <div class="admin-form-field">
+
+                            <label>
+                                Number
+                            </label>
+
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.number"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label>
+                                Use Case
+                            </label>
+
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.use_case_display"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label>
+                                Current Priority
+                            </label>
+
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.current_priority_display"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label>
+                                Student Count
+                            </label>
+
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.student_count"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label>
+                                State
+                            </label>
+
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.state_display"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label>
+                                Assignment Group
+                            </label>
+
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.assignment_group_display"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label>
+                                Problem Type
+                            </label>
+
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.problem_type_display"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label>
+                                Short Description
+                            </label>
+
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.short_description"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label>
+                                Use Case Number
+                            </label>
+
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.use_case_number"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label>
+                                Mess Hall
+                            </label>
+
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.mess_hall_display"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label>
+                                Meal Type
+                            </label>
+
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.meal_type_display"
+                                readonly>
+
+                        </div>
+
+
+                        <div class="admin-form-field">
+
+                            <label>
+                                Resolution Status
+                            </label>
+
+                            <input
+                                type="text"
+                                ng-model="c.selectedRecord.resolution_status_display"
+                                readonly>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-form-section">
+
+                    <div class="admin-form-section-title">
+                        Task Guidance
+                    </div>
+
+
+                    <div class="admin-form-field admin-full-field">
+
+                        <label>
+                            Priority Reason
+                        </label>
+
+                        <textarea
+                            ng-model="c.selectedRecord.priority_reason"
+                            readonly>
+                        </textarea>
+
+                    </div>
+
+
+                    <div class="admin-form-field admin-full-field">
+
+                        <label>
+                            Recommended Actions
+                        </label>
+
+                        <textarea
+                            ng-model="c.selectedRecord.recomended_actions"
+                            readonly>
+                        </textarea>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-form-section">
+
+                    <div class="admin-form-section-title">
+                        Admin Action
+                    </div>
+
+
+                    <div class="admin-form-field admin-full-field">
+
+                        <label>
+                            Approval
+                        </label>
+
+                        <select
+                            class="admin-approval-select"
+                            ng-model="c.selectedRecord.approval"
+                            ng-change="c.updateNotesVisibility()">
+
+                            <option value="requested">
+                                Requested
+                            </option>
+
+                            <option value="approved">
+                                Approved
+                            </option>
+
+                            <option value="rejected">
+                                Rejected
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div
+                        class="admin-form-field admin-full-field"
+                        ng-if="c.notesVisible">
+
+                        <label>
+
+                            Notes
+
+                            <span
+                                class="admin-required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <textarea
+                            class="admin-notes"
+                            ng-model="c.selectedRecord.notes"
+                            ng-required="c.notesRequired"
+                            placeholder="Enter the reason or action taken...">
+                        </textarea>
+
+
+                        <small class="admin-field-help">
+
+                            Notes are mandatory when Approval is Approved or Rejected.
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="admin-modal-footer">
+
+                <button
+                    class="admin-cancel-button"
+                    ng-click="c.closeRecordForm()"
+                    ng-disabled="c.savingRecord">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    class="admin-save-button"
+                    ng-click="c.saveRecord()"
+                    ng-disabled="c.savingRecord">
+
+                    <span
+                        ng-if="!c.savingRecord">
+
+                        Save Changes
+
+                    </span>
+
+                    <span
+                        ng-if="c.savingRecord">
+
+                        Saving...
+
+                    </span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

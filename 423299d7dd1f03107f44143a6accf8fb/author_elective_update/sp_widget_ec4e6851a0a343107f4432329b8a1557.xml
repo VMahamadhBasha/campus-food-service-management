@@ -1,0 +1,4073 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+
+    var c = this;
+
+
+    /* =========================================
+       HOME
+       ========================================= */
+
+    c.goHome = function() {
+
+        window.location.href =
+            "?id=cfms_home";
+
+    };
+
+
+    /* =========================================
+       ASSIGNED TICKETS
+       ========================================= */
+
+    c.assignedTickets = function() {
+
+        window.location.href =
+            "?id=cfms_assigned";
+
+    };
+
+
+    /* =========================================
+       RECORDS
+       ========================================= */
+
+    c.records = function() {
+
+        window.location.href =
+            "?id=cfms_records";
+
+    };
+
+
+    /* =========================================
+       REPORTS
+       ========================================= */
+
+    c.reports = function() {
+
+        /*
+         * Create cfms_reports later if you
+         * want a separate Reports page.
+         */
+
+        window.location.href =
+            "?id=cfms_records";
+
+    };
+
+
+    /* =========================================
+       FEEDBACK
+       ========================================= */
+
+    c.feedback = function() {
+
+        /*
+         * Manager can currently view the
+         * records page where feedback-related
+         * information can be displayed.
+         */
+
+        window.location.href =
+            "?id=cfms_records";
+
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================&#13;
+   CFMS MANAGER HOME&#13;
+   ========================================= */&#13;
+&#13;
+.cfms-manager {&#13;
+&#13;
+  min-height: 100vh;&#13;
+&#13;
+  background: #f0fbfc;&#13;
+&#13;
+  padding: 30px;&#13;
+&#13;
+  font-family:&#13;
+    'Segoe UI',&#13;
+    Tahoma,&#13;
+    Geneva,&#13;
+    Verdana,&#13;
+    sans-serif;&#13;
+&#13;
+  color: #263238;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   HEADER&#13;
+   ========================================= */&#13;
+&#13;
+.manager-header {&#13;
+&#13;
+  background:&#13;
+    linear-gradient(&#13;
+      135deg,&#13;
+      #00acc1,&#13;
+      #4dd0e1&#13;
+    );&#13;
+&#13;
+  color: white;&#13;
+&#13;
+  border-radius: 20px;&#13;
+&#13;
+  padding: 28px 32px;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: space-between;&#13;
+&#13;
+  margin-bottom: 25px;&#13;
+&#13;
+  box-shadow:&#13;
+    0 8px 25px&#13;
+    rgba(0, 172, 193, 0.18);&#13;
+}&#13;
+&#13;
+&#13;
+.header-content {&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  gap: 17px;&#13;
+}&#13;
+&#13;
+&#13;
+.header-icon {&#13;
+&#13;
+  width: 58px;&#13;
+&#13;
+  height: 58px;&#13;
+&#13;
+  background: rgba(255,255,255,0.18);&#13;
+&#13;
+  border-radius: 15px;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: center;&#13;
+&#13;
+  font-size: 28px;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-header h1 {&#13;
+&#13;
+  margin: 0 0 6px;&#13;
+&#13;
+  font-size: 29px;&#13;
+&#13;
+  font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.manager-header p {&#13;
+&#13;
+  margin: 0;&#13;
+&#13;
+  font-size: 14px;&#13;
+&#13;
+  opacity: 0.95;&#13;
+}&#13;
+&#13;
+&#13;
+.home-btn {&#13;
+&#13;
+  border: none;&#13;
+&#13;
+  background: white;&#13;
+&#13;
+  color: #008c9e;&#13;
+&#13;
+  padding: 11px 18px;&#13;
+&#13;
+  border-radius: 10px;&#13;
+&#13;
+  font-weight: 600;&#13;
+&#13;
+  cursor: pointer;&#13;
+&#13;
+  transition: 0.2s;&#13;
+}&#13;
+&#13;
+&#13;
+.home-btn:hover {&#13;
+&#13;
+  transform: translateY(-2px);&#13;
+&#13;
+  box-shadow:&#13;
+    0 5px 15px&#13;
+    rgba(0,0,0,0.1);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   ALERT&#13;
+   ========================================= */&#13;
+&#13;
+.alert {&#13;
+&#13;
+  padding: 14px 18px;&#13;
+&#13;
+  border-radius: 10px;&#13;
+&#13;
+  margin-bottom: 20px;&#13;
+&#13;
+  font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+.error-alert {&#13;
+&#13;
+  background: #ffebee;&#13;
+&#13;
+  color: #c62828;&#13;
+&#13;
+  border: 1px solid #ef9a9a;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   WELCOME&#13;
+   ========================================= */&#13;
+&#13;
+.welcome-card {&#13;
+&#13;
+  background: white;&#13;
+&#13;
+  border-radius: 18px;&#13;
+&#13;
+  padding: 27px 30px;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: space-between;&#13;
+&#13;
+  margin-bottom: 25px;&#13;
+&#13;
+  box-shadow:&#13;
+    0 5px 18px&#13;
+    rgba(38,50,56,0.06);&#13;
+}&#13;
+&#13;
+&#13;
+.welcome-label {&#13;
+&#13;
+  color: #0097a7;&#13;
+&#13;
+  font-size: 11px;&#13;
+&#13;
+  font-weight: 800;&#13;
+&#13;
+  letter-spacing: 1px;&#13;
+}&#13;
+&#13;
+&#13;
+.welcome-text h2 {&#13;
+&#13;
+  margin: 7px 0 7px;&#13;
+&#13;
+  font-size: 24px;&#13;
+}&#13;
+&#13;
+&#13;
+.welcome-text p {&#13;
+&#13;
+  margin: 0;&#13;
+&#13;
+  color: #78909c;&#13;
+&#13;
+  font-size: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+.welcome-icon {&#13;
+&#13;
+  width: 72px;&#13;
+&#13;
+  height: 72px;&#13;
+&#13;
+  border-radius: 18px;&#13;
+&#13;
+  background: #e0f7fa;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: center;&#13;
+&#13;
+  font-size: 34px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   STATISTICS&#13;
+   ========================================= */&#13;
+&#13;
+.stats-grid {&#13;
+&#13;
+  display: grid;&#13;
+&#13;
+  grid-template-columns:&#13;
+    repeat(4, 1fr);&#13;
+&#13;
+  gap: 18px;&#13;
+&#13;
+  margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+.stat-card {&#13;
+&#13;
+  background: white;&#13;
+&#13;
+  border-radius: 16px;&#13;
+&#13;
+  padding: 21px;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  gap: 15px;&#13;
+&#13;
+  box-shadow:&#13;
+    0 4px 15px&#13;
+    rgba(38,50,56,0.06);&#13;
+&#13;
+  border: 1px solid #e4f2f4;&#13;
+}&#13;
+&#13;
+&#13;
+.stat-icon {&#13;
+&#13;
+  width: 51px;&#13;
+&#13;
+  height: 51px;&#13;
+&#13;
+  border-radius: 13px;&#13;
+&#13;
+  background: #e0f7fa;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: center;&#13;
+&#13;
+  font-size: 23px;&#13;
+}&#13;
+&#13;
+&#13;
+.stat-content span {&#13;
+&#13;
+  display: block;&#13;
+&#13;
+  color: #78909c;&#13;
+&#13;
+  font-size: 12px;&#13;
+&#13;
+  margin-bottom: 5px;&#13;
+}&#13;
+&#13;
+&#13;
+.stat-content strong {&#13;
+&#13;
+  font-size: 26px;&#13;
+&#13;
+  color: #263238;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   DASHBOARD GRID&#13;
+   ========================================= */&#13;
+&#13;
+.dashboard-grid {&#13;
+&#13;
+  display: grid;&#13;
+&#13;
+  grid-template-columns:&#13;
+    1fr 1fr;&#13;
+&#13;
+  gap: 20px;&#13;
+&#13;
+  margin-bottom: 28px;&#13;
+}&#13;
+&#13;
+&#13;
+.dashboard-card,&#13;
+.recent-card {&#13;
+&#13;
+  background: white;&#13;
+&#13;
+  border-radius: 17px;&#13;
+&#13;
+  padding: 25px;&#13;
+&#13;
+  box-shadow:&#13;
+    0 5px 20px&#13;
+    rgba(38,50,56,0.06);&#13;
+}&#13;
+&#13;
+&#13;
+.card-header {&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: space-between;&#13;
+&#13;
+  padding-bottom: 18px;&#13;
+&#13;
+  border-bottom: 1px solid #edf5f6;&#13;
+}&#13;
+&#13;
+&#13;
+.card-header h3 {&#13;
+&#13;
+  margin: 0 0 5px;&#13;
+&#13;
+  font-size: 18px;&#13;
+}&#13;
+&#13;
+&#13;
+.card-header p {&#13;
+&#13;
+  margin: 0;&#13;
+&#13;
+  color: #78909c;&#13;
+&#13;
+  font-size: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+.card-icon {&#13;
+&#13;
+  width: 42px;&#13;
+&#13;
+  height: 42px;&#13;
+&#13;
+  background: #e0f7fa;&#13;
+&#13;
+  border-radius: 11px;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: center;&#13;
+&#13;
+  font-size: 20px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   PRIORITY&#13;
+   ========================================= */&#13;
+&#13;
+.priority-list {&#13;
+&#13;
+  padding-top: 8px;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-item {&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: space-between;&#13;
+&#13;
+  padding: 14px 5px;&#13;
+&#13;
+  border-bottom: 1px solid #f0f5f6;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-item:last-child {&#13;
+&#13;
+  border-bottom: none;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-left {&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  gap: 10px;&#13;
+&#13;
+  font-size: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-item strong {&#13;
+&#13;
+  font-size: 15px;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-dot {&#13;
+&#13;
+  width: 10px;&#13;
+&#13;
+  height: 10px;&#13;
+&#13;
+  border-radius: 50%;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-dot.critical {&#13;
+  background: #e53935;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-dot.high {&#13;
+  background: #fb8c00;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-dot.medium {&#13;
+  background: #fdd835;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-dot.low {&#13;
+  background: #43a047;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   GROUPS&#13;
+   ========================================= */&#13;
+&#13;
+.group-list {&#13;
+&#13;
+  padding-top: 7px;&#13;
+}&#13;
+&#13;
+&#13;
+.group-item {&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: space-between;&#13;
+&#13;
+  padding: 11px 3px;&#13;
+&#13;
+  border-bottom: 1px solid #f0f5f6;&#13;
+}&#13;
+&#13;
+&#13;
+.group-item:last-child {&#13;
+&#13;
+  border-bottom: none;&#13;
+}&#13;
+&#13;
+&#13;
+.group-info {&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  gap: 11px;&#13;
+}&#13;
+&#13;
+&#13;
+.group-avatar {&#13;
+&#13;
+  width: 38px;&#13;
+&#13;
+  height: 38px;&#13;
+&#13;
+  border-radius: 10px;&#13;
+&#13;
+  background: #e0f7fa;&#13;
+&#13;
+  color: #008c9e;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: center;&#13;
+&#13;
+  font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.group-info strong {&#13;
+&#13;
+  display: block;&#13;
+&#13;
+  font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+.group-info span {&#13;
+&#13;
+  display: block;&#13;
+&#13;
+  color: #90a4ae;&#13;
+&#13;
+  font-size: 11px;&#13;
+&#13;
+  margin-top: 3px;&#13;
+}&#13;
+&#13;
+&#13;
+.group-count {&#13;
+&#13;
+  font-size: 14px;&#13;
+&#13;
+  font-weight: 700;&#13;
+&#13;
+  color: #008c9e;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   QUICK ACTIONS&#13;
+   ========================================= */&#13;
+&#13;
+.quick-section {&#13;
+&#13;
+  margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+.section-heading {&#13;
+&#13;
+  margin-bottom: 15px;&#13;
+}&#13;
+&#13;
+&#13;
+.section-heading h2 {&#13;
+&#13;
+  margin: 0 0 5px;&#13;
+&#13;
+  font-size: 21px;&#13;
+}&#13;
+&#13;
+&#13;
+.section-heading p {&#13;
+&#13;
+  margin: 0;&#13;
+&#13;
+  color: #78909c;&#13;
+&#13;
+  font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+.action-grid {&#13;
+&#13;
+  display: grid;&#13;
+&#13;
+  grid-template-columns:&#13;
+    repeat(4, 1fr);&#13;
+&#13;
+  gap: 17px;&#13;
+}&#13;
+&#13;
+&#13;
+.action-card {&#13;
+&#13;
+  background: white;&#13;
+&#13;
+  border-radius: 15px;&#13;
+&#13;
+  padding: 21px;&#13;
+&#13;
+  cursor: pointer;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  gap: 13px;&#13;
+&#13;
+  border: 1px solid #e3f2f4;&#13;
+&#13;
+  box-shadow:&#13;
+    0 4px 14px&#13;
+    rgba(38,50,56,0.05);&#13;
+&#13;
+  transition: 0.2s;&#13;
+}&#13;
+&#13;
+&#13;
+.action-card:hover {&#13;
+&#13;
+  transform: translateY(-4px);&#13;
+&#13;
+  border-color: #4dd0e1;&#13;
+&#13;
+  box-shadow:&#13;
+    0 9px 22px&#13;
+    rgba(0,172,193,0.12);&#13;
+}&#13;
+&#13;
+&#13;
+.action-icon {&#13;
+&#13;
+  width: 45px;&#13;
+&#13;
+  height: 45px;&#13;
+&#13;
+  min-width: 45px;&#13;
+&#13;
+  border-radius: 12px;&#13;
+&#13;
+  background: #e0f7fa;&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  justify-content: center;&#13;
+&#13;
+  font-size: 21px;&#13;
+}&#13;
+&#13;
+&#13;
+.action-content h3 {&#13;
+&#13;
+  margin: 0 0 5px;&#13;
+&#13;
+  font-size: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+.action-content p {&#13;
+&#13;
+  margin: 0 0 10px;&#13;
+&#13;
+  color: #78909c;&#13;
+&#13;
+  font-size: 11px;&#13;
+&#13;
+  line-height: 1.5;&#13;
+}&#13;
+&#13;
+&#13;
+.action-content span {&#13;
+&#13;
+  color: #0097a7;&#13;
+&#13;
+  font-size: 11px;&#13;
+&#13;
+  font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   RECENT REQUESTS&#13;
+   ========================================= */&#13;
+&#13;
+.recent-card {&#13;
+&#13;
+  margin-bottom: 25px;&#13;
+}&#13;
+&#13;
+&#13;
+.view-all {&#13;
+&#13;
+  border: none;&#13;
+&#13;
+  background: transparent;&#13;
+&#13;
+  color: #0097a7;&#13;
+&#13;
+  font-size: 12px;&#13;
+&#13;
+  font-weight: 700;&#13;
+&#13;
+  cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+.request-list {&#13;
+&#13;
+  padding-top: 5px;&#13;
+}&#13;
+&#13;
+&#13;
+.request-row {&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  justify-content: space-between;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  gap: 20px;&#13;
+&#13;
+  padding: 16px 4px;&#13;
+&#13;
+  border-bottom: 1px solid #edf5f6;&#13;
+}&#13;
+&#13;
+&#13;
+.request-row:last-child {&#13;
+&#13;
+  border-bottom: none;&#13;
+}&#13;
+&#13;
+&#13;
+.request-info {&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  flex-direction: column;&#13;
+&#13;
+  gap: 4px;&#13;
+}&#13;
+&#13;
+&#13;
+.request-number {&#13;
+&#13;
+  color: #0097a7;&#13;
+&#13;
+  font-size: 11px;&#13;
+&#13;
+  font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.request-info strong {&#13;
+&#13;
+  font-size: 13px;&#13;
+&#13;
+  font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+.request-caller {&#13;
+&#13;
+  color: #90a4ae;&#13;
+&#13;
+  font-size: 11px;&#13;
+}&#13;
+&#13;
+&#13;
+.request-right {&#13;
+&#13;
+  display: flex;&#13;
+&#13;
+  align-items: center;&#13;
+&#13;
+  gap: 8px;&#13;
+}&#13;
+&#13;
+&#13;
+.status-badge,&#13;
+.priority-badge {&#13;
+&#13;
+  padding: 6px 10px;&#13;
+&#13;
+  border-radius: 20px;&#13;
+&#13;
+  font-size: 10px;&#13;
+&#13;
+  font-weight: 700;&#13;
+&#13;
+  white-space: nowrap;&#13;
+}&#13;
+&#13;
+&#13;
+.status-open {&#13;
+&#13;
+  background: #fff3e0;&#13;
+&#13;
+  color: #ef6c00;&#13;
+}&#13;
+&#13;
+&#13;
+.status-progress {&#13;
+&#13;
+  background: #e3f2fd;&#13;
+&#13;
+  color: #1565c0;&#13;
+}&#13;
+&#13;
+&#13;
+.status-resolved {&#13;
+&#13;
+  background: #e8f5e9;&#13;
+&#13;
+  color: #2e7d32;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-critical {&#13;
+&#13;
+  background: #ffebee;&#13;
+&#13;
+  color: #c62828;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-high {&#13;
+&#13;
+  background: #fff3e0;&#13;
+&#13;
+  color: #ef6c00;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-medium {&#13;
+&#13;
+  background: #fffde7;&#13;
+&#13;
+  color: #827717;&#13;
+}&#13;
+&#13;
+&#13;
+.priority-low {&#13;
+&#13;
+  background: #e8f5e9;&#13;
+&#13;
+  color: #2e7d32;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   EMPTY&#13;
+   ========================================= */&#13;
+&#13;
+.mini-empty {&#13;
+&#13;
+  padding: 30px 10px;&#13;
+&#13;
+  text-align: center;&#13;
+&#13;
+  color: #90a4ae;&#13;
+&#13;
+  font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   RESPONSIVE&#13;
+   ========================================= */&#13;
+&#13;
+@media (max-width: 1050px) {&#13;
+&#13;
+  .stats-grid {&#13;
+&#13;
+    grid-template-columns:&#13;
+      repeat(2, 1fr);&#13;
+  }&#13;
+&#13;
+  .action-grid {&#13;
+&#13;
+    grid-template-columns:&#13;
+      repeat(2, 1fr);&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 800px) {&#13;
+&#13;
+  .cfms-manager {&#13;
+&#13;
+    padding: 15px;&#13;
+  }&#13;
+&#13;
+  .manager-header {&#13;
+&#13;
+    flex-direction: column;&#13;
+&#13;
+    align-items: flex-start;&#13;
+&#13;
+    gap: 15px;&#13;
+  }&#13;
+&#13;
+  .dashboard-grid {&#13;
+&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+  .stats-grid {&#13;
+&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+&#13;
+  .action-grid {&#13;
+&#13;
+    grid-template-columns: 1fr;&#13;
+  }&#13;
+&#13;
+  .welcome-card {&#13;
+&#13;
+    align-items: flex-start;&#13;
+  }&#13;
+&#13;
+  .welcome-icon {&#13;
+&#13;
+    display: none;&#13;
+  }&#13;
+&#13;
+  .request-row {&#13;
+&#13;
+    align-items: flex-start;&#13;
+&#13;
+    flex-direction: column;&#13;
+  }&#13;
+&#13;
+  .request-right {&#13;
+&#13;
+    justify-content: flex-start;&#13;
+  }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>cfms_manager_dashboard</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>CFMS Manager Dashboard</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.userName = gs.getUserDisplayName();
+
+    data.totalRequests = 0;
+    data.activeRequests = 0;
+    data.resolvedRequests = 0;
+
+    data.averageRating = "0.0";
+
+    data.criticalCount = 0;
+    data.highCount = 0;
+    data.mediumCount = 0;
+    data.lowCount = 0;
+
+    data.groups = [];
+    data.recentRequests = [];
+
+    data.error = "";
+
+
+    /* =========================================
+       SECURITY
+       ========================================= */
+
+    if (!gs.isLoggedIn()) {
+
+        data.redirect = "cfms_login";
+
+        return;
+    }
+
+
+    if (
+        !gs.hasRole("cfms_manager") &&
+        !gs.hasRole("admin")
+    ) {
+
+        data.error =
+            "You are not authorized to access the Manager Portal.";
+
+        data.redirect =
+            "cfms_home";
+
+        return;
+    }
+
+
+    /* =========================================
+       INCIDENT DATA
+       ========================================= */
+
+    var groupMap = {};
+
+
+    var gr = new GlideRecord("incident");
+
+    gr.orderByDesc("sys_created_on");
+
+    gr.query();
+
+
+    while (gr.next()) {
+
+        data.totalRequests++;
+
+
+        var state =
+            gr.getValue("state");
+
+
+        /* -----------------------------------------
+           ACTIVE / RESOLVED
+           ----------------------------------------- */
+
+        if (
+            state == "6" ||
+            state == "7"
+        ) {
+
+            data.resolvedRequests++;
+
+        } else {
+
+            data.activeRequests++;
+
+        }
+
+
+        /* -----------------------------------------
+           PRIORITY
+           ----------------------------------------- */
+
+        var priority =
+            gr.getValue("priority");
+
+
+        if (priority == "1") {
+
+            data.criticalCount++;
+
+        } else if (priority == "2") {
+
+            data.highCount++;
+
+        } else if (priority == "3") {
+
+            data.mediumCount++;
+
+        } else if (priority == "4") {
+
+            data.lowCount++;
+
+        }
+
+
+        /* -----------------------------------------
+           ASSIGNMENT GROUP
+           ----------------------------------------- */
+
+        var groupID =
+            gr.getValue("assignment_group");
+
+        var groupName =
+            gr.getDisplayValue("assignment_group");
+
+
+        if (
+            groupID &&
+            groupName
+        ) {
+
+            if (!groupMap[groupID]) {
+
+                groupMap[groupID] = {
+
+                    name: groupName,
+
+                    count: 0
+
+                };
+
+            }
+
+            groupMap[groupID].count++;
+
+        }
+
+
+        /* -----------------------------------------
+           RECENT REQUESTS
+           ----------------------------------------- */
+
+        if (
+            data.recentRequests.length < 6
+        ) {
+
+            var stateText =
+                gr.getDisplayValue("state");
+
+
+            var statusClass =
+                "status-open";
+
+
+            if (state == "2") {
+
+                statusClass =
+                    "status-progress";
+
+            } else if (
+                state == "6" ||
+                state == "7"
+            ) {
+
+                statusClass =
+                    "status-resolved";
+
+            }
+
+
+            var priorityText =
+                gr.getDisplayValue("priority");
+
+
+            var priorityClass =
+                "priority-medium";
+
+
+            if (priority == "1") {
+
+                priorityText =
+                    "Critical";
+
+                priorityClass =
+                    "priority-critical";
+
+            } else if (priority == "2") {
+
+                priorityText =
+                    "High";
+
+                priorityClass =
+                    "priority-high";
+
+            } else if (priority == "3") {
+
+                priorityText =
+                    "Medium";
+
+                priorityClass =
+                    "priority-medium";
+
+            } else if (priority == "4") {
+
+                priorityText =
+                    "Low";
+
+                priorityClass =
+                    "priority-low";
+
+            }
+
+
+            data.recentRequests.push({
+
+                sys_id:
+                    gr.getUniqueValue(),
+
+                number:
+                    gr.getValue("number"),
+
+                short_description:
+                    gr.getValue(
+                        "short_description"
+                    ),
+
+                caller:
+                    gr.getDisplayValue(
+                        "caller_id"
+                    ),
+
+                state:
+                    stateText,
+
+                stateValue:
+                    state,
+
+                statusClass:
+                    statusClass,
+
+                priority:
+                    priorityText,
+
+                priorityClass:
+                    priorityClass,
+
+                created:
+                    gr.getDisplayValue(
+                        "sys_created_on"
+                    )
+
+            });
+
+        }
+
+    }
+
+
+    /* =========================================
+       CONVERT GROUP MAP TO ARRAY
+       ========================================= */
+
+    for (var groupID in groupMap) {
+
+        if (
+            groupMap.hasOwnProperty(groupID)
+        ) {
+
+            var groupName =
+                groupMap[groupID].name;
+
+
+            var initial =
+                groupName
+                .substring(0, 1)
+                .toUpperCase();
+
+
+            data.groups.push({
+
+                name:
+                    groupName,
+
+                count:
+                    groupMap[groupID].count,
+
+                initial:
+                    initial
+
+            });
+
+        }
+
+    }
+
+
+    /* =========================================
+       FEEDBACK RATING
+       ========================================= */
+
+    /*
+     * The CFMS feedback table created earlier
+     * is u_cfms_feedback.
+     */
+
+    var feedback =
+        new GlideRecord("u_cfms_feedback");
+
+
+    if (feedback.isValid()) {
+
+        var totalRating = 0;
+
+        var ratingCount = 0;
+
+
+        feedback.query();
+
+
+        while (feedback.next()) {
+
+            var rating =
+                parseInt(
+                    feedback.getValue(
+                        "u_rating"
+                    ),
+                    10
+                );
+
+
+            if (!isNaN(rating)) {
+
+                totalRating += rating;
+
+                ratingCount++;
+
+            }
+
+        }
+
+
+        if (ratingCount > 0) {
+
+            data.averageRating =
+                (
+                    totalRating /
+                    ratingCount
+                ).toFixed(1);
+
+        }
+
+    }
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 13:34:31</sys_created_on>
+        <sys_id>ec4e6851a0a343107f4432329b8a1557</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>CFMS Manager Dashboard</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_update_name>sp_widget_ec4e6851a0a343107f4432329b8a1557</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 13:34:31</sys_updated_on>
+        <template><![CDATA[<div class="cfms-manager">
+
+  <!-- ==============================
+       HEADER
+       ============================== -->
+
+  <div class="manager-header">
+
+    <div class="header-content">
+
+      <div class="header-icon">
+        ]]>👨<![CDATA[‍]]>💼
+<![CDATA[      </div>
+
+      <div>
+        <h1>CFMS Manager Portal</h1>
+
+        <p>
+          Welcome back, {{c.data.userName}}.
+          Monitor campus food service operations.
+        </p>
+      </div>
+
+    </div>
+
+    <button
+      class="home-btn"
+      ng-click="c.goHome()">
+
+      ]]>🏠<![CDATA[ Home
+
+    </button>
+
+  </div>
+
+
+  <!-- ==============================
+       ERROR
+       ============================== -->
+
+  <div
+    class="alert error-alert"
+    ng-if="c.data.error">
+
+    {{c.data.error}}
+
+  </div>
+
+
+  <!-- ==============================
+       WELCOME
+       ============================== -->
+
+  <div class="welcome-card">
+
+    <div class="welcome-text">
+
+      <span class="welcome-label">
+        MANAGER DASHBOARD
+      </span>
+
+      <h2>
+        Campus Food Management Overview
+      </h2>
+
+      <p>
+        Monitor requests, priorities, staff workload
+        and student feedback from one place.
+      </p>
+
+    </div>
+
+    <div class="welcome-icon">
+      ]]>📊
+<![CDATA[    </div>
+
+  </div>
+
+
+  <!-- ==============================
+       MAIN STATISTICS
+       ============================== -->
+
+  <div class="stats-grid">
+
+    <!-- Total -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        ]]>🎫
+<![CDATA[      </div>
+
+      <div class="stat-content">
+
+        <span>Total Requests</span>
+
+        <strong>
+          {{c.data.totalRequests}}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- Active -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        ]]>🔄
+<![CDATA[      </div>
+
+      <div class="stat-content">
+
+        <span>Active Requests</span>
+
+        <strong>
+          {{c.data.activeRequests}}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- Resolved -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        ✓
+      </div>
+
+      <div class="stat-content">
+
+        <span>Resolved</span>
+
+        <strong>
+          {{c.data.resolvedRequests}}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- Feedback -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        ⭐
+      </div>
+
+      <div class="stat-content">
+
+        <span>Feedback Rating</span>
+
+        <strong>
+          {{c.data.averageRating}}
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==============================
+       DASHBOARD GRID
+       ============================== -->
+
+  <div class="dashboard-grid">
+
+
+    <!-- ==========================
+         PRIORITY OVERVIEW
+         ========================== -->
+
+    <div class="dashboard-card">
+
+      <div class="card-header">
+
+        <div>
+
+          <h3>Priority Overview</h3>
+
+          <p>
+            Current request priorities
+          </p>
+
+        </div>
+
+        <span class="card-icon">
+          ⚡
+        </span>
+
+      </div>
+
+
+      <div class="priority-list">
+
+        <div class="priority-item">
+
+          <div class="priority-left">
+
+            <span class="priority-dot critical"></span>
+
+            <span>Critical</span>
+
+          </div>
+
+          <strong>
+            {{c.data.criticalCount}}
+          </strong>
+
+        </div>
+
+
+        <div class="priority-item">
+
+          <div class="priority-left">
+
+            <span class="priority-dot high"></span>
+
+            <span>High</span>
+
+          </div>
+
+          <strong>
+            {{c.data.highCount}}
+          </strong>
+
+        </div>
+
+
+        <div class="priority-item">
+
+          <div class="priority-left">
+
+            <span class="priority-dot medium"></span>
+
+            <span>Medium</span>
+
+          </div>
+
+          <strong>
+            {{c.data.mediumCount}}
+          </strong>
+
+        </div>
+
+
+        <div class="priority-item">
+
+          <div class="priority-left">
+
+            <span class="priority-dot low"></span>
+
+            <span>Low</span>
+
+          </div>
+
+          <strong>
+            {{c.data.lowCount}}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ==========================
+         ASSIGNMENT GROUPS
+         ========================== -->
+
+    <div class="dashboard-card">
+
+      <div class="card-header">
+
+        <div>
+
+          <h3>Assigned Groups</h3>
+
+          <p>
+            Current ticket distribution
+          </p>
+
+        </div>
+
+        <span class="card-icon">
+          ]]>👥
+<![CDATA[        </span>
+
+      </div>
+
+
+      <div
+        class="group-list"
+        ng-if="c.data.groups.length > 0"
+      >
+
+        <div
+          class="group-item"
+          ng-repeat="group in c.data.groups"
+        >
+
+          <div class="group-info">
+
+            <div class="group-avatar">
+              {{group.initial}}
+            </div>
+
+            <div>
+
+              <strong>
+                {{group.name}}
+              </strong>
+
+              <span>
+                {{group.count}} tickets
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="group-count">
+            {{group.count}}
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="mini-empty"
+        ng-if="c.data.groups.length === 0"
+      >
+
+        No assignment groups found.
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==============================
+       QUICK ACTIONS
+       ============================== -->
+
+  <div class="quick-section">
+
+    <div class="section-heading">
+
+      <div>
+
+        <h2>Manager Actions</h2>
+
+        <p>
+          Access important CFMS management functions.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="action-grid">
+
+
+      <!-- Assigned Tickets -->
+
+      <div
+        class="action-card"
+        ng-click="c.assignedTickets()"
+      >
+
+        <div class="action-icon">
+          ]]>🎫
+<![CDATA[        </div>
+
+        <div class="action-content">
+
+          <h3>Assigned Tickets</h3>
+
+          <p>
+            View and monitor staff tickets.
+          </p>
+
+          <span>
+            Open Tickets →
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Records -->
+
+      <div
+        class="action-card"
+        ng-click="c.records()"
+      >
+
+        <div class="action-icon">
+          ]]>📋
+<![CDATA[        </div>
+
+        <div class="action-content">
+
+          <h3>View Records</h3>
+
+          <p>
+            Review CFMS requests and records.
+          </p>
+
+          <span>
+            View Records →
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Reports -->
+
+      <div
+        class="action-card"
+        ng-click="c.reports()"
+      >
+
+        <div class="action-icon">
+          ]]>📈
+<![CDATA[        </div>
+
+        <div class="action-content">
+
+          <h3>Reports</h3>
+
+          <p>
+            Analyze requests and service activity.
+          </p>
+
+          <span>
+            Open Reports →
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Feedback -->
+
+      <div
+        class="action-card"
+        ng-click="c.feedback()"
+      >
+
+        <div class="action-icon">
+          ⭐
+        </div>
+
+        <div class="action-content">
+
+          <h3>Student Feedback</h3>
+
+          <p>
+            Monitor student feedback and ratings.
+          </p>
+
+          <span>
+            View Feedback →
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==============================
+       RECENT REQUESTS
+       ============================== -->
+
+  <div class="recent-card">
+
+    <div class="card-header">
+
+      <div>
+
+        <h3>Recent Requests</h3>
+
+        <p>
+          Latest CFMS activity
+        </p>
+
+      </div>
+
+      <button
+        class="view-all"
+        ng-click="c.records()">
+
+        View All →
+
+      </button>
+
+    </div>
+
+
+    <div
+      class="request-list"
+      ng-if="c.data.recentRequests.length > 0"
+    >
+
+      <div
+        class="request-row"
+        ng-repeat="request in c.data.recentRequests"
+      >
+
+        <div class="request-info">
+
+          <span class="request-number">
+            {{request.number}}
+          </span>
+
+          <strong>
+            {{request.short_description}}
+          </strong>
+
+          <span class="request-caller">
+            ]]>👤<![CDATA[ {{request.caller}}
+          </span>
+
+        </div>
+
+
+        <div class="request-right">
+
+          <span
+            class="status-badge"
+            ng-class="request.statusClass"
+          >
+            {{request.state}}
+          </span>
+
+          <span
+            class="priority-badge"
+            ng-class="request.priorityClass"
+          >
+            {{request.priority}}
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="mini-empty"
+      ng-if="c.data.recentRequests.length === 0"
+    >
+
+      No recent requests found.
+
+    </div>
+
+  </div>
+
+</div>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</application>
+        <file_path/>
+        <instance_id>8ed1cdc7c38fcf94a03197af05013150</instance_id>
+        <instance_name>ltm-hck-2876-0046</instance_name>
+        <name>sp_widget_ec4e6851a0a343107f4432329b8a1557</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller = function() {
+
+    var c = this;
+
+
+    /* =========================================
+       HOME
+       ========================================= */
+
+    c.goHome = function() {
+
+        window.location.href =
+            "?id=cfms_home";
+
+    };
+
+
+    /* =========================================
+       ASSIGNED TICKETS
+       ========================================= */
+
+    c.assignedTickets = function() {
+
+        window.location.href =
+            "?id=cfms_assigned";
+
+    };
+
+
+    /* =========================================
+       RECORDS
+       ========================================= */
+
+    c.records = function() {
+
+        window.location.href =
+            "?id=cfms_records";
+
+    };
+
+
+    /* =========================================
+       REPORTS
+       ========================================= */
+
+    c.reports = function() {
+
+        /*
+         * Create cfms_reports later if you
+         * want a separate Reports page.
+         */
+
+        window.location.href =
+            "?id=cfms_records";
+
+    };
+
+
+    /* =========================================
+       FEEDBACK
+       ========================================= */
+
+    c.feedback = function() {
+
+        /*
+         * Manager can currently view the
+         * records page where feedback-related
+         * information can be displayed.
+         */
+
+        window.location.href =
+            "?id=cfms_records";
+
+    };
+
+};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;/* =========================================&amp;#13;
+   CFMS MANAGER HOME&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.cfms-manager {&amp;#13;
+&amp;#13;
+  min-height: 100vh;&amp;#13;
+&amp;#13;
+  background: #f0fbfc;&amp;#13;
+&amp;#13;
+  padding: 30px;&amp;#13;
+&amp;#13;
+  font-family:&amp;#13;
+    'Segoe UI',&amp;#13;
+    Tahoma,&amp;#13;
+    Geneva,&amp;#13;
+    Verdana,&amp;#13;
+    sans-serif;&amp;#13;
+&amp;#13;
+  color: #263238;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   HEADER&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.manager-header {&amp;#13;
+&amp;#13;
+  background:&amp;#13;
+    linear-gradient(&amp;#13;
+      135deg,&amp;#13;
+      #00acc1,&amp;#13;
+      #4dd0e1&amp;#13;
+    );&amp;#13;
+&amp;#13;
+  color: white;&amp;#13;
+&amp;#13;
+  border-radius: 20px;&amp;#13;
+&amp;#13;
+  padding: 28px 32px;&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  justify-content: space-between;&amp;#13;
+&amp;#13;
+  margin-bottom: 25px;&amp;#13;
+&amp;#13;
+  box-shadow:&amp;#13;
+    0 8px 25px&amp;#13;
+    rgba(0, 172, 193, 0.18);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.header-content {&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  gap: 17px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.header-icon {&amp;#13;
+&amp;#13;
+  width: 58px;&amp;#13;
+&amp;#13;
+  height: 58px;&amp;#13;
+&amp;#13;
+  background: rgba(255,255,255,0.18);&amp;#13;
+&amp;#13;
+  border-radius: 15px;&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  justify-content: center;&amp;#13;
+&amp;#13;
+  font-size: 28px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.manager-header h1 {&amp;#13;
+&amp;#13;
+  margin: 0 0 6px;&amp;#13;
+&amp;#13;
+  font-size: 29px;&amp;#13;
+&amp;#13;
+  font-weight: 700;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.manager-header p {&amp;#13;
+&amp;#13;
+  margin: 0;&amp;#13;
+&amp;#13;
+  font-size: 14px;&amp;#13;
+&amp;#13;
+  opacity: 0.95;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.home-btn {&amp;#13;
+&amp;#13;
+  border: none;&amp;#13;
+&amp;#13;
+  background: white;&amp;#13;
+&amp;#13;
+  color: #008c9e;&amp;#13;
+&amp;#13;
+  padding: 11px 18px;&amp;#13;
+&amp;#13;
+  border-radius: 10px;&amp;#13;
+&amp;#13;
+  font-weight: 600;&amp;#13;
+&amp;#13;
+  cursor: pointer;&amp;#13;
+&amp;#13;
+  transition: 0.2s;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.home-btn:hover {&amp;#13;
+&amp;#13;
+  transform: translateY(-2px);&amp;#13;
+&amp;#13;
+  box-shadow:&amp;#13;
+    0 5px 15px&amp;#13;
+    rgba(0,0,0,0.1);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   ALERT&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.alert {&amp;#13;
+&amp;#13;
+  padding: 14px 18px;&amp;#13;
+&amp;#13;
+  border-radius: 10px;&amp;#13;
+&amp;#13;
+  margin-bottom: 20px;&amp;#13;
+&amp;#13;
+  font-weight: 600;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.error-alert {&amp;#13;
+&amp;#13;
+  background: #ffebee;&amp;#13;
+&amp;#13;
+  color: #c62828;&amp;#13;
+&amp;#13;
+  border: 1px solid #ef9a9a;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   WELCOME&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.welcome-card {&amp;#13;
+&amp;#13;
+  background: white;&amp;#13;
+&amp;#13;
+  border-radius: 18px;&amp;#13;
+&amp;#13;
+  padding: 27px 30px;&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  justify-content: space-between;&amp;#13;
+&amp;#13;
+  margin-bottom: 25px;&amp;#13;
+&amp;#13;
+  box-shadow:&amp;#13;
+    0 5px 18px&amp;#13;
+    rgba(38,50,56,0.06);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.welcome-label {&amp;#13;
+&amp;#13;
+  color: #0097a7;&amp;#13;
+&amp;#13;
+  font-size: 11px;&amp;#13;
+&amp;#13;
+  font-weight: 800;&amp;#13;
+&amp;#13;
+  letter-spacing: 1px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.welcome-text h2 {&amp;#13;
+&amp;#13;
+  margin: 7px 0 7px;&amp;#13;
+&amp;#13;
+  font-size: 24px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.welcome-text p {&amp;#13;
+&amp;#13;
+  margin: 0;&amp;#13;
+&amp;#13;
+  color: #78909c;&amp;#13;
+&amp;#13;
+  font-size: 14px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.welcome-icon {&amp;#13;
+&amp;#13;
+  width: 72px;&amp;#13;
+&amp;#13;
+  height: 72px;&amp;#13;
+&amp;#13;
+  border-radius: 18px;&amp;#13;
+&amp;#13;
+  background: #e0f7fa;&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  justify-content: center;&amp;#13;
+&amp;#13;
+  font-size: 34px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   STATISTICS&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.stats-grid {&amp;#13;
+&amp;#13;
+  display: grid;&amp;#13;
+&amp;#13;
+  grid-template-columns:&amp;#13;
+    repeat(4, 1fr);&amp;#13;
+&amp;#13;
+  gap: 18px;&amp;#13;
+&amp;#13;
+  margin-bottom: 25px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.stat-card {&amp;#13;
+&amp;#13;
+  background: white;&amp;#13;
+&amp;#13;
+  border-radius: 16px;&amp;#13;
+&amp;#13;
+  padding: 21px;&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  gap: 15px;&amp;#13;
+&amp;#13;
+  box-shadow:&amp;#13;
+    0 4px 15px&amp;#13;
+    rgba(38,50,56,0.06);&amp;#13;
+&amp;#13;
+  border: 1px solid #e4f2f4;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.stat-icon {&amp;#13;
+&amp;#13;
+  width: 51px;&amp;#13;
+&amp;#13;
+  height: 51px;&amp;#13;
+&amp;#13;
+  border-radius: 13px;&amp;#13;
+&amp;#13;
+  background: #e0f7fa;&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  justify-content: center;&amp;#13;
+&amp;#13;
+  font-size: 23px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.stat-content span {&amp;#13;
+&amp;#13;
+  display: block;&amp;#13;
+&amp;#13;
+  color: #78909c;&amp;#13;
+&amp;#13;
+  font-size: 12px;&amp;#13;
+&amp;#13;
+  margin-bottom: 5px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.stat-content strong {&amp;#13;
+&amp;#13;
+  font-size: 26px;&amp;#13;
+&amp;#13;
+  color: #263238;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   DASHBOARD GRID&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.dashboard-grid {&amp;#13;
+&amp;#13;
+  display: grid;&amp;#13;
+&amp;#13;
+  grid-template-columns:&amp;#13;
+    1fr 1fr;&amp;#13;
+&amp;#13;
+  gap: 20px;&amp;#13;
+&amp;#13;
+  margin-bottom: 28px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.dashboard-card,&amp;#13;
+.recent-card {&amp;#13;
+&amp;#13;
+  background: white;&amp;#13;
+&amp;#13;
+  border-radius: 17px;&amp;#13;
+&amp;#13;
+  padding: 25px;&amp;#13;
+&amp;#13;
+  box-shadow:&amp;#13;
+    0 5px 20px&amp;#13;
+    rgba(38,50,56,0.06);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.card-header {&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  justify-content: space-between;&amp;#13;
+&amp;#13;
+  padding-bottom: 18px;&amp;#13;
+&amp;#13;
+  border-bottom: 1px solid #edf5f6;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.card-header h3 {&amp;#13;
+&amp;#13;
+  margin: 0 0 5px;&amp;#13;
+&amp;#13;
+  font-size: 18px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.card-header p {&amp;#13;
+&amp;#13;
+  margin: 0;&amp;#13;
+&amp;#13;
+  color: #78909c;&amp;#13;
+&amp;#13;
+  font-size: 12px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.card-icon {&amp;#13;
+&amp;#13;
+  width: 42px;&amp;#13;
+&amp;#13;
+  height: 42px;&amp;#13;
+&amp;#13;
+  background: #e0f7fa;&amp;#13;
+&amp;#13;
+  border-radius: 11px;&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  justify-content: center;&amp;#13;
+&amp;#13;
+  font-size: 20px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   PRIORITY&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.priority-list {&amp;#13;
+&amp;#13;
+  padding-top: 8px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-item {&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  justify-content: space-between;&amp;#13;
+&amp;#13;
+  padding: 14px 5px;&amp;#13;
+&amp;#13;
+  border-bottom: 1px solid #f0f5f6;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-item:last-child {&amp;#13;
+&amp;#13;
+  border-bottom: none;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-left {&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  gap: 10px;&amp;#13;
+&amp;#13;
+  font-size: 14px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-item strong {&amp;#13;
+&amp;#13;
+  font-size: 15px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-dot {&amp;#13;
+&amp;#13;
+  width: 10px;&amp;#13;
+&amp;#13;
+  height: 10px;&amp;#13;
+&amp;#13;
+  border-radius: 50%;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-dot.critical {&amp;#13;
+  background: #e53935;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-dot.high {&amp;#13;
+  background: #fb8c00;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-dot.medium {&amp;#13;
+  background: #fdd835;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-dot.low {&amp;#13;
+  background: #43a047;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   GROUPS&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.group-list {&amp;#13;
+&amp;#13;
+  padding-top: 7px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.group-item {&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  justify-content: space-between;&amp;#13;
+&amp;#13;
+  padding: 11px 3px;&amp;#13;
+&amp;#13;
+  border-bottom: 1px solid #f0f5f6;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.group-item:last-child {&amp;#13;
+&amp;#13;
+  border-bottom: none;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.group-info {&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  gap: 11px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.group-avatar {&amp;#13;
+&amp;#13;
+  width: 38px;&amp;#13;
+&amp;#13;
+  height: 38px;&amp;#13;
+&amp;#13;
+  border-radius: 10px;&amp;#13;
+&amp;#13;
+  background: #e0f7fa;&amp;#13;
+&amp;#13;
+  color: #008c9e;&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  justify-content: center;&amp;#13;
+&amp;#13;
+  font-weight: 700;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.group-info strong {&amp;#13;
+&amp;#13;
+  display: block;&amp;#13;
+&amp;#13;
+  font-size: 13px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.group-info span {&amp;#13;
+&amp;#13;
+  display: block;&amp;#13;
+&amp;#13;
+  color: #90a4ae;&amp;#13;
+&amp;#13;
+  font-size: 11px;&amp;#13;
+&amp;#13;
+  margin-top: 3px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.group-count {&amp;#13;
+&amp;#13;
+  font-size: 14px;&amp;#13;
+&amp;#13;
+  font-weight: 700;&amp;#13;
+&amp;#13;
+  color: #008c9e;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   QUICK ACTIONS&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.quick-section {&amp;#13;
+&amp;#13;
+  margin-bottom: 25px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.section-heading {&amp;#13;
+&amp;#13;
+  margin-bottom: 15px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.section-heading h2 {&amp;#13;
+&amp;#13;
+  margin: 0 0 5px;&amp;#13;
+&amp;#13;
+  font-size: 21px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.section-heading p {&amp;#13;
+&amp;#13;
+  margin: 0;&amp;#13;
+&amp;#13;
+  color: #78909c;&amp;#13;
+&amp;#13;
+  font-size: 13px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.action-grid {&amp;#13;
+&amp;#13;
+  display: grid;&amp;#13;
+&amp;#13;
+  grid-template-columns:&amp;#13;
+    repeat(4, 1fr);&amp;#13;
+&amp;#13;
+  gap: 17px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.action-card {&amp;#13;
+&amp;#13;
+  background: white;&amp;#13;
+&amp;#13;
+  border-radius: 15px;&amp;#13;
+&amp;#13;
+  padding: 21px;&amp;#13;
+&amp;#13;
+  cursor: pointer;&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  gap: 13px;&amp;#13;
+&amp;#13;
+  border: 1px solid #e3f2f4;&amp;#13;
+&amp;#13;
+  box-shadow:&amp;#13;
+    0 4px 14px&amp;#13;
+    rgba(38,50,56,0.05);&amp;#13;
+&amp;#13;
+  transition: 0.2s;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.action-card:hover {&amp;#13;
+&amp;#13;
+  transform: translateY(-4px);&amp;#13;
+&amp;#13;
+  border-color: #4dd0e1;&amp;#13;
+&amp;#13;
+  box-shadow:&amp;#13;
+    0 9px 22px&amp;#13;
+    rgba(0,172,193,0.12);&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.action-icon {&amp;#13;
+&amp;#13;
+  width: 45px;&amp;#13;
+&amp;#13;
+  height: 45px;&amp;#13;
+&amp;#13;
+  min-width: 45px;&amp;#13;
+&amp;#13;
+  border-radius: 12px;&amp;#13;
+&amp;#13;
+  background: #e0f7fa;&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  justify-content: center;&amp;#13;
+&amp;#13;
+  font-size: 21px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.action-content h3 {&amp;#13;
+&amp;#13;
+  margin: 0 0 5px;&amp;#13;
+&amp;#13;
+  font-size: 14px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.action-content p {&amp;#13;
+&amp;#13;
+  margin: 0 0 10px;&amp;#13;
+&amp;#13;
+  color: #78909c;&amp;#13;
+&amp;#13;
+  font-size: 11px;&amp;#13;
+&amp;#13;
+  line-height: 1.5;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.action-content span {&amp;#13;
+&amp;#13;
+  color: #0097a7;&amp;#13;
+&amp;#13;
+  font-size: 11px;&amp;#13;
+&amp;#13;
+  font-weight: 700;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   RECENT REQUESTS&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.recent-card {&amp;#13;
+&amp;#13;
+  margin-bottom: 25px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.view-all {&amp;#13;
+&amp;#13;
+  border: none;&amp;#13;
+&amp;#13;
+  background: transparent;&amp;#13;
+&amp;#13;
+  color: #0097a7;&amp;#13;
+&amp;#13;
+  font-size: 12px;&amp;#13;
+&amp;#13;
+  font-weight: 700;&amp;#13;
+&amp;#13;
+  cursor: pointer;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-list {&amp;#13;
+&amp;#13;
+  padding-top: 5px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-row {&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  justify-content: space-between;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  gap: 20px;&amp;#13;
+&amp;#13;
+  padding: 16px 4px;&amp;#13;
+&amp;#13;
+  border-bottom: 1px solid #edf5f6;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-row:last-child {&amp;#13;
+&amp;#13;
+  border-bottom: none;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-info {&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  flex-direction: column;&amp;#13;
+&amp;#13;
+  gap: 4px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-number {&amp;#13;
+&amp;#13;
+  color: #0097a7;&amp;#13;
+&amp;#13;
+  font-size: 11px;&amp;#13;
+&amp;#13;
+  font-weight: 700;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-info strong {&amp;#13;
+&amp;#13;
+  font-size: 13px;&amp;#13;
+&amp;#13;
+  font-weight: 600;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-caller {&amp;#13;
+&amp;#13;
+  color: #90a4ae;&amp;#13;
+&amp;#13;
+  font-size: 11px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.request-right {&amp;#13;
+&amp;#13;
+  display: flex;&amp;#13;
+&amp;#13;
+  align-items: center;&amp;#13;
+&amp;#13;
+  gap: 8px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.status-badge,&amp;#13;
+.priority-badge {&amp;#13;
+&amp;#13;
+  padding: 6px 10px;&amp;#13;
+&amp;#13;
+  border-radius: 20px;&amp;#13;
+&amp;#13;
+  font-size: 10px;&amp;#13;
+&amp;#13;
+  font-weight: 700;&amp;#13;
+&amp;#13;
+  white-space: nowrap;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.status-open {&amp;#13;
+&amp;#13;
+  background: #fff3e0;&amp;#13;
+&amp;#13;
+  color: #ef6c00;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.status-progress {&amp;#13;
+&amp;#13;
+  background: #e3f2fd;&amp;#13;
+&amp;#13;
+  color: #1565c0;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.status-resolved {&amp;#13;
+&amp;#13;
+  background: #e8f5e9;&amp;#13;
+&amp;#13;
+  color: #2e7d32;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-critical {&amp;#13;
+&amp;#13;
+  background: #ffebee;&amp;#13;
+&amp;#13;
+  color: #c62828;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-high {&amp;#13;
+&amp;#13;
+  background: #fff3e0;&amp;#13;
+&amp;#13;
+  color: #ef6c00;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-medium {&amp;#13;
+&amp;#13;
+  background: #fffde7;&amp;#13;
+&amp;#13;
+  color: #827717;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+.priority-low {&amp;#13;
+&amp;#13;
+  background: #e8f5e9;&amp;#13;
+&amp;#13;
+  color: #2e7d32;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   EMPTY&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+.mini-empty {&amp;#13;
+&amp;#13;
+  padding: 30px 10px;&amp;#13;
+&amp;#13;
+  text-align: center;&amp;#13;
+&amp;#13;
+  color: #90a4ae;&amp;#13;
+&amp;#13;
+  font-size: 13px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+/* =========================================&amp;#13;
+   RESPONSIVE&amp;#13;
+   ========================================= */&amp;#13;
+&amp;#13;
+@media (max-width: 1050px) {&amp;#13;
+&amp;#13;
+  .stats-grid {&amp;#13;
+&amp;#13;
+    grid-template-columns:&amp;#13;
+      repeat(2, 1fr);&amp;#13;
+  }&amp;#13;
+&amp;#13;
+  .action-grid {&amp;#13;
+&amp;#13;
+    grid-template-columns:&amp;#13;
+      repeat(2, 1fr);&amp;#13;
+  }&amp;#13;
+&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+@media (max-width: 800px) {&amp;#13;
+&amp;#13;
+  .cfms-manager {&amp;#13;
+&amp;#13;
+    padding: 15px;&amp;#13;
+  }&amp;#13;
+&amp;#13;
+  .manager-header {&amp;#13;
+&amp;#13;
+    flex-direction: column;&amp;#13;
+&amp;#13;
+    align-items: flex-start;&amp;#13;
+&amp;#13;
+    gap: 15px;&amp;#13;
+  }&amp;#13;
+&amp;#13;
+  .dashboard-grid {&amp;#13;
+&amp;#13;
+    grid-template-columns: 1fr;&amp;#13;
+  }&amp;#13;
+&amp;#13;
+}&amp;#13;
+&amp;#13;
+&amp;#13;
+@media (max-width: 600px) {&amp;#13;
+&amp;#13;
+  .stats-grid {&amp;#13;
+&amp;#13;
+    grid-template-columns: 1fr;&amp;#13;
+  }&amp;#13;
+&amp;#13;
+  .action-grid {&amp;#13;
+&amp;#13;
+    grid-template-columns: 1fr;&amp;#13;
+  }&amp;#13;
+&amp;#13;
+  .welcome-card {&amp;#13;
+&amp;#13;
+    align-items: flex-start;&amp;#13;
+  }&amp;#13;
+&amp;#13;
+  .welcome-icon {&amp;#13;
+&amp;#13;
+    display: none;&amp;#13;
+  }&amp;#13;
+&amp;#13;
+  .request-row {&amp;#13;
+&amp;#13;
+    align-items: flex-start;&amp;#13;
+&amp;#13;
+    flex-direction: column;&amp;#13;
+  }&amp;#13;
+&amp;#13;
+  .request-right {&amp;#13;
+&amp;#13;
+    justify-content: flex-start;&amp;#13;
+  }&amp;#13;
+&amp;#13;
+}&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;cfms_manager_dashboard&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]&gt;&lt;/link&gt;&lt;name&gt;CFMS Manager Dashboard&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;false&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+
+    data.userName = gs.getUserDisplayName();
+
+    data.totalRequests = 0;
+    data.activeRequests = 0;
+    data.resolvedRequests = 0;
+
+    data.averageRating = "0.0";
+
+    data.criticalCount = 0;
+    data.highCount = 0;
+    data.mediumCount = 0;
+    data.lowCount = 0;
+
+    data.groups = [];
+    data.recentRequests = [];
+
+    data.error = "";
+
+
+    /* =========================================
+       SECURITY
+       ========================================= */
+
+    if (!gs.isLoggedIn()) {
+
+        data.redirect = "cfms_login";
+
+        return;
+    }
+
+
+    if (
+        !gs.hasRole("cfms_manager") &amp;&amp;
+        !gs.hasRole("admin")
+    ) {
+
+        data.error =
+            "You are not authorized to access the Manager Portal.";
+
+        data.redirect =
+            "cfms_home";
+
+        return;
+    }
+
+
+    /* =========================================
+       INCIDENT DATA
+       ========================================= */
+
+    var groupMap = {};
+
+
+    var gr = new GlideRecord("incident");
+
+    gr.orderByDesc("sys_created_on");
+
+    gr.query();
+
+
+    while (gr.next()) {
+
+        data.totalRequests++;
+
+
+        var state =
+            gr.getValue("state");
+
+
+        /* -----------------------------------------
+           ACTIVE / RESOLVED
+           ----------------------------------------- */
+
+        if (
+            state == "6" ||
+            state == "7"
+        ) {
+
+            data.resolvedRequests++;
+
+        } else {
+
+            data.activeRequests++;
+
+        }
+
+
+        /* -----------------------------------------
+           PRIORITY
+           ----------------------------------------- */
+
+        var priority =
+            gr.getValue("priority");
+
+
+        if (priority == "1") {
+
+            data.criticalCount++;
+
+        } else if (priority == "2") {
+
+            data.highCount++;
+
+        } else if (priority == "3") {
+
+            data.mediumCount++;
+
+        } else if (priority == "4") {
+
+            data.lowCount++;
+
+        }
+
+
+        /* -----------------------------------------
+           ASSIGNMENT GROUP
+           ----------------------------------------- */
+
+        var groupID =
+            gr.getValue("assignment_group");
+
+        var groupName =
+            gr.getDisplayValue("assignment_group");
+
+
+        if (
+            groupID &amp;&amp;
+            groupName
+        ) {
+
+            if (!groupMap[groupID]) {
+
+                groupMap[groupID] = {
+
+                    name: groupName,
+
+                    count: 0
+
+                };
+
+            }
+
+            groupMap[groupID].count++;
+
+        }
+
+
+        /* -----------------------------------------
+           RECENT REQUESTS
+           ----------------------------------------- */
+
+        if (
+            data.recentRequests.length &lt; 6
+        ) {
+
+            var stateText =
+                gr.getDisplayValue("state");
+
+
+            var statusClass =
+                "status-open";
+
+
+            if (state == "2") {
+
+                statusClass =
+                    "status-progress";
+
+            } else if (
+                state == "6" ||
+                state == "7"
+            ) {
+
+                statusClass =
+                    "status-resolved";
+
+            }
+
+
+            var priorityText =
+                gr.getDisplayValue("priority");
+
+
+            var priorityClass =
+                "priority-medium";
+
+
+            if (priority == "1") {
+
+                priorityText =
+                    "Critical";
+
+                priorityClass =
+                    "priority-critical";
+
+            } else if (priority == "2") {
+
+                priorityText =
+                    "High";
+
+                priorityClass =
+                    "priority-high";
+
+            } else if (priority == "3") {
+
+                priorityText =
+                    "Medium";
+
+                priorityClass =
+                    "priority-medium";
+
+            } else if (priority == "4") {
+
+                priorityText =
+                    "Low";
+
+                priorityClass =
+                    "priority-low";
+
+            }
+
+
+            data.recentRequests.push({
+
+                sys_id:
+                    gr.getUniqueValue(),
+
+                number:
+                    gr.getValue("number"),
+
+                short_description:
+                    gr.getValue(
+                        "short_description"
+                    ),
+
+                caller:
+                    gr.getDisplayValue(
+                        "caller_id"
+                    ),
+
+                state:
+                    stateText,
+
+                stateValue:
+                    state,
+
+                statusClass:
+                    statusClass,
+
+                priority:
+                    priorityText,
+
+                priorityClass:
+                    priorityClass,
+
+                created:
+                    gr.getDisplayValue(
+                        "sys_created_on"
+                    )
+
+            });
+
+        }
+
+    }
+
+
+    /* =========================================
+       CONVERT GROUP MAP TO ARRAY
+       ========================================= */
+
+    for (var groupID in groupMap) {
+
+        if (
+            groupMap.hasOwnProperty(groupID)
+        ) {
+
+            var groupName =
+                groupMap[groupID].name;
+
+
+            var initial =
+                groupName
+                .substring(0, 1)
+                .toUpperCase();
+
+
+            data.groups.push({
+
+                name:
+                    groupName,
+
+                count:
+                    groupMap[groupID].count,
+
+                initial:
+                    initial
+
+            });
+
+        }
+
+    }
+
+
+    /* =========================================
+       FEEDBACK RATING
+       ========================================= */
+
+    /*
+     * The CFMS feedback table created earlier
+     * is u_cfms_feedback.
+     */
+
+    var feedback =
+        new GlideRecord("u_cfms_feedback");
+
+
+    if (feedback.isValid()) {
+
+        var totalRating = 0;
+
+        var ratingCount = 0;
+
+
+        feedback.query();
+
+
+        while (feedback.next()) {
+
+            var rating =
+                parseInt(
+                    feedback.getValue(
+                        "u_rating"
+                    ),
+                    10
+                );
+
+
+            if (!isNaN(rating)) {
+
+                totalRating += rating;
+
+                ratingCount++;
+
+            }
+
+        }
+
+
+        if (ratingCount &gt; 0) {
+
+            data.averageRating =
+                (
+                    totalRating /
+                    ratingCount
+                ).toFixed(1);
+
+        }
+
+    }
+
+})();]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-09-24 13:34:31&lt;/sys_created_on&gt;&lt;sys_id&gt;ec4e6851a0a343107f4432329b8a1557&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;CFMS Manager Dashboard&lt;/sys_name&gt;&lt;sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Campus Food Services Assistant"&gt;423299d7dd1f03107f44143a6accf8fb&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_ec4e6851a0a343107f4432329b8a1557&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-09-24 13:34:31&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div class="cfms-manager"&gt;
+
+  &lt;!-- ==============================
+       HEADER
+       ============================== --&gt;
+
+  &lt;div class="manager-header"&gt;
+
+    &lt;div class="header-content"&gt;
+
+      &lt;div class="header-icon"&gt;
+        ]]&gt;👨&lt;![CDATA[‍]]&gt;💼
+&lt;![CDATA[      &lt;/div&gt;
+
+      &lt;div&gt;
+        &lt;h1&gt;CFMS Manager Portal&lt;/h1&gt;
+
+        &lt;p&gt;
+          Welcome back, {{c.data.userName}}.
+          Monitor campus food service operations.
+        &lt;/p&gt;
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;button
+      class="home-btn"
+      ng-click="c.goHome()"&gt;
+
+      ]]&gt;🏠&lt;![CDATA[ Home
+
+    &lt;/button&gt;
+
+  &lt;/div&gt;
+
+
+  &lt;!-- ==============================
+       ERROR
+       ============================== --&gt;
+
+  &lt;div
+    class="alert error-alert"
+    ng-if="c.data.error"&gt;
+
+    {{c.data.error}}
+
+  &lt;/div&gt;
+
+
+  &lt;!-- ==============================
+       WELCOME
+       ============================== --&gt;
+
+  &lt;div class="welcome-card"&gt;
+
+    &lt;div class="welcome-text"&gt;
+
+      &lt;span class="welcome-label"&gt;
+        MANAGER DASHBOARD
+      &lt;/span&gt;
+
+      &lt;h2&gt;
+        Campus Food Management Overview
+      &lt;/h2&gt;
+
+      &lt;p&gt;
+        Monitor requests, priorities, staff workload
+        and student feedback from one place.
+      &lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div class="welcome-icon"&gt;
+      ]]&gt;📊
+&lt;![CDATA[    &lt;/div&gt;
+
+  &lt;/div&gt;
+
+
+  &lt;!-- ==============================
+       MAIN STATISTICS
+       ============================== --&gt;
+
+  &lt;div class="stats-grid"&gt;
+
+    &lt;!-- Total --&gt;
+
+    &lt;div class="stat-card"&gt;
+
+      &lt;div class="stat-icon"&gt;
+        ]]&gt;🎫
+&lt;![CDATA[      &lt;/div&gt;
+
+      &lt;div class="stat-content"&gt;
+
+        &lt;span&gt;Total Requests&lt;/span&gt;
+
+        &lt;strong&gt;
+          {{c.data.totalRequests}}
+        &lt;/strong&gt;
+
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+
+    &lt;!-- Active --&gt;
+
+    &lt;div class="stat-card"&gt;
+
+      &lt;div class="stat-icon"&gt;
+        ]]&gt;🔄
+&lt;![CDATA[      &lt;/div&gt;
+
+      &lt;div class="stat-content"&gt;
+
+        &lt;span&gt;Active Requests&lt;/span&gt;
+
+        &lt;strong&gt;
+          {{c.data.activeRequests}}
+        &lt;/strong&gt;
+
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+
+    &lt;!-- Resolved --&gt;
+
+    &lt;div class="stat-card"&gt;
+
+      &lt;div class="stat-icon"&gt;
+        ✓
+      &lt;/div&gt;
+
+      &lt;div class="stat-content"&gt;
+
+        &lt;span&gt;Resolved&lt;/span&gt;
+
+        &lt;strong&gt;
+          {{c.data.resolvedRequests}}
+        &lt;/strong&gt;
+
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+
+    &lt;!-- Feedback --&gt;
+
+    &lt;div class="stat-card"&gt;
+
+      &lt;div class="stat-icon"&gt;
+        ⭐
+      &lt;/div&gt;
+
+      &lt;div class="stat-content"&gt;
+
+        &lt;span&gt;Feedback Rating&lt;/span&gt;
+
+        &lt;strong&gt;
+          {{c.data.averageRating}}
+        &lt;/strong&gt;
+
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+
+
+  &lt;!-- ==============================
+       DASHBOARD GRID
+       ============================== --&gt;
+
+  &lt;div class="dashboard-grid"&gt;
+
+
+    &lt;!-- ==========================
+         PRIORITY OVERVIEW
+         ========================== --&gt;
+
+    &lt;div class="dashboard-card"&gt;
+
+      &lt;div class="card-header"&gt;
+
+        &lt;div&gt;
+
+          &lt;h3&gt;Priority Overview&lt;/h3&gt;
+
+          &lt;p&gt;
+            Current request priorities
+          &lt;/p&gt;
+
+        &lt;/div&gt;
+
+        &lt;span class="card-icon"&gt;
+          ⚡
+        &lt;/span&gt;
+
+      &lt;/div&gt;
+
+
+      &lt;div class="priority-list"&gt;
+
+        &lt;div class="priority-item"&gt;
+
+          &lt;div class="priority-left"&gt;
+
+            &lt;span class="priority-dot critical"&gt;&lt;/span&gt;
+
+            &lt;span&gt;Critical&lt;/span&gt;
+
+          &lt;/div&gt;
+
+          &lt;strong&gt;
+            {{c.data.criticalCount}}
+          &lt;/strong&gt;
+
+        &lt;/div&gt;
+
+
+        &lt;div class="priority-item"&gt;
+
+          &lt;div class="priority-left"&gt;
+
+            &lt;span class="priority-dot high"&gt;&lt;/span&gt;
+
+            &lt;span&gt;High&lt;/span&gt;
+
+          &lt;/div&gt;
+
+          &lt;strong&gt;
+            {{c.data.highCount}}
+          &lt;/strong&gt;
+
+        &lt;/div&gt;
+
+
+        &lt;div class="priority-item"&gt;
+
+          &lt;div class="priority-left"&gt;
+
+            &lt;span class="priority-dot medium"&gt;&lt;/span&gt;
+
+            &lt;span&gt;Medium&lt;/span&gt;
+
+          &lt;/div&gt;
+
+          &lt;strong&gt;
+            {{c.data.mediumCount}}
+          &lt;/strong&gt;
+
+        &lt;/div&gt;
+
+
+        &lt;div class="priority-item"&gt;
+
+          &lt;div class="priority-left"&gt;
+
+            &lt;span class="priority-dot low"&gt;&lt;/span&gt;
+
+            &lt;span&gt;Low&lt;/span&gt;
+
+          &lt;/div&gt;
+
+          &lt;strong&gt;
+            {{c.data.lowCount}}
+          &lt;/strong&gt;
+
+        &lt;/div&gt;
+
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+
+    &lt;!-- ==========================
+         ASSIGNMENT GROUPS
+         ========================== --&gt;
+
+    &lt;div class="dashboard-card"&gt;
+
+      &lt;div class="card-header"&gt;
+
+        &lt;div&gt;
+
+          &lt;h3&gt;Assigned Groups&lt;/h3&gt;
+
+          &lt;p&gt;
+            Current ticket distribution
+          &lt;/p&gt;
+
+        &lt;/div&gt;
+
+        &lt;span class="card-icon"&gt;
+          ]]&gt;👥
+&lt;![CDATA[        &lt;/span&gt;
+
+      &lt;/div&gt;
+
+
+      &lt;div
+        class="group-list"
+        ng-if="c.data.groups.length &gt; 0"
+      &gt;
+
+        &lt;div
+          class="group-item"
+          ng-repeat="group in c.data.groups"
+        &gt;
+
+          &lt;div class="group-info"&gt;
+
+            &lt;div class="group-avatar"&gt;
+              {{group.initial}}
+            &lt;/div&gt;
+
+            &lt;div&gt;
+
+              &lt;strong&gt;
+                {{group.name}}
+              &lt;/strong&gt;
+
+              &lt;span&gt;
+                {{group.count}} tickets
+              &lt;/span&gt;
+
+            &lt;/div&gt;
+
+          &lt;/div&gt;
+
+          &lt;div class="group-count"&gt;
+            {{group.count}}
+          &lt;/div&gt;
+
+        &lt;/div&gt;
+
+      &lt;/div&gt;
+
+
+      &lt;div
+        class="mini-empty"
+        ng-if="c.data.groups.length === 0"
+      &gt;
+
+        No assignment groups found.
+
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+
+
+  &lt;!-- ==============================
+       QUICK ACTIONS
+       ============================== --&gt;
+
+  &lt;div class="quick-section"&gt;
+
+    &lt;div class="section-heading"&gt;
+
+      &lt;div&gt;
+
+        &lt;h2&gt;Manager Actions&lt;/h2&gt;
+
+        &lt;p&gt;
+          Access important CFMS management functions.
+        &lt;/p&gt;
+
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+
+    &lt;div class="action-grid"&gt;
+
+
+      &lt;!-- Assigned Tickets --&gt;
+
+      &lt;div
+        class="action-card"
+        ng-click="c.assignedTickets()"
+      &gt;
+
+        &lt;div class="action-icon"&gt;
+          ]]&gt;🎫
+&lt;![CDATA[        &lt;/div&gt;
+
+        &lt;div class="action-content"&gt;
+
+          &lt;h3&gt;Assigned Tickets&lt;/h3&gt;
+
+          &lt;p&gt;
+            View and monitor staff tickets.
+          &lt;/p&gt;
+
+          &lt;span&gt;
+            Open Tickets →
+          &lt;/span&gt;
+
+        &lt;/div&gt;
+
+      &lt;/div&gt;
+
+
+      &lt;!-- Records --&gt;
+
+      &lt;div
+        class="action-card"
+        ng-click="c.records()"
+      &gt;
+
+        &lt;div class="action-icon"&gt;
+          ]]&gt;📋
+&lt;![CDATA[        &lt;/div&gt;
+
+        &lt;div class="action-content"&gt;
+
+          &lt;h3&gt;View Records&lt;/h3&gt;
+
+          &lt;p&gt;
+            Review CFMS requests and records.
+          &lt;/p&gt;
+
+          &lt;span&gt;
+            View Records →
+          &lt;/span&gt;
+
+        &lt;/div&gt;
+
+      &lt;/div&gt;
+
+
+      &lt;!-- Reports --&gt;
+
+      &lt;div
+        class="action-card"
+        ng-click="c.reports()"
+      &gt;
+
+        &lt;div class="action-icon"&gt;
+          ]]&gt;📈
+&lt;![CDATA[        &lt;/div&gt;
+
+        &lt;div class="action-content"&gt;
+
+          &lt;h3&gt;Reports&lt;/h3&gt;
+
+          &lt;p&gt;
+            Analyze requests and service activity.
+          &lt;/p&gt;
+
+          &lt;span&gt;
+            Open Reports →
+          &lt;/span&gt;
+
+        &lt;/div&gt;
+
+      &lt;/div&gt;
+
+
+      &lt;!-- Feedback --&gt;
+
+      &lt;div
+        class="action-card"
+        ng-click="c.feedback()"
+      &gt;
+
+        &lt;div class="action-icon"&gt;
+          ⭐
+        &lt;/div&gt;
+
+        &lt;div class="action-content"&gt;
+
+          &lt;h3&gt;Student Feedback&lt;/h3&gt;
+
+          &lt;p&gt;
+            Monitor student feedback and ratings.
+          &lt;/p&gt;
+
+          &lt;span&gt;
+            View Feedback →
+          &lt;/span&gt;
+
+        &lt;/div&gt;
+
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+
+
+  &lt;!-- ==============================
+       RECENT REQUESTS
+       ============================== --&gt;
+
+  &lt;div class="recent-card"&gt;
+
+    &lt;div class="card-header"&gt;
+
+      &lt;div&gt;
+
+        &lt;h3&gt;Recent Requests&lt;/h3&gt;
+
+        &lt;p&gt;
+          Latest CFMS activity
+        &lt;/p&gt;
+
+      &lt;/div&gt;
+
+      &lt;button
+        class="view-all"
+        ng-click="c.records()"&gt;
+
+        View All →
+
+      &lt;/button&gt;
+
+    &lt;/div&gt;
+
+
+    &lt;div
+      class="request-list"
+      ng-if="c.data.recentRequests.length &gt; 0"
+    &gt;
+
+      &lt;div
+        class="request-row"
+        ng-repeat="request in c.data.recentRequests"
+      &gt;
+
+        &lt;div class="request-info"&gt;
+
+          &lt;span class="request-number"&gt;
+            {{request.number}}
+          &lt;/span&gt;
+
+          &lt;strong&gt;
+            {{request.short_description}}
+          &lt;/strong&gt;
+
+          &lt;span class="request-caller"&gt;
+            ]]&gt;👤&lt;![CDATA[ {{request.caller}}
+          &lt;/span&gt;
+
+        &lt;/div&gt;
+
+
+        &lt;div class="request-right"&gt;
+
+          &lt;span
+            class="status-badge"
+            ng-class="request.statusClass"
+          &gt;
+            {{request.state}}
+          &lt;/span&gt;
+
+          &lt;span
+            class="priority-badge"
+            ng-class="request.priorityClass"
+          &gt;
+            {{request.priority}}
+          &lt;/span&gt;
+
+        &lt;/div&gt;
+
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+
+    &lt;div
+      class="mini-empty"
+      ng-if="c.data.recentRequests.length === 0"
+    &gt;
+
+      No recent requests found.
+
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-1567042399</payload_hash>
+        <record_name>CFMS Manager Dashboard</record_name>
+        <reverted_from/>
+        <source>6f2d16f3615703107f44f4898ccc4c88</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 13:34:31</sys_created_on>
+        <sys_id>9110fc15a0a343107f4432329b8a1554</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0d39ff9940000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 13:34:31</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>9110fc1592a34310537a151b77fb3a53</update_guid>
+        <update_guid_history>9110fc1592a34310537a151b77fb3a53:-1567042399</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="CFMS Manager Dashboard">caa81dfd80a703107f4447e44ab1d51a</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 05:48:46</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>113b00757b4f44cc8414db54d4e4c839</sys_id>
+        <sys_metadata>ec4e6851a0a343107f4432329b8a1557</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>CFMS Manager Dashboard</sys_name>
+        <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_scope_delete display_value="">00ca93000f1045668006564f73c0b4e4</sys_scope_delete>
+        <sys_update_name>sp_widget_ec4e6851a0a343107f4432329b8a1557</sys_update_name>
+        <sys_update_version display_value="sp_widget_ec4e6851a0a343107f4432329b8a1557">9110fc15a0a343107f4432329b8a1554</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-26 05:48:46</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
