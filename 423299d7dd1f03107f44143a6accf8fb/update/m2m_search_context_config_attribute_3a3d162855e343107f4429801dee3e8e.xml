@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="m2m_search_context_config_attribute">
     <m2m_search_context_config_attribute action="INSERT_OR_UPDATE">
-        <attribute display_value="enable_hybrid_search">86c738003fb40310f129295e001f8b16</attribute>
-        <search_application display_value="Now Assist in VA">a3f76e4377853110f9b9f8fb8c5a991d</search_application>
+        <attribute display_value="">86c738003fb40310f129295e001f8b16</attribute>
+        <search_application display_value="">a3f76e4377853110f9b9f8fb8c5a991d</search_application>
         <sys_class_name>m2m_search_context_config_attribute</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-22 13:35:58</sys_created_on>

@@ -25,7 +25,7 @@
         <error_policy/>
         <metadata>{}</metadata>
         <parent_capability display_value="Classify Food Complaint">6f8bdbc42de303107f44a1c965bbbad4</parent_capability>
-        <resource_capability display_value="Correctness Metric">a28f0e067f0202105bc49fbefc8665ec</resource_capability>
+        <resource_capability display_value="">a28f0e067f0202105bc49fbefc8665ec</resource_capability>
         <resource_name>Correctness Metric</resource_name>
         <sys_class_name>sys_one_extend_resource_mapping</sys_class_name>
         <sys_created_by>system</sys_created_by>

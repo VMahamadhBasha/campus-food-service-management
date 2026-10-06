@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_one_extend_eval_strategy_metric">
     <sys_one_extend_eval_strategy_metric action="INSERT_OR_UPDATE">
         <active>true</active>
-        <definition display_value="Execution Latency">9768468fff3ba210b474fffffffffff6</definition>
+        <definition display_value="">9768468fff3ba210b474fffffffffff6</definition>
         <eval_strategy display_value="AutoEval-admin-2026-09-23-06:50:02">c14a8e70492b03107f44f280a62db5d4</eval_strategy>
         <gen_ai_config/>
-        <metric_name>Execution Latency</metric_name>
+        <metric_name/>
         <sys_class_name>sys_one_extend_eval_strategy_metric</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-23 06:51:36</sys_created_on>

@@ -53,7 +53,7 @@
         <update_guid_history>5c8297b53d2b431056e182905563c3cb:-1447796048,4e7257b5ee2b4310046b9159320a1342:1417013359,b162d3b5e62b43109c465464fb32481f:-13144530,d6afde71e7a3431043f87cf14721f508:1417013359</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Food services Student Dashboards - Container 2">198297b5802b43107f4447e44ab1d5d2</sys_audit_delete>
+        <sys_audit_delete display_value="">198297b5802b43107f4447e44ab1d5d2</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 14:41:12</sys_created_on>

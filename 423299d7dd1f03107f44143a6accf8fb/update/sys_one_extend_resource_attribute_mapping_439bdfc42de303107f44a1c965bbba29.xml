@@ -6,7 +6,7 @@
         <attribute_value_template/>
         <attribute_value_type>script</attribute_value_type>
         <from_resource_mapping/>
-        <resource_attribute_name display_value="context">667113fa7f82d21071cab6257d8665d7</resource_attribute_name>
+        <resource_attribute_name display_value="">667113fa7f82d21071cab6257d8665d7</resource_attribute_name>
         <resource_mapping display_value="Correctness Metric">439bdfc42de303107f44a1c965bbba11</resource_mapping>
         <sys_class_name>sys_one_extend_resource_attribute_mapping</sys_class_name>
         <sys_created_by>system</sys_created_by>
@@ -23,6 +23,6 @@
         <sys_updated_by>system</sys_updated_by>
         <sys_updated_on>2026-09-21 04:51:33</sys_updated_on>
         <truncate>false</truncate>
-        <type>input</type>
+        <type/>
     </sys_one_extend_resource_attribute_mapping>
 </record_update>

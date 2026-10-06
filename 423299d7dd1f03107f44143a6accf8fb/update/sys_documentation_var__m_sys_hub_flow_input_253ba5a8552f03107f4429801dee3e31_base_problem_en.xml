@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="base_problem" label="Base Problem" language="en" table="var__m_sys_hub_flow_input_253ba5a8552f03107f4429801dee3e31">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>base_problem</element>
+            <help/>
+            <hint/>
+            <label>Base Problem</label>
+            <language>en</language>
+            <name>var__m_sys_hub_flow_input_253ba5a8552f03107f4429801dee3e31</name>
+            <plural/>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-09-23 06:59:06</sys_created_on>
+            <sys_id>47fb0e74492b03107f44f280a62db561</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Base Problem</sys_name>
+            <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+            <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_253ba5a8552f03107f4429801dee3e31_base_problem_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-09-23 06:59:06</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

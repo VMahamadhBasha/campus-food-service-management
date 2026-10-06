@@ -54,7 +54,7 @@
         <update_guid_history>320bcd199a6743105d058c8b344080bb:135068352,b4b94d5543674310debec4452f72306e:-753718569</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="cfms_student_login1">a3273a31806743107f4447e44ab1d519</sys_audit_delete>
+        <sys_audit_delete display_value="">a3273a31806743107f4447e44ab1d519</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:41:46</sys_created_on>

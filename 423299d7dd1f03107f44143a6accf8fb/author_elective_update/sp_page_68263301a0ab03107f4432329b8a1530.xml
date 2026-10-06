@@ -54,7 +54,7 @@
         <update_guid_history>804637012bab03106430d95f29aefcb3:959535756</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="cfms_home">19973a71806743107f4447e44ab1d546</sys_audit_delete>
+        <sys_audit_delete display_value="">19973a71806743107f4447e44ab1d546</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:43:31</sys_created_on>

@@ -41,7 +41,7 @@
         <update_guid_history>e4aac2233d9f0310d1cf2c57745b22ef:-2127520802</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="x_snc_campus_foo_1_use_case_priority.x_snc_campus_foo_1.use_case_priority_user">2e93b2f449af03107f44f280a62db544</sys_audit_delete>
+        <sys_audit_delete display_value="">2e93b2f449af03107f44f280a62db544</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-23 09:52:12</sys_created_on>

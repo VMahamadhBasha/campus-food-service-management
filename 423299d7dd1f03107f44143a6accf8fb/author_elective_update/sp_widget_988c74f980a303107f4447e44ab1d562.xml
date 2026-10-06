@@ -193,7 +193,7 @@
         <update_guid_history>09bc7cf9fea30310783e187adf8eb938:388753851</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Food Services Login CTA">fd07befd802743107f4447e44ab1d58d</sys_audit_delete>
+        <sys_audit_delete display_value="">fd07befd802743107f4447e44ab1d58d</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:41:05</sys_created_on>

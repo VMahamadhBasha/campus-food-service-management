@@ -53,7 +53,7 @@
         <update_guid_history>4ae00815b82f0310c889995c1357bf69:177085059</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="CFMS Role Router - Container 1">73a73e71806743107f4447e44ab1d53e</sys_audit_delete>
+        <sys_audit_delete display_value="">73a73e71806743107f4447e44ab1d53e</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:43:57</sys_created_on>

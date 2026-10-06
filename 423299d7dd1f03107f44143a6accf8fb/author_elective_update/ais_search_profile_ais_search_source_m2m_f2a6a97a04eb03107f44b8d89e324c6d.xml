@@ -44,7 +44,7 @@
         <update_guid_history>72a6a97a2feb0310c6a3e69e0adbcf73:325869105</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Now Assist in Virtual Agent - 119a6a57a04eb03107f44b8d89e324cad.Custom skills">768e6db2046f03107f44b8d89e324c3e</sys_audit_delete>
+        <sys_audit_delete display_value="">768e6db2046f03107f44b8d89e324c3e</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-29 09:58:18</sys_created_on>

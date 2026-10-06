@@ -49,20 +49,6 @@
     <sys_variable_value action="INSERT_OR_UPDATE">
         <document>sys_hub_action_type_definition</document>
         <document_key>506e54d1a02343107f4432329b8a1572</document_key>
-        <order>2</order>
-        <sys_class_name>sys_variable_value</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2026-09-24 12:17:41</sys_created_on>
-        <sys_id>277e58d1a02343107f4432329b8a15b3</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-24 12:17:41</sys_updated_on>
-        <value>0</value>
-        <variable display_value="Don't Treat as Error">237e58d1a02343107f4432329b8a158b</variable>
-    </sys_variable_value>
-    <sys_variable_value action="INSERT_OR_UPDATE">
-        <document>sys_hub_action_type_definition</document>
-        <document_key>506e54d1a02343107f4432329b8a1572</document_key>
         <order>1</order>
         <sys_class_name>sys_variable_value</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -73,6 +59,20 @@
         <sys_updated_on>2026-09-24 12:17:41</sys_updated_on>
         <value>{"version":"1.0","complexObject":{"code":{"$cv":{"$c":"java.lang.String","$v":""}},"message":{"$cv":{"$c":"java.lang.String","$v":""}}},"complexObjectSchema":{"FlowDesigner:FDACTIONSTATUS":{"code":"Integer","code.$field_facets":{"SimpleMapFacet":"{\"uiTypeLabel\":\"Integer\",\"read_only\":\"false\",\"hint\":\"\",\"uiType\":\"integer\",\"default_value\":\"\",\"label\":\"Code\",\"action_error_output\":\"true\",\"mandatory\":\"false\",\"order\":\"1\",\"max_length\":\"40\"}"},"message":"String","message.$field_facets":{"SimpleMapFacet":"{\"uiTypeLabel\":\"String\",\"read_only\":\"false\",\"hint\":\"\",\"uiType\":\"string\",\"default_value\":\"\",\"label\":\"Message\",\"action_error_output\":\"true\",\"mandatory\":\"false\",\"order\":\"2\",\"max_length\":\"4000\"}"}},"FlowDesigner:FDACTIONSTATUS.$type_facets":{"SimpleMapFacet":"{\"default_value\":\"\",\"label\":\"Action Status\",\"action_error_output\":\"true\",\"mandatory\":\"false\",\"uiUniqueId\":\"794bc342-9c9d-444b-a3f2-dd4b6a5a0173\",\"uiTypeLabel\":\"Object\",\"co_type_name\":\"FDACTIONSTATUS\",\"element_mapping_provider\":\"com.glide.flow_design.action.data.FlowDesignVariableMapper\",\"read_only\":\"false\",\"hint\":null,\"uiType\":\"object\",\"order\":\"1\",\"max_length\":\"65000\"}"}},"serializationFormat":"JSON"}</value>
         <variable display_value="Action Status">277e58d1a02343107f4432329b8a1583</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_hub_action_type_definition</document>
+        <document_key>506e54d1a02343107f4432329b8a1572</document_key>
+        <order>2</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 12:17:41</sys_created_on>
+        <sys_id>277e58d1a02343107f4432329b8a15b3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 12:17:41</sys_updated_on>
+        <value>0</value>
+        <variable display_value="Don't Treat as Error">237e58d1a02343107f4432329b8a158b</variable>
     </sys_variable_value>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_hub_action_output_506e54d1a02343107f4432329b8a1572^id=506e54d1a02343107f4432329b8a1572"/>
     <sys_hub_step_instance action="delete_multiple" query="action=506e54d1a02343107f4432329b8a1572^sys_idNOT IN82ee9415a02343107f4432329b8a1594,d56fd455a02343107f4432329b8a15a4"/>
@@ -154,7 +154,7 @@
         <order>2</order>
         <outputs/>
         <section/>
-        <step_type display_value="Use an AI agent">8fb06dd6fffb22100200ffffffffff13</step_type>
+        <step_type display_value="">8fb06dd6fffb22100200ffffffffff13</step_type>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-24 12:21:37</sys_created_on>
         <sys_id>d56fd455a02343107f4432329b8a15a4</sys_id>
@@ -167,20 +167,6 @@
     <sys_variable_value action="INSERT_OR_UPDATE">
         <document>sys_hub_step_instance</document>
         <document_key>d56fd455a02343107f4432329b8a15a4</document_key>
-        <order>500</order>
-        <sys_class_name>sys_variable_value</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2026-09-24 12:21:37</sys_created_on>
-        <sys_id>d96fd455a02343107f4432329b8a15b0</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-24 12:21:37</sys_updated_on>
-        <value>autonomous</value>
-        <variable display_value="Execution mode">31f36634ff2832100200ffffffffff66</variable>
-    </sys_variable_value>
-    <sys_variable_value action="INSERT_OR_UPDATE">
-        <document>sys_hub_step_instance</document>
-        <document_key>d56fd455a02343107f4432329b8a15a4</document_key>
         <order>100</order>
         <sys_class_name>sys_variable_value</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -190,9 +176,22 @@
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-24 12:21:37</sys_updated_on>
         <value>0aa5d349a06703107f4432329b8a15c1</value>
-        <variable display_value="AI agent">118f165effb762100200ffffffffffa5</variable>
+        <variable display_value="">118f165effb762100200ffffffffffa5</variable>
     </sys_variable_value>
-    <sys_element_mapping action="delete_multiple" query="table=var__m_sys_flow_step_definition_input_8fb06dd6fffb22100200ffffffffff13^id=d56fd455a02343107f4432329b8a15a4"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_hub_step_instance</document>
+        <document_key>d56fd455a02343107f4432329b8a15a4</document_key>
+        <order>500</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 12:21:37</sys_created_on>
+        <sys_id>d96fd455a02343107f4432329b8a15b0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 12:21:37</sys_updated_on>
+        <value>autonomous</value>
+        <variable display_value="">31f36634ff2832100200ffffffffff66</variable>
+    </sys_variable_value>
     <sys_translated_text action="delete_multiple" query="documentkey=d56fd455a02343107f4432329b8a15a4"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=d56fd455a02343107f4432329b8a15a4"/>
     <sys_hub_step_ext_output action="delete_multiple" query="model=d56fd455a02343107f4432329b8a15a4"/>
@@ -573,11 +572,11 @@
         <sys_created_on>2026-09-24 12:17:40</sys_created_on>
         <sys_id>237e58d1a02343107f4432329b8a1573</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>sysid</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_action_input_506e54d1a02343107f4432329b8a1572_sysid_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-24 12:17:40</sys_updated_on>
         <url/>
@@ -597,11 +596,11 @@
         <sys_created_on>2026-09-24 12:17:40</sys_created_on>
         <sys_id>637e58d1a02343107f4432329b8a1589</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Action Status</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_action_output_506e54d1a02343107f4432329b8a1572___action_status___en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-24 12:17:40</sys_updated_on>
         <url/>
@@ -620,11 +619,11 @@
         <sys_created_on>2026-09-24 12:17:40</sys_created_on>
         <sys_id>6b7e58d1a02343107f4432329b8a1593</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Don't Treat as Error</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_action_output_506e54d1a02343107f4432329b8a1572___dont_treat_as_error___en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-24 12:17:40</sys_updated_on>
         <url/>
@@ -643,11 +642,11 @@
         <sys_created_on>2026-09-24 12:19:30</sys_created_on>
         <sys_id>92ee9415a02343107f4432329b8a15b7</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>use_case</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_action_output_506e54d1a02343107f4432329b8a1572_use_case_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-24 12:19:30</sys_updated_on>
         <url/>

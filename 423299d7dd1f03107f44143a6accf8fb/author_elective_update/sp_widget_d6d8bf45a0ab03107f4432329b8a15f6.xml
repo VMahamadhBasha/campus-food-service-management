@@ -1991,7 +1991,7 @@
         <update_guid_history>f6300011e02f0310140806c1c3b567df:1424390451,536cbb8159eb031050a5bbf87681f144:489274305,445bf38d1fab0310c4b5d9e590bf19f5:-1534805589</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="CFMS Login Gateway">4f26fa7d802743107f4447e44ab1d58d</sys_audit_delete>
+        <sys_audit_delete display_value="">4f26fa7d802743107f4447e44ab1d58d</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:37:21</sys_created_on>

@@ -3,7 +3,7 @@
         <active>true</active>
         <document_id>b51fa936046f03107f44b8d89e324c99</document_id>
         <document_table>sys_cs_context_profile</document_table>
-        <filter display_value="Greetings">85b01cc89fa01210f29e21164b0a1c1e</filter>
+        <filter display_value="">85b01cc89fa01210f29e21164b0a1c1e</filter>
         <sys_class_name>sys_gen_ai_filter_config</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-29 10:00:47</sys_created_on>

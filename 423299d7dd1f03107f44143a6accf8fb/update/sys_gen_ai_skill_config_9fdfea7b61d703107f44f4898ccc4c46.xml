@@ -4,7 +4,7 @@
         <channels/>
         <discoverable>true</discoverable>
         <hint>Food Base Priority Agent</hint>
-        <skill_id display_value="Food Base Priority Agent">12dfe27b61d703107f44f4898ccc4ce4</skill_id>
+        <skill_id display_value="">12dfe27b61d703107f44f4898ccc4ce4</skill_id>
         <supervision/>
         <sys_class_name>sys_gen_ai_skill_config</sys_class_name>
         <sys_created_by>admin</sys_created_by>

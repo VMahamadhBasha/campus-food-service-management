@@ -3485,7 +3485,7 @@
         <update_guid_history>f3cf085517af031037dd7c4a590dc887:1301494988</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="CFMS Student Feedback">54a67ebd802743107f4447e44ab1d52f</sys_audit_delete>
+        <sys_audit_delete display_value="">54a67ebd802743107f4447e44ab1d52f</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:39:21</sys_created_on>

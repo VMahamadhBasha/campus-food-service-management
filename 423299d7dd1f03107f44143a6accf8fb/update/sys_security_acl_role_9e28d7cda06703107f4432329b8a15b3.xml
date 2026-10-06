@@ -13,6 +13,6 @@
         <sys_update_name>sys_security_acl_role_9e28d7cda06703107f4432329b8a15b3</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-24 07:10:24</sys_updated_on>
-        <sys_user_role display_value="baseline_user" name="baseline_user">5558fa3d73204010aaecfcf2c4f6a78b</sys_user_role>
+        <sys_user_role display_value="">5558fa3d73204010aaecfcf2c4f6a78b</sys_user_role>
     </sys_security_acl_role>
 </record_update>

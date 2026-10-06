@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sn_nowassist_skill_family">
     <sn_nowassist_skill_family action="INSERT_OR_UPDATE">
-        <advanced_script><![CDATA[(function getMessages() {  //assign string to installPluginMessage  var installPluginMessage = null;  //assign boolean true/false to hideGetPluginButton  var hideGetPluginButton = null;  //assign string to getPluginButtonLabel  var getPluginButtonLabel = null;  return {   'installPluginMessage': installPluginMessage,   'hideGetPluginButton': hideGetPluginButton,   'getPluginButtonLabel': getPluginButtonLabel  }; })();]]></advanced_script>
         <category>custom</category>
         <description><![CDATA[AI-powered analysis of Food Base Problem records to determine the normalized problem type, priority, and priority reason for automated campus food-service case management.]]></description>
         <image_url>images/custom-feature-image.svg</image_url>

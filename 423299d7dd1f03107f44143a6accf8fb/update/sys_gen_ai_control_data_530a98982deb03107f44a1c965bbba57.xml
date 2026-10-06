@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_gen_ai_control_data">
     <sys_gen_ai_control_data action="INSERT_OR_UPDATE">
         <active>true</active>
-        <control display_value="Trustbuilder (Now Assist Skill)">8d90dc857f0b8210ee61def20d8665a0</control>
+        <control display_value="">8d90dc857f0b8210ee61def20d8665a0</control>
         <description/>
         <name>TB f38b1fc42de303107f44a1c965bbba3a</name>
         <sys_class_name>sys_gen_ai_control_data</sys_class_name>

@@ -41,7 +41,7 @@
         <update_guid_history>0533cd679217031063e8a6948b3d8fee:-1864985724</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="x_snc_campus_foo_1_food_complaint.x_snc_campus_foo_1.food_complaint_user">46a69fd2b52703107f449220c3ec98fa</sys_audit_delete>
+        <sys_audit_delete display_value="">46a69fd2b52703107f449220c3ec98fa</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-28 04:16:13</sys_created_on>

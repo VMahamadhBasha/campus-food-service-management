@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_one_extend_eval_strategy_metric">
     <sys_one_extend_eval_strategy_metric action="INSERT_OR_UPDATE">
         <active>false</active>
-        <definition display_value="Correctness Metric (Now LLM)">cbf929b27fe242100a03b6257d866548</definition>
+        <definition display_value="">cbf929b27fe242100a03b6257d866548</definition>
         <eval_strategy display_value="Default">dc9b1fc42de303107f44a1c965bbbabd</eval_strategy>
-        <gen_ai_config display_value="OneExtend Capability Definition: Correctness Metric (Now LLM)">c834087d7f5202100a03b6257d866503</gen_ai_config>
-        <metric_name>Correctness Metric</metric_name>
+        <gen_ai_config display_value="">c834087d7f5202100a03b6257d866503</gen_ai_config>
+        <metric_name/>
         <sys_class_name>sys_one_extend_eval_strategy_metric</sys_class_name>
         <sys_created_by>system</sys_created_by>
         <sys_created_on>2026-09-21 04:51:33</sys_created_on>

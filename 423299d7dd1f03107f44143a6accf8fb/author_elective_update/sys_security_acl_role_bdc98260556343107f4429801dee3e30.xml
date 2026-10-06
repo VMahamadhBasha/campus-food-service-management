@@ -41,7 +41,7 @@
         <update_guid_history>de4eae2c08674310ab99fec71c714d86:1467699493</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="global.x_snc_campus_foo_1.Campus Food Complaint AI Agent.snc_internal">5e4eae2c556743107f4429801dee3e87</sys_audit_delete>
+        <sys_audit_delete display_value="">5e4eae2c556743107f4429801dee3e87</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-22 14:50:29</sys_created_on>

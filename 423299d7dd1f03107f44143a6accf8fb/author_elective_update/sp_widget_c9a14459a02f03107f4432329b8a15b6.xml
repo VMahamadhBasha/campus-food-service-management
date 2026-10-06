@@ -3565,7 +3565,7 @@
         <update_guid_history>7104485d792f0310731cbdc7eb68e2e7:262728336,49a14459982f03103bc2cbbcbed411b8:-1554518049</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="CFMS Student Dashboard">a2b632fd802743107f4447e44ab1d578</sys_audit_delete>
+        <sys_audit_delete display_value="">a2b632fd802743107f4447e44ab1d578</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:39:46</sys_created_on>

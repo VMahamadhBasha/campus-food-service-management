@@ -53,7 +53,7 @@
         <update_guid_history>698fe42450e3031062000e5eed576757:-1371984264</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="CFMS Home - Container 2">82cdb93449a703107f44f280a62db569</sys_audit_delete>
+        <sys_audit_delete display_value="">82cdb93449a703107f44f280a62db569</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-23 05:57:05</sys_created_on>

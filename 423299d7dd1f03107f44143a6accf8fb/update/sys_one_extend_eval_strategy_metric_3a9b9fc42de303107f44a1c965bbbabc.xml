@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_one_extend_eval_strategy_metric">
     <sys_one_extend_eval_strategy_metric action="INSERT_OR_UPDATE">
         <active>false</active>
-        <definition display_value="CorrectnessMetric - with golden response">e34cc1d97f14121071cab6257d8665b2</definition>
+        <definition display_value="">e34cc1d97f14121071cab6257d8665b2</definition>
         <eval_strategy display_value="Default">dc9b1fc42de303107f44a1c965bbbabd</eval_strategy>
-        <gen_ai_config display_value="OneExtend Capability Definition: CorrectnessMetric - with golden response">be27f08a7f4702100a03b6257d86655c</gen_ai_config>
-        <metric_name>Correctness Metric with Golden Response</metric_name>
+        <gen_ai_config display_value="">be27f08a7f4702100a03b6257d86655c</gen_ai_config>
+        <metric_name/>
         <sys_class_name>sys_one_extend_eval_strategy_metric</sys_class_name>
         <sys_created_by>system</sys_created_by>
         <sys_created_on>2026-09-21 04:51:32</sys_created_on>

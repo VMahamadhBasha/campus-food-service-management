@@ -44,7 +44,7 @@
         <update_guid_history>faa6a97ab2eb0310928bc6a8fea3b766:-492237119</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Now Assist in Virtual Agent - 119a6a57a04eb03107f44b8d89e324cad.Subflows and act">be8e6db2046f03107f44b8d89e324c36</sys_audit_delete>
+        <sys_audit_delete display_value="">be8e6db2046f03107f44b8d89e324c36</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-29 09:58:18</sys_created_on>

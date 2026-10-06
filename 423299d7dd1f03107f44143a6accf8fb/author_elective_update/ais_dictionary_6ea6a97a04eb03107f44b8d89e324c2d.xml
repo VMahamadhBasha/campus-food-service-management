@@ -41,7 +41,7 @@
         <reverted_from/>
         <source>6f2d16f3615703107f44f4898ccc4c88</source>
         <source_table>sys_update_set</source_table>
-        <state>current</state>
+        <state>previous</state>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-29 09:23:55</sys_created_on>
         <sys_id>3ea6a97a04eb03107f44b8d89e324c7d</sys_id>
@@ -54,7 +54,7 @@
         <update_guid_history>fea6a97a58eb0310e906029e738d7a7c:1064041225,7ea6a97aa7eb0310469773b04e0d1070:-1681007094,f6a6a97a09eb03106fd8f5f4cda45964:-192498455,baa6a97a88eb0310696d68c7534d5857:1528604714,e6a6a97a58eb0310d2787deecc553147:-295321045,aea6a97a0aeb0310581d6fd45e15d52f:-1626546231</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="x_snc_campus_foo_1_now_assist_in_virtual_agent_119a6a57a04eb03107f44b8d89e324cad">4f8e6db2046f03107f44b8d89e324ca6</sys_audit_delete>
+        <sys_audit_delete display_value="">4f8e6db2046f03107f44b8d89e324ca6</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-29 09:58:20</sys_created_on>

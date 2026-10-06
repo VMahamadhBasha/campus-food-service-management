@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_one_extend_eval_strategy_metric">
     <sys_one_extend_eval_strategy_metric action="INSERT_OR_UPDATE">
         <active>false</active>
-        <definition display_value="Faithfulness Metric (Now LLM)">a5d3dae1a3d20210883c25d1d71e6108</definition>
+        <definition display_value="">a5d3dae1a3d20210883c25d1d71e6108</definition>
         <eval_strategy display_value="Default">dc9b1fc42de303107f44a1c965bbbabd</eval_strategy>
-        <gen_ai_config display_value="OneExtend Capability Definition: Faithfulness Metric (Now LLM)">aa55d2e5a3d20210883c25d1d71e6102</gen_ai_config>
-        <metric_name>Faithfulness Metric</metric_name>
+        <gen_ai_config display_value="">aa55d2e5a3d20210883c25d1d71e6102</gen_ai_config>
+        <metric_name/>
         <sys_class_name>sys_one_extend_eval_strategy_metric</sys_class_name>
         <sys_created_by>system</sys_created_by>
         <sys_created_on>2026-09-21 04:51:33</sys_created_on>

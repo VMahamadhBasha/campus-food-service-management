@@ -49,7 +49,7 @@
         <update_guid_history>f0b319dba01f031093a6bf87a318cc86:-277105035</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="x_snc_campus_foo_1.x_cfsa_dietician">e8cdde0ea92b03107f444d1b3bf577fd</sys_audit_delete>
+        <sys_audit_delete display_value="">e8cdde0ea92b03107f444d1b3bf577fd</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-27 05:29:11</sys_created_on>

@@ -69,7 +69,7 @@
         <update_guid_history>5334ff775f53431083ae08731e7260d3:561391514</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Problem Tasks Use Cases">10743bb7615343107f44f4898ccc4c82</sys_audit_delete>
+        <sys_audit_delete display_value="">10743bb7615343107f44f4898ccc4c82</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-20 12:01:33</sys_created_on>

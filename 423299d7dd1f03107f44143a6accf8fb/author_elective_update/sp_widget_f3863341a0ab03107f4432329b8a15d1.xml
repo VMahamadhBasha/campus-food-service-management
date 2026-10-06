@@ -1795,7 +1795,7 @@
         <update_guid_history>132b95198ee74310d04231c186cea1ec:-1099910859,9409d115bee743100dffceb12af7a7c2:1963786808,b8a65ddd86a743100f5622293664055e:-1841205298,a3261d9d97a743100c412729b6b97b34:-45838703,9eb5519d41a743102b223688a5f8bd57:1218581074,ae85995de7a7431005257f73627b8a14:2097400800,2af29919b0a74310860c27b19c43d810:-1328770160,324295d56aa74310bd30f019efb67acb:977958925,ae85c19dac274310d0cf21910c13a9f4:-1589296599,d16d7f0598eb031073d4570b51b9c5cf:500549304,50e7330557ab0310a5f4eb8fb9b72c94:-943297637,cc57f781cbab0310c372067a7cc0c3b5:-557361020</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="CFMS Landing Page">2678d1fd80a703107f4447e44ab1d578</sys_audit_delete>
+        <sys_audit_delete display_value="">2678d1fd80a703107f4447e44ab1d578</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 05:48:00</sys_created_on>

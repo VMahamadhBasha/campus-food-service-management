@@ -264,7 +264,31 @@
         <trigger_type>record_create</trigger_type>
         <updation_source/>
     </sys_hub_trigger_instance_v2>
-    <sys_hub_action_instance_v2 action="delete_multiple" query="flow=959a06dc2dab43107f44a1c965bbba5c^sys_idNOT IN62cc02d02deb43107f44a1c965bbbafe,46538aa855af03107f4429801dee3e51"/>
+    <sys_hub_action_instance_v2 action="delete_multiple" query="flow=959a06dc2dab43107f44a1c965bbba5c^sys_idNOT IN46538aa855af03107f4429801dee3e51,62cc02d02deb43107f44a1c965bbbafe"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="">30468d977f921210f465c3b76d8665c1</action_type>
+        <action_type_parent/>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot/>
+        <display_text/>
+        <flow display_value="FBP AI Priority Analysis V1">959a06dc2dab43107f44a1c965bbba5c</flow>
+        <generation_source/>
+        <order>1</order>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 11:42:52</sys_created_on>
+        <sys_id>46538aa855af03107f4429801dee3e51</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 11:42:52</sys_updated_on>
+        <ui_id>75d60f1d-a212-411f-821d-ffbf56132e25</ui_id>
+        <updation_source/>
+        <values>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</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=46538aa855af03107f4429801dee3e51"/>
     <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
         <action_type display_value="Update Record">f9d01dd2c31332002841b63b12d3aea1</action_type>
         <action_type_parent display_value="Update Record">baf174c8c3c232002841b63b12d3aee4</action_type_parent>
@@ -289,30 +313,6 @@
         <values>H4sIAAAAAAAA/+1X32/bNhD+Vwg9JZmnWHEatM5T1izYhi0ZmqEvdUfQ4snmRpEaSTnxUv/vO1KU4h+JExQBhrb2gw2e7j5+d/cdKX+4SwRPhskx8H72JjvJB9lgcNTvH70+zsYng3F2xAcMIEt6iWIloKeBXBuO6xmTtTfc3b01wBxwmqV5bQwot1jgcy5sJdn8fXRDSz4VkuPzZPjhYy+pmEFEByYZ3q09cvMKqGRjkBh4rvO6RFDy8zliPJdtG/2upbtO3++Bax7RqfBGfOT5ZP1eArcOFAfcrmDSQi8pmeLMaTNPhs7UaMCs+ZWS885jKpRrMi3ZrRX/Iv5x3/sVgKnlsQrdksYKtcXRIoerygmtGotjY9lWTsu6VJdNCr62ULBauqXa1hbxoPKUPYmGYXE91Tfv2v0uhArZRbZS50x2K+acEePagfXtAAmhKCWrKqEmtDJ6JkIwUinTicRFWkh9g3taMVEpyz3vFAvE0gu0nwfze2aET+I3hMHgRUie/lP7fZs0ImEacg4J09AodLW5EZU7Q+AZRJqLXpTr+NU2AeRv7vu9hHkv2VtqVU5zVla1pYXWNPPfnI4ZVhFzxZByU8EX6EJ+QBfye+fyeZL+w5Milw2p5ya0EvxIglHUK7ao6VcvpunX/5OmI6MvTNRPSbl/tPUsW+p0UK9dknFUKg3aUtqUTGKD+Kju9we84N832wL/Mx7LmLHQRrj5pkf7hKIArFabDkxQW5clMw8E+zO1LIOyaFOzDZ/NafqyyH/mnEOJKTsgTdK9Z3e8BbgQILl9QALtoMcN6Cxu0F1gLzbt2Uk/fHb32IvcY01Cjc0zvJemX23zTQ4PRurg4CzPwVriyR2eBbbEsyW1xQSJmwIpOA0WPf4LcpeS6wBAyto6YsDVRhFGgmBS4hGvvGaIqssx/ghLdFFYcGQ8J99lRCjyozHakJ9QPNJvcQ1NjQKZGRMyXGY6NNySqAVSV0isMkjVx4ySdJQQVuDItPR8ONziFSxhiGwMsVNtHNY7J80Ato4pNnQyAdO+XKbB0Tcs5IW7nnqsmFmH4o2HI+WRkQWywXs7Av9yfXWZ4gxb2Gv3wDeApfcB3h02lIkUW4QIKNP90w4PVw+gtRulpeYgqa5dVYeokYr0mtD0b6VvJPAJUKFQYFNnyadPWKVRcopysmwGvJuJoLb1M2onlm9HLJvd3yqW9ftyJ5WvWSo+rgVtI/eicDp7lMt+6vSv+gbMW/wTs7fvC1DuNTCiIHtrMBFslGA5nMA7FgHaPo+SDNW3PWyK59pKyNGTISVwUZcrQYMng1CwKxHHIaIbokfn5JEX0N24fM3jsnqyPiKBrcfr2p+NnVy+JbmstH6LTBaLj/8BtbwIhFoVAAA=</values>
     </sys_hub_action_instance_v2>
     <sys_hub_alias_mapping action="delete_multiple" query="source_id=62cc02d02deb43107f44a1c965bbbafe"/>
-    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
-        <action_type display_value="Execute Skill">30468d977f921210f465c3b76d8665c1</action_type>
-        <action_type_parent/>
-        <attributes/>
-        <comment/>
-        <compiled_snapshot/>
-        <display_text/>
-        <flow display_value="FBP AI Priority Analysis V1">959a06dc2dab43107f44a1c965bbba5c</flow>
-        <generation_source/>
-        <order>1</order>
-        <parent_ui_id/>
-        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2026-09-22 11:42:52</sys_created_on>
-        <sys_id>46538aa855af03107f4429801dee3e51</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-22 11:42:52</sys_updated_on>
-        <ui_id>75d60f1d-a212-411f-821d-ffbf56132e25</ui_id>
-        <updation_source/>
-        <values>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</values>
-    </sys_hub_action_instance_v2>
-    <sys_hub_alias_mapping action="delete_multiple" query="source_id=46538aa855af03107f4429801dee3e51"/>
     <sys_hub_sub_flow_instance_v2 action="delete_multiple" query="flow=959a06dc2dab43107f44a1c965bbba5c"/>
     <sys_hub_flow_logic_instance_v2 action="delete_multiple" query="flow=959a06dc2dab43107f44a1c965bbba5c"/>
     <sys_hub_pill_compound action="delete_multiple" query="attached_to=959a06dc2dab43107f44a1c965bbba5c"/>
@@ -330,11 +330,11 @@
         <sys_created_on>2026-09-21 17:37:53</sys_created_on>
         <sys_id>300b46102deb43107f44a1c965bbba85</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Record</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_959a06dc2dab43107f44a1c965bbba5c_current_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-21 17:37:53</sys_updated_on>
         <url/>
@@ -353,11 +353,11 @@
         <sys_created_on>2026-09-21 17:37:53</sys_created_on>
         <sys_id>3c0b46102deb43107f44a1c965bbba8f</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Table Name</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_959a06dc2dab43107f44a1c965bbba5c_table_name_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-21 17:37:53</sys_updated_on>
         <url/>

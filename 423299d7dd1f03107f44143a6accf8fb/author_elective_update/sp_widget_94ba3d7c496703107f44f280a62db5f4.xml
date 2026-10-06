@@ -437,7 +437,7 @@ textarea.form-control {&amp;#13;
         <update_guid_history>512c3170c9a703103ca8b8e5922ca121:124567400,96eaf1bcb66703106cc650aecae8d26a:1347170328</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Campus Food Complaint">30c672fd802743107f4447e44ab1d5be</sys_audit_delete>
+        <sys_audit_delete display_value="">30c672fd802743107f4447e44ab1d5be</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:39:55</sys_created_on>

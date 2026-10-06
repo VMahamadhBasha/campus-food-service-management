@@ -15,7 +15,7 @@
         <sys_update_name>sys_cs_context_profile_topic_0a1fa936046f03107f44b8d89e324c9f</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-29 10:00:43</sys_updated_on>
-        <topic display_value="Now Assist - Greeting">dfd50745c7203110b65579a988c260d8</topic>
+        <topic display_value="">dfd50745c7203110b65579a988c260d8</topic>
         <topic_type>greeting</topic_type>
     </sys_cs_context_profile_topic>
 </record_update>

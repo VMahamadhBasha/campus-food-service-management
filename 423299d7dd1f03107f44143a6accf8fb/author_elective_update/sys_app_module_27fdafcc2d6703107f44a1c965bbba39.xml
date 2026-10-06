@@ -69,7 +69,7 @@
         <update_guid_history>23fdafccf86703105cca97d7ff779a3d:-1024549171</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Use_Case_Priority_Configurations">822ee7002da703107f44a1c965bbba74</sys_audit_delete>
+        <sys_audit_delete display_value="">822ee7002da703107f44a1c965bbba74</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-21 06:12:35</sys_created_on>

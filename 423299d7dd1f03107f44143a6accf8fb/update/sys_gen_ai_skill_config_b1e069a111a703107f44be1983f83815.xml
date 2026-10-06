@@ -4,7 +4,7 @@
         <channels/>
         <discoverable>true</discoverable>
         <hint>Campus Food Intelligence Agent</hint>
-        <skill_id display_value="Campus Food Intelligence Agent">3ce0e5a111a703107f44be1983f83858</skill_id>
+        <skill_id display_value="">3ce0e5a111a703107f44be1983f83858</skill_id>
         <supervision/>
         <sys_class_name>sys_gen_ai_skill_config</sys_class_name>
         <sys_created_by>admin</sys_created_by>

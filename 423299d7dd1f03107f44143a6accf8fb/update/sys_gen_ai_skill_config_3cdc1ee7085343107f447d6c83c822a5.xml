@@ -4,7 +4,7 @@
         <channels/>
         <discoverable>true</discoverable>
         <hint>Campus Food Priority Analyzer</hint>
-        <skill_id display_value="Campus Food Priority Analyzer">4fcc16e7085343107f447d6c83c8228e</skill_id>
+        <skill_id display_value="">4fcc16e7085343107f447d6c83c8228e</skill_id>
         <supervision/>
         <sys_class_name>sys_gen_ai_skill_config</sys_class_name>
         <sys_created_by>admin</sys_created_by>

@@ -41,7 +41,7 @@
         <update_guid_history>7390d521f7270310f87568e77ec96cb4:737266479</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="global.x_snc_campus_foo_1.Campus Food Assistant.snc_internal">ff90d521112703107f44be1983f838b4</sys_audit_delete>
+        <sys_audit_delete display_value="">ff90d521112703107f44be1983f838b4</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-25 10:35:10</sys_created_on>

@@ -6,6 +6,7 @@
             <sys_class_name>sys_choice_set</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2026-09-19 06:29:52</sys_created_on>
+            <sys_id>a399ad0d837bcfd010c7c310feaad3ee</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_name>priority_reason</sys_name>
             <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
@@ -29,6 +30,7 @@
             <sys_created_on>2026-09-19 06:30:11</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
+            <sys_id>2b99ad0d837bcfd010c7c310feaad3ef</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-09-19 06:30:11</sys_updated_on>
@@ -48,6 +50,7 @@
             <sys_created_on>2026-09-19 06:30:23</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
+            <sys_id>2b99ad0d837bcfd010c7c310feaad3f1</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-09-19 06:30:23</sys_updated_on>
@@ -67,6 +70,7 @@
             <sys_created_on>2026-09-19 06:30:02</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
+            <sys_id>2b99ad0d837bcfd010c7c310feaad3f3</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-09-19 06:30:02</sys_updated_on>
@@ -86,6 +90,7 @@
             <sys_created_on>2026-09-19 06:29:52</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
+            <sys_id>3b99ad0d837bcfd010c7c310feaad3f5</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-09-19 06:29:52</sys_updated_on>

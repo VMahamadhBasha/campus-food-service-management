@@ -41,7 +41,7 @@
         <update_guid_history>16eec92de2e30310ba68daf937459e6f:-1916956554</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="global.x_snc_campus_foo_1.Test Agent 1.snc_internal">92eec92d11e303107f44be1983f83870</sys_audit_delete>
+        <sys_audit_delete display_value="">92eec92d11e303107f44be1983f83870</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-25 10:27:42</sys_created_on>

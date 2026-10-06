@@ -76,7 +76,7 @@
         <update_guid_history>036e47ab2fd74310c3b2436db246f5f2:-1051337365,ef3ec3ab4ad743103ea552ee82e401a3:-1137213954</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Home Page1">6d46fe7d802743107f4447e44ab1d532</sys_audit_delete>
+        <sys_audit_delete display_value="">6d46fe7d802743107f4447e44ab1d532</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:37:48</sys_created_on>

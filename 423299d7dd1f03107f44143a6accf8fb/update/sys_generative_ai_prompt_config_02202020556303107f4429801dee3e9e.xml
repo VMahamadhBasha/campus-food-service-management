@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_generative_ai_prompt_config">
     <sys_generative_ai_prompt_config action="INSERT_OR_UPDATE">
-        <ai_config display_value="OneExtend Capability Definition: Classify Food Complaint (Now LLM Service - Now LLM Generic)">8e202020556303107f4429801dee3e99</ai_config>
-        <definition display_value="Classify Food Complaint (Now LLM Service - Now LLM Generic)">2b8bdbc42de303107f44a1c965bbbae5</definition>
+        <ai_config display_value="">8e202020556303107f4429801dee3e99</ai_config>
+        <definition/>
         <filter_properties>{}</filter_properties>
         <filter_type>default</filter_type>
         <is_default>true</is_default>

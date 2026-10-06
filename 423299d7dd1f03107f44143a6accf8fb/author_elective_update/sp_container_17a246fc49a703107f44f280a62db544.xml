@@ -53,7 +53,7 @@
         <update_guid_history>ccdd8a7c3f2b0310ab62937c6df165fd:1420799477,9fa246fc38a7031018cad363bd552b45:-69203819</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Report Complaint - Container 1">d6b77e71806743107f4447e44ab1d5e9</sys_audit_delete>
+        <sys_audit_delete display_value="">d6b77e71806743107f4447e44ab1d5e9</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:44:07</sys_created_on>

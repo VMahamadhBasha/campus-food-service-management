@@ -42,7 +42,7 @@
         <update_guid_history>dba6e97a50eb03101d77e8a8787bcf68:-1733208252</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Now Assist Multi-Content Response.Now Assist in Virtual Agent - 119a6a57a04eb031">368e6db2046f03107f44b8d89e324c5f</sys_audit_delete>
+        <sys_audit_delete display_value="">368e6db2046f03107f44b8d89e324c5f</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-29 09:58:19</sys_created_on>

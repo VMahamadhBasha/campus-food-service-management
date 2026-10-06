@@ -41,7 +41,7 @@
         <update_guid_history>8256ca3744930310a1f67b36c50d442b:-2019265530</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="x_snc_campus_foo_1_problem_task.x_snc_campus_foo_1.problem_task_user">c504b777615343107f44f4898ccc4ca9</sys_audit_delete>
+        <sys_audit_delete display_value="">c504b777615343107f44f4898ccc4ca9</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-20 11:59:41</sys_created_on>

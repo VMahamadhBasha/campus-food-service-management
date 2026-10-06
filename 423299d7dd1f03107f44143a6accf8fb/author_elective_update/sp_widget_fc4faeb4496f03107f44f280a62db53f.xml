@@ -935,7 +935,7 @@
         <update_guid_history>739032f8b86f031037c989cd53a8b50a:1054600869,e830f678696f0310c7f9c2ac496f5c75:62673981</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="CFMS Raise Ticket">9a567e7d802743107f4447e44ab1d5d3</sys_audit_delete>
+        <sys_audit_delete display_value="">9a567e7d802743107f4447e44ab1d5d3</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:38:07</sys_created_on>

@@ -54,7 +54,7 @@
         <update_guid_history>41e78a3cd2e70310f2653d0db0518103:2112689721</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="campusfoodhome">dbc772b1806743107f4447e44ab1d523</sys_audit_delete>
+        <sys_audit_delete display_value="">dbc772b1806743107f4447e44ab1d523</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:44:28</sys_created_on>

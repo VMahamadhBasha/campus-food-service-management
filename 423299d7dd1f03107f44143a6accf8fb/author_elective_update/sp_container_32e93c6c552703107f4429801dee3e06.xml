@@ -53,7 +53,7 @@
         <update_guid_history>bae93c6c40270310042cb7a10f263b07:602107733</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Student Complaint Ticket - Container 1">3de736b1806743107f4447e44ab1d587</sys_audit_delete>
+        <sys_audit_delete display_value="">3de736b1806743107f4447e44ab1d587</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:44:55</sys_created_on>

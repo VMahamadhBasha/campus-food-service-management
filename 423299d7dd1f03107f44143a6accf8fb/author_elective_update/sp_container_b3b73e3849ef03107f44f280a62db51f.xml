@@ -53,7 +53,7 @@
         <update_guid_history>bbb73e38d7ef03101858cf918e392620:-537605520</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Student Feedback - Container 2">fcc7b63849ef03107f44f280a62db58d</sys_audit_delete>
+        <sys_audit_delete display_value="">fcc7b63849ef03107f44f280a62db58d</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-23 10:10:22</sys_created_on>

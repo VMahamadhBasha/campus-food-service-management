@@ -53,7 +53,7 @@
         <update_guid_history>1b7caaa938ef031083c22db9a3ac93b5:1125856086,56db666952ef0310cc38a352216294d9:1537138901,e63ba229e7ef0310ee9fc4c6d8e31a8d:1125856086,060baae521ef03104bc8b16ae629d974:714573271</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Food_Services_home - Container 2">968c2ea911ef03107f44be1983f83829</sys_audit_delete>
+        <sys_audit_delete display_value="">968c2ea911ef03107f44be1983f83829</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-25 17:16:45</sys_created_on>

@@ -49,7 +49,7 @@
         <update_guid_history>6aa6a97a6feb031039e4222397942023:-1923375093</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Now Assist Q&amp;A">cb8e6db2046f03107f44b8d89e324cb8</sys_audit_delete>
+        <sys_audit_delete display_value="">cb8e6db2046f03107f44b8d89e324cb8</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-29 09:58:21</sys_created_on>

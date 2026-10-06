@@ -53,7 +53,7 @@
         <update_guid_history>4bc6468e28670310a749f091d0d35233:743987949,b9c6068e02670310152d457d27aefa5f:1230106796,34c6c28e4a6703107a0ec6b9643ec88d:743987949</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Food Services Staff Dashboard - Container 2">c0d6468ea96703107f444d1b3bf57775</sys_audit_delete>
+        <sys_audit_delete display_value="">c0d6468ea96703107f444d1b3bf57775</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-27 03:48:54</sys_created_on>

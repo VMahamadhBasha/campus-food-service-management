@@ -53,7 +53,7 @@
         <update_guid_history>967ab57cb567031043b35b4fae63e50f:893053256</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Campus Food Service - Container 1">44c7fe71806743107f4447e44ab1d584</sys_audit_delete>
+        <sys_audit_delete display_value="">44c7fe71806743107f4447e44ab1d584</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:44:16</sys_created_on>

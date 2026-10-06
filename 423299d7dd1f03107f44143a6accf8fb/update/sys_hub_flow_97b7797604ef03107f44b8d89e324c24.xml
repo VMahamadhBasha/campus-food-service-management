@@ -37,7 +37,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>97b7797604ef03107f44b8d89e324c24</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Food Base Problem - AI Agent: Campus Food Intelligence Agent - 97b7797604ef03107f44b8d89e324c23</sys_name>
         <sys_overrides/>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
@@ -45,11 +45,11 @@
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
         <sys_update_name>sys_hub_flow_97b7797604ef03107f44b8d89e324c24</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-09-29 10:38:34</sys_updated_on>
+        <sys_updated_on>2026-10-06 09:21:49</sys_updated_on>
         <type>flow</type>
         <updation_source/>
         <version>2</version>
-        <version_record>18c7b97604ef03107f44b8d89e324c7f</version_record>
+        <version_record/>
     </sys_hub_flow>
     <sys_translated_text action="delete_multiple" query="documentkey=97b7797604ef03107f44b8d89e324c24"/>
     <sys_variable_value action="delete_multiple" query="document_key=97b7797604ef03107f44b8d89e324c24"/>
@@ -392,7 +392,7 @@
     </sys_hub_trigger_instance_v2>
     <sys_hub_action_instance_v2 action="delete_multiple" query="flow=97b7797604ef03107f44b8d89e324c24^sys_idNOT IN08c7b97604ef03107f44b8d89e324c17"/>
     <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
-        <action_type display_value="AIA Trigger Use Case">0b63e51a53c7121059e0ddeeff7b12b5</action_type>
+        <action_type display_value="">0b63e51a53c7121059e0ddeeff7b12b5</action_type>
         <action_type_parent/>
         <attributes/>
         <comment/>
@@ -432,11 +432,11 @@
         <sys_created_on>2026-09-29 10:38:31</sys_created_on>
         <sys_id>37b7797604ef03107f44b8d89e324cdd</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Changed Fields</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_97b7797604ef03107f44b8d89e324c24_changed_fields_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-29 10:38:31</sys_updated_on>
         <url/>
@@ -455,11 +455,11 @@
         <sys_created_on>2026-09-29 10:38:31</sys_created_on>
         <sys_id>bbb7797604ef03107f44b8d89e324cca</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Record</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_97b7797604ef03107f44b8d89e324c24_current_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-29 10:38:31</sys_updated_on>
         <url/>
@@ -478,11 +478,11 @@
         <sys_created_on>2026-09-29 10:38:31</sys_created_on>
         <sys_id>ffb7797604ef03107f44b8d89e324cc4</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Table Name</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_97b7797604ef03107f44b8d89e324c24_table_name_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-29 10:38:31</sys_updated_on>
         <url/>
@@ -832,8 +832,8 @@
     </sys_hub_trigger_instance_v2>
     <sys_hub_action_instance_v2 action="delete_multiple" query="flow=d0c7b97604ef03107f44b8d89e324c85^sys_idNOT IN10c7b97604ef03107f44b8d89e324cb3"/>
     <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
-        <action_type display_value="AIA Trigger Use Case">0b63e51a53c7121059e0ddeeff7b12b5</action_type>
-        <action_type_parent display_value="AIA Trigger Use Case">931a511a5387121059e0ddeeff7b1249</action_type_parent>
+        <action_type display_value="">0b63e51a53c7121059e0ddeeff7b12b5</action_type>
+        <action_type_parent display_value="">931a511a5387121059e0ddeeff7b1249</action_type_parent>
         <attributes/>
         <comment/>
         <compiled_snapshot>0b63e51a53c7121059e0ddeeff7b12b5</compiled_snapshot>
@@ -872,11 +872,11 @@
         <sys_created_on>2026-09-29 10:38:33</sys_created_on>
         <sys_id>14c7b97604ef03107f44b8d89e324c9e</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Changed Fields</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_d0c7b97604ef03107f44b8d89e324c85_changed_fields_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-29 10:38:33</sys_updated_on>
         <url/>
@@ -895,11 +895,11 @@
         <sys_created_on>2026-09-29 10:38:34</sys_created_on>
         <sys_id>58c7b97604ef03107f44b8d89e324ca8</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Table Name</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_d0c7b97604ef03107f44b8d89e324c85_table_name_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-29 10:38:34</sys_updated_on>
         <url/>
@@ -918,11 +918,11 @@
         <sys_created_on>2026-09-29 10:38:33</sys_created_on>
         <sys_id>98c7b97604ef03107f44b8d89e324c93</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
+        <sys_name>Record</sys_name>
         <sys_package display_value="Campus Food Services Assistant" source="x_snc_campus_foo_1">423299d7dd1f03107f44143a6accf8fb</sys_package>
         <sys_policy/>
         <sys_scope display_value="Campus Food Services Assistant">423299d7dd1f03107f44143a6accf8fb</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_d0c7b97604ef03107f44b8d89e324c85_current_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-29 10:38:33</sys_updated_on>
         <url/>

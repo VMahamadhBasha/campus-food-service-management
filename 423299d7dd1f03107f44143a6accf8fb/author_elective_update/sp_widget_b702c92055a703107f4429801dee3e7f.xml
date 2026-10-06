@@ -185,7 +185,7 @@
         <update_guid_history>d72505a8cfa703101f610d204117857c:-1081088792,37c2c1e020a703103cb1202be5defc41:-157218522</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Student Issue Widget">4016b67d802743107f4447e44ab1d5e8</sys_audit_delete>
+        <sys_audit_delete display_value="">4016b67d802743107f4447e44ab1d5e8</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:36:53</sys_created_on>

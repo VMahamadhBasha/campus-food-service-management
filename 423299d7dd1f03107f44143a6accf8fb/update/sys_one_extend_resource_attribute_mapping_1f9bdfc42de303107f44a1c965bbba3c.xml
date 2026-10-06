@@ -6,7 +6,7 @@
         <attribute_value_template/>
         <attribute_value_type>script</attribute_value_type>
         <from_resource_mapping/>
-        <resource_attribute_name display_value="generated_response">b6f296a1a3d20210883c25d1d71e6170</resource_attribute_name>
+        <resource_attribute_name display_value="">b6f296a1a3d20210883c25d1d71e6170</resource_attribute_name>
         <resource_mapping display_value="Faithfulness Metric">5f9bdfc42de303107f44a1c965bbba36</resource_mapping>
         <sys_class_name>sys_one_extend_resource_attribute_mapping</sys_class_name>
         <sys_created_by>system</sys_created_by>
@@ -23,6 +23,6 @@
         <sys_updated_by>system</sys_updated_by>
         <sys_updated_on>2026-09-21 04:51:33</sys_updated_on>
         <truncate>false</truncate>
-        <type>input</type>
+        <type/>
     </sys_one_extend_resource_attribute_mapping>
 </record_update>

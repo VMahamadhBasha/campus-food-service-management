@@ -175,7 +175,7 @@ Do not add any text after the JSON.
 Do not return the fields in any other format.</prompt>
         <prompt_template_role>user</prompt_template_role>
         <provider_company/>
-        <request_tokens>32018</request_tokens>
+        <request_tokens>4000</request_tokens>
         <show_in_prompt_library>true</show_in_prompt_library>
         <state>archived</state>
         <structured_output_enabled>false</structured_output_enabled>

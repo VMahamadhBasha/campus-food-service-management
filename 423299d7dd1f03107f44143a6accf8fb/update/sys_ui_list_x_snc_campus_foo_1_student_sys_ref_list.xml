@@ -3,7 +3,7 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>user</element>
-            <list_id display_value="x_snc_campus_foo_1_student" element="NULL" name="x_snc_campus_foo_1_student" parent="NULL" relationship="NULL" sys_domain="global" view="09f22e33292103107f44f3a98c182477">5505e9a3085b03107f447d6c83c8225e</list_id>
+            <list_id display_value="x_snc_campus_foo_1_student" element="NULL" name="x_snc_campus_foo_1_student" parent="NULL" relationship="NULL" sys_domain="global" view="af3ba242183232108bb255f46a373a79">5505e9a3085b03107f447d6c83c8225e</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>0</position>
@@ -18,7 +18,7 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>student_id</element>
-            <list_id display_value="x_snc_campus_foo_1_student" element="NULL" name="x_snc_campus_foo_1_student" parent="NULL" relationship="NULL" sys_domain="global" view="09f22e33292103107f44f3a98c182477">5505e9a3085b03107f447d6c83c8225e</list_id>
+            <list_id display_value="x_snc_campus_foo_1_student" element="NULL" name="x_snc_campus_foo_1_student" parent="NULL" relationship="NULL" sys_domain="global" view="af3ba242183232108bb255f46a373a79">5505e9a3085b03107f447d6c83c8225e</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>1</position>
@@ -33,7 +33,7 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>number</element>
-            <list_id display_value="x_snc_campus_foo_1_student" element="NULL" name="x_snc_campus_foo_1_student" parent="NULL" relationship="NULL" sys_domain="global" view="09f22e33292103107f44f3a98c182477">5505e9a3085b03107f447d6c83c8225e</list_id>
+            <list_id display_value="x_snc_campus_foo_1_student" element="NULL" name="x_snc_campus_foo_1_student" parent="NULL" relationship="NULL" sys_domain="global" view="af3ba242183232108bb255f46a373a79">5505e9a3085b03107f447d6c83c8225e</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>2</position>
@@ -48,7 +48,7 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>dietary_preference</element>
-            <list_id display_value="x_snc_campus_foo_1_student" element="NULL" name="x_snc_campus_foo_1_student" parent="NULL" relationship="NULL" sys_domain="global" view="09f22e33292103107f44f3a98c182477">5505e9a3085b03107f447d6c83c8225e</list_id>
+            <list_id display_value="x_snc_campus_foo_1_student" element="NULL" name="x_snc_campus_foo_1_student" parent="NULL" relationship="NULL" sys_domain="global" view="af3ba242183232108bb255f46a373a79">5505e9a3085b03107f447d6c83c8225e</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>3</position>
@@ -63,7 +63,7 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>hostel_name</element>
-            <list_id display_value="x_snc_campus_foo_1_student" element="NULL" name="x_snc_campus_foo_1_student" parent="NULL" relationship="NULL" sys_domain="global" view="09f22e33292103107f44f3a98c182477">5505e9a3085b03107f447d6c83c8225e</list_id>
+            <list_id display_value="x_snc_campus_foo_1_student" element="NULL" name="x_snc_campus_foo_1_student" parent="NULL" relationship="NULL" sys_domain="global" view="af3ba242183232108bb255f46a373a79">5505e9a3085b03107f447d6c83c8225e</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>4</position>
@@ -78,7 +78,7 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>room_number</element>
-            <list_id display_value="x_snc_campus_foo_1_student" element="NULL" name="x_snc_campus_foo_1_student" parent="NULL" relationship="NULL" sys_domain="global" view="09f22e33292103107f44f3a98c182477">5505e9a3085b03107f447d6c83c8225e</list_id>
+            <list_id display_value="x_snc_campus_foo_1_student" element="NULL" name="x_snc_campus_foo_1_student" parent="NULL" relationship="NULL" sys_domain="global" view="af3ba242183232108bb255f46a373a79">5505e9a3085b03107f447d6c83c8225e</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>5</position>
@@ -93,7 +93,7 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>contact_number</element>
-            <list_id display_value="x_snc_campus_foo_1_student" element="NULL" name="x_snc_campus_foo_1_student" parent="NULL" relationship="NULL" sys_domain="global" view="09f22e33292103107f44f3a98c182477">5505e9a3085b03107f447d6c83c8225e</list_id>
+            <list_id display_value="x_snc_campus_foo_1_student" element="NULL" name="x_snc_campus_foo_1_student" parent="NULL" relationship="NULL" sys_domain="global" view="af3ba242183232108bb255f46a373a79">5505e9a3085b03107f447d6c83c8225e</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>6</position>
@@ -108,7 +108,7 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>mess_hall</element>
-            <list_id display_value="x_snc_campus_foo_1_student" element="NULL" name="x_snc_campus_foo_1_student" parent="NULL" relationship="NULL" sys_domain="global" view="09f22e33292103107f44f3a98c182477">5505e9a3085b03107f447d6c83c8225e</list_id>
+            <list_id display_value="x_snc_campus_foo_1_student" element="NULL" name="x_snc_campus_foo_1_student" parent="NULL" relationship="NULL" sys_domain="global" view="af3ba242183232108bb255f46a373a79">5505e9a3085b03107f447d6c83c8225e</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>7</position>
@@ -145,7 +145,7 @@
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-09-19 06:56:27</sys_updated_on>
             <sys_user/>
-            <view display_value="Reference List" name="sys_ref_list">09f22e33292103107f44f3a98c182477</view>
+            <view display_value="Reference List" name="sys_ref_list">af3ba242183232108bb255f46a373a79</view>
             <view_name/>
         </sys_ui_list>
     </sys_ui_list>

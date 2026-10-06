@@ -54,7 +54,7 @@
         <update_guid_history>9e2f6ab4ef6f031057861671c486bd81:1699079101</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="raise_ticket">5397f671806743107f4447e44ab1d546</sys_audit_delete>
+        <sys_audit_delete display_value="">5397f671806743107f4447e44ab1d546</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:43:40</sys_created_on>

@@ -4,7 +4,7 @@
         <order>10</order>
         <portals>4ddc79b049a703107f44f280a62db561</portals>
         <roles/>
-        <route_from_page display_value="cfms_student_login">1e1402f049e703107f44f280a62db557</route_from_page>
+        <route_from_page/>
         <route_to_page display_value="student_welcome_dashboard">3b3e4abc492b03107f44f280a62db570</route_to_page>
         <short_description>CFMS Login to Student Welcome</short_description>
         <sys_class_name>sp_page_route_map</sys_class_name>

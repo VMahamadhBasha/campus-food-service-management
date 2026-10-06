@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="m2m_search_context_config_attribute">
     <m2m_search_context_config_attribute action="INSERT_OR_UPDATE">
-        <attribute display_value="enable_hybrid_search">86c738003fb40310f129295e001f8b16</attribute>
+        <attribute display_value="">86c738003fb40310f129295e001f8b16</attribute>
         <search_application display_value="Campus Service Assistant">e31fa176046f03107f44b8d89e324c9c</search_application>
         <sys_class_name>m2m_search_context_config_attribute</sys_class_name>
         <sys_created_by>admin</sys_created_by>

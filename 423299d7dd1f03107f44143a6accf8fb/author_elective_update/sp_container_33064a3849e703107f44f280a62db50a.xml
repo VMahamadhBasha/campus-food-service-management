@@ -53,7 +53,7 @@
         <update_guid_history>a6a68e784ce70310e9e8c2e0e42df9d8:-1411940400,3b064a3801e7031080571a90b28c7d0b:1307554385</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="cfms Studentlogin - Container 2">633b8559a06743107f4432329b8a15e7</sys_audit_delete>
+        <sys_audit_delete display_value="">633b8559a06743107f4432329b8a15e7</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-24 15:33:11</sys_created_on>

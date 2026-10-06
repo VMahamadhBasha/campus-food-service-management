@@ -53,7 +53,7 @@
         <update_guid_history>6aa6a97a19eb031010ab5d2bfd68f83c:800283714</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Now Assist Multi-Turn Catalog Ordering">d38e6db2046f03107f44b8d89e324cf7</sys_audit_delete>
+        <sys_audit_delete display_value="">d38e6db2046f03107f44b8d89e324cf7</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-29 09:58:21</sys_created_on>

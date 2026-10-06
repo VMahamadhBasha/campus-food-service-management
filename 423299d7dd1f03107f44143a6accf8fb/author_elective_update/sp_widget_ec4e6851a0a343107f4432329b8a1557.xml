@@ -4051,7 +4051,7 @@
         <update_guid_history>9110fc1592a34310537a151b77fb3a53:-1567042399</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="CFMS Manager Dashboard">caa81dfd80a703107f4447e44ab1d51a</sys_audit_delete>
+        <sys_audit_delete display_value="">caa81dfd80a703107f4447e44ab1d51a</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 05:48:46</sys_created_on>

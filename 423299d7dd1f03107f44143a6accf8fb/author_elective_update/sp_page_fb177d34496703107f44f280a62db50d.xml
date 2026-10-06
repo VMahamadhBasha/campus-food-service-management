@@ -54,7 +54,7 @@
         <update_guid_history>2897b5b4be6703108a32b1489955f612:-2107778723</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="campus_food_service">8cc7fe71806743107f4447e44ab1d53b</sys_audit_delete>
+        <sys_audit_delete display_value="">8cc7fe71806743107f4447e44ab1d53b</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 12:44:16</sys_created_on>

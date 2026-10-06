@@ -53,7 +53,7 @@
         <update_guid_history>9593b07940630310201f37dc73403a14:-1300821343,8f8c2ea98cef0310eb3a6dff922961d4:714573271,5e8c2ea957ef0310f0ebaf80edacbf94:1125856086,937caaa96bef0310e6dba138d1532eb9:1537138901,96db6669c9ef0310f945b2823b5c37dc:1948421716,2a3ba2295def0310160cc691e12dba90:1537138901,ca0b6ee576ef03103eb33acfd4767a17:1125856086,13eae6e52fef03106d314b54b1a38434:714573271</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Food_Services_Landing - Container 1">99657879806303107f4447e44ab1d5b0</sys_audit_delete>
+        <sys_audit_delete display_value="">99657879806303107f4447e44ab1d5b0</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-26 03:14:43</sys_created_on>

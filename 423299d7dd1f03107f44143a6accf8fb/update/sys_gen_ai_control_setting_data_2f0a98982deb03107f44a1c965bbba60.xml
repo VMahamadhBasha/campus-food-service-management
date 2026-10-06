@@ -3,7 +3,7 @@
         <active>true</active>
         <additional_settings/>
         <control_data display_value="TB f38b1fc42de303107f44a1c965bbba3a">530a98982deb03107f44a1c965bbba57</control_data>
-        <control_setting display_value="Prompt Inject Threshold(NowAssistSkill)">e15504adff1803108b0dffffffffff57</control_setting>
+        <control_setting display_value="">e15504adff1803108b0dffffffffff57</control_setting>
         <description/>
         <sys_class_name>sys_gen_ai_control_setting_data</sys_class_name>
         <sys_created_by>admin</sys_created_by>

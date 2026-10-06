@@ -41,7 +41,7 @@
         <update_guid_history>de45581168ef0310c4018e41cc59b474:1852949999</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="global.x_snc_campus_foo_1.Incident Resolution Agent.access_analyzer_admin">c2d8d8d5a0ef03107f4432329b8a152c</sys_audit_delete>
+        <sys_audit_delete display_value="">c2d8d8d5a0ef03107f4432329b8a152c</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-24 11:53:00</sys_created_on>

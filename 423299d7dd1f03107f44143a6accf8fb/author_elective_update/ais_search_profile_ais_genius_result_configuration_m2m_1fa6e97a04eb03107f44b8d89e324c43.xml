@@ -42,7 +42,7 @@
         <update_guid_history>9ba6e97a13eb0310b034d4dfcec94e47:-38658960</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Now Assist Actions.Now Assist in Virtual Agent - 119a6a57a04eb03107f44b8d89e324c">7a8e6db2046f03107f44b8d89e324c57</sys_audit_delete>
+        <sys_audit_delete display_value="">7a8e6db2046f03107f44b8d89e324c57</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-29 09:58:19</sys_created_on>

@@ -11,7 +11,7 @@
         <attribute_value_template>750</attribute_value_template>
         <attribute_value_type>template</attribute_value_type>
         <from_resource_mapping/>
-        <resource_attribute_name display_value="expanded_snippet_size">5f94e58a77e81210e9c41345ba5a99a2</resource_attribute_name>
+        <resource_attribute_name display_value="">5f94e58a77e81210e9c41345ba5a99a2</resource_attribute_name>
         <resource_mapping display_value="FindFoodKnowledge">28d7a02055a303107f4429801dee3eb0</resource_mapping>
         <sys_class_name>sys_one_extend_resource_attribute_mapping</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -28,6 +28,6 @@
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-09-22 05:03:01</sys_updated_on>
         <truncate>false</truncate>
-        <type>input</type>
+        <type/>
     </sys_one_extend_resource_attribute_mapping>
 </record_update>

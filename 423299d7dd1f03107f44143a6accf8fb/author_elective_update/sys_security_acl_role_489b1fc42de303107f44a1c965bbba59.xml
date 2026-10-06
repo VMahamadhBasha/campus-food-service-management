@@ -41,7 +41,7 @@
         <update_guid_history>90eb1b08c4e3031073901a932668791d:1572474016</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="classify_food_complaint.f38b1fc42de303107f44a1c965bbba3a.snc_internal">14eb1b082de303107f44a1c965bbba1e</sys_audit_delete>
+        <sys_audit_delete display_value="">14eb1b082de303107f44a1c965bbba1e</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-09-21 04:52:43</sys_created_on>
